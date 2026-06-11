@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 3.1</title>
+  <title>Czas pracy 3.2</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -856,7 +856,7 @@
 
     @media(max-width:440px){
       .appHeader h1{font-size:24px;max-width:48vw}
-      .hamburger{display:none}
+      .hamburger{display:grid}
       .monthTitle{font-size:24px;max-width:72vw}
       .dayCell,.blankCell{min-height:100px}
       .dayNum{font-size:19px}
@@ -1097,6 +1097,313 @@ dialog#toolsDialog{
   }
   textarea{
     min-height:58px;
+  }
+}
+
+  
+/* ===== Czas pracy 3.2: dynamiczne skalowanie mobile ===== */
+:root{
+  --app-title-size:clamp(20px, 5.2vw, 28px);
+  --month-title-size:clamp(22px, 6.1vw, 28px);
+  --dow-size:clamp(11px, 3.1vw, 15px);
+  --day-num-size:clamp(15px, 4.3vw, 20px);
+  --day-num-box:clamp(24px, 7.1vw, 32px);
+  --pill-size:clamp(8px, 2.55vw, 12px);
+  --pill-height:clamp(14px, 4.35vw, 19px);
+  --day-height:clamp(70px, 10.8dvh, 104px);
+}
+
+.appHeader h1{font-size:var(--app-title-size)}
+.monthTitle{font-size:var(--month-title-size)}
+.calDow{font-size:var(--dow-size)}
+.dayCell,.blankCell{min-height:var(--day-height)}
+.dayNum{
+  width:var(--day-num-box);
+  height:var(--day-num-box);
+  font-size:var(--day-num-size);
+}
+.pill{
+  height:var(--pill-height);
+  font-size:var(--pill-size);
+  padding:0 3px;
+  justify-content:center;
+  letter-spacing:-.02em;
+}
+
+/* Na małych ekranach pastylki mają pokazać godziny, nie idealną pełną etykietę */
+@media(max-width:430px){
+  .pill{
+    border-radius:5px;
+    padding:0 2px;
+    font-weight:650;
+  }
+
+  .appHeader{
+    min-height:54px;
+    padding:7px 10px 2px;
+  }
+
+  .hamburger{
+    display:grid !important;
+    width:40px;
+    height:40px;
+    min-height:40px;
+    margin-left:-4px;
+  }
+
+  .appLeft{
+    gap:8px;
+  }
+
+  .topActions button.tonal{
+    height:34px !important;
+    min-height:34px !important;
+    padding:0 13px !important;
+    font-size:13px !important;
+  }
+
+  .monthSelector{
+    padding:0 8px 5px;
+  }
+
+  .iconCircle{
+    width:36px;
+    height:36px;
+  }
+
+  .calDow{
+    padding:5px 0 6px;
+  }
+
+  #calGrid,#calGridGhost{
+    gap:3px;
+  }
+
+  .dayCell,.blankCell{
+    border-radius:7px;
+    padding-top:4px;
+  }
+
+  .dayTop{
+    padding-bottom:4px;
+  }
+
+  .summaryCard{
+    padding:10px 14px 0;
+    margin-top:2px;
+  }
+
+  .statValue{
+    font-size:clamp(21px, 6vw, 25px);
+  }
+
+  .fab-container{
+    right:18px;
+    bottom:18px;
+  }
+}
+
+/* S23 i podobne: wysokość ważniejsza niż szerokość */
+@media(max-height:820px) and (max-width:430px){
+  :root{
+    --day-height:clamp(66px, 10.1dvh, 86px);
+    --day-num-size:clamp(14px, 4vw, 18px);
+    --day-num-box:clamp(23px, 6.4vw, 29px);
+    --pill-size:clamp(7.8px, 2.35vw, 10px);
+    --pill-height:clamp(13px, 3.85vw, 17px);
+  }
+
+  .appHeader{
+    min-height:50px;
+    padding-top:6px;
+  }
+
+  .monthTitle{
+    font-size:clamp(21px, 5.7vw, 24px);
+  }
+
+  .calDow{
+    font-size:12px;
+    padding:4px 0 5px;
+  }
+
+  .dayCell,.blankCell{
+    padding-top:3px;
+  }
+
+  .pillStack{
+    gap:2px;
+  }
+}
+
+/* Bardzo niskie podglądy / małe telefony */
+@media(max-height:740px) and (max-width:430px){
+  :root{
+    --day-height:64px;
+    --day-num-size:14px;
+    --day-num-box:22px;
+    --pill-size:7.5px;
+    --pill-height:12px;
+  }
+
+  .summaryCard{
+    padding-top:8px;
+  }
+
+  .statBox{
+    min-height:42px;
+  }
+
+  .statValue{
+    font-size:20px;
+  }
+}
+
+/* Modal dnia: nie ucina daty na górze i nie rośnie jak desktop */
+dialog#dayDialog{
+  max-height:min(92dvh, 760px);
+}
+
+#dayDialog .drag-handle{
+  margin-top:12px;
+  margin-bottom:12px;
+}
+
+#dayDialog .modalHead{
+  padding-top:0;
+  padding-bottom:10px;
+}
+
+#dayDialog .modalHead h3{
+  font-size:clamp(23px, 6.6vw, 28px);
+  line-height:1.18;
+}
+
+#dayDialog .modalBody{
+  max-height:calc(min(92dvh, 760px) - 86px);
+  overflow-y:auto;
+}
+
+@media(max-width:430px){
+  dialog#dayDialog{
+    max-height:88dvh;
+  }
+
+  #dayDialog .modalBody{
+    max-height:calc(88dvh - 82px);
+  }
+
+  #dayDialog .modalHead{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  #dayDialog .modalBody{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .modalStats{
+    margin:4px 0 16px;
+    gap:18px;
+  }
+
+  .statMiniValue{
+    font-size:clamp(24px, 7vw, 28px);
+  }
+
+  .modalStack{
+    padding:14px;
+    border-radius:22px;
+    margin-bottom:18px;
+  }
+
+  .timeGrid{
+    gap:10px;
+    margin-bottom:12px;
+  }
+
+  input,textarea,select{
+    min-height:44px !important;
+    padding:11px 12px 9px !important;
+    font-size:14px !important;
+    border-radius:10px 10px 0 0 !important;
+  }
+
+  textarea{
+    min-height:58px !important;
+  }
+
+  label{
+    font-size:12px;
+    margin-bottom:5px;
+  }
+
+  #dlgAddShift{
+    min-height:44px;
+    font-size:14px;
+    padding:0 20px;
+    margin-top:12px;
+  }
+
+  #dlgShiftsTitle{
+    font-size:15px;
+    margin-bottom:6px;
+  }
+
+  .shiftItem{
+    padding:12px 0;
+  }
+
+  .shiftItem .times{
+    font-size:18px;
+  }
+
+  .shiftItem .mins{
+    font-size:13px;
+    margin-top:4px;
+  }
+
+  .delIcon{
+    width:42px;
+    height:42px;
+    min-height:42px;
+  }
+}
+
+/* Jeżeli użytkownik ma bardzo małą wysokość roboczą, modal dnia jeszcze bardziej kompaktowy */
+@media(max-height:760px) and (max-width:430px){
+  dialog#dayDialog{
+    max-height:86dvh;
+  }
+
+  #dayDialog .modalBody{
+    max-height:calc(86dvh - 76px);
+  }
+
+  #dayDialog .drag-handle{
+    margin-top:10px;
+    margin-bottom:9px;
+  }
+
+  #dayDialog .modalHead h3{
+    font-size:22px;
+  }
+
+  #dayDialog .modalHead .muted{
+    font-size:13px;
+  }
+
+  .modalStats{
+    margin-bottom:12px;
+  }
+
+  .modalStack{
+    padding:12px;
+  }
+
+  textarea{
+    min-height:52px !important;
   }
 }
 
