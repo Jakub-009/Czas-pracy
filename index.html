@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.0 nawigacja</title>
+  <title>Czas pracy 4.0.1</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2159,6 +2159,220 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
   }
 }
 
+  
+/* ===== Czas pracy 4.0.1: ustawienia accordion + FAB jak Google ===== */
+
+/* Ustawienia: przewijalny modal i sekcje rozwijane */
+dialog#settingsDialog{
+  max-height:92dvh !important;
+}
+#settingsDialog .modalBody.settingsBody{
+  max-height:calc(92dvh - 96px) !important;
+  overflow-y:auto !important;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:calc(24px + env(safe-area-inset-bottom)) !important;
+}
+.settingsAccordion{
+  border-top:1px solid var(--outline-soft);
+}
+.settingsAccordion:last-of-type{
+  border-bottom:1px solid var(--outline-soft);
+}
+.settingsAccordion summary{
+  min-height:58px;
+  padding:0;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  list-style:none;
+  color:#202124;
+}
+.settingsAccordion summary::-webkit-details-marker{
+  display:none;
+}
+.settingsAccordion summary span{
+  font-size:16px;
+  font-weight:650;
+}
+.settingsChevron{
+  width:22px;
+  height:22px;
+  position:relative;
+  flex:0 0 auto;
+  transition:transform .18s ease;
+}
+.settingsChevron::before{
+  content:"";
+  position:absolute;
+  left:6px;
+  top:5px;
+  width:9px;
+  height:9px;
+  border-right:2px solid #5f6368;
+  border-bottom:2px solid #5f6368;
+  transform:rotate(45deg);
+}
+.settingsAccordion[open] .settingsChevron{
+  transform:rotate(180deg);
+}
+.settingsAccordionBody{
+  padding:0 0 18px;
+  animation:settingsAccordionIn .18s cubic-bezier(.2,0,0,1);
+}
+@keyframes settingsAccordionIn{
+  from{opacity:0;transform:translateY(-4px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.settingsSoon{
+  margin-top:14px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:#f6f8fb;
+  border:1px solid #e2e6ed;
+  color:#5f6368;
+  font-size:14px;
+  line-height:1.35;
+}
+.settingsCloseRow{
+  position:sticky;
+  bottom:0;
+  padding-top:14px;
+  padding-bottom:2px;
+  background:linear-gradient(to top, var(--surface) 78%, rgba(255,255,255,0));
+}
+
+/* Stare settingsSection nie jest już potrzebne, ale zostaje neutralne gdyby gdzieś było */
+.settingsSection{
+  margin-top:0 !important;
+  padding-top:0 !important;
+  border-top:none !important;
+}
+
+/* FAB Google-like */
+.fabScrim{
+  position:fixed;
+  inset:0;
+  z-index:29;
+  background:rgba(248,249,250,.82);
+  backdrop-filter:blur(1.5px);
+  -webkit-backdrop-filter:blur(1.5px);
+}
+.fabScrim[hidden]{
+  display:none !important;
+}
+.fabGoogle{
+  z-index:31;
+  right:24px !important;
+  bottom:24px !important;
+  gap:14px;
+}
+.fabActions{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:10px;
+  margin-bottom:2px;
+}
+.fabActions[hidden]{
+  display:none !important;
+}
+.fabActionPill{
+  min-height:62px;
+  height:62px;
+  padding:0 24px 0 20px;
+  border-radius:999px;
+  background:#d7e3ff;
+  color:#27446f;
+  box-shadow:none;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:16px;
+  font-size:20px;
+  font-weight:500;
+  letter-spacing:-.02em;
+  transform-origin:right center;
+  animation:fabActionIn .18s cubic-bezier(.2,0,0,1) both;
+}
+.fabActionPill:nth-child(1){animation-delay:.03s}
+.fabActionPill:nth-child(2){animation-delay:.015s}
+.fabActionPill:nth-child(3){animation-delay:0s}
+@keyframes fabActionIn{
+  from{opacity:0;transform:translateY(10px) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.fabActionPill svg{
+  width:28px;
+  height:28px;
+  fill:currentColor;
+  flex:0 0 auto;
+}
+.fabActionPill:hover{
+  background:#c8d7fb;
+}
+.fabGoogle .fab{
+  width:64px !important;
+  height:64px !important;
+  min-height:64px !important;
+  padding:0 !important;
+  border-radius:22px !important;
+  background:#4285f4 !important;
+  color:#fff !important;
+  box-shadow:0 8px 20px rgba(60,64,67,.28),0 2px 6px rgba(60,64,67,.18) !important;
+}
+.fabGoogle .fab svg{
+  width:30px !important;
+  height:30px !important;
+  fill:currentColor;
+}
+.fabCloseIcon{
+  display:none;
+}
+.fabGoogle.is-open .fabPlusIcon{
+  display:none;
+}
+.fabGoogle.is-open .fabCloseIcon{
+  display:block;
+}
+body.fab-open .wrap,
+body.fab-open .monthStrip{
+  filter:opacity(.18);
+  pointer-events:none;
+}
+body.fab-open .appHeader{
+  filter:opacity(.18);
+}
+
+/* Nie pokazujemy starego bottom sheeta szybkiego dodawania w nowym UX */
+dialog#fabMenuDialog{
+  display:none !important;
+}
+
+@media(max-width:430px){
+  .fabGoogle{
+    right:20px !important;
+    bottom:20px !important;
+  }
+  .fabActionPill{
+    min-height:58px;
+    height:58px;
+    padding:0 22px 0 18px;
+    font-size:19px;
+    gap:14px;
+  }
+  .fabActionPill svg{
+    width:27px;
+    height:27px;
+  }
+  .fabGoogle .fab{
+    width:62px !important;
+    height:62px !important;
+    min-height:62px !important;
+  }
+}
+
   </style>
 
 </head>
@@ -2224,10 +2438,29 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
 
   </div>
 
-  <div class="fab-container">
-    <button class="fab" id="mainFab" type="button" aria-label="Dodaj">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span class="fabText">Dodaj</span>
+  <div class="fabScrim" id="fabScrim" hidden></div>
+
+  <div class="fab-container fabGoogle" id="fabContainer">
+    <div class="fabActions" id="fabActions" hidden>
+      <button class="fabActionPill" id="fabVacationAction" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm0 16H5V9h14v10ZM5 7V5h14v2H5Zm7 4c-1.66 0-3 1.34-3 3 0 2.25 3 5 3 5s3-2.75 3-5c0-1.66-1.34-3-3-3Zm0 4.2a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4Z"/></svg>
+        <span>Urlop / L4</span>
+      </button>
+
+      <button class="fabActionPill" id="fabBulkAction" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm0 16H5V8h14v11ZM7 10h5v5H7v-5Zm7 0h3v2h-3v-2Zm0 4h3v2h-3v-2Z"/></svg>
+        <span>Wiele dni</span>
+      </button>
+
+      <button class="fabActionPill" id="fabTodayAction" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm0 16H5V9h14v10ZM5 7V5h14v2H5Zm7 3.5c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5Z"/></svg>
+        <span>Dzisiejszy wpis</span>
+      </button>
+    </div>
+
+    <button class="fab" id="mainFab" type="button" aria-label="Szybkie akcje" aria-expanded="false">
+      <svg class="fabPlusIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      <svg class="fabCloseIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.41L10.59 13.41 4.29 19.71 2.88 18.3 9.17 12 2.88 5.71 4.29 4.29l6.3 6.3 6.29-6.3z"/></svg>
     </button>
   </div>
 
@@ -2329,39 +2562,56 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
       </div>
     </div>
 
-    <div class="modalBody">
-      <div style="margin-bottom:16px;">
-        <label>Stawka godzinowa (PLN)</label>
-        <input id="rate" type="number" step="0.01" min="0" placeholder="Wpisz stawkę" />
-      </div>
+    <div class="modalBody settingsBody">
+      <details class="settingsAccordion" open>
+        <summary>
+          <span>Szczegóły pracodawcy</span>
+          <i class="settingsChevron" aria-hidden="true"></i>
+        </summary>
 
-      <div>
-        <label>Limit urlopu płatnego (dni / rok)</label>
-        <input id="leaveQuota" type="number" step="1" min="0" placeholder="np. 26" />
-        <div class="muted" id="leaveCounter" style="margin-top:8px;">—</div>
-      </div>
-
-      <div class="settingsSection">
-        <div class="sectionTitle">Szablony godzin pracy</div>
-        <div class="muted">Szybkie zakresy dostępne później w modalu dnia i w wielu godzinach.</div>
-
-        <div class="templateList" id="templateList"></div>
-
-        <div class="fieldGrid templateAddGrid">
-          <div>
-            <label>Wejście</label>
-            <input id="tplStart" type="time" />
+        <div class="settingsAccordionBody">
+          <div style="margin-bottom:16px;">
+            <label>Stawka godzinowa (PLN)</label>
+            <input id="rate" type="number" step="0.01" min="0" placeholder="Wpisz stawkę" />
           </div>
+
           <div>
-            <label>Wyjście</label>
-            <input id="tplEnd" type="time" />
+            <label>Limit urlopu płatnego (dni / rok)</label>
+            <input id="leaveQuota" type="number" step="1" min="0" placeholder="np. 26" />
+            <div class="muted" id="leaveCounter" style="margin-top:8px;">—</div>
           </div>
+
+          <div class="settingsSoon">Więcej ustawień wkrótce.</div>
         </div>
+      </details>
 
-        <button class="tonal templateAddBtn" id="tplAdd" type="button">Dodaj szablon</button>
-      </div>
+      <details class="settingsAccordion">
+        <summary>
+          <span>Szablony godzin pracy</span>
+          <i class="settingsChevron" aria-hidden="true"></i>
+        </summary>
 
-      <div class="actionRow">
+        <div class="settingsAccordionBody">
+          <div class="muted">Szybkie zakresy dostępne w modalu dnia i przy dodawaniu wielu dni.</div>
+
+          <div class="templateList" id="templateList"></div>
+
+          <div class="fieldGrid templateAddGrid">
+            <div>
+              <label>Wejście</label>
+              <input id="tplStart" type="time" />
+            </div>
+            <div>
+              <label>Wyjście</label>
+              <input id="tplEnd" type="time" />
+            </div>
+          </div>
+
+          <button class="tonal templateAddBtn" id="tplAdd" type="button">Dodaj szablon</button>
+        </div>
+      </details>
+
+      <div class="actionRow settingsCloseRow">
         <button class="tonal" id="settingsClose" type="button">Zamknij</button>
       </div>
     </div>
@@ -4327,32 +4577,55 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
   }
 
   const mainFab = $("mainFab");
-  const fabMenu = $("fabMenuDialog");
-  const openBulk = $("openBulkDialog");
-  const openVac = $("openVacDialog");
-  const openToday = $("openTodayDialog");
+  const fabActions = $("fabActions");
+  const fabScrim = $("fabScrim");
+  const fabContainer = $("fabContainer");
 
-  if (mainFab && fabMenu) {
-    mainFab.addEventListener("click", () => openDialog(fabMenu));
-    fabMenu.addEventListener("click", (e) => {
-      if (e.target === fabMenu) closeDialog(fabMenu);
+  function setFabOpen(open) {
+    if (!mainFab || !fabActions || !fabScrim || !fabContainer) return;
+    fabContainer.classList.toggle("is-open", open);
+    mainFab.setAttribute("aria-expanded", open ? "true" : "false");
+    fabActions.hidden = !open;
+    fabScrim.hidden = !open;
+    document.body.classList.toggle("fab-open", open);
+  }
+
+  function closeFabMenu() {
+    setFabOpen(false);
+  }
+
+  if (mainFab) {
+    mainFab.addEventListener("click", () => {
+      const next = !fabContainer?.classList.contains("is-open");
+      setFabOpen(next);
+      haptic.tap?.();
     });
   }
 
-  if (openToday) {
-    openToday.addEventListener("click", () => {
-      closeDialog(fabMenu);
-      setTimeout(() => {
-        if (window.openWorkDay && window.workTodayISO) {
-          window.openWorkDay(window.workTodayISO());
-        }
-      }, 120);
-    }, { capture:true });
+  if (fabScrim) {
+    fabScrim.addEventListener("click", () => {
+      closeFabMenu();
+      haptic.tap?.();
+    });
   }
 
-  [openBulk, openVac].forEach((btn) => {
-    if (!btn || !fabMenu) return;
-    btn.addEventListener("click", () => closeDialog(fabMenu), { capture:true });
+  $("fabTodayAction")?.addEventListener("click", () => {
+    closeFabMenu();
+    setTimeout(() => {
+      if (window.openWorkDay && window.workTodayISO) {
+        window.openWorkDay(window.workTodayISO());
+      }
+    }, 80);
+  });
+
+  $("fabBulkAction")?.addEventListener("click", () => {
+    closeFabMenu();
+    setTimeout(() => $("openBulkDialog")?.click(), 80);
+  });
+
+  $("fabVacationAction")?.addEventListener("click", () => {
+    closeFabMenu();
+    setTimeout(() => $("openVacDialog")?.click(), 80);
   });
 
   const menuBtn = $("mainMenuBtn");
