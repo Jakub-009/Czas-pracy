@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.0.2</title>
+  <title>Czas pracy 4.0.3</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2460,6 +2460,229 @@ dialog#fabMenuDialog{
   }
 }
 
+  
+/* ===== Czas pracy 4.0.3: poprawki FAB, modali i drawera ===== */
+
+/* Drawer: wyłączenie animacji bottom sheet i start zawsze z lewego boku */
+dialog#mainMenuDialog.drawerDialog[open]{
+  animation:none !important;
+}
+dialog#mainMenuDialog.drawerDialog .drawerPanel{
+  animation:drawerSlideFromLeftOnly .24s cubic-bezier(.2,0,0,1) !important;
+  transform-origin:left center !important;
+}
+@keyframes drawerSlideFromLeftOnly{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(0)}
+}
+
+/* Sztywne tło także przy bocznym menu */
+body.drawer-open{
+  overflow:hidden !important;
+  height:100dvh !important;
+  position:fixed !important;
+  inset:0 !important;
+  width:100% !important;
+  touch-action:none !important;
+}
+
+/* Margines przy dużych bottom sheetach na telefonie */
+@media(max-width:679px){
+  dialog#vacDialog,
+  dialog#bulkDialog,
+  dialog#dayDialog,
+  dialog#settingsDialog,
+  dialog#toolsDialog,
+  dialog#appInfoDialog{
+    width:calc(100vw - 18px) !important;
+    max-width:calc(100vw - 18px) !important;
+    margin:auto 9px 9px 9px !important;
+    border-radius:30px !important;
+  }
+
+  dialog#vacDialog .modalHead,
+  dialog#bulkDialog .modalHead,
+  dialog#dayDialog .modalHead,
+  dialog#settingsDialog .modalHead,
+  dialog#toolsDialog .modalHead,
+  dialog#appInfoDialog .modalHead{
+    padding-left:22px !important;
+    padding-right:22px !important;
+  }
+
+  dialog#vacDialog .modalBody,
+  dialog#bulkDialog .modalBody,
+  dialog#dayDialog .modalBody,
+  dialog#settingsDialog .modalBody,
+  dialog#toolsDialog .modalBody,
+  dialog#appInfoDialog .modalBody{
+    padding-left:22px !important;
+    padding-right:22px !important;
+  }
+}
+
+/* FAB: usuwamy konflikt svg i rysujemy X CSS-em, żeby był centralnie */
+.fabGoogle .fab{
+  width:58px !important;
+  height:58px !important;
+  min-height:58px !important;
+  border-radius:20px !important;
+  padding:0 !important;
+  display:grid !important;
+  place-items:center !important;
+  position:relative !important;
+  overflow:hidden !important;
+}
+
+.fabGoogle .fab svg{
+  grid-area:1 / 1 !important;
+  margin:0 !important;
+}
+
+.fabGoogle .fabPlusIcon{
+  width:27px !important;
+  height:27px !important;
+  display:block !important;
+}
+
+.fabGoogle .fabCloseIcon{
+  display:none !important;
+}
+
+.fabGoogle.is-open .fabPlusIcon,
+.fabGoogle.is-open .fabCloseIcon{
+  display:none !important;
+}
+
+.fabGoogle.is-open .fab::before,
+.fabGoogle.is-open .fab::after{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  width:25px !important;
+  height:3.5px !important;
+  background:#fff !important;
+  border-radius:999px !important;
+  transform-origin:center !important;
+}
+
+.fabGoogle.is-open .fab::before{
+  transform:translate(-50%,-50%) rotate(45deg) !important;
+}
+.fabGoogle.is-open .fab::after{
+  transform:translate(-50%,-50%) rotate(-45deg) !important;
+}
+
+/* Mniejsze i lżejsze pigułki z plusa */
+.fabActionPill{
+  min-height:48px !important;
+  height:48px !important;
+  padding:0 18px 0 15px !important;
+  gap:12px !important;
+  font-size:16px !important;
+  font-weight:550 !important;
+  border-radius:999px !important;
+}
+.fabActionPill svg{
+  width:22px !important;
+  height:22px !important;
+}
+
+/* Mniejsze chipy szablonów w modalach */
+.templateChip{
+  min-height:30px !important;
+  height:30px !important;
+  padding:0 10px !important;
+  font-size:12.5px !important;
+  font-weight:650 !important;
+}
+
+/* Przyciski akcji w modalach — mniej toporne */
+#bulkApply,
+#setVacationRange,
+#dlgAddShift{
+  min-height:46px !important;
+  padding:0 20px !important;
+  font-size:15px !important;
+  border-radius:999px !important;
+}
+
+#bulkRemove,
+#clearVacationRange,
+.backBtn,
+#dlgBack,
+#settingsClose,
+#toolsClose,
+#appInfoClose{
+  min-height:42px !important;
+  padding:0 16px !important;
+  font-size:15px !important;
+  border-radius:999px !important;
+}
+
+#dlgAddShift.addBtnCenter{
+  width:auto !important;
+  min-width:210px !important;
+  max-width:100% !important;
+  margin-left:auto !important;
+  margin-right:0 !important;
+}
+
+/* Wiele godzin / urlop — stabilniejsze przewijanie wewnątrz */
+dialog#vacDialog,
+dialog#bulkDialog{
+  max-height:92dvh !important;
+}
+dialog#vacDialog .modalBody,
+dialog#bulkDialog .modalBody{
+  max-height:calc(92dvh - 92px) !important;
+  overflow-y:auto !important;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+}
+
+/* Gdy modal jest otwarty, tło nie rusza się pod palcem */
+body.modal-open,
+body.drawer-open{
+  overflow:hidden !important;
+  height:100dvh !important;
+  position:fixed !important;
+  inset:0 !important;
+  width:100% !important;
+  touch-action:none !important;
+}
+
+@media(max-width:430px){
+  .fabActionPill{
+    min-height:46px !important;
+    height:46px !important;
+    padding:0 17px 0 14px !important;
+    gap:11px !important;
+    font-size:15.5px !important;
+  }
+  .fabActionPill svg{
+    width:21px !important;
+    height:21px !important;
+  }
+  .fabGoogle .fab{
+    width:56px !important;
+    height:56px !important;
+    min-height:56px !important;
+  }
+  .fabGoogle.is-open .fab::before,
+  .fabGoogle.is-open .fab::after{
+    width:23px !important;
+    height:3.2px !important;
+  }
+  .templateChip{
+    min-height:29px !important;
+    height:29px !important;
+    font-size:12px !important;
+    padding:0 9px !important;
+  }
+}
+
   </style>
 
 </head>
@@ -4677,6 +4900,7 @@ dialog#fabMenuDialog{
   }
   function closeDialog(dlg){
     if (!dlg) return;
+    if (dlg.id === "mainMenuDialog") document.body.classList.remove("drawer-open");
     if (typeof dlg.close === "function" && dlg.open) dlg.close();
     else dlg.removeAttribute("open");
   }
@@ -4739,7 +4963,14 @@ dialog#fabMenuDialog{
   const toolsDialog = $("toolsDialog");
   const appInfoDialog = $("appInfoDialog");
 
-  if (menuBtn && mainMenu) menuBtn.addEventListener("click", () => openDialog(mainMenu));
+  if (menuBtn && mainMenu) {
+    menuBtn.addEventListener("click", () => {
+      document.body.classList.add("drawer-open");
+      openDialog(mainMenu);
+    });
+    mainMenu.addEventListener("close", () => document.body.classList.remove("drawer-open"));
+    mainMenu.addEventListener("cancel", () => document.body.classList.remove("drawer-open"));
+  }
 
   $("drawerMonthView")?.addEventListener("click", () => {
     closeDialog(mainMenu);
