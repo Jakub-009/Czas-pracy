@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 3.5.4</title>
+  <title>Czas pracy 3.5.5</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -884,26 +884,75 @@
       .dayNum{font-size:18px}
       .pill{height:17px;font-size:10px}
     }
-  
-/* ===== Czas pracy 3.1 compact / S23 polish ===== */
-.hamburger{
-  border:none;
-  padding:0;
-  min-height:44px;
-  background:transparent;
-  box-shadow:none;
-}
-.toolGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-.toolGrid button{
-  width:100%;
-  min-height:48px;
+
+
+/* ===== Czas pracy 3.5.5: porządkowa baza CSS ===== */
+
+/* Jeden zestaw zmiennych odpowiedzialnych za geometrię kalendarza */
+:root{
+  --bg:#e8eaed;
+  --surface:#ffffff;
+  --surface-low:#f6f8fb;
+  --surface-mid:#edf0f4;
+  --grid:#e0e0e0;
+
+  --app-title-size:clamp(20px, 5.2vw, 28px);
+  --month-title-size:clamp(22px, 6.1vw, 28px);
+  --dow-size:clamp(12px, 3vw, 15px);
+
+  --day-height:clamp(84px, 12.7dvh, 112px);
+  --day-num-size:clamp(11.5px, 3.05vw, 14.5px);
+  --day-num-box:clamp(19px, 5.25vw, 24px);
+  --today-badge-h:clamp(20px, 5.3vw, 25px);
+  --today-badge-w:clamp(27px, 6.85vw, 33px);
+  --pill-size:clamp(7.2px, 1.92vw, 8.8px);
+  --pill-height:clamp(12px, 3.12vw, 15px);
 }
 
-/* Pola bardziej jak nowe Google: mniej ciężkie, jaśniejsze, bez starego "betonowego" wypełnienia */
+/* Ogólna powierzchnia */
+html,body{
+  width:100%;
+  overflow-x:hidden;
+}
+body{
+  background:var(--bg) !important;
+  padding-bottom:82px !important;
+}
+.wrap{
+  padding-bottom:82px !important;
+}
+.appHeader{
+  background:var(--bg) !important;
+  min-height:58px !important;
+  padding:8px 12px 2px !important;
+}
+.appHeader h1{
+  font-size:var(--app-title-size) !important;
+}
+.hamburger{
+  border:none !important;
+  padding:0 !important;
+  min-height:40px !important;
+  width:40px !important;
+  height:40px !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+.hamburger svg{
+  width:24px !important;
+  height:24px !important;
+}
+.appLeft{
+  gap:8px !important;
+}
+.topActions button.tonal{
+  height:34px !important;
+  min-height:34px !important;
+  padding:0 13px !important;
+  font-size:13px !important;
+}
+
+/* Pola formularzy */
 input,textarea,select{
   background:#f5f7fb !important;
   border:1px solid transparent !important;
@@ -917,814 +966,35 @@ input:hover,textarea:hover,select:hover{
 input:focus-visible,textarea:focus-visible,select:focus-visible{
   background:#eef3fa !important;
   border-bottom:2px solid var(--primary) !important;
+  outline:none !important;
 }
 
-/* Menu/modale boczne też w stylu bottom sheet */
-dialog#mainMenuDialog,
-dialog#settingsDialog,
-dialog#toolsDialog{
-  width:100vw;
-  max-width:100vw;
-  margin:auto 0 0 0;
-  border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;
-}
-@media(min-width:680px){
-  dialog#mainMenuDialog,
-  dialog#settingsDialog,
-  dialog#toolsDialog{
-    width:min(560px,calc(100vw - 32px));
-    max-width:560px;
-    margin:auto;
-    border-radius:var(--radius-sheet);
-  }
-}
-
-/* Telefony typu S23 / mniejsze wysokości — wersja bardziej zwarta */
-@media(max-width:430px), (max-height:820px){
-  body{padding-bottom:82px}
-  .wrap{padding-bottom:82px}
-  .appHeader{
-    min-height:58px;
-    padding:8px 12px 4px;
-  }
-  .hamburger{
-    width:38px;
-    height:38px;
-    min-height:38px;
-  }
-  .hamburger svg{width:24px;height:24px}
-  .appHeader h1{
-    font-size:22px;
-    max-width:52vw;
-  }
-  .topActions button.tonal{
-    height:34px !important;
-    min-height:34px !important;
-    padding:0 14px !important;
-    font-size:13px !important;
-  }
-
-  .monthSelector{
-    padding:0 8px 6px;
-  }
-  .monthTitle{
-    font-size:22px;
-  }
-  .iconCircle{
-    width:38px;
-    height:38px;
-  }
-  .iconCircle svg{width:22px;height:22px}
-
-  .calDow{
-    font-size:13px;
-    padding:6px 0;
-  }
-  #calGrid,#calGridGhost{
-    gap:3px;
-  }
-  .dayCell,.blankCell{
-    min-height:88px;
-    border-radius:8px;
-  }
-  .dayTop{
-    padding-bottom:4px;
-  }
-  .dayNum{
-    width:28px;
-    height:28px;
-    font-size:17px;
-  }
-  .pill{
-    height:17px;
-    font-size:10px;
-    border-radius:5px;
-  }
-
-  .summaryCard{
-    padding:12px 14px 0;
-    margin-top:4px;
-  }
-  .statBox{
-    min-height:48px;
-  }
-  .statValue{
-    font-size:23px;
-    margin-bottom:4px;
-  }
-  .statBox .muted{
-    font-size:12.5px;
-  }
-
-  .fab-container{
-    right:18px;
-    bottom:18px;
-  }
-  .fab{
-    width:58px;
-    height:58px;
-    min-height:58px;
-    padding:0;
-    border-radius:18px;
-  }
-  .fabText{display:none}
-  .fab svg{
-    width:30px;
-    height:30px;
-  }
-
-  .drag-handle{
-    margin:12px auto 10px;
-  }
-  .modalHead{
-    padding:0 20px 10px;
-  }
-  .modalBody{
-    padding:0 20px 20px;
-  }
-  .modalHead h3,.modalHeader h3{
-    font-size:24px;
-  }
-  .modalHead .muted,.modalHeader p{
-    font-size:14px;
-  }
-  .modalStats{
-    gap:18px;
-    margin:6px 0 20px;
-  }
-  .statMiniValue{
-    font-size:25px;
-  }
-  .modalStack{
-    padding:16px;
-    border-radius:24px;
-    margin-bottom:22px;
-  }
-  .shiftItem{
-    padding:14px 0;
-  }
-  .shiftItem .times{
-    font-size:19px;
-  }
-  .shiftItem .mins{
-    font-size:14px;
-    margin-top:5px;
-  }
-  input,textarea,select{
-    min-height:48px;
-    padding:13px 14px 10px;
-    font-size:15px;
-  }
-  textarea{
-    min-height:66px;
-  }
-  #setVacationRange,#bulkApply,#dlgAddShift{
-    min-height:48px;
-    font-size:15px;
-  }
-}
-
-/* bardzo niskie ekrany — modal dnia mniej zasłania */
-@media(max-height:760px){
-  dialog#dayDialog{
-    max-height:92dvh;
-  }
-  #dayDialog .modalBody{
-    max-height:calc(92dvh - 48px);
-  }
-  .modalStack{
-    padding:14px;
-  }
-  textarea{
-    min-height:58px;
-  }
-}
-
-  
-/* ===== Czas pracy 3.2: dynamiczne skalowanie mobile ===== */
-:root{
-  --app-title-size:clamp(20px, 5.2vw, 28px);
-  --month-title-size:clamp(22px, 6.1vw, 28px);
-  --dow-size:clamp(11px, 3.1vw, 15px);
-  --day-num-size:clamp(15px, 4.3vw, 20px);
-  --day-num-box:clamp(24px, 7.1vw, 32px);
-  --pill-size:clamp(8px, 2.55vw, 12px);
-  --pill-height:clamp(14px, 4.35vw, 19px);
-  --day-height:clamp(70px, 10.8dvh, 104px);
-}
-
-.appHeader h1{font-size:var(--app-title-size)}
-.monthTitle{font-size:var(--month-title-size)}
-.calDow{font-size:var(--dow-size)}
-.dayCell,.blankCell{min-height:var(--day-height)}
-.dayNum{
-  width:var(--day-num-box);
-  height:var(--day-num-box);
-  font-size:var(--day-num-size);
-}
-.pill{
-  height:var(--pill-height);
-  font-size:var(--pill-size);
-  padding:0 3px;
-  justify-content:center;
-  letter-spacing:-.02em;
-}
-
-/* Na małych ekranach pastylki mają pokazać godziny, nie idealną pełną etykietę */
-@media(max-width:430px){
-  .pill{
-    border-radius:5px;
-    padding:0 2px;
-    font-weight:650;
-  }
-
-  .appHeader{
-    min-height:54px;
-    padding:7px 10px 2px;
-  }
-
-  .hamburger{
-    display:grid !important;
-    width:40px;
-    height:40px;
-    min-height:40px;
-    margin-left:-4px;
-  }
-
-  .appLeft{
-    gap:8px;
-  }
-
-  .topActions button.tonal{
-    height:34px !important;
-    min-height:34px !important;
-    padding:0 13px !important;
-    font-size:13px !important;
-  }
-
-  .monthSelector{
-    padding:0 8px 5px;
-  }
-
-  .iconCircle{
-    width:36px;
-    height:36px;
-  }
-
-  .calDow{
-    padding:5px 0 6px;
-  }
-
-  #calGrid,#calGridGhost{
-    gap:3px;
-  }
-
-  .dayCell,.blankCell{
-    border-radius:7px;
-    padding-top:4px;
-  }
-
-  .dayTop{
-    padding-bottom:4px;
-  }
-
-  .summaryCard{
-    padding:10px 14px 0;
-    margin-top:2px;
-  }
-
-  .statValue{
-    font-size:clamp(21px, 6vw, 25px);
-  }
-
-  .fab-container{
-    right:18px;
-    bottom:18px;
-  }
-}
-
-/* S23 i podobne: wysokość ważniejsza niż szerokość */
-@media(max-height:820px) and (max-width:430px){
-  :root{
-    --day-height:clamp(66px, 10.1dvh, 86px);
-    --day-num-size:clamp(14px, 4vw, 18px);
-    --day-num-box:clamp(23px, 6.4vw, 29px);
-    --pill-size:clamp(7.8px, 2.35vw, 10px);
-    --pill-height:clamp(13px, 3.85vw, 17px);
-  }
-
-  .appHeader{
-    min-height:50px;
-    padding-top:6px;
-  }
-
-  .monthTitle{
-    font-size:clamp(21px, 5.7vw, 24px);
-  }
-
-  .calDow{
-    font-size:12px;
-    padding:4px 0 5px;
-  }
-
-  .dayCell,.blankCell{
-    padding-top:3px;
-  }
-
-  .pillStack{
-    gap:2px;
-  }
-}
-
-/* Bardzo niskie podglądy / małe telefony */
-@media(max-height:740px) and (max-width:430px){
-  :root{
-    --day-height:64px;
-    --day-num-size:14px;
-    --day-num-box:22px;
-    --pill-size:7.5px;
-    --pill-height:12px;
-  }
-
-  .summaryCard{
-    padding-top:8px;
-  }
-
-  .statBox{
-    min-height:42px;
-  }
-
-  .statValue{
-    font-size:20px;
-  }
-}
-
-/* Modal dnia: nie ucina daty na górze i nie rośnie jak desktop */
-dialog#dayDialog{
-  max-height:min(92dvh, 760px);
-}
-
-#dayDialog .drag-handle{
-  margin-top:12px;
-  margin-bottom:12px;
-}
-
-#dayDialog .modalHead{
-  padding-top:0;
-  padding-bottom:10px;
-}
-
-#dayDialog .modalHead h3{
-  font-size:clamp(23px, 6.6vw, 28px);
-  line-height:1.18;
-}
-
-#dayDialog .modalBody{
-  max-height:calc(min(92dvh, 760px) - 86px);
-  overflow-y:auto;
-}
-
-@media(max-width:430px){
-  dialog#dayDialog{
-    max-height:88dvh;
-  }
-
-  #dayDialog .modalBody{
-    max-height:calc(88dvh - 82px);
-  }
-
-  #dayDialog .modalHead{
-    padding-left:20px;
-    padding-right:20px;
-  }
-
-  #dayDialog .modalBody{
-    padding-left:20px;
-    padding-right:20px;
-  }
-
-  .modalStats{
-    margin:4px 0 16px;
-    gap:18px;
-  }
-
-  .statMiniValue{
-    font-size:clamp(24px, 7vw, 28px);
-  }
-
-  .modalStack{
-    padding:14px;
-    border-radius:22px;
-    margin-bottom:18px;
-  }
-
-  .timeGrid{
-    gap:10px;
-    margin-bottom:12px;
-  }
-
-  input,textarea,select{
-    min-height:44px !important;
-    padding:11px 12px 9px !important;
-    font-size:14px !important;
-    border-radius:10px 10px 0 0 !important;
-  }
-
-  textarea{
-    min-height:58px !important;
-  }
-
-  label{
-    font-size:12px;
-    margin-bottom:5px;
-  }
-
-  #dlgAddShift{
-    min-height:44px;
-    font-size:14px;
-    padding:0 20px;
-    margin-top:12px;
-  }
-
-  #dlgShiftsTitle{
-    font-size:15px;
-    margin-bottom:6px;
-  }
-
-  .shiftItem{
-    padding:12px 0;
-  }
-
-  .shiftItem .times{
-    font-size:18px;
-  }
-
-  .shiftItem .mins{
-    font-size:13px;
-    margin-top:4px;
-  }
-
-  .delIcon{
-    width:42px;
-    height:42px;
-    min-height:42px;
-  }
-}
-
-/* Jeżeli użytkownik ma bardzo małą wysokość roboczą, modal dnia jeszcze bardziej kompaktowy */
-@media(max-height:760px) and (max-width:430px){
-  dialog#dayDialog{
-    max-height:86dvh;
-  }
-
-  #dayDialog .modalBody{
-    max-height:calc(86dvh - 76px);
-  }
-
-  #dayDialog .drag-handle{
-    margin-top:10px;
-    margin-bottom:9px;
-  }
-
-  #dayDialog .modalHead h3{
-    font-size:22px;
-  }
-
-  #dayDialog .modalHead .muted{
-    font-size:13px;
-  }
-
-  .modalStats{
-    margin-bottom:12px;
-  }
-
-  .modalStack{
-    padding:12px;
-  }
-
-  textarea{
-    min-height:52px !important;
-  }
-}
-
-  
-/* ===== Czas pracy 3.3: dłuższe dni + drobniejsze numery i pastylki jak Google ===== */
-:root{
-  --day-height:clamp(82px, 12.6dvh, 112px);
-  --day-num-size:clamp(13px, 3.65vw, 17px);
-  --day-num-box:clamp(22px, 6.4vw, 28px);
-  --pill-size:clamp(8px, 2.25vw, 10px);
-  --pill-height:clamp(14px, 3.65vw, 18px);
-}
-
-.dayCell,.blankCell{
-  min-height:var(--day-height) !important;
-}
-
-.dayNum{
-  width:var(--day-num-box) !important;
-  height:var(--day-num-box) !important;
-  font-size:var(--day-num-size) !important;
-  font-weight:700 !important;
-}
-
-.dayCell.today .dayNum{
-  background:#4285f4 !important;
-  color:#fff !important;
-}
-
-.dayTop{
-  padding-bottom:5px !important;
-}
-
-.pillStack{
-  gap:2px !important;
-  padding:0 2px !important;
-}
-
-.pill{
-  height:var(--pill-height) !important;
-  font-size:var(--pill-size) !important;
-  font-weight:600 !important;
-  line-height:1 !important;
-  border-radius:5px !important;
-  padding:0 4px !important;
-  justify-content:flex-start !important;
-  text-align:left !important;
-  letter-spacing:-.025em !important;
-  box-shadow:none !important;
-}
-
-.pill.work{
-  background:#d7f2dd !important;
-  color:#137333 !important;
-}
-
-.pill.vac{
-  background:#d3e3fd !important;
-  color:#1a73e8 !important;
-}
-
-.pill.sick{
-  background:#fce8e6 !important;
-  color:#d93025 !important;
-}
-
-.pill.unpaid{
-  background:#eef0f4 !important;
-  color:#3c4043 !important;
-}
-
-.pill.more{
+/* Kalendarz — jedna finalna geometria, bez starych konfliktujących bloków */
+.calCard{
   background:transparent !important;
-  color:#5f6368 !important;
-  justify-content:center !important;
+  padding-left:6px !important;
+  padding-right:6px !important;
+}
+.monthSelector{
+  padding:1px 8px 6px !important;
+}
+.monthTitle{
+  font-size:var(--month-title-size) !important;
+}
+.iconCircle{
+  width:38px !important;
+  height:38px !important;
+}
+.iconCircle svg{
+  width:22px !important;
+  height:22px !important;
 }
 
-/* S23 / mniejsze ekrany: dni trochę dłuższe, ale cyfry i wpisy mniejsze */
-@media(max-width:430px){
-  :root{
-    --day-height:clamp(86px, 11.55dvh, 102px);
-    --day-num-size:clamp(13px, 3.8vw, 16px);
-    --day-num-box:clamp(22px, 6.2vw, 27px);
-    --pill-size:clamp(7.6px, 2.18vw, 9.2px);
-    --pill-height:clamp(13px, 3.55vw, 16px);
-  }
-
-  #calGrid,#calGridGhost{
-    gap:4px !important;
-  }
-
-  .dayCell,.blankCell{
-    border-radius:8px !important;
-    padding-top:5px !important;
-  }
-
-  .dayTop{
-    padding-bottom:5px !important;
-  }
-
-  .pill{
-    padding:0 3px !important;
-    border-radius:5px !important;
-  }
-}
-
-/* Bardzo niskie ekrany: nadal kompaktowo, ale bez przesadnego ściskania */
-@media(max-height:820px) and (max-width:430px){
-  :root{
-    --day-height:clamp(82px, 11.05dvh, 96px);
-    --day-num-size:clamp(12.5px, 3.6vw, 15px);
-    --day-num-box:clamp(21px, 5.9vw, 26px);
-    --pill-size:clamp(7.2px, 2.05vw, 8.8px);
-    --pill-height:clamp(12px, 3.35vw, 15px);
-  }
-
-  .calDow{
-    font-size:12px !important;
-    padding:4px 0 5px !important;
-  }
-}
-
-@media(max-height:740px) and (max-width:430px){
-  :root{
-    --day-height:76px;
-    --day-num-size:12px;
-    --day-num-box:21px;
-    --pill-size:7px;
-    --pill-height:12px;
-  }
-}
-
-  
-/* ===== Czas pracy 3.4: numery dni + pastylki bardziej jak Google Calendar ===== */
-
-/* Bazowa skala: numer dnia nie dominuje, pastylki są niskie i zwarte */
-:root{
-  --day-height:clamp(84px, 12.8dvh, 112px);
-  --day-num-size:clamp(12px, 3.25vw, 15px);
-  --day-num-box:clamp(21px, 5.7vw, 26px);
-  --today-badge-h:clamp(24px, 6.3vw, 30px);
-  --today-badge-w:clamp(30px, 7.8vw, 38px);
-  --pill-size:clamp(7.6px, 2.05vw, 9.4px);
-  --pill-height:clamp(13px, 3.35vw, 16px);
-}
-
-/* Dni: zostają wyższe, ale numer jest wyraźnie spokojniejszy */
-.dayCell,.blankCell{
-  min-height:var(--day-height) !important;
-}
-
-.dayTop{
-  padding-top:3px !important;
-  padding-bottom:4px !important;
-}
-
-.dayNum{
-  width:var(--day-num-box) !important;
-  min-width:var(--day-num-box) !important;
-  height:var(--day-num-box) !important;
-  padding:0 4px !important;
-  border-radius:999px !important;
-  font-size:var(--day-num-size) !important;
-  font-weight:700 !important;
-  line-height:1 !important;
-  letter-spacing:-.015em !important;
-}
-
-/* Dzisiaj: bardziej badge/pastylka niż idealne kółko */
-.dayCell.today .dayNum{
-  width:auto !important;
-  min-width:var(--today-badge-w) !important;
-  height:var(--today-badge-h) !important;
-  padding:0 8px !important;
-  border-radius:999px !important;
-  background:#4285f4 !important;
-  color:#fff !important;
-  font-weight:700 !important;
-}
-
-/* Pastylki: mniej "pigułkowe", bardziej Google Calendar */
-.pillStack{
-  gap:2px !important;
-  padding:0 2px !important;
-}
-
-.pill{
-  height:var(--pill-height) !important;
-  min-height:var(--pill-height) !important;
-  font-size:var(--pill-size) !important;
-  font-weight:600 !important;
-  line-height:1 !important;
-  border-radius:4px !important;
-  padding:0 4px !important;
-  justify-content:flex-start !important;
-  text-align:left !important;
-  letter-spacing:-.02em !important;
-  box-shadow:none !important;
-}
-
-/* Praca: bliżej Google — mocniejsza zieleń i biały tekst */
-.pill.work{
-  background:#4f9d69 !important;
-  color:#ffffff !important;
-}
-
-/* Urlop: jasny niebieski, ciemny tekst — czytelniej niż biały na jasnym tle */
-.pill.vac{
-  background:#d3e3fd !important;
-  color:#1a56b8 !important;
-}
-
-/* Urlop bezpłatny: neutralny */
-.pill.unpaid{
-  background:#e8eaed !important;
-  color:#3c4043 !important;
-}
-
-/* L4: jasnoczerwone tło, czerwony tekst */
-.pill.sick{
-  background:#fce8e6 !important;
-  color:#b3261e !important;
-}
-
-.pill.more{
-  background:transparent !important;
-  color:#5f6368 !important;
-  justify-content:center !important;
-}
-
-/* Notatka dalej subtelna */
-.noteDot{
-  width:5px !important;
-  height:5px !important;
-  top:7px !important;
-  right:7px !important;
-  background:#fbbc04 !important;
-}
-
-/* S23 / wąskie ekrany */
-@media(max-width:430px){
-  :root{
-    --day-height:clamp(88px, 11.8dvh, 102px);
-    --day-num-size:clamp(12px, 3.45vw, 14.5px);
-    --day-num-box:clamp(20px, 5.55vw, 25px);
-    --today-badge-h:clamp(23px, 6.1vw, 28px);
-    --today-badge-w:clamp(29px, 7.5vw, 36px);
-    --pill-size:clamp(7.2px, 1.96vw, 8.6px);
-    --pill-height:clamp(12px, 3.25vw, 15px);
-  }
-
-  #calGrid,#calGridGhost{
-    gap:4px !important;
-  }
-
-  .dayCell,.blankCell{
-    border-radius:8px !important;
-    padding-top:4px !important;
-  }
-
-  .dayTop{
-    padding-top:2px !important;
-    padding-bottom:4px !important;
-  }
-
-  .pillStack{
-    padding:0 2px !important;
-    gap:2px !important;
-  }
-
-  .pill{
-    border-radius:4px !important;
-    padding:0 3px !important;
-    font-weight:650 !important;
-  }
-}
-
-/* Niższe telefony / mniejsza wysokość robocza */
-@media(max-height:820px) and (max-width:430px){
-  :root{
-    --day-height:clamp(84px, 11.25dvh, 96px);
-    --day-num-size:clamp(11.5px, 3.25vw, 13.8px);
-    --day-num-box:clamp(20px, 5.25vw, 24px);
-    --today-badge-h:clamp(22px, 5.75vw, 27px);
-    --today-badge-w:clamp(28px, 7.1vw, 34px);
-    --pill-size:clamp(6.9px, 1.9vw, 8.2px);
-    --pill-height:clamp(11px, 3.05vw, 14px);
-  }
-
-  .calDow{
-    font-size:12px !important;
-    padding:4px 0 5px !important;
-  }
-
-  .dayCell,.blankCell{
-    padding-top:3px !important;
-  }
-}
-
-/* Bardzo niskie podglądy */
-@media(max-height:740px) and (max-width:430px){
-  :root{
-    --day-height:78px;
-    --day-num-size:11px;
-    --day-num-box:19px;
-    --today-badge-h:21px;
-    --today-badge-w:31px;
-    --pill-size:6.8px;
-    --pill-height:11px;
-  }
-}
-
-  
-/* ===== Czas pracy 3.5: Google Calendar feel, preview modal, stronger event colors ===== */
-
-/* Główna siatka i ghost mają identyczny rozmiar podczas swipe */
 #calSwipeArea{
-  contain:layout paint;
-}
-#calSwipeArea.is-swiping{
+  touch-action:pan-y;
   overflow:hidden !important;
+  position:relative;
+  contain:layout paint;
 }
 #calLayerCurrent,
 #calLayerGhost{
@@ -1733,126 +1003,322 @@ dialog#dayDialog{
   backface-visibility:hidden;
   transform:translateZ(0);
 }
-#calGrid .dayCell,
-#calGridGhost .dayCell,
-#calGrid .blankCell,
-#calGridGhost .blankCell{
-  min-height:var(--day-height) !important;
-}
-#calGrid .dayNum,
-#calGridGhost .dayNum{
-  width:var(--day-num-box) !important;
-  height:var(--day-num-box) !important;
-  font-size:var(--day-num-size) !important;
-}
-#calGrid .pill,
-#calGridGhost .pill{
-  height:var(--pill-height) !important;
-  min-height:var(--pill-height) !important;
-  font-size:var(--pill-size) !important;
+.calGhost{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  pointer-events:none;
 }
 
-/* Dni i dzisiejszy badge: mały, nie dominujący */
-:root{
-  --day-height:clamp(84px, 12.7dvh, 112px);
-  --day-num-size:clamp(11.5px, 3.05vw, 14.5px);
-  --day-num-box:clamp(19px, 5.25vw, 24px);
-  --today-badge-h:clamp(20px, 5.3vw, 25px);
-  --today-badge-w:clamp(27px, 6.85vw, 33px);
-  --pill-size:clamp(7.2px, 1.92vw, 8.8px);
-  --pill-height:clamp(12px, 3.12vw, 15px);
+#dowRow,
+#dowRowGhost{
+  gap:0 !important;
+  padding:0 0 4px !important;
 }
-
-.dayNum{
+.calDow{
+  font-size:var(--dow-size) !important;
   font-weight:600 !important;
+  color:#202124 !important;
+  padding:5px 0 6px !important;
+  text-transform:lowercase !important;
 }
-
+#calGrid,
+#calGridGhost{
+  gap:4px !important;
+  background:transparent !important;
+  grid-template-rows:none !important;
+  align-items:stretch !important;
+}
+.dayCell,
+.blankCell{
+  min-height:var(--day-height) !important;
+  height:auto !important;
+  max-height:none !important;
+  border-radius:6px !important;
+  background:#f8f9fa !important;
+  box-shadow:none !important;
+}
+.dayCell{
+  contain:layout paint;
+  padding-top:4px !important;
+  padding-bottom:6px !important;
+}
+.dayCell:hover{
+  background:#f4f7fb !important;
+}
+.dayCell:active{
+  background:#edf3fe !important;
+  transform:scale(.992);
+}
+.blankCell{
+  opacity:1 !important;
+}
+.dayTop{
+  padding-top:2px !important;
+  padding-bottom:4px !important;
+}
+.dayNum{
+  width:var(--day-num-box) !important;
+  min-width:var(--day-num-box) !important;
+  height:var(--day-num-box) !important;
+  padding:0 4px !important;
+  border-radius:999px !important;
+  font-size:var(--day-num-size) !important;
+  font-weight:600 !important;
+  line-height:1 !important;
+  letter-spacing:-.015em !important;
+  color:#202124 !important;
+}
 .dayCell.today .dayNum{
-  min-width:var(--today-badge-w) !important;
   width:auto !important;
+  min-width:var(--today-badge-w) !important;
   height:var(--today-badge-h) !important;
   padding:0 7px !important;
   border-radius:999px !important;
-  font-size:var(--day-num-size) !important;
   background:#4285f4 !important;
   color:#fff !important;
 }
 
-/* Pastylki wydarzeń jak w Google: mocniejsze kolory, mały radius */
+/* Weekendy i święta */
+.dayNum.saturday{
+  color:#5f6368 !important;
+}
+.dayNum.sunday,
+.dayNum.holiday{
+  color:#c5221f !important;
+}
+.dayCell.today .dayNum,
+.dayCell.today .dayNum.saturday,
+.dayCell.today .dayNum.sunday,
+.dayCell.today .dayNum.holiday{
+  color:#fff !important;
+}
+.dayCell.is-saturday{
+  background:#f1f3f4 !important;
+}
+.dayCell.is-sunday,
+.dayCell.is-holiday{
+  background:#fff5f5 !important;
+}
+.dayCell.is-saturday:hover{
+  background:#eceff1 !important;
+}
+.dayCell.is-sunday:hover,
+.dayCell.is-holiday:hover{
+  background:#fff0f0 !important;
+}
+
+/* Pastylki wydarzeń */
+.pillStack{
+  gap:2px !important;
+  padding:0 2px !important;
+}
 .pill{
-  border-radius:3px !important;
+  height:var(--pill-height) !important;
+  min-height:var(--pill-height) !important;
+  max-height:var(--pill-height) !important;
+  font-size:var(--pill-size) !important;
+  line-height:1 !important;
   font-weight:600 !important;
-  letter-spacing:-.02em !important;
+  border-radius:3px !important;
   padding:0 4px !important;
   justify-content:flex-start !important;
   text-align:left !important;
+  letter-spacing:-.02em !important;
   box-shadow:none !important;
   overflow:hidden !important;
   text-overflow:clip !important;
 }
-
-/* Praca: zielony + biały tekst */
 .pill.work{
   background:#34a853 !important;
   color:#fff !important;
 }
-
-/* Urlop płatny: niebieski z czarnym/bardzo ciemnym tekstem */
 .pill.vac{
   background:#8ab4f8 !important;
   color:#202124 !important;
 }
-
-/* Urlop bezpłatny: żółty jak wydarzenia Google */
 .pill.unpaid{
   background:#fbbc04 !important;
   color:#202124 !important;
 }
-
-/* L4: czerwony + biały tekst */
 .pill.sick{
   background:#ea4335 !important;
   color:#fff !important;
 }
-
 .pill.more{
   background:transparent !important;
   color:#5f6368 !important;
   justify-content:center !important;
 }
+.noteDot{
+  width:5px !important;
+  height:5px !important;
+  top:7px !important;
+  right:7px !important;
+  background:#fbbc04 !important;
+}
 
-/* Animacje: płynniej, bez topornego wejścia */
-dialog[open]{
-  animation:sheetSoftIn .26s cubic-bezier(.2,0,0,1);
+/* Swipe: tylko w trakcie gestu blokujemy rozmiar komórek na wymiar zmierzony JS-em */
+#calSwipeArea.is-swiping{
+  overflow:hidden !important;
+  contain:layout paint style !important;
 }
-@keyframes sheetSoftIn{
-  from{transform:translateY(22px);opacity:.0}
-  to{transform:translateY(0);opacity:1}
-}
-@media(max-width:679px){
-  dialog[open]{
-    animation:sheetMobileIn .30s cubic-bezier(.2,0,0,1);
-  }
-  @keyframes sheetMobileIn{
-    from{transform:translateY(56px);opacity:.0}
-    to{transform:translateY(0);opacity:1}
-  }
-}
-.dayCell{
-  contain:layout paint;
-}
-.dayCell:active{
-  background:#edf3fe !important;
-}
-.fab,
-.menu-item,
-.dayAddTrigger{
+#calSwipeArea.is-swiping #calLayerCurrent,
+#calSwipeArea.is-swiping #calLayerGhost{
+  width:100% !important;
+  min-width:100% !important;
   will-change:transform;
+  backface-visibility:hidden;
+}
+#calSwipeArea.is-swiping #calGrid,
+#calSwipeArea.is-swiping #calGridGhost{
+  gap:4px !important;
+  grid-template-rows:none !important;
+}
+#calSwipeArea.is-swiping .dayCell,
+#calSwipeArea.is-swiping .blankCell{
+  height:var(--swipe-cell-height) !important;
+  min-height:var(--swipe-cell-height) !important;
+  max-height:var(--swipe-cell-height) !important;
+  transition:none !important;
+  transform:none !important;
+}
+#calSwipeArea.is-swiping .dayNum{
+  transition:none !important;
+}
+#calSwipeArea.is-swiping .pill{
+  transition:none !important;
 }
 
-/* Modal dnia: najpierw podgląd, formularz po kliknięciu */
+/* Podsumowanie i FAB */
+.summaryCard{
+  padding-top:11px !important;
+  margin-top:2px !important;
+}
+.statBox{
+  min-height:48px !important;
+}
+.statValue{
+  font-size:clamp(21px, 6vw, 25px) !important;
+  margin-bottom:4px !important;
+}
+.statBox .muted{
+  font-size:12.5px !important;
+}
+.fab-container{
+  right:18px !important;
+  bottom:18px !important;
+}
+.fab{
+  width:58px !important;
+  height:58px !important;
+  min-height:58px !important;
+  padding:0 !important;
+  border-radius:18px !important;
+  background:#d7e3ff !important;
+  color:#12355f !important;
+  box-shadow:0 7px 18px rgba(60,64,67,.18), 0 2px 5px rgba(60,64,67,.12) !important;
+}
+.fabText{
+  display:none !important;
+}
+.fab svg{
+  width:28px !important;
+  height:28px !important;
+}
+
+/* Wszystkie menu narzędziowe jako jednolite bottom sheety */
+dialog#fabMenuDialog,
+dialog#vacDialog,
+dialog#bulkDialog,
+dialog#dayDialog,
+dialog#mainMenuDialog,
+dialog#settingsDialog,
+dialog#toolsDialog,
+dialog#appInfoDialog{
+  width:100vw;
+  max-width:100vw;
+  margin:auto 0 0 0;
+  border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;
+}
+@media(min-width:680px){
+  dialog#fabMenuDialog,
+  dialog#vacDialog,
+  dialog#bulkDialog,
+  dialog#dayDialog,
+  dialog#mainMenuDialog,
+  dialog#settingsDialog,
+  dialog#toolsDialog,
+  dialog#appInfoDialog{
+    width:min(560px,calc(100vw - 32px));
+    max-width:560px;
+    margin:auto;
+    border-radius:var(--radius-sheet);
+  }
+  dialog#dayDialog{
+    max-width:640px;
+  }
+}
+dialog:focus,
+dialog:focus-visible{
+  outline:none !important;
+}
+
+/* Chevron modala jako rozwarte V */
+.drag-handle{
+  width:52px !important;
+  height:28px !important;
+  margin:7px auto 5px !important;
+  background:transparent !important;
+  border:none !important;
+  border-radius:999px !important;
+  display:grid !important;
+  place-items:center !important;
+  cursor:pointer !important;
+  touch-action:none !important;
+  position:relative !important;
+}
+.drag-handle:hover{
+  background:rgba(60,64,67,.04) !important;
+}
+.drag-handle::before,
+.drag-handle::after{
+  content:"" !important;
+  position:absolute !important;
+  top:12px !important;
+  width:20px !important;
+  height:4px !important;
+  background:#d5d9df !important;
+  border:none !important;
+  border-radius:999px !important;
+  transform-origin:center !important;
+}
+.drag-handle::before{
+  left:8px !important;
+  transform:rotate(22deg) !important;
+}
+.drag-handle::after{
+  right:8px !important;
+  transform:rotate(-22deg) !important;
+}
+.modalHead{
+  padding-top:0 !important;
+}
+
+/* Modal dnia */
+dialog#dayDialog{
+  max-height:88dvh !important;
+}
+#dayDialog .modalBody{
+  max-height:calc(88dvh - 76px) !important;
+  overflow-y:auto !important;
+  -webkit-overflow-scrolling:touch;
+}
 .dayPreviewHead{
-  padding-bottom:8px !important;
+  padding-left:20px !important;
+  padding-right:20px !important;
+  padding-bottom:10px !important;
 }
 .dayPreviewHead h3{
   font-size:clamp(22px, 6vw, 27px) !important;
@@ -1862,15 +1328,15 @@ dialog[open]{
 .dayPreviewHead .muted{
   font-size:14px !important;
 }
-
 .dayPreviewBody{
+  padding-left:20px !important;
+  padding-right:20px !important;
   padding-top:0 !important;
 }
-
 .dayPreviewStats{
   grid-template-columns:1fr 1fr !important;
   gap:14px !important;
-  margin:4px 0 18px !important;
+  margin:4px 0 16px !important;
 }
 .dayPreviewStats .statMini{
   padding:0 0 9px !important;
@@ -1886,11 +1352,6 @@ dialog[open]{
 .dayPreviewStats .muted{
   font-size:12.5px !important;
 }
-
-.daySection{
-  margin-top:4px;
-}
-
 #dlgShiftsTitle{
   display:block !important;
   margin:0 0 8px !important;
@@ -1898,13 +1359,11 @@ dialog[open]{
   color:#3c4043 !important;
   font-weight:600 !important;
 }
-
 .shiftList{
   display:flex;
   flex-direction:column;
   gap:6px;
 }
-
 .shiftItem.googleEvent{
   position:relative;
   display:flex !important;
@@ -1947,234 +1406,6 @@ dialog[open]{
   min-height:38px !important;
   flex:0 0 auto;
 }
-
-.emptyDayHint{
-  padding:12px 0 2px;
-  color:#5f6368;
-  font-size:14px;
-  line-height:1.35;
-}
-
-.dayNotePreview{
-  margin:14px 0 4px;
-  padding:12px 14px;
-  border-radius:14px;
-  background:#f8fafd;
-  border:1px solid #e2e6ed;
-}
-.dayNotePreview strong{
-  display:block;
-  margin-bottom:4px;
-  font-size:12px;
-  color:#5f6368;
-}
-.dayNotePreview span{
-  display:block;
-  font-size:14px;
-  line-height:1.35;
-  color:#202124;
-}
-
-.dayAddTrigger{
-  width:100%;
-  justify-content:flex-start;
-  min-height:48px;
-  padding:0 4px;
-  margin:14px 0 0;
-  background:transparent !important;
-  color:#1a73e8 !important;
-  border-radius:12px !important;
-  box-shadow:none !important;
-  font-size:15px;
-  font-weight:600;
-}
-.dayAddTrigger:hover{
-  background:#eef3fe !important;
-}
-.plusMark{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  display:inline-grid;
-  place-items:center;
-  font-size:24px;
-  line-height:1;
-  font-weight:400;
-  color:#1a73e8;
-}
-
-.addShiftPanel{
-  display:none !important;
-  margin-top:10px !important;
-  margin-bottom:12px !important;
-  animation:addPanelIn .20s cubic-bezier(.2,0,0,1);
-}
-#dayDialog.is-form-open .addShiftPanel{
-  display:block !important;
-}
-#dayDialog.is-form-open .dayAddTrigger{
-  display:none !important;
-}
-@keyframes addPanelIn{
-  from{opacity:0;transform:translateY(-6px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-.dayCloseRow{
-  margin-top:18px !important;
-}
-
-/* Mniejszy modal na S23 */
-@media(max-width:430px){
-  :root{
-    --day-height:clamp(84px, 11.35dvh, 98px);
-    --day-num-size:clamp(11px, 3.05vw, 13.5px);
-    --day-num-box:clamp(18px, 4.95vw, 23px);
-    --today-badge-h:clamp(19px, 5.05vw, 24px);
-    --today-badge-w:clamp(26px, 6.55vw, 32px);
-    --pill-size:clamp(6.8px, 1.82vw, 8.1px);
-    --pill-height:clamp(11px, 2.95vw, 14px);
-  }
-
-  .dayCell.today .dayNum{
-    padding:0 6px !important;
-  }
-
-  .pill{
-    border-radius:3px !important;
-    padding:0 3px !important;
-  }
-
-  dialog#dayDialog{
-    max-height:88dvh !important;
-  }
-  #dayDialog .modalBody{
-    max-height:calc(88dvh - 76px) !important;
-  }
-
-  .dayPreviewHead{
-    padding-left:20px !important;
-    padding-right:20px !important;
-  }
-  .dayPreviewHead h3{
-    font-size:23px !important;
-  }
-  .dayPreviewBody{
-    padding-left:20px !important;
-    padding-right:20px !important;
-  }
-  .dayPreviewStats{
-    margin-bottom:14px !important;
-  }
-  .dayPreviewStats .statMiniValue{
-    font-size:22px !important;
-  }
-  .shiftItem.googleEvent{
-    min-height:50px !important;
-    padding-top:8px !important;
-    padding-bottom:8px !important;
-  }
-  .shiftItem.googleEvent .times{
-    font-size:15px !important;
-  }
-  .shiftItem.googleEvent .mins{
-    font-size:12px !important;
-  }
-  .addShiftPanel{
-    padding:12px !important;
-    border-radius:20px !important;
-  }
-}
-
-@media(max-height:760px) and (max-width:430px){
-  :root{
-    --day-height:78px;
-    --day-num-size:10.5px;
-    --day-num-box:18px;
-    --today-badge-h:19px;
-    --today-badge-w:28px;
-    --pill-size:6.6px;
-    --pill-height:11px;
-  }
-
-  dialog#dayDialog{
-    max-height:86dvh !important;
-  }
-  #dayDialog .modalBody{
-    max-height:calc(86dvh - 72px) !important;
-  }
-  .dayPreviewHead h3{
-    font-size:21px !important;
-  }
-  .dayPreviewStats .statMiniValue{
-    font-size:20px !important;
-  }
-}
-
-  
-/* ===== Czas pracy 3.6: poprawki 3.5 — ghost swipe, urlopy jako wydarzenia, handle jak Google ===== */
-
-/* Stabilizacja ghost layer podczas przesuwania miesiąca */
-#calSwipeArea.is-swiping #calGrid,
-#calSwipeArea.is-swiping #calGridGhost{
-  gap:4px !important;
-}
-#calSwipeArea.is-swiping .dayCell,
-#calSwipeArea.is-swiping .blankCell,
-#calLayerCurrent .dayCell,
-#calLayerGhost .dayCell,
-#calLayerCurrent .blankCell,
-#calLayerGhost .blankCell{
-  min-height:var(--day-height) !important;
-  height:var(--day-height) !important;
-  max-height:var(--day-height) !important;
-}
-#calSwipeArea.is-swiping .dayNum,
-#calLayerCurrent .dayNum,
-#calLayerGhost .dayNum{
-  width:var(--day-num-box) !important;
-  min-width:var(--day-num-box) !important;
-  height:var(--day-num-box) !important;
-  max-height:var(--day-num-box) !important;
-  font-size:var(--day-num-size) !important;
-}
-#calSwipeArea.is-swiping .dayCell.today .dayNum,
-#calLayerCurrent .dayCell.today .dayNum,
-#calLayerGhost .dayCell.today .dayNum{
-  width:auto !important;
-  min-width:var(--today-badge-w) !important;
-  height:var(--today-badge-h) !important;
-  max-height:var(--today-badge-h) !important;
-}
-#calSwipeArea.is-swiping .pill,
-#calLayerCurrent .pill,
-#calLayerGhost .pill{
-  height:var(--pill-height) !important;
-  min-height:var(--pill-height) !important;
-  max-height:var(--pill-height) !important;
-  font-size:var(--pill-size) !important;
-  line-height:1 !important;
-}
-
-/* Wyrazistsze kolory wydarzeń */
-.pill.work{
-  background:#34a853 !important;
-  color:#fff !important;
-}
-.pill.vac{
-  background:#8ab4f8 !important;
-  color:#202124 !important;
-}
-.pill.unpaid{
-  background:#fbbc04 !important;
-  color:#202124 !important;
-}
-.pill.sick{
-  background:#ea4335 !important;
-  color:#fff !important;
-}
-
-/* Urlopy w modalu dnia jako wydarzenia całego dnia */
 .shiftItem.googleEvent.workEvent{
   background:#eaf6ee !important;
 }
@@ -2202,733 +1433,116 @@ dialog[open]{
 .shiftItem.googleEvent.leaveEvent.sick .eventStripe{
   background:#ea4335 !important;
 }
-.shiftItem.googleEvent.leaveEvent .times{
-  color:#202124 !important;
-}
-.shiftItem.googleEvent.leaveEvent.sick .times{
-  color:#202124 !important;
-}
-
-/* Górny uchwyt modala: subtelna strzałka w dół zamiast paska */
-.drag-handle{
-  width:44px !important;
-  height:26px !important;
-  margin:8px auto 6px !important;
-  background:transparent !important;
-  border-radius:999px !important;
-  display:grid !important;
-  place-items:center !important;
-  cursor:grab !important;
-  touch-action:none !important;
-}
-.drag-handle:active{
-  cursor:grabbing !important;
-}
-.drag-handle::before{
-  content:"" !important;
-  width:12px !important;
-  height:12px !important;
-  border-right:2px solid #9aa0a6 !important;
-  border-bottom:2px solid #9aa0a6 !important;
-  transform:rotate(45deg) translateY(-2px) !important;
-  border-radius:1px !important;
-}
-.drag-handle::after{
-  content:none !important;
-}
-
-/* Trochę ciaśniej po zmianie handle */
-#dayDialog .drag-handle{
-  margin-top:6px !important;
-  margin-bottom:4px !important;
-}
-#dayDialog .modalHead{
-  padding-top:0 !important;
-}
-
-/* Na małych telefonach też bez skakania przy ghost */
-@media(max-width:430px){
-  #calSwipeArea.is-swiping #calGrid,
-  #calSwipeArea.is-swiping #calGridGhost{
-    gap:4px !important;
-  }
-  #calSwipeArea.is-swiping .pill,
-  #calLayerCurrent .pill,
-  #calLayerGhost .pill{
-    border-radius:3px !important;
-    padding:0 3px !important;
-  }
-}
-
-  
-/* ===== Czas pracy 3.5.2 final — estetyczne dopracowanie Google Calendar ===== */
-
-/* Tło bliżej Google Calendar */
-:root{
-  --bg:#e8eaed;
-  --surface:#ffffff;
-  --surface-low:#f6f8fb;
-  --surface-mid:#edf0f4;
-  --grid:#e0e0e0;
-}
-
-/* Ogólne tło i top bar */
-body{
-  background:var(--bg) !important;
-}
-.appHeader{
-  background:var(--bg) !important;
-  padding-bottom:2px !important;
-}
-.calCard{
-  background:transparent !important;
-}
-
-/* Odstępy bliżej Google */
-.monthSelector{
-  padding-top:2px !important;
-  padding-bottom:7px !important;
-}
-#dowRow,
-#dowRowGhost{
-  padding-bottom:4px !important;
-}
-.summaryCard{
-  padding-top:12px !important;
-}
-
-/* Kafelki dni: jasne, ale mniej "kartowe" */
-#calGrid,
-#calGridGhost{
-  gap:4px !important;
-}
-.dayCell,
-.blankCell{
-  background:#f8f9fa !important;
-  border-radius:6px !important;
-  box-shadow:none !important;
-}
-.dayCell:hover{
-  background:#f4f7fb !important;
-}
-.blankCell{
-  opacity:1 !important;
-}
-
-/* Mniej tłusta typografia w kalendarzu */
-.calDow{
-  font-weight:600 !important;
-  color:#202124 !important;
-}
-.dayNum{
-  font-weight:600 !important;
-  color:#202124 !important;
-}
-.dayNum.sunday,
-.dayNum.holiday{
-  font-weight:600 !important;
-}
-.dayCell.today .dayNum{
-  font-weight:600 !important;
-}
-
-/* Pastylki bez zmian funkcjonalnych, ale bardziej równo na tle */
-.pill{
-  font-weight:600 !important;
-  border-radius:3px !important;
-}
-
-/* FAB spokojniejszy */
-.fab{
-  width:58px !important;
-  height:58px !important;
-  min-height:58px !important;
-  border-radius:18px !important;
-  padding:0 !important;
-  background:#d7e3ff !important;
-  color:#12355f !important;
-  box-shadow:0 7px 18px rgba(60,64,67,.18), 0 2px 5px rgba(60,64,67,.12) !important;
-}
-.fab svg{
-  width:28px !important;
-  height:28px !important;
-}
-.fabText{
-  display:none !important;
-}
-.fab:active{
-  transform:scale(.97) !important;
-  box-shadow:0 4px 12px rgba(60,64,67,.18), 0 1px 3px rgba(60,64,67,.12) !important;
-}
-
-/* Google'owy chevron w modalu */
-.drag-handle{
-  width:52px !important;
-  height:28px !important;
-  margin:7px auto 5px !important;
-  background:transparent !important;
-  border:none !important;
-  border-radius:999px !important;
-  display:grid !important;
-  place-items:center !important;
-  cursor:pointer !important;
-  touch-action:none !important;
-}
-.drag-handle:hover{
-  background:rgba(60,64,67,.04) !important;
-}
-.drag-handle::before{
-  content:"" !important;
-  width:25px !important;
-  height:11px !important;
-  border:none !important;
-  border-bottom:5px solid #d7dbe2 !important;
-  border-radius:0 0 22px 22px !important;
-  transform:none !important;
-}
-.drag-handle::after{
-  content:none !important;
-}
-
-/* Mniej powietrza nad tytułem modala po zmianie strzałki */
-#dayDialog .drag-handle,
-#vacDialog .drag-handle,
-#bulkDialog .drag-handle,
-#fabMenuDialog .drag-handle,
-#mainMenuDialog .drag-handle,
-#settingsDialog .drag-handle,
-#toolsDialog .drag-handle{
-  margin-top:6px !important;
-  margin-bottom:4px !important;
-}
-.modalHead{
-  padding-top:0 !important;
-}
-
-/* Wydarzenia całodniowe w modalu */
 .shiftItem.googleEvent.leaveEvent .mins{
   color:#5f6368 !important;
   font-weight:500 !important;
 }
 
-/* Samsung / małe ekrany — dopracowanie odstępów */
-@media(max-width:430px){
-  .appHeader{
-    padding-top:7px !important;
-    padding-bottom:1px !important;
-  }
-  .monthSelector{
-    padding-top:1px !important;
-    padding-bottom:6px !important;
-  }
-  .calDow{
-    font-weight:600 !important;
-  }
-  #calGrid,
-  #calGridGhost{
-    gap:4px !important;
-  }
-  .dayCell,
-  .blankCell{
-    border-radius:6px !important;
-  }
-  .summaryCard{
-    padding-top:11px !important;
-  }
-  .fab-container{
-    right:18px !important;
-    bottom:18px !important;
-  }
+.emptyDayHint{
+  padding:12px 0 2px;
+  color:#5f6368;
+  font-size:14px;
+  line-height:1.35;
 }
-
-/* Ghost podczas swipe ma identyczny wygląd jak aktywny kalendarz */
-#calSwipeArea.is-swiping .dayCell,
-#calSwipeArea.is-swiping .blankCell,
-#calLayerCurrent .dayCell,
-#calLayerGhost .dayCell,
-#calLayerCurrent .blankCell,
-#calLayerGhost .blankCell{
-  background:#f8f9fa !important;
-  border-radius:6px !important;
+.dayNotePreview{
+  margin:14px 0 4px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:#f8fafd;
+  border:1px solid #e2e6ed;
 }
-#calSwipeArea.is-swiping .pill,
-#calLayerCurrent .pill,
-#calLayerGhost .pill{
-  font-weight:600 !important;
-  border-radius:3px !important;
-}
-
-  
-/* ===== 3.5.2 FIX: brak skakania przy swipe + prawdziwy chevron Google ===== */
-
-/* Podczas swipe obie warstwy mają identyczną geometrię */
-#calSwipeArea.is-swiping{
-  overflow:hidden !important;
-  contain:layout paint style !important;
-}
-
-#calSwipeArea.is-swiping #calLayerCurrent,
-#calSwipeArea.is-swiping #calLayerGhost{
-  width:100% !important;
-  min-width:100% !important;
-  transform:translateZ(0);
-  will-change:transform;
-  backface-visibility:hidden;
-}
-
-/* Gridy muszą mieć identyczne przerwy i brak dodatkowych przeliczeń */
-#calSwipeArea.is-swiping #dowRow,
-#calSwipeArea.is-swiping #dowRowGhost,
-#calSwipeArea.is-swiping #calGrid,
-#calSwipeArea.is-swiping #calGridGhost{
-  width:100% !important;
-  min-width:100% !important;
-  gap:4px !important;
-}
-
-/* Najważniejsze: dokładnie ten sam wymiar kafelków i pastylek w current oraz ghost */
-#calSwipeArea.is-swiping #calLayerCurrent .dayCell,
-#calSwipeArea.is-swiping #calLayerGhost .dayCell,
-#calSwipeArea.is-swiping #calLayerCurrent .blankCell,
-#calSwipeArea.is-swiping #calLayerGhost .blankCell{
-  min-height:var(--day-height) !important;
-  height:var(--day-height) !important;
-  max-height:var(--day-height) !important;
-  flex:0 0 auto !important;
-  border-radius:6px !important;
-  background:#f8f9fa !important;
-  transition:none !important;
-  transform:none !important;
-}
-
-#calSwipeArea.is-swiping #calLayerCurrent .dayNum,
-#calSwipeArea.is-swiping #calLayerGhost .dayNum{
-  min-width:var(--day-num-box) !important;
-  width:var(--day-num-box) !important;
-  height:var(--day-num-box) !important;
-  max-height:var(--day-num-box) !important;
-  font-size:var(--day-num-size) !important;
-  transition:none !important;
-}
-
-#calSwipeArea.is-swiping #calLayerCurrent .dayCell.today .dayNum,
-#calSwipeArea.is-swiping #calLayerGhost .dayCell.today .dayNum{
-  min-width:var(--today-badge-w) !important;
-  width:auto !important;
-  height:var(--today-badge-h) !important;
-  max-height:var(--today-badge-h) !important;
-}
-
-#calSwipeArea.is-swiping #calLayerCurrent .pill,
-#calSwipeArea.is-swiping #calLayerGhost .pill{
-  min-height:var(--pill-height) !important;
-  height:var(--pill-height) !important;
-  max-height:var(--pill-height) !important;
-  font-size:var(--pill-size) !important;
-  line-height:1 !important;
-  border-radius:3px !important;
-  padding:0 3px !important;
-  transition:none !important;
-}
-
-/* Chevron Google: rozwarte V z dwóch kresek, bez półksiężyca */
-.drag-handle{
-  width:52px !important;
-  height:28px !important;
-  margin:7px auto 5px !important;
-  background:transparent !important;
-  border:none !important;
-  border-radius:999px !important;
-  display:grid !important;
-  place-items:center !important;
-  cursor:pointer !important;
-  touch-action:none !important;
-  position:relative !important;
-}
-
-.drag-handle:hover{
-  background:rgba(60,64,67,.04) !important;
-}
-
-.drag-handle::before,
-.drag-handle::after{
-  content:"" !important;
-  position:absolute !important;
-  top:12px !important;
-  width:20px !important;
-  height:4px !important;
-  background:#d5d9df !important;
-  border:none !important;
-  border-radius:999px !important;
-  transform-origin:center !important;
-}
-
-.drag-handle::before{
-  left:8px !important;
-  transform:rotate(22deg) !important;
-}
-
-.drag-handle::after{
-  right:8px !important;
-  transform:rotate(-22deg) !important;
-}
-
-/* Mniejszy wariant na Samsungu, nadal rozwarte V */
-@media(max-width:430px){
-  .drag-handle{
-    width:48px !important;
-    height:26px !important;
-  }
-
-  .drag-handle::before,
-  .drag-handle::after{
-    top:11px !important;
-    width:18px !important;
-    height:4px !important;
-  }
-
-  .drag-handle::before{
-    left:8px !important;
-  }
-
-  .drag-handle::after{
-    right:8px !important;
-  }
-}
-
-  
-/* ===== 3.5.2 CLEAN/STABLE: stabilizacja po czyszczeniu skryptów ===== */
-dialog:focus,
-dialog:focus-visible{
-  outline:none !important;
-}
-
-/* Utrzymanie spójnych wymiarów przy swipe */
-#calSwipeArea.is-swiping{
-  overflow:hidden !important;
-}
-
-#calSwipeArea.is-swiping #calLayerCurrent,
-#calSwipeArea.is-swiping #calLayerGhost{
-  width:100% !important;
-  min-width:100% !important;
-  will-change:transform;
-  backface-visibility:hidden;
-}
-
-#calSwipeArea.is-swiping #calGrid,
-#calSwipeArea.is-swiping #calGridGhost{
-  gap:4px !important;
-}
-
-#calSwipeArea.is-swiping #calLayerCurrent .dayCell,
-#calSwipeArea.is-swiping #calLayerGhost .dayCell,
-#calSwipeArea.is-swiping #calLayerCurrent .blankCell,
-#calSwipeArea.is-swiping #calLayerGhost .blankCell{
-  min-height:var(--day-height) !important;
-  height:var(--day-height) !important;
-  max-height:var(--day-height) !important;
-  transition:none !important;
-}
-
-#calSwipeArea.is-swiping #calLayerCurrent .pill,
-#calSwipeArea.is-swiping #calLayerGhost .pill{
-  height:var(--pill-height) !important;
-  min-height:var(--pill-height) !important;
-  max-height:var(--pill-height) !important;
-  font-size:var(--pill-size) !important;
-  transition:none !important;
-}
-
-  
-/* ===== Czas pracy 3.5.3: clean/stable + stała siatka 6 tygodni ===== */
-
-/* Stała geometria kalendarza: 42 komórki, identyczna wysokość miesiąca */
-#calGrid,
-#calGridGhost{
-  grid-template-rows:none !important;
-  align-items:stretch !important;
-}
-
-#calGrid .dayCell,
-#calGridGhost .dayCell,
-#calGrid .blankCell,
-#calGridGhost .blankCell{
-  min-height:var(--day-height) !important;
-  height:var(--day-height) !important;
-  max-height:var(--day-height) !important;
-}
-
-/* Podczas swipe nie pozwalamy, żeby style current/ghost różniły się o choćby kilka px */
-#calSwipeArea.is-swiping{
-  overflow:hidden !important;
-  contain:layout paint style !important;
-}
-
-#calSwipeArea.is-swiping #calLayerCurrent,
-#calSwipeArea.is-swiping #calLayerGhost{
-  width:100% !important;
-  min-width:100% !important;
-  will-change:transform;
-  backface-visibility:hidden;
-}
-
-#calSwipeArea.is-swiping #calGrid,
-#calSwipeArea.is-swiping #calGridGhost{
-  grid-template-rows:none !important;
-  gap:4px !important;
-}
-
-#calSwipeArea.is-swiping .dayCell,
-#calSwipeArea.is-swiping .blankCell{
-  min-height:var(--day-height) !important;
-  height:var(--day-height) !important;
-  max-height:var(--day-height) !important;
-  transition:none !important;
-  transform:none !important;
-}
-
-#calSwipeArea.is-swiping .pill{
-  height:var(--pill-height) !important;
-  min-height:var(--pill-height) !important;
-  max-height:var(--pill-height) !important;
-  font-size:var(--pill-size) !important;
-  transition:none !important;
-}
-
-/* Stopka wersji w menu */
-.menuFooter{
-  margin:10px 24px 0;
-  padding-top:14px;
-  border-top:1px solid var(--outline-soft);
-  color:#6f7785;
+.dayNotePreview strong{
+  display:block;
+  margin-bottom:4px;
   font-size:12px;
-  line-height:1.3;
+  color:#5f6368;
+}
+.dayNotePreview span{
+  display:block;
+  font-size:14px;
+  line-height:1.35;
+  color:#202124;
+}
+.dayAddTrigger{
+  width:100%;
+  justify-content:flex-start;
+  min-height:48px;
+  padding:0 4px;
+  margin:14px 0 0;
+  background:transparent !important;
+  color:#1a73e8 !important;
+  border-radius:12px !important;
+  box-shadow:none !important;
+  font-size:15px;
+  font-weight:600;
+}
+.dayAddTrigger:hover{
+  background:#eef3fe !important;
+}
+.plusMark{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  display:inline-grid;
+  place-items:center;
+  font-size:24px;
+  line-height:1;
+  font-weight:400;
+  color:#1a73e8;
+}
+.addShiftPanel{
+  display:none !important;
+  margin-top:10px !important;
+  margin-bottom:12px !important;
+  animation:addPanelIn .20s cubic-bezier(.2,0,0,1);
+}
+#dayDialog.is-form-open .addShiftPanel{
+  display:block !important;
+}
+#dayDialog.is-form-open .dayAddTrigger{
+  display:none !important;
+}
+@keyframes addPanelIn{
+  from{opacity:0;transform:translateY(-6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.dayCloseRow{
+  margin-top:18px !important;
+}
+.addShiftPanel{
+  padding:14px !important;
+  border-radius:22px !important;
+}
+input,textarea,select{
+  min-height:44px !important;
+  padding:11px 12px 9px !important;
+  font-size:14px !important;
+}
+textarea{
+  min-height:58px !important;
+}
+
+/* Narzędzia */
+.toolGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.toolGrid button{
+  width:100%;
+  min-height:48px;
 }
 
 /* Informacje o aplikacji */
-.appInfoCard{
-  display:flex;
-  flex-direction:column;
-  gap:0;
-  border:1px solid var(--outline-soft);
-  border-radius:22px;
-  background:var(--surface-low);
-  overflow:hidden;
-}
-
-.infoRow{
-  min-height:54px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  padding:0 16px;
-  border-bottom:1px solid var(--outline-soft);
-}
-
-.infoRow:last-child{
-  border-bottom:none;
-}
-
-.infoRow span{
-  font-size:14px;
-  color:#5f6368;
-}
-
-.infoRow strong{
-  font-size:15px;
-  color:#202124;
-  font-weight:600;
-  text-align:right;
-}
-
-.appErrorBox{
-  margin-top:14px;
-  padding:12px;
-  border-radius:16px;
-  background:#fce8e6;
-  color:#202124;
-  font-size:13px;
-  line-height:1.35;
-}
-
-.errorLine{
-  padding:8px 0;
-  border-bottom:1px solid rgba(0,0,0,.08);
-}
-
-.errorLine:last-child{
-  border-bottom:none;
-}
-
-.errorLine strong,
-.errorLine span,
-.errorLine small{
-  display:block;
-}
-
-.errorLine strong{
-  font-size:12px;
-  color:#5f6368;
-  margin-bottom:3px;
-}
-
-.errorLine small{
-  margin-top:3px;
-  color:#5f6368;
-}
-
-  
-/* ===== 3.5.3 STABLE FIX: powrót do naturalnej liczby tygodni + bez skoku kafelków ===== */
-
-/* Cofnięcie pomysłu ze stałą siatką 6 tygodni */
-#calGrid,
-#calGridGhost{
-  grid-template-rows:none !important;
-  align-items:stretch !important;
-}
-
-/* Normalnie miesiąc ma naturalną wysokość, jak wcześniej */
-#calGrid .dayCell,
-#calGridGhost .dayCell,
-#calGrid .blankCell,
-#calGridGhost .blankCell{
-  height:auto !important;
-  max-height:none !important;
-  min-height:var(--day-height) !important;
-}
-
-/* Tylko w trakcie swipe blokujemy wymiar komórki na wartość zmierzoną z aktualnego miesiąca */
-#calSwipeArea.is-swiping .dayCell,
-#calSwipeArea.is-swiping .blankCell{
-  height:var(--swipe-cell-height) !important;
-  min-height:var(--swipe-cell-height) !important;
-  max-height:var(--swipe-cell-height) !important;
-  transition:none !important;
-  transform:none !important;
-}
-
-/* Pastylki w trakcie swipe bez zmiany wielkości */
-#calSwipeArea.is-swiping .pill{
-  height:var(--pill-height) !important;
-  min-height:var(--pill-height) !important;
-  max-height:var(--pill-height) !important;
-  font-size:var(--pill-size) !important;
-  line-height:1 !important;
-  transition:none !important;
-}
-
-  
-/* ===== 3.5.3 FIX: naprawa ReferenceError i stabilizacja swipe bez 42 komórek ===== */
-#calGrid,
-#calGridGhost{
-  grid-template-rows:none !important;
-}
-
-#calSwipeArea.is-swiping{
-  overflow:hidden !important;
-}
-
-#calSwipeArea.is-swiping .dayCell,
-#calSwipeArea.is-swiping .blankCell{
-  height:var(--swipe-cell-height) !important;
-  min-height:var(--swipe-cell-height) !important;
-  max-height:var(--swipe-cell-height) !important;
-  transition:none !important;
-}
-
-#calSwipeArea.is-swiping .pill{
-  transition:none !important;
-}
-
-  
-/* ===== 3.5.3: wersja z jednego miejsca + jednolite okno informacji ===== */
-
-/* Okno Informacje o aplikacji jak pozostałe bottom sheety */
-.appInfoCard{
-  display:none !important;
-}
-
-.appInfoList{
-  display:flex;
-  flex-direction:column;
-  margin-top:4px;
-}
-
-.appInfoRow{
-  min-height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:18px;
-  padding:0;
-  border-bottom:1px solid var(--outline-soft);
-}
-
-.appInfoRow:first-child{
-  border-top:1px solid var(--outline-soft);
-}
-
-.appInfoRow span{
-  font-size:15px;
-  line-height:1.25;
-  color:#3c4043;
-}
-
-.appInfoRow strong{
-  font-size:15px;
-  line-height:1.25;
-  font-weight:600;
-  color:#202124;
-  text-align:right;
-}
-
-.appErrorBox{
-  margin-top:16px !important;
-  padding:14px 0 0 !important;
-  border-radius:0 !important;
-  background:transparent !important;
-  color:#202124 !important;
-  border-top:1px solid var(--outline-soft);
-  font-size:13px;
-  line-height:1.35;
-}
-
-.errorLine{
-  padding:10px 0 !important;
-  border-bottom:1px solid var(--outline-soft) !important;
-}
-
-.errorLine:last-child{
-  border-bottom:none !important;
-}
-
-/* Stopka wersji w menu jako subtelny element */
-.menuFooter{
-  margin:12px 24px 0 !important;
-  padding-top:12px !important;
-  border-top:1px solid var(--outline-soft) !important;
-  color:#6f7785 !important;
-  font-size:12px !important;
-  line-height:1.3 !important;
-}
-
-  
-/* ===== Czas pracy 3.5.4: okno informacji + weekendy/święta ===== */
-
-/* Informacje o aplikacji: dokładnie taki sam typ bottom sheeta jak pozostałe modale */
 #appInfoDialog .modalBody{
   padding-top:0 !important;
 }
-
 .sheetList{
   display:flex;
   flex-direction:column;
   margin:4px 0 0;
   background:transparent;
 }
-
 .sheetListRow{
   min-height:58px;
   display:flex;
@@ -2938,17 +1552,14 @@ dialog:focus-visible{
   padding:0;
   border-bottom:1px solid var(--outline-soft);
 }
-
 .sheetListRow:first-child{
   border-top:1px solid var(--outline-soft);
 }
-
 .sheetListRow span{
   font-size:15px;
   line-height:1.25;
   color:#3c4043;
 }
-
 .sheetListRow strong{
   font-size:15px;
   line-height:1.25;
@@ -2956,13 +1567,10 @@ dialog:focus-visible{
   color:#202124;
   text-align:right;
 }
-
-/* Wyłączamy stare style informacyjnej karty, żeby nie robiła innego wyglądu */
 .appInfoCard,
 .appInfoList{
   display:none !important;
 }
-
 .sheetErrorBox,
 .appErrorBox{
   margin-top:16px !important;
@@ -2974,80 +1582,86 @@ dialog:focus-visible{
   font-size:13px !important;
   line-height:1.35 !important;
 }
-
 .errorLine{
   padding:10px 0 !important;
   border-bottom:1px solid var(--outline-soft) !important;
 }
-
 .errorLine:last-child{
   border-bottom:none !important;
 }
-
-/* Przywrócenie czytelnego oznaczania weekendów i świąt */
-.dayNum.saturday{
-  color:#5f6368 !important;
-  font-weight:600 !important;
+.menuFooter{
+  margin:12px 24px 0 !important;
+  padding-top:12px !important;
+  border-top:1px solid var(--outline-soft) !important;
+  color:#6f7785 !important;
+  font-size:12px !important;
+  line-height:1.3 !important;
 }
 
-.dayNum.sunday,
-.dayNum.holiday{
-  color:#c5221f !important;
-  font-weight:600 !important;
+/* S23 i podobne — jeden kontrolowany breakpoint zamiast kilku sprzecznych bloków */
+@media(max-width:430px){
+  :root{
+    --day-height:clamp(84px, 11.35dvh, 98px);
+    --day-num-size:clamp(11px, 3.05vw, 13.5px);
+    --day-num-box:clamp(18px, 4.95vw, 23px);
+    --today-badge-h:clamp(19px, 5.05vw, 24px);
+    --today-badge-w:clamp(26px, 6.55vw, 32px);
+    --pill-size:clamp(6.8px, 1.82vw, 8.1px);
+    --pill-height:clamp(11px, 2.95vw, 14px);
+  }
+  .monthTitle{
+    font-size:clamp(21px, 5.7vw, 24px) !important;
+  }
+  .calDow{
+    font-size:12px !important;
+    padding:4px 0 5px !important;
+  }
+  .dayCell,
+  .blankCell{
+    padding-top:4px !important;
+  }
+  .pill{
+    border-radius:3px !important;
+    padding:0 3px !important;
+  }
+  .drag-handle{
+    width:48px !important;
+    height:26px !important;
+  }
+  .drag-handle::before,
+  .drag-handle::after{
+    top:11px !important;
+    width:18px !important;
+    height:4px !important;
+  }
 }
 
-.dayCell.today .dayNum,
-.dayCell.today .dayNum.saturday,
-.dayCell.today .dayNum.sunday,
-.dayCell.today .dayNum.holiday{
-  color:#fff !important;
+/* Bardzo niskie ekrany — nadal jeden wariant, bez mieszania wielu wersji */
+@media(max-height:760px) and (max-width:430px){
+  :root{
+    --day-height:78px;
+    --day-num-size:10.5px;
+    --day-num-box:18px;
+    --today-badge-h:19px;
+    --today-badge-w:28px;
+    --pill-size:6.6px;
+    --pill-height:11px;
+  }
+  dialog#dayDialog{
+    max-height:86dvh !important;
+  }
+  #dayDialog .modalBody{
+    max-height:calc(86dvh - 72px) !important;
+  }
+  .dayPreviewHead h3{
+    font-size:21px !important;
+  }
+  .dayPreviewStats .statMiniValue{
+    font-size:20px !important;
+  }
 }
 
-/* Delikatne tła weekendów/świąt — testowo, bardzo subtelnie */
-.dayCell.is-saturday{
-  background:#f1f3f4 !important;
-}
-
-.dayCell.is-sunday,
-.dayCell.is-holiday{
-  background:#fff5f5 !important;
-}
-
-.dayCell.is-sunday:hover,
-.dayCell.is-holiday:hover{
-  background:#fff0f0 !important;
-}
-
-.dayCell.is-saturday:hover{
-  background:#eceff1 !important;
-}
-
-/* Dzisiejszy dzień zachowuje własny badge, ale tło kafelka może zostać weekendowe/świąteczne */
-.dayCell.today.is-sunday,
-.dayCell.today.is-holiday{
-  background:#fff5f5 !important;
-}
-
-.dayCell.today.is-saturday{
-  background:#f1f3f4 !important;
-}
-
-/* Ghost też dostaje te same weekendowe kolory, żeby swipe nie zmieniał wyglądu */
-#calLayerGhost .dayCell.is-saturday,
-#calSwipeArea.is-swiping .dayCell.is-saturday{
-  background:#f1f3f4 !important;
-}
-
-#calLayerGhost .dayCell.is-sunday,
-#calLayerGhost .dayCell.is-holiday,
-#calSwipeArea.is-swiping .dayCell.is-sunday,
-#calSwipeArea.is-swiping .dayCell.is-holiday{
-  background:#fff5f5 !important;
-}
-
-/* Jeśli tło okaże się zbyt widoczne, wystarczy w kolejnej wersji zostawić same cyfry */
-
-  </style>
+</style>
 
 </head>
 
