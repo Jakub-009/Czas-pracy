@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 3.5.3</title>
+  <title>Czas pracy 3.5.3 stable</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2779,6 +2779,46 @@ dialog:focus-visible{
   color:#5f6368;
 }
 
+  
+/* ===== 3.5.3 STABLE FIX: powrót do naturalnej liczby tygodni + bez skoku kafelków ===== */
+
+/* Cofnięcie pomysłu ze stałą siatką 6 tygodni */
+#calGrid,
+#calGridGhost{
+  grid-template-rows:none !important;
+  align-items:stretch !important;
+}
+
+/* Normalnie miesiąc ma naturalną wysokość, jak wcześniej */
+#calGrid .dayCell,
+#calGridGhost .dayCell,
+#calGrid .blankCell,
+#calGridGhost .blankCell{
+  height:auto !important;
+  max-height:none !important;
+  min-height:var(--day-height) !important;
+}
+
+/* Tylko w trakcie swipe blokujemy wymiar komórki na wartość zmierzoną z aktualnego miesiąca */
+#calSwipeArea.is-swiping .dayCell,
+#calSwipeArea.is-swiping .blankCell{
+  height:var(--swipe-cell-height) !important;
+  min-height:var(--swipe-cell-height) !important;
+  max-height:var(--swipe-cell-height) !important;
+  transition:none !important;
+  transform:none !important;
+}
+
+/* Pastylki w trakcie swipe bez zmiany wielkości */
+#calSwipeArea.is-swiping .pill{
+  height:var(--pill-height) !important;
+  min-height:var(--pill-height) !important;
+  max-height:var(--pill-height) !important;
+  font-size:var(--pill-size) !important;
+  line-height:1 !important;
+  transition:none !important;
+}
+
   </style>
 
 </head>
@@ -2874,7 +2914,7 @@ dialog:focus-visible{
         <span>Informacje o aplikacji<span class="desc">Wersja, autor i podgląd błędów</span></span>
       </button>
 
-      <div class="menuFooter">Wersja 3.5.3</div>
+      <div class="menuFooter">Wersja 3.5.3 stable</div>
     </div>
   </dialog>
 
@@ -2892,7 +2932,7 @@ dialog:focus-visible{
       <div class="appInfoCard">
         <div class="infoRow">
           <span>Wersja</span>
-          <strong id="appVersionLabel">3.5.3</strong>
+          <strong id="appVersionLabel">3.5.3 stable</strong>
         </div>
         <div class="infoRow">
           <span>Autor</span>
@@ -3654,10 +3694,10 @@ dialog:focus-visible{
       `);
     }
 
-    // Stała siatka 6 tygodni / 42 komórki.
-    // Dzięki temu miesiące nie zmieniają wysokości przy swipe i kafelki nie "skaczą".
-    while (cells.length < 42) {
-      cells.push(`<div class="blankCell"></div>`);
+    const mod = cells.length % 7;
+    if (mod !== 0) {
+      const need = 7 - mod;
+      for (let i = 0; i < need; i++) cells.push(`<div class="blankCell"></div>`);
     }
 
     gridEl.innerHTML = cells.join("");
@@ -4259,9 +4299,8 @@ dialog:focus-visible{
       renderDowInto(dowGhost);
       renderCalendarInto(nextYM, gridGhost, false);
 
-      area.classList.add("is-swiping");
-      area.style.height = Math.max(currentLayer.offsetHeight, ghostLayer.offsetHeight) + "px";
       ghostLayer.style.display = "block";
+      freezeSwipeGeometry(area, currentLayer, ghostLayer);
 
       const w = area.clientWidth || window.innerWidth;
       setX(currentLayer, 0);
@@ -4287,15 +4326,13 @@ dialog:focus-visible{
           currentLayer.style.transition = "";
           ghostLayer.style.transition = "";
           ghostLayer.style.display = "none";
-          area.classList.remove("is-swiping");
-          area.style.height = "";
+          unfreezeSwipeGeometry(area, currentLayer, ghostLayer);
           prepared = false;
           activeDelta = 0;
         }, 190);
       } else {
         ghostLayer.style.display = "none";
-        area.classList.remove("is-swiping");
-        area.style.height = "";
+        unfreezeSwipeGeometry(area, currentLayer, ghostLayer);
         prepared = false;
         activeDelta = 0;
       }
@@ -4324,8 +4361,7 @@ dialog:focus-visible{
         ghostLayer.style.transition = "";
         setX(currentLayer, 0);
         ghostLayer.style.display = "none";
-        area.classList.remove("is-swiping");
-        area.style.height = "";
+        unfreezeSwipeGeometry(area, currentLayer, ghostLayer);
         prepared = false;
         activeDelta = 0;
       }, 200);
@@ -4437,7 +4473,7 @@ dialog:focus-visible{
 <script>
 (() => {
   const $ = (id) => document.getElementById(id);
-  const APP_VERSION = "3.5.3";
+  const APP_VERSION = "3.5.3 stable";
   window.__appErrors = window.__appErrors || [];
 
   function logAppError(message, source) {
