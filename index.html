@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 3.5.6</title>
+  <title>Czas pracy 4.0</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -1659,7 +1659,88 @@ textarea{
   }
 }
 
-</style>
+
+/* ===== Czas pracy 4.0: lekkie funkcje i przygotowanie pod nowe ustawienia ===== */
+
+/* Aktualny dzień tygodnia w nagłówku kalendarza */
+.calDow.dowToday{
+  color:#1a73e8 !important;
+  font-weight:700 !important;
+}
+
+/* Notatka i święto jako wydarzenia dnia */
+.shiftItem.googleEvent.noteEvent{
+  background:#fff8e1 !important;
+}
+.shiftItem.googleEvent.noteEvent .eventStripe{
+  background:#fbbc04 !important;
+}
+.shiftItem.googleEvent.noteEvent .times{
+  color:#202124 !important;
+}
+.shiftItem.googleEvent.noteEvent .mins{
+  white-space:normal !important;
+  overflow:visible !important;
+  text-overflow:initial !important;
+  line-height:1.35 !important;
+}
+
+.shiftItem.googleEvent.holidayEvent{
+  background:#fce8e6 !important;
+}
+.shiftItem.googleEvent.holidayEvent .eventStripe{
+  background:#ea4335 !important;
+}
+.shiftItem.googleEvent.holidayEvent .times{
+  color:#202124 !important;
+}
+.shiftItem.googleEvent.holidayEvent .mins{
+  color:#5f6368 !important;
+}
+
+/* Opcje dodawania wielu godzin */
+.bulkOptions{
+  margin-top:2px;
+  padding:12px 0 4px;
+  border-top:1px solid var(--outline-soft);
+  border-bottom:1px solid var(--outline-soft);
+}
+.bulkOptionsTitle{
+  margin-bottom:8px;
+  color:#3c4043;
+  font-size:14px;
+  font-weight:600;
+}
+.checkRow{
+  min-height:42px;
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:#202124;
+  font-size:15px;
+  font-weight:500;
+}
+.checkRow input{
+  width:20px !important;
+  min-width:20px !important;
+  height:20px !important;
+  min-height:20px !important;
+  margin:0 !important;
+  padding:0 !important;
+  accent-color:#1a73e8;
+  border-radius:4px !important;
+}
+.checkRow span{
+  line-height:1.2;
+}
+
+/* Stary podgląd notatki ukryty, notatka jest teraz wydarzeniem */
+.dayNotePreview{
+  display:none !important;
+}
+
+  </style>
 
 </head>
 
@@ -1742,7 +1823,7 @@ textarea{
     <div style="padding:0 0 20px;">
       <button class="menu-item" id="openEmployerSettings" type="button">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z"/></svg>
-        <span>Ustawienia pracodawcy<span class="desc">Stawka godzinowa i limit urlopu</span></span>
+        <span>Ustawienia<span class="desc">Stawka, urlop i opcje pracy</span></span>
       </button>
       <button class="menu-item" id="openSystemTools" type="button">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3l4.1 4.1-2.9 2.9L1.7 4.6C.6 7 .9 10 3 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.4-.4.4-1 0-1.4Z"/></svg>
@@ -1796,8 +1877,8 @@ textarea{
     <div class="drag-handle"></div>
     <div class="modalHead">
       <div class="modalHeadInner">
-        <h3>Ustawienia pracodawcy</h3>
-        <div class="muted">Dane używane do obliczania wypłaty i urlopu.</div>
+        <h3>Ustawienia</h3>
+        <div class="muted">Stawka, limit urlopu i podstawowe opcje pracy.</div>
       </div>
     </div>
 
@@ -1936,8 +2017,24 @@ textarea{
         </div>
       </div>
 
-      <div class="muted" style="margin-top:4px;">
-        „Dodaj” dopisuje zakres do każdego dnia. „Usuń godziny” usuwa dokładnie ten sam zakres, jeśli istnieje.
+      <div class="bulkOptions">
+        <div class="bulkOptionsTitle">Uwzględnij przy operacji</div>
+        <label class="checkRow">
+          <input id="bulkIncludeSat" type="checkbox" />
+          <span>Soboty</span>
+        </label>
+        <label class="checkRow">
+          <input id="bulkIncludeSun" type="checkbox" />
+          <span>Niedziele</span>
+        </label>
+        <label class="checkRow">
+          <input id="bulkIncludeHolidays" type="checkbox" />
+          <span>Święta</span>
+        </label>
+      </div>
+
+      <div class="muted" style="margin-top:10px;">
+        Domyślnie aplikacja pomija soboty, niedziele i święta. Opcje dotyczą zarówno dodawania, jak i usuwania godzin.
       </div>
 
       <div class="actionRow">
@@ -2307,7 +2404,7 @@ textarea{
   }
 
   // ===== Wiele godzin: zakres =====
-  function applyBulkHours(fromISO, toISO, start, end, mode) {
+  function applyBulkHours(fromISO, toISO, start, end, mode, options = {}) {
     const a = parseISODate(fromISO);
     const b = parseISODate(toISO);
     if (!a || !b) { alert("Uzupełnij poprawnie daty 'Od' i 'Do'."); return { ok: false }; }
@@ -2316,9 +2413,28 @@ textarea{
 
     let cur = a;
     let changedDays = 0;
+    let skippedDays = 0;
+
+    const includeSat = !!options.includeSat;
+    const includeSun = !!options.includeSun;
+    const includeHolidays = !!options.includeHolidays;
 
     while (cur <= b) {
       const dISO = isoFromDate(cur);
+      const jsDow = cur.getDay();
+      const isHoliday = getHolidayMap(cur.getFullYear()).has(dISO);
+
+      const shouldSkip =
+        (jsDow === 6 && !includeSat) ||
+        (jsDow === 0 && !includeSun) ||
+        (isHoliday && !includeHolidays);
+
+      if (shouldSkip) {
+        skippedDays++;
+        cur = addDays(cur, 1);
+        continue;
+      }
+
       const day = getDay(dISO) || { date: dISO, note: "", shifts: [], vacation: false, leaveType:"" };
 
       day.shifts = Array.isArray(day.shifts) ? day.shifts : [];
@@ -2346,13 +2462,14 @@ textarea{
     renderAll();
     if (dlgDate) renderDayDialog();
 
+    const skippedText = skippedDays ? ` Pominięto ${skippedDays} dni wolnych.` : "";
     setStatus(
       mode === "add"
-        ? `Dodano godziny (zakres) w ${changedDays} dniach.`
-        : `Usunięto godziny (zakres) w ${changedDays} dniach.`
+        ? `Dodano godziny (zakres) w ${changedDays} dniach.${skippedText}`
+        : `Usunięto godziny (zakres) w ${changedDays} dniach.${skippedText}`
     );
 
-    return { ok: true, changedDays };
+    return { ok: true, changedDays, skippedDays };
   }
 
   function leaveLabel(t) {
@@ -2443,12 +2560,19 @@ textarea{
   function renderDow() {
     const dowRow = $("dowRow");
     if (!dowRow) return;
-    dowRow.innerHTML = DOW.map(d => `<div class="calDow">${d}</div>`).join("");
+    renderDowInto(dowRow, getCurrentMonthYM());
   }
 
-  function renderDowInto(el) {
+  function renderDowInto(el, monthYMForHighlight) {
     if (!el) return;
-    el.innerHTML = DOW.map(d => `<div class="calDow">${d}</div>`).join("");
+    const t = todayISO();
+    const [ty, tm, td] = t.split("-").map(Number);
+    const todayIdx = mondayIndex(new Date(ty, tm - 1, td).getDay());
+    const shouldHighlight = monthYMForHighlight === ym(t);
+    el.innerHTML = DOW.map((d, idx) => {
+      const cls = shouldHighlight && idx === todayIdx ? "calDow dowToday" : "calDow";
+      return `<div class="${cls}">${d}</div>`;
+    }).join("");
   }
 
   function buildPillsHTML(day) {
@@ -2575,7 +2699,13 @@ textarea{
     const hasAnyEvent = hasShifts || hasLeaveEvent;
 
     if ($("dlgTitle")) $("dlgTitle").textContent = fmtDateLongPL(dateISO);
-    if ($("dlgMeta")) $("dlgMeta").textContent = capFirst(fmtWeekdayLongPL(dateISO));
+    if ($("dlgMeta")) {
+      const [hy] = dateISO.split("-").map(Number);
+      const holidayName = getHolidayMap(hy).get(dateISO) || "";
+      $("dlgMeta").textContent = holidayName
+        ? `${capFirst(fmtWeekdayLongPL(dateISO))} · ${holidayName}`
+        : capFirst(fmtWeekdayLongPL(dateISO));
+    }
 
     if ($("dlgStart")) $("dlgStart").value = "";
     if ($("dlgEnd")) $("dlgEnd").value = "";
@@ -2633,8 +2763,8 @@ textarea{
     const notePreview = $("dlgNotePreview");
     const note = (day.note || "").trim();
     if (notePreview) {
-      notePreview.hidden = !note;
-      notePreview.innerHTML = note ? `<strong>Notatka</strong><span>${escapeHtml(note)}</span>` : "";
+      notePreview.hidden = true;
+      notePreview.innerHTML = "";
     }
 
     const shiftsTitle = $("dlgShiftsTitle");
@@ -2670,7 +2800,29 @@ textarea{
       `;
     }).join("");
 
-    const items = leaveEvent + shiftEvents;
+    const [holidayYear] = dlgDate.split("-").map(Number);
+    const holidayName = getHolidayMap(holidayYear).get(dlgDate) || "";
+    const holidayEvent = holidayName ? `
+      <div class="shiftItem googleEvent holidayEvent">
+        <div class="eventStripe" aria-hidden="true"></div>
+        <div class="eventContent">
+          <div class="times">${holidayName}</div>
+          <div class="mins">Święto · cały dzień</div>
+        </div>
+      </div>
+    ` : "";
+
+    const noteEvent = note ? `
+      <div class="shiftItem googleEvent noteEvent">
+        <div class="eventStripe" aria-hidden="true"></div>
+        <div class="eventContent">
+          <div class="times">Notatka</div>
+          <div class="mins">${escapeHtml(note)}</div>
+        </div>
+      </div>
+    ` : "";
+
+    const items = holidayEvent + leaveEvent + shiftEvents + noteEvent;
 
     if (shiftsTitle) shiftsTitle.textContent = items ? "Wydarzenia dnia" : "Godziny pracy";
     if (shiftsBox) shiftsBox.innerHTML = items || `<div class="emptyDayHint">Brak godzin w tym dniu. Dodaj pierwszy zakres poniżej.</div>`;
@@ -3020,7 +3172,11 @@ textarea{
       const to = $("bulkTo")?.value;
       const start = $("bulkStart")?.value;
       const end = $("bulkEnd")?.value;
-      const res = applyBulkHours(from, to, start, end, "add");
+      const res = applyBulkHours(from, to, start, end, "add", {
+        includeSat: $("bulkIncludeSat")?.checked,
+        includeSun: $("bulkIncludeSun")?.checked,
+        includeHolidays: $("bulkIncludeHolidays")?.checked
+      });
       if (res.ok) {
         haptic.success();
         closeBulk();
@@ -3035,7 +3191,11 @@ textarea{
       const to = $("bulkTo")?.value;
       const start = $("bulkStart")?.value;
       const end = $("bulkEnd")?.value;
-      const res = applyBulkHours(from, to, start, end, "remove");
+      const res = applyBulkHours(from, to, start, end, "remove", {
+        includeSat: $("bulkIncludeSat")?.checked,
+        includeSun: $("bulkIncludeSun")?.checked,
+        includeHolidays: $("bulkIncludeHolidays")?.checked
+      });
       if (res.ok) haptic.warning();
     };
   }
@@ -3187,7 +3347,7 @@ textarea{
       const cur = getCurrentMonthYM();
       const nextYM = addMonths(cur, delta);
 
-      renderDowInto(dowGhost);
+      renderDowInto(dowGhost, nextYM);
       renderCalendarInto(nextYM, gridGhost, false);
 
       ghostLayer.style.display = "block";
