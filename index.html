@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 3.5.1</title>
+  <title>Czas pracy 3.5.2</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2260,6 +2260,204 @@ dialog[open]{
   }
 }
 
+  
+/* ===== Czas pracy 3.5.2 final — estetyczne dopracowanie Google Calendar ===== */
+
+/* Tło bliżej Google Calendar */
+:root{
+  --bg:#e8eaed;
+  --surface:#ffffff;
+  --surface-low:#f6f8fb;
+  --surface-mid:#edf0f4;
+  --grid:#e0e0e0;
+}
+
+/* Ogólne tło i top bar */
+body{
+  background:var(--bg) !important;
+}
+.appHeader{
+  background:var(--bg) !important;
+  padding-bottom:2px !important;
+}
+.calCard{
+  background:transparent !important;
+}
+
+/* Odstępy bliżej Google */
+.monthSelector{
+  padding-top:2px !important;
+  padding-bottom:7px !important;
+}
+#dowRow,
+#dowRowGhost{
+  padding-bottom:4px !important;
+}
+.summaryCard{
+  padding-top:12px !important;
+}
+
+/* Kafelki dni: jasne, ale mniej "kartowe" */
+#calGrid,
+#calGridGhost{
+  gap:4px !important;
+}
+.dayCell,
+.blankCell{
+  background:#f8f9fa !important;
+  border-radius:6px !important;
+  box-shadow:none !important;
+}
+.dayCell:hover{
+  background:#f4f7fb !important;
+}
+.blankCell{
+  opacity:1 !important;
+}
+
+/* Mniej tłusta typografia w kalendarzu */
+.calDow{
+  font-weight:600 !important;
+  color:#202124 !important;
+}
+.dayNum{
+  font-weight:600 !important;
+  color:#202124 !important;
+}
+.dayNum.sunday,
+.dayNum.holiday{
+  font-weight:600 !important;
+}
+.dayCell.today .dayNum{
+  font-weight:600 !important;
+}
+
+/* Pastylki bez zmian funkcjonalnych, ale bardziej równo na tle */
+.pill{
+  font-weight:600 !important;
+  border-radius:3px !important;
+}
+
+/* FAB spokojniejszy */
+.fab{
+  width:58px !important;
+  height:58px !important;
+  min-height:58px !important;
+  border-radius:18px !important;
+  padding:0 !important;
+  background:#d7e3ff !important;
+  color:#12355f !important;
+  box-shadow:0 7px 18px rgba(60,64,67,.18), 0 2px 5px rgba(60,64,67,.12) !important;
+}
+.fab svg{
+  width:28px !important;
+  height:28px !important;
+}
+.fabText{
+  display:none !important;
+}
+.fab:active{
+  transform:scale(.97) !important;
+  box-shadow:0 4px 12px rgba(60,64,67,.18), 0 1px 3px rgba(60,64,67,.12) !important;
+}
+
+/* Google'owy chevron w modalu */
+.drag-handle{
+  width:52px !important;
+  height:28px !important;
+  margin:7px auto 5px !important;
+  background:transparent !important;
+  border:none !important;
+  border-radius:999px !important;
+  display:grid !important;
+  place-items:center !important;
+  cursor:pointer !important;
+  touch-action:none !important;
+}
+.drag-handle:hover{
+  background:rgba(60,64,67,.04) !important;
+}
+.drag-handle::before{
+  content:"" !important;
+  width:25px !important;
+  height:11px !important;
+  border:none !important;
+  border-bottom:5px solid #d7dbe2 !important;
+  border-radius:0 0 22px 22px !important;
+  transform:none !important;
+}
+.drag-handle::after{
+  content:none !important;
+}
+
+/* Mniej powietrza nad tytułem modala po zmianie strzałki */
+#dayDialog .drag-handle,
+#vacDialog .drag-handle,
+#bulkDialog .drag-handle,
+#fabMenuDialog .drag-handle,
+#mainMenuDialog .drag-handle,
+#settingsDialog .drag-handle,
+#toolsDialog .drag-handle{
+  margin-top:6px !important;
+  margin-bottom:4px !important;
+}
+.modalHead{
+  padding-top:0 !important;
+}
+
+/* Wydarzenia całodniowe w modalu */
+.shiftItem.googleEvent.leaveEvent .mins{
+  color:#5f6368 !important;
+  font-weight:500 !important;
+}
+
+/* Samsung / małe ekrany — dopracowanie odstępów */
+@media(max-width:430px){
+  .appHeader{
+    padding-top:7px !important;
+    padding-bottom:1px !important;
+  }
+  .monthSelector{
+    padding-top:1px !important;
+    padding-bottom:6px !important;
+  }
+  .calDow{
+    font-weight:600 !important;
+  }
+  #calGrid,
+  #calGridGhost{
+    gap:4px !important;
+  }
+  .dayCell,
+  .blankCell{
+    border-radius:6px !important;
+  }
+  .summaryCard{
+    padding-top:11px !important;
+  }
+  .fab-container{
+    right:18px !important;
+    bottom:18px !important;
+  }
+}
+
+/* Ghost podczas swipe ma identyczny wygląd jak aktywny kalendarz */
+#calSwipeArea.is-swiping .dayCell,
+#calSwipeArea.is-swiping .blankCell,
+#calLayerCurrent .dayCell,
+#calLayerGhost .dayCell,
+#calLayerCurrent .blankCell,
+#calLayerGhost .blankCell{
+  background:#f8f9fa !important;
+  border-radius:6px !important;
+}
+#calSwipeArea.is-swiping .pill,
+#calLayerCurrent .pill,
+#calLayerGhost .pill{
+  font-weight:600 !important;
+  border-radius:3px !important;
+}
+
   </style>
 
 </head>
@@ -3200,7 +3398,7 @@ dialog[open]{
         <div class="eventStripe" aria-hidden="true"></div>
         <div class="eventContent">
           <div class="times">${leaveLabel(leaveType)}</div>
-          <div class="mins">Wydarzenie całego dnia</div>
+          <div class="mins">Cały dzień</div>
         </div>
       </div>
     ` : "";
@@ -3956,16 +4154,32 @@ dialog[open]{
     let startY = 0;
     let currentY = 0;
     let dragging = false;
+    let moved = false;
 
     const reset = () => {
       dragging = false;
+      setTimeout(() => { moved = false; }, 0);
       dlg.style.transform = "";
       dlg.style.transition = "";
     };
 
+    const closeThisDialog = () => {
+      if (dlg.id === "dayDialog") $("dlgBack")?.click();
+      else if (dlg.id === "vacDialog") $("vacBack")?.click();
+      else if (dlg.id === "bulkDialog") $("bulkBack")?.click();
+      else closeDialog(dlg);
+    };
+
+    handle.addEventListener("click", (e) => {
+      if (moved) return;
+      e.preventDefault();
+      closeThisDialog();
+    });
+
     handle.addEventListener("pointerdown", (e) => {
       if (!dlg.open) return;
       dragging = true;
+      moved = false;
       startY = e.clientY;
       currentY = startY;
       dlg.style.transition = "none";
@@ -3976,6 +4190,7 @@ dialog[open]{
       if (!dragging) return;
       currentY = e.clientY;
       const dy = Math.max(0, currentY - startY);
+      if (dy > 6) moved = true;
       dlg.style.transform = `translateY(${dy}px)`;
     });
 
@@ -3984,12 +4199,13 @@ dialog[open]{
       const dy = Math.max(0, currentY - startY);
       handle.releasePointerCapture?.(e.pointerId);
       if (dy > 90) {
+        moved = true;
         dlg.style.transition = "transform .18s cubic-bezier(.2,0,0,1), opacity .18s cubic-bezier(.2,0,0,1)";
         dlg.style.transform = "translateY(110%)";
         dlg.style.opacity = "0";
         setTimeout(() => {
           dlg.style.opacity = "";
-          closeDialog(dlg);
+          closeThisDialog();
           if (dlg.id === "dayDialog") document.body.classList.remove("modal-open");
           reset();
         }, 170);
