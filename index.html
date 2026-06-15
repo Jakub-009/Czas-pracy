@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.8</title>
+  <title>Czas pracy 4.1.9</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -3390,7 +3390,8 @@ dialog#bulkDialog > .drag-handle::after{
 
 
 
-/* ===== Czas pracy 4.1.8: Google-like panels — dopracowany header i formularz dnia ===== */
+
+/* ===== Czas pracy 4.1.9: panele ekranowe ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel{
@@ -3407,6 +3408,9 @@ dialog#vacDialog.googlePanel{
   color:var(--text);
   overflow:hidden;
   box-shadow:none;
+  --panel-action-w:128px;
+  --panel-action-h:40px;
+  --panel-action-font:14.5px;
 }
 
 dialog#dayDialog.googlePanel::backdrop,
@@ -3440,10 +3444,10 @@ dialog#vacDialog.googlePanel[open]{
   position:sticky;
   top:0;
   z-index:5;
-  min-height:calc(52px + env(safe-area-inset-top));
+  min-height:calc(54px + env(safe-area-inset-top));
   padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
   display:grid;
-  grid-template-columns:38px 1fr 78px;
+  grid-template-columns:38px 1fr var(--panel-action-w);
   align-items:start;
   gap:8px;
   background:#fff;
@@ -3455,7 +3459,7 @@ dialog#vacDialog.googlePanel[open]{
   height:32px;
   min-height:32px;
   padding:0;
-  margin-top:1px;
+  margin-top:4px;
   border-radius:50%;
   background:transparent;
   color:#111318;
@@ -3480,21 +3484,43 @@ dialog#vacDialog.googlePanel[open]{
 .panelCloseBtn::after{transform:translate(-50%,-50%) rotate(-45deg)}
 .panelCloseBtn:hover{background:#f1f3f4}
 
-.panelSaveBtn{
-  justify-self:end;
-  min-width:76px;
-  height:34px;
-  min-height:34px;
+.panelSaveBtn,
+dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter,
+dialog#bulkDialog.googlePanel #bulkRemove,
+dialog#vacDialog.googlePanel #clearVacationRange{
+  width:var(--panel-action-w);
+  min-width:var(--panel-action-w);
+  max-width:var(--panel-action-w);
+  height:var(--panel-action-h);
+  min-height:var(--panel-action-h);
   padding:0 14px;
   border-radius:999px;
-  background:#4285f4;
-  color:#fff;
   box-shadow:none;
-  font-size:13.5px;
+  font-size:var(--panel-action-font);
+  line-height:1;
   font-weight:650;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  white-space:nowrap;
 }
 
-/* Chevron zrobiony od nowa: dwie belki spotykają się idealnie w środku */
+.panelSaveBtn,
+dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
+  background:#4285f4;
+  color:#fff;
+}
+
+dialog#bulkDialog.googlePanel #bulkRemove,
+dialog#vacDialog.googlePanel #clearVacationRange{
+  background:#c5221f;
+  color:#fff;
+  margin-top:18px;
+  margin-left:0;
+  margin-right:0;
+}
+
 .googlePanel .drag-handle{
   justify-self:center;
   align-self:start;
@@ -3508,25 +3534,26 @@ dialog#vacDialog.googlePanel[open]{
   touch-action:none;
 }
 
+/* Chevron: dwa identyczne ramiona, jeden punkt styku, bez rombu i bez rozsunięcia */
 .googlePanel .drag-handle::before,
 .googlePanel .drag-handle::after{
   content:"";
   position:absolute;
-  top:10px;
-  width:24px;
+  top:11px;
+  width:22px;
   height:4px;
   border-radius:999px;
-  background:#e1e4e8;
+  background:#dfe3e8;
 }
 
 .googlePanel .drag-handle::before{
-  right:50%;
+  left:7px;
   transform-origin:right center;
   transform:rotate(18deg);
 }
 
 .googlePanel .drag-handle::after{
-  left:50%;
+  right:7px;
   transform-origin:left center;
   transform:rotate(-18deg);
 }
@@ -3539,6 +3566,7 @@ dialog#vacDialog.googlePanel[open]{
   overscroll-behavior:contain;
   padding-bottom:calc(26px + env(safe-area-inset-bottom));
   background:#fff;
+  touch-action:pan-y;
 }
 
 .googlePanel .modalHead{
@@ -3616,17 +3644,7 @@ dialog#dayDialog.googlePanel .dayCloseRow{
   display:none;
 }
 
-dialog#bulkDialog.googlePanel #bulkRemove,
-dialog#vacDialog.googlePanel #clearVacationRange{
-  min-height:42px;
-  padding:0 4px;
-  background:transparent;
-  color:#c5221f;
-  font-size:15px;
-  font-weight:650;
-}
-
-/* Formularz dnia w trybie dodawania: jak Zakres dni, bez karty i pustych bocznych marginesów */
+/* Formularz dnia w trybie dodawania: układ jak Zakres dni, bez karty i pustych bocznych marginesów */
 dialog#dayDialog.googlePanel.is-form-open .dayPreviewStats,
 dialog#dayDialog.googlePanel.is-form-open #dlgShiftsBlock{
   display:none;
@@ -3683,26 +3701,24 @@ dialog#dayDialog.googlePanel .addShiftPanel .dayNoteField{
 
 dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   order:4;
-}
-
-dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
   margin-top:4px;
   margin-left:0;
   margin-right:0;
-  min-width:0;
-  width:max-content;
-  max-width:100%;
-  min-height:42px;
-  padding:0 18px;
-  font-size:14.5px;
-  border-radius:999px;
 }
 
 @media(max-width:679px){
+  dialog#dayDialog.googlePanel,
+  dialog#bulkDialog.googlePanel,
+  dialog#vacDialog.googlePanel{
+    --panel-action-w:126px;
+    --panel-action-h:40px;
+    --panel-action-font:14.5px;
+  }
+
   .googlePanelBar{
-    min-height:calc(52px + env(safe-area-inset-top));
+    min-height:calc(54px + env(safe-area-inset-top));
     padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
-    grid-template-columns:38px 1fr 78px;
+    grid-template-columns:38px 1fr var(--panel-action-w);
   }
 
   .googlePanel .modalHead{
@@ -3723,10 +3739,18 @@ dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
 }
 
 @media(max-width:430px){
+  dialog#dayDialog.googlePanel,
+  dialog#bulkDialog.googlePanel,
+  dialog#vacDialog.googlePanel{
+    --panel-action-w:124px;
+    --panel-action-h:39px;
+    --panel-action-font:14px;
+  }
+
   .googlePanelBar{
     padding-left:22px;
     padding-right:22px;
-    grid-template-columns:36px 1fr 76px;
+    grid-template-columns:36px 1fr var(--panel-action-w);
   }
 
   .panelCloseBtn{
@@ -3741,14 +3765,6 @@ dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
     height:2.2px;
   }
 
-  .panelSaveBtn{
-    min-width:74px;
-    height:33px;
-    min-height:33px;
-    padding:0 13px;
-    font-size:13.5px;
-  }
-
   .googlePanel .drag-handle{
     width:50px;
     height:22px;
@@ -3756,9 +3772,17 @@ dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
 
   .googlePanel .drag-handle::before,
   .googlePanel .drag-handle::after{
-    top:9px;
-    width:22px;
+    top:10px;
+    width:21px;
     height:4px;
+  }
+
+  .googlePanel .drag-handle::before{
+    left:7px;
+  }
+
+  .googlePanel .drag-handle::after{
+    right:7px;
   }
 
   .googlePanel .modalHead{
@@ -6251,6 +6275,99 @@ dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
   $("bulkPanelSave")?.addEventListener("click", () => { $("bulkApply")?.click(); });
   $("dayPanelClose")?.addEventListener("click", () => { $("dlgBack")?.click(); });
   $("dayPanelDone")?.addEventListener("click", () => { $("dlgBack")?.click(); });
+
+  function closeGooglePanelById(id) {
+    if (id === "vacDialog") $("vacBack")?.click();
+    else if (id === "bulkDialog") $("bulkBack")?.click();
+    else if (id === "dayDialog") $("dlgBack")?.click();
+  }
+
+  function setupGooglePanelPullDown(dialogId) {
+    const dialog = $(dialogId);
+    if (!dialog) return;
+
+    let startX = 0;
+    let startY = 0;
+    let lastY = 0;
+    let startTime = 0;
+    let pulling = false;
+
+    const content = () => dialog.querySelector(".googlePanelContent");
+
+    dialog.addEventListener("touchstart", (e) => {
+      if (!dialog.open || e.touches.length !== 1) return;
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+      lastY = startY;
+      startTime = performance.now();
+      pulling = false;
+      dialog.style.transition = "";
+    }, { passive:true });
+
+    dialog.addEventListener("touchmove", (e) => {
+      if (!dialog.open || e.touches.length !== 1) return;
+
+      const t = e.touches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      lastY = t.clientY;
+
+      if (dy <= 0 || Math.abs(dx) > dy * 0.9) return;
+
+      const scrollEl = content();
+      if (scrollEl && scrollEl.scrollTop > 2 && !pulling) return;
+
+      if (dy > 14) pulling = true;
+      if (!pulling) return;
+
+      e.preventDefault();
+      const pull = Math.min(180, dy * 0.55);
+      dialog.style.transform = `translate3d(0, ${pull}px, 0)`;
+    }, { passive:false });
+
+    dialog.addEventListener("touchend", () => {
+      if (!pulling) return;
+
+      const dy = Math.max(0, lastY - startY);
+      const dt = Math.max(1, performance.now() - startTime);
+      const velocity = dy / dt;
+
+      if (dy > 125 || velocity > 0.75) {
+        dialog.style.transition = "transform .16s ease, opacity .16s ease";
+        dialog.style.transform = "translate3d(0, 100%, 0)";
+        setTimeout(() => {
+          dialog.style.transition = "";
+          dialog.style.transform = "";
+          closeGooglePanelById(dialogId);
+        }, 120);
+      } else {
+        dialog.style.transition = "transform .18s cubic-bezier(.2,0,0,1)";
+        dialog.style.transform = "translate3d(0, 0, 0)";
+        setTimeout(() => {
+          dialog.style.transition = "";
+          dialog.style.transform = "";
+        }, 190);
+      }
+
+      pulling = false;
+    }, { passive:true });
+
+    dialog.addEventListener("touchcancel", () => {
+      if (!pulling) return;
+      dialog.style.transition = "transform .18s cubic-bezier(.2,0,0,1)";
+      dialog.style.transform = "translate3d(0, 0, 0)";
+      setTimeout(() => {
+        dialog.style.transition = "";
+        dialog.style.transform = "";
+      }, 190);
+      pulling = false;
+    }, { passive:true });
+  }
+
+  setupGooglePanelPullDown("dayDialog");
+  setupGooglePanelPullDown("bulkDialog");
+  setupGooglePanelPullDown("vacDialog");
 
   const drawer = $("mainMenuDialog");
   const drawerBack = $("drawerBack");
