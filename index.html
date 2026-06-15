@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.4</title>
+  <title>Czas pracy 4.1.5 Google-like panels</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -1259,90 +1259,90 @@ dialog:focus-visible{
 
 /* Chevron modala jako rozwarte V */
 .drag-handle{
-  width:52px !important;
-  height:28px !important;
-  margin:7px auto 5px !important;
-  background:transparent !important;
-  border:none !important;
-  border-radius:999px !important;
-  display:grid !important;
-  place-items:center !important;
-  cursor:pointer !important;
-  touch-action:none !important;
-  position:relative !important;
+  width:52px;
+  height:28px;
+  margin:7px auto 5px;
+  background:transparent;
+  border:none;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  touch-action:none;
+  position:relative;
 }
 .drag-handle:hover{
-  background:rgba(60,64,67,.04) !important;
+  background:rgba(60,64,67,.04);
 }
 .drag-handle::before,
 .drag-handle::after{
-  content:"" !important;
-  position:absolute !important;
-  top:12px !important;
-  width:20px !important;
-  height:4px !important;
-  background:#d5d9df !important;
-  border:none !important;
-  border-radius:999px !important;
-  transform-origin:center !important;
+  content:"";
+  position:absolute;
+  top:12px;
+  width:20px;
+  height:4px;
+  background:#d5d9df;
+  border:none;
+  border-radius:999px;
+  transform-origin:center;
 }
 .drag-handle::before{
-  left:8px !important;
-  transform:rotate(22deg) !important;
+  left:8px;
+  transform:rotate(22deg);
 }
 .drag-handle::after{
-  right:8px !important;
-  transform:rotate(-22deg) !important;
+  right:8px;
+  transform:rotate(-22deg);
 }
 .modalHead{
-  padding-top:0 !important;
+  padding-top:0;
 }
 
 /* Modal dnia */
 dialog#dayDialog{
-  max-height:88dvh !important;
+  max-height:88dvh;
 }
 #dayDialog .modalBody{
-  max-height:calc(88dvh - 76px) !important;
-  overflow-y:auto !important;
+  max-height:calc(88dvh - 76px);
+  overflow-y:auto;
   -webkit-overflow-scrolling:touch;
 }
 .dayPreviewHead{
-  padding-left:20px !important;
-  padding-right:20px !important;
-  padding-bottom:10px !important;
+  padding-left:20px;
+  padding-right:20px;
+  padding-bottom:10px;
 }
 .dayPreviewHead h3{
-  font-size:clamp(22px, 6vw, 27px) !important;
-  line-height:1.16 !important;
-  letter-spacing:-.03em !important;
+  font-size:clamp(22px, 6vw, 27px);
+  line-height:1.16;
+  letter-spacing:-.03em;
 }
 .dayPreviewHead .muted{
-  font-size:14px !important;
+  font-size:14px;
 }
 .dayPreviewBody{
-  padding-left:20px !important;
-  padding-right:20px !important;
-  padding-top:0 !important;
+  padding-left:20px;
+  padding-right:20px;
+  padding-top:0;
 }
 .dayPreviewStats{
-  grid-template-columns:1fr 1fr !important;
-  gap:14px !important;
-  margin:4px 0 16px !important;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin:4px 0 16px;
 }
 .dayPreviewStats .statMini{
-  padding:0 0 9px !important;
-  border-bottom:1px solid var(--outline-soft) !important;
+  padding:0 0 9px;
+  border-bottom:1px solid var(--outline-soft);
 }
 .dayPreviewStats .statMiniValue{
-  font-size:clamp(20px, 5.6vw, 25px) !important;
-  line-height:1.05 !important;
-  font-weight:500 !important;
-  margin:0 0 6px !important;
-  letter-spacing:-.025em !important;
+  font-size:clamp(20px, 5.6vw, 25px);
+  line-height:1.05;
+  font-weight:500;
+  margin:0 0 6px;
+  letter-spacing:-.025em;
 }
 .dayPreviewStats .muted{
-  font-size:12.5px !important;
+  font-size:12.5px;
 }
 #dlgShiftsTitle{
   display:block !important;
@@ -1489,17 +1489,17 @@ dialog#dayDialog{
   animation:addPanelIn .20s cubic-bezier(.2,0,0,1);
 }
 #dayDialog.is-form-open .addShiftPanel{
-  display:block !important;
+  display:block;
 }
 #dayDialog.is-form-open .dayAddTrigger{
-  display:none !important;
+  display:none;
 }
 @keyframes addPanelIn{
   from{opacity:0;transform:translateY(-6px)}
   to{opacity:1;transform:translateY(0)}
 }
 .dayCloseRow{
-  margin-top:18px !important;
+  margin-top:18px;
 }
 .addShiftPanel{
   padding:14px !important;
@@ -1527,7 +1527,7 @@ textarea{
 
 /* Informacje o aplikacji */
 #appInfoDialog .modalBody{
-  padding-top:0 !important;
+  padding-top:0;
 }
 .sheetList{
   display:flex;
@@ -1617,14 +1617,14 @@ textarea{
     padding:0 3px !important;
   }
   .drag-handle{
-    width:48px !important;
-    height:26px !important;
+    width:48px;
+    height:26px;
   }
   .drag-handle::before,
   .drag-handle::after{
-    top:11px !important;
-    width:18px !important;
-    height:4px !important;
+    top:11px;
+    width:18px;
+    height:4px;
   }
 }
 
@@ -1640,16 +1640,16 @@ textarea{
     --pill-height:11px;
   }
   dialog#dayDialog{
-    max-height:86dvh !important;
+    max-height:86dvh;
   }
   #dayDialog .modalBody{
-    max-height:calc(86dvh - 72px) !important;
+    max-height:calc(86dvh - 72px);
   }
   .dayPreviewHead h3{
-    font-size:21px !important;
+    font-size:21px;
   }
   .dayPreviewStats .statMiniValue{
-    font-size:20px !important;
+    font-size:20px;
   }
 }
 
@@ -1861,12 +1861,12 @@ body.keyboard-focus dialog[open]{
 }
 body.keyboard-open #dayDialog .modalBody,
 body.keyboard-focus #dayDialog .modalBody{
-  max-height:calc(92dvh - 70px) !important;
-  padding-bottom:calc(36px + env(safe-area-inset-bottom)) !important;
+  max-height:calc(92dvh - 70px);
+  padding-bottom:calc(36px + env(safe-area-inset-bottom));
 }
 body.keyboard-open .modalBody,
 body.keyboard-focus .modalBody{
-  padding-bottom:calc(28px + env(safe-area-inset-bottom)) !important;
+  padding-bottom:calc(28px + env(safe-area-inset-bottom));
 }
 
   
@@ -2161,10 +2161,10 @@ dialog#settingsDialog{
   max-height:92dvh !important;
 }
 #settingsDialog .modalBody.settingsBody{
-  max-height:calc(92dvh - 96px) !important;
-  overflow-y:auto !important;
+  max-height:calc(92dvh - 96px);
+  overflow-y:auto;
   -webkit-overflow-scrolling:touch;
-  padding-bottom:calc(24px + env(safe-area-inset-bottom)) !important;
+  padding-bottom:calc(24px + env(safe-area-inset-bottom));
 }
 .settingsAccordion{
   border-top:1px solid var(--outline-soft);
@@ -2420,8 +2420,8 @@ body.modal-open{
 }
 dialog#vacDialog .modalBody,
 dialog#bulkDialog .modalBody{
-  max-height:calc(92dvh - 74px) !important;
-  overflow-y:auto !important;
+  max-height:calc(92dvh - 74px);
+  overflow-y:auto;
   -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;
 }
@@ -2488,10 +2488,10 @@ body.drawer-open{
   dialog#settingsDialog,
   dialog#toolsDialog,
   dialog#appInfoDialog{
-    width:calc(100vw - 18px) !important;
-    max-width:calc(100vw - 18px) !important;
-    margin:auto 9px 9px 9px !important;
-    border-radius:30px !important;
+    width:calc(100vw - 18px);
+    max-width:calc(100vw - 18px);
+    margin:auto 9px 9px 9px;
+    border-radius:30px;
   }
 
   dialog#vacDialog .modalHead,
@@ -2500,8 +2500,8 @@ body.drawer-open{
   dialog#settingsDialog .modalHead,
   dialog#toolsDialog .modalHead,
   dialog#appInfoDialog .modalHead{
-    padding-left:22px !important;
-    padding-right:22px !important;
+    padding-left:22px;
+    padding-right:22px;
   }
 
   dialog#vacDialog .modalBody,
@@ -2510,8 +2510,8 @@ body.drawer-open{
   dialog#settingsDialog .modalBody,
   dialog#toolsDialog .modalBody,
   dialog#appInfoDialog .modalBody{
-    padding-left:22px !important;
-    padding-right:22px !important;
+    padding-left:22px;
+    padding-right:22px;
   }
 }
 
@@ -2596,10 +2596,10 @@ body.drawer-open{
 #bulkApply,
 #setVacationRange,
 #dlgAddShift{
-  min-height:46px !important;
-  padding:0 20px !important;
-  font-size:15px !important;
-  border-radius:999px !important;
+  min-height:46px;
+  padding:0 20px;
+  font-size:15px;
+  border-radius:999px;
 }
 
 #bulkRemove,
@@ -2609,29 +2609,29 @@ body.drawer-open{
 #settingsClose,
 #toolsClose,
 #appInfoClose{
-  min-height:42px !important;
-  padding:0 16px !important;
-  font-size:15px !important;
-  border-radius:999px !important;
+  min-height:42px;
+  padding:0 16px;
+  font-size:15px;
+  border-radius:999px;
 }
 
 #dlgAddShift.addBtnCenter{
-  width:auto !important;
-  min-width:210px !important;
-  max-width:100% !important;
-  margin-left:auto !important;
-  margin-right:0 !important;
+  width:auto;
+  min-width:210px;
+  max-width:100%;
+  margin-left:auto;
+  margin-right:0;
 }
 
 /* Wiele godzin / urlop — stabilniejsze przewijanie wewnątrz */
 dialog#vacDialog,
 dialog#bulkDialog{
-  max-height:92dvh !important;
+  max-height:92dvh;
 }
 dialog#vacDialog .modalBody,
 dialog#bulkDialog .modalBody{
-  max-height:calc(92dvh - 92px) !important;
-  overflow-y:auto !important;
+  max-height:calc(92dvh - 92px);
+  overflow-y:auto;
   -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;
 }
@@ -2807,22 +2807,22 @@ dialog#mainMenuDialog.drawerDialog{
 /* Margines i przewijanie dużych bottom sheetów */
 @media(max-width:679px){
   dialog#vacDialog,dialog#bulkDialog,dialog#dayDialog{
-    width:calc(100vw - 18px) !important;
-    max-width:calc(100vw - 18px) !important;
-    margin:auto 9px 9px 9px !important;
-    border-radius:30px !important;
+    width:calc(100vw - 18px);
+    max-width:calc(100vw - 18px);
+    margin:auto 9px 9px 9px;
+    border-radius:30px;
   }
   dialog#vacDialog .modalHead,dialog#bulkDialog .modalHead,dialog#dayDialog .modalHead,
   dialog#vacDialog .modalBody,dialog#bulkDialog .modalBody,dialog#dayDialog .modalBody{
-    padding-left:22px !important;
-    padding-right:22px !important;
+    padding-left:22px;
+    padding-right:22px;
   }
 }
-dialog#vacDialog,dialog#bulkDialog{max-height:92dvh !important}
-dialog#vacDialog .modalBody,dialog#bulkDialog .modalBody{max-height:calc(92dvh - 92px) !important;overflow-y:auto !important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-#bulkApply,#setVacationRange,#dlgAddShift{min-height:46px !important;padding:0 20px !important;font-size:15px !important;border-radius:999px !important}
-#bulkRemove,#clearVacationRange,.backBtn,#dlgBack{min-height:42px !important;padding:0 16px !important;font-size:15px !important;border-radius:999px !important}
-#dlgAddShift.addBtnCenter{width:auto !important;min-width:210px !important;max-width:100% !important;margin-left:auto !important;margin-right:0 !important}
+dialog#vacDialog,dialog#bulkDialog{max-height:92dvh}
+dialog#vacDialog .modalBody,dialog#bulkDialog .modalBody{max-height:calc(92dvh - 92px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#bulkApply,#setVacationRange,#dlgAddShift{min-height:46px;padding:0 20px;font-size:15px;border-radius:999px}
+#bulkRemove,#clearVacationRange,.backBtn,#dlgBack{min-height:42px;padding:0 16px;font-size:15px;border-radius:999px}
+#dlgAddShift.addBtnCenter{width:auto;min-width:210px;max-width:100%;margin-left:auto;margin-right:0}
 
   
 /* ===== Czas pracy 4.0.5: poprawka strzałki drawer + mniejsze ikony FAB + mocniejszy scroll lock ===== */
@@ -2925,27 +2925,27 @@ dialog#mainMenuDialog.drawerDialog{
   dialog#dayDialog,
   dialog#bulkDialog,
   dialog#vacDialog{
-    position:fixed !important;
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-    top:auto !important;
-    width:100vw !important;
-    max-width:100vw !important;
-    margin:0 !important;
-    border-radius:30px 30px 0 0 !important;
-    max-height:92dvh !important;
-    box-shadow:0 -10px 36px rgba(32,33,36,.24) !important;
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    top:auto;
+    width:100vw;
+    max-width:100vw;
+    margin:0;
+    border-radius:30px 30px 0 0;
+    max-height:92dvh;
+    box-shadow:0 -10px 36px rgba(32,33,36,.24);
   }
 
   dialog#dayDialog{
-    max-height:90dvh !important;
+    max-height:90dvh;
   }
 
   dialog#dayDialog[open],
   dialog#bulkDialog[open],
   dialog#vacDialog[open]{
-    animation:sheetUp410 .24s cubic-bezier(.2,0,0,1) !important;
+    animation:sheetUp410 .24s cubic-bezier(.2,0,0,1);
   }
 
   @keyframes sheetUp410{
@@ -2956,32 +2956,32 @@ dialog#mainMenuDialog.drawerDialog{
   dialog#dayDialog .drag-handle,
   dialog#bulkDialog .drag-handle,
   dialog#vacDialog .drag-handle{
-    margin-top:13px !important;
-    margin-bottom:11px !important;
+    margin-top:13px;
+    margin-bottom:11px;
   }
 
   dialog#dayDialog .modalHead,
   dialog#bulkDialog .modalHead,
   dialog#vacDialog .modalHead{
-    padding:6px 24px 17px !important;
+    padding:6px 24px 17px;
   }
 
   dialog#dayDialog .modalBody,
   dialog#bulkDialog .modalBody,
   dialog#vacDialog .modalBody{
-    padding-left:24px !important;
-    padding-right:24px !important;
-    padding-bottom:calc(24px + env(safe-area-inset-bottom)) !important;
-    overscroll-behavior:contain !important;
+    padding-left:24px;
+    padding-right:24px;
+    padding-bottom:calc(24px + env(safe-area-inset-bottom));
+    overscroll-behavior:contain;
   }
 
   dialog#dayDialog .modalBody{
-    max-height:calc(90dvh - 88px) !important;
+    max-height:calc(90dvh - 88px);
   }
 
   dialog#bulkDialog .modalBody,
   dialog#vacDialog .modalBody{
-    max-height:calc(92dvh - 96px) !important;
+    max-height:calc(92dvh - 96px);
   }
 }
 
@@ -3097,21 +3097,21 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 /* Więcej oddechu u góry w panelu zakresu dni */
 @media(max-width:679px){
   dialog#bulkDialog{
-    max-height:91dvh !important;
+    max-height:91dvh;
   }
 
   dialog#bulkDialog .drag-handle{
-    margin-top:16px !important;
-    margin-bottom:12px !important;
+    margin-top:16px;
+    margin-bottom:12px;
   }
 
   dialog#bulkDialog .modalHead{
-    padding-top:24px !important;
-    padding-bottom:16px !important;
+    padding-top:24px;
+    padding-bottom:16px;
   }
 
   dialog#bulkDialog .modalBody{
-    max-height:calc(91dvh - 116px) !important;
+    max-height:calc(91dvh - 116px);
   }
 }
 
@@ -3148,45 +3148,45 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 /* Modal zakresu dni: przywrócony szary uchwyt/chevron na górze */
 dialog#bulkDialog .drag-handle{
-  display:grid !important;
-  place-items:center !important;
-  width:52px !important;
-  height:28px !important;
-  margin:12px auto 10px !important;
-  background:transparent !important;
-  border-radius:999px !important;
-  position:relative !important;
-  opacity:1 !important;
+  display:grid;
+  place-items:center;
+  width:52px;
+  height:28px;
+  margin:12px auto 10px;
+  background:transparent;
+  border-radius:999px;
+  position:relative;
+  opacity:1;
 }
 
 dialog#bulkDialog .drag-handle::before,
 dialog#bulkDialog .drag-handle::after{
-  content:"" !important;
-  position:absolute !important;
-  top:12px !important;
-  width:18px !important;
-  height:4px !important;
-  border-radius:999px !important;
-  background:#d5d9df !important;
+  content:"";
+  position:absolute;
+  top:12px;
+  width:18px;
+  height:4px;
+  border-radius:999px;
+  background:#d5d9df;
 }
 
 dialog#bulkDialog .drag-handle::before{
-  left:9px !important;
-  transform:rotate(22deg) !important;
+  left:9px;
+  transform:rotate(22deg);
 }
 
 dialog#bulkDialog .drag-handle::after{
-  right:9px !important;
-  transform:rotate(-22deg) !important;
+  right:9px;
+  transform:rotate(-22deg);
 }
 
 @media(max-width:679px){
   dialog#bulkDialog .modalHead{
-    padding-top:8px !important;
+    padding-top:8px;
   }
 
   dialog#bulkDialog .modalBody{
-    max-height:calc(91dvh - 102px) !important;
+    max-height:calc(91dvh - 102px);
   }
 }
 
@@ -3253,47 +3253,47 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 /* 4. Modal "Godziny dla zakresu dni": widoczny szary uchwyt i więcej oddechu u góry */
 dialog#bulkDialog > .drag-handle{
-  display:grid !important;
-  place-items:center !important;
-  width:56px !important;
-  height:34px !important;
-  margin:16px auto 10px !important;
-  background:transparent !important;
-  border-radius:999px !important;
-  position:relative !important;
-  opacity:1 !important;
-  z-index:3 !important;
+  display:grid;
+  place-items:center;
+  width:56px;
+  height:34px;
+  margin:16px auto 10px;
+  background:transparent;
+  border-radius:999px;
+  position:relative;
+  opacity:1;
+  z-index:3;
 }
 
 dialog#bulkDialog > .drag-handle::before,
 dialog#bulkDialog > .drag-handle::after{
-  content:"" !important;
-  position:absolute !important;
-  top:15px !important;
-  width:19px !important;
-  height:4px !important;
-  border-radius:999px !important;
-  background:#d5d9df !important;
+  content:"";
+  position:absolute;
+  top:15px;
+  width:19px;
+  height:4px;
+  border-radius:999px;
+  background:#d5d9df;
 }
 
 dialog#bulkDialog > .drag-handle::before{
-  left:10px !important;
-  transform:rotate(22deg) !important;
+  left:10px;
+  transform:rotate(22deg);
 }
 
 dialog#bulkDialog > .drag-handle::after{
-  right:10px !important;
-  transform:rotate(-22deg) !important;
+  right:10px;
+  transform:rotate(-22deg);
 }
 
 @media(max-width:679px){
   dialog#bulkDialog .modalHead{
-    padding-top:10px !important;
-    padding-bottom:16px !important;
+    padding-top:10px;
+    padding-bottom:16px;
   }
 
   dialog#bulkDialog .modalBody{
-    max-height:calc(91dvh - 114px) !important;
+    max-height:calc(91dvh - 114px);
   }
 }
 
@@ -3385,7 +3385,315 @@ dialog#bulkDialog > .drag-handle::after{
   }
 }
 
-  </style>
+  
+
+/* ===== Czas pracy 4.1.5: Google-like panels dla dnia, zakresu i urlopu ===== */
+dialog#dayDialog.googlePanel,
+dialog#bulkDialog.googlePanel,
+dialog#vacDialog.googlePanel{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  max-width:none;
+  height:100dvh;
+  max-height:none;
+  margin:0;
+  padding:0;
+  border-radius:0;
+  background:#fff;
+  color:var(--text);
+  overflow:hidden;
+  box-shadow:none;
+}
+
+dialog#dayDialog.googlePanel::backdrop,
+dialog#bulkDialog.googlePanel::backdrop,
+dialog#vacDialog.googlePanel::backdrop{
+  background:rgba(32,33,36,.34);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+
+dialog#dayDialog.googlePanel[open],
+dialog#bulkDialog.googlePanel[open],
+dialog#vacDialog.googlePanel[open]{
+  animation:googlePanelIn .20s cubic-bezier(.2,0,0,1);
+}
+
+@keyframes googlePanelIn{
+  from{transform:translateY(18px);opacity:.96}
+  to{transform:translateY(0);opacity:1}
+}
+
+.googlePanelShell{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  background:#fff;
+  overflow:hidden;
+}
+
+.googlePanelBar{
+  position:sticky;
+  top:0;
+  z-index:5;
+  min-height:calc(76px + env(safe-area-inset-top));
+  padding:calc(12px + env(safe-area-inset-top)) 28px 12px;
+  display:grid;
+  grid-template-columns:64px 1fr 132px;
+  align-items:start;
+  gap:8px;
+  background:#fff;
+  border-bottom:1px solid rgba(60,64,67,.12);
+}
+
+.panelCloseBtn{
+  width:52px;
+  height:52px;
+  min-height:52px;
+  padding:0;
+  border-radius:50%;
+  background:transparent;
+  color:#111318;
+  box-shadow:none;
+  position:relative;
+}
+
+.panelCloseBtn::before,
+.panelCloseBtn::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:30px;
+  height:3px;
+  border-radius:999px;
+  background:currentColor;
+  transform-origin:center;
+}
+
+.panelCloseBtn::before{transform:translate(-50%,-50%) rotate(45deg)}
+.panelCloseBtn::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.panelCloseBtn:hover{background:#f1f3f4}
+
+.panelSaveBtn{
+  justify-self:end;
+  min-width:112px;
+  height:52px;
+  min-height:52px;
+  padding:0 24px;
+  border-radius:999px;
+  background:#4285f4;
+  color:#fff;
+  box-shadow:none;
+  font-size:18px;
+  font-weight:650;
+}
+
+.googlePanel .drag-handle{
+  justify-self:center;
+  align-self:start;
+  width:78px;
+  height:34px;
+  margin:0;
+  background:transparent;
+  border-radius:999px;
+  position:relative;
+  cursor:pointer;
+  touch-action:none;
+}
+
+.googlePanel .drag-handle::before,
+.googlePanel .drag-handle::after{
+  content:"";
+  position:absolute;
+  top:13px;
+  width:30px;
+  height:5px;
+  border-radius:999px;
+  background:#e0e3e7;
+}
+
+.googlePanel .drag-handle::before{
+  left:13px;
+  transform:rotate(20deg);
+}
+
+.googlePanel .drag-handle::after{
+  right:13px;
+  transform:rotate(-20deg);
+}
+
+.googlePanelContent{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  padding-bottom:calc(30px + env(safe-area-inset-bottom));
+  background:#fff;
+}
+
+.googlePanel .modalHead{
+  padding:30px 118px 24px;
+  background:#fff;
+  border:none;
+}
+
+.googlePanel .modalHead h3{
+  margin:0;
+  font-size:40px;
+  line-height:1.08;
+  font-weight:520;
+  letter-spacing:-.04em;
+  color:#111318;
+}
+
+.googlePanel .modalHead .muted{
+  margin-top:12px;
+  font-size:18px;
+  line-height:1.35;
+  color:#3c4043;
+}
+
+.googlePanel .modalBody{
+  max-height:none;
+  overflow:visible;
+  padding:0 118px 38px;
+  background:#fff;
+}
+
+.googlePanel .fieldGrid,
+.googlePanel .timeGrid{
+  gap:18px;
+}
+
+.googlePanel input,
+.googlePanel textarea,
+.googlePanel select{
+  min-height:58px;
+  font-size:17px;
+  border-radius:16px 16px 0 0;
+}
+
+.googlePanel .actionRow{
+  justify-content:flex-start;
+  margin-top:28px;
+  padding-bottom:10px;
+}
+
+dialog#bulkDialog.googlePanel #bulkApply,
+dialog#bulkDialog.googlePanel #bulkBack,
+dialog#vacDialog.googlePanel #setVacationRange,
+dialog#vacDialog.googlePanel #vacBack,
+dialog#dayDialog.googlePanel .dayCloseRow{
+  display:none;
+}
+
+dialog#bulkDialog.googlePanel #bulkRemove,
+dialog#vacDialog.googlePanel #clearVacationRange{
+  min-height:46px;
+  padding:0 4px;
+  background:transparent;
+  color:#c5221f;
+  font-size:16px;
+  font-weight:650;
+}
+
+dialog#dayDialog.googlePanel .dayPreviewStats{
+  margin-top:4px;
+}
+
+dialog#dayDialog.googlePanel .addShiftPanel{
+  margin-top:16px;
+}
+
+@media(max-width:679px){
+  .googlePanelBar{
+    min-height:calc(74px + env(safe-area-inset-top));
+    padding:calc(12px + env(safe-area-inset-top)) 28px 10px;
+    grid-template-columns:56px 1fr 116px;
+  }
+
+  .panelCloseBtn{
+    width:48px;
+    height:48px;
+    min-height:48px;
+  }
+
+  .panelCloseBtn::before,
+  .panelCloseBtn::after{
+    width:28px;
+    height:3px;
+  }
+
+  .panelSaveBtn{
+    min-width:104px;
+    height:50px;
+    min-height:50px;
+    padding:0 20px;
+    font-size:17px;
+  }
+
+  .googlePanel .drag-handle{
+    width:70px;
+    height:30px;
+  }
+
+  .googlePanel .drag-handle::before,
+  .googlePanel .drag-handle::after{
+    top:12px;
+    width:28px;
+    height:5px;
+  }
+
+  .googlePanel .modalHead{
+    padding:28px 28px 24px;
+  }
+
+  .googlePanel .modalHead h3{
+    font-size:38px;
+  }
+
+  .googlePanel .modalHead .muted{
+    font-size:17px;
+  }
+
+  .googlePanel .modalBody{
+    padding:0 28px 36px;
+  }
+}
+
+@media(max-width:430px){
+  .googlePanelBar{
+    padding-left:24px;
+    padding-right:24px;
+    grid-template-columns:52px 1fr 104px;
+  }
+
+  .panelSaveBtn{
+    min-width:96px;
+    height:48px;
+    min-height:48px;
+    padding:0 18px;
+    font-size:16px;
+  }
+
+  .googlePanel .modalHead{
+    padding:26px 24px 22px;
+  }
+
+  .googlePanel .modalHead h3{
+    font-size:34px;
+  }
+
+  .googlePanel .modalBody{
+    padding-left:24px;
+    padding-right:24px;
+  }
+}
+
+</style>
 
 </head>
 
@@ -3599,8 +3907,14 @@ dialog#bulkDialog > .drag-handle::after{
     </div>
   </dialog>
 
-  <dialog id="vacDialog">
-    <div class="drag-handle"></div>
+  <dialog id="vacDialog" class="googlePanel leavePanel">
+    <div class="googlePanelShell">
+      <div class="googlePanelBar">
+        <button class="panelCloseBtn" id="vacPanelClose" type="button" aria-label="Zamknij"></button>
+        <div class="drag-handle" aria-hidden="true"></div>
+        <button class="panelSaveBtn" id="vacPanelSave" type="button">Zapisz</button>
+      </div>
+      <div class="googlePanelContent">
     <div class="modalHead">
       <div class="modalHeadInner">
         <h3>Dodaj urlop</h3>
@@ -3635,11 +3949,19 @@ dialog#bulkDialog > .drag-handle::after{
         <button class="filled" id="setVacationRange" type="button">Zapisz</button>
       </div>
     </div>
+      </div>
+    </div>
   </dialog>
 
   <!-- MODAL GODZINY DLA ZAKRESU DNI -->
-  <dialog id="bulkDialog">
-    <div class="drag-handle"></div>
+  <dialog id="bulkDialog" class="googlePanel bulkPanel">
+    <div class="googlePanelShell">
+      <div class="googlePanelBar">
+        <button class="panelCloseBtn" id="bulkPanelClose" type="button" aria-label="Zamknij"></button>
+        <div class="drag-handle" aria-hidden="true"></div>
+        <button class="panelSaveBtn" id="bulkPanelSave" type="button">Dodaj</button>
+      </div>
+      <div class="googlePanelContent">
     <div class="modalHead">
       <div class="modalHeadInner">
         <h3>Godziny dla zakresu dni</h3>
@@ -3706,11 +4028,19 @@ dialog#bulkDialog > .drag-handle::after{
         <button class="filled" id="bulkApply" type="button">Dodaj</button>
       </div>
     </div>
+      </div>
+    </div>
   </dialog>
 
   <!-- MODAL DNIA -->
-  <dialog id="dayDialog">
-    <div class="drag-handle"></div>
+  <dialog id="dayDialog" class="googlePanel dayPanel">
+    <div class="googlePanelShell">
+      <div class="googlePanelBar">
+        <button class="panelCloseBtn" id="dayPanelClose" type="button" aria-label="Zamknij"></button>
+        <div class="drag-handle" aria-hidden="true"></div>
+        <button class="panelSaveBtn" id="dayPanelDone" type="button">Gotowe</button>
+      </div>
+      <div class="googlePanelContent">
 
     <div class="modalHead dayPreviewHead">
       <div class="modalHeadInner">
@@ -3770,6 +4100,8 @@ dialog#bulkDialog > .drag-handle::after{
 
       <div class="actionRow dayCloseRow">
         <button class="tonal" id="dlgBack" aria-label="Zamknij" type="button"></button>
+      </div>
+    </div>
       </div>
     </div>
   </dialog>
@@ -5830,6 +6162,13 @@ dialog#bulkDialog > .drag-handle::after{
     closeFabMenu();
     setTimeout(() => window.openVacationDialogFromFab?.(), 80);
   });
+
+  $("vacPanelClose")?.addEventListener("click", () => { $("vacBack")?.click(); });
+  $("vacPanelSave")?.addEventListener("click", () => { $("setVacationRange")?.click(); });
+  $("bulkPanelClose")?.addEventListener("click", () => { $("bulkBack")?.click(); });
+  $("bulkPanelSave")?.addEventListener("click", () => { $("bulkApply")?.click(); });
+  $("dayPanelClose")?.addEventListener("click", () => { $("dlgBack")?.click(); });
+  $("dayPanelDone")?.addEventListener("click", () => { $("dlgBack")?.click(); });
 
   const drawer = $("mainMenuDialog");
   const drawerBack = $("drawerBack");
