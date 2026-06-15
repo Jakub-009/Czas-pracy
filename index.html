@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.1</title>
+  <title>Czas pracy 4.1.2</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -4674,19 +4674,6 @@ dialog#bulkDialog > .drag-handle::after{
     }).join("");
   }
 
-
-  function compactTileTime(value) {
-    if (!value || !/^\d{2}:\d{2}$/.test(value)) return value || "";
-    const [hh, mm] = value.split(":");
-    return mm === "00" ? hh : `${hh}:${mm}`;
-  }
-
-  function formatShiftForTile(start, end) {
-    const narrow = window.matchMedia?.("(max-width: 410px)")?.matches;
-    if (!narrow) return `${start}–${end}`;
-    return `${compactTileTime(start)}–${compactTileTime(end)}`;
-  }
-
   function buildPillsHTML(day) {
     const shifts = (day?.shifts || []).slice().sort((a, b) => (a.start || "").localeCompare(b.start || ""));
     const leaveType = day?.leaveType || "";
@@ -4707,7 +4694,7 @@ dialog#bulkDialog > .drag-handle::after{
     pills.push(...visible.map(s => {
       const a = (s && s.start) ? s.start : "—";
       const b = (s && s.end) ? s.end : "—";
-      return `<div class="pill work">${formatShiftForTile(a, b)}</div>`;
+      return `<div class="pill work">${a}–${b}</div>`;
     }));
 
     if (extra > 0) pills.push(`<div class="pill more">+${extra}</div>`);
@@ -5505,11 +5492,9 @@ dialog#bulkDialog > .drag-handle::after{
       });
 
       const currentRows = Math.max(1, Math.ceil(currentLayer.querySelectorAll(".dayCell,.blankCell").length / 7));
-      const ghostRows = Math.max(1, Math.ceil(ghostLayer.querySelectorAll(".dayCell,.blankCell").length / 7));
-      const rows = Math.max(currentRows, ghostRows);
       const dowHeight = currentLayer.querySelector("#dowRow")?.offsetHeight || 0;
-      const gapTotal = rows > 1 ? (rows - 1) * 4 : 0;
-      area.style.height = (dowHeight + rows * h + gapTotal + 4) + "px";
+      const gapTotal = currentRows > 1 ? (currentRows - 1) * 4 : 0;
+      area.style.height = (dowHeight + currentRows * h + gapTotal + 4) + "px";
       area.classList.add("is-swiping");
     }
 
