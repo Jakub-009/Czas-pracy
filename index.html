@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.7</title>
+  <title>Czas pracy 4.1.8</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -3389,7 +3389,8 @@ dialog#bulkDialog > .drag-handle::after{
 
 
 
-/* ===== Czas pracy 4.1.7: Google-like panels — mniejszy header i jednolity formularz ===== */
+
+/* ===== Czas pracy 4.1.8: Google-like panels — dopracowany header i formularz dnia ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel{
@@ -3423,7 +3424,7 @@ dialog#vacDialog.googlePanel[open]{
 }
 
 @keyframes googlePanelIn{
-  from{transform:translateY(12px);opacity:.97}
+  from{transform:translateY(10px);opacity:.98}
   to{transform:translateY(0);opacity:1}
 }
 
@@ -3439,10 +3440,10 @@ dialog#vacDialog.googlePanel[open]{
   position:sticky;
   top:0;
   z-index:5;
-  min-height:calc(58px + env(safe-area-inset-top));
-  padding:calc(8px + env(safe-area-inset-top)) 26px 7px;
+  min-height:calc(52px + env(safe-area-inset-top));
+  padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
   display:grid;
-  grid-template-columns:42px 1fr 92px;
+  grid-template-columns:38px 1fr 78px;
   align-items:start;
   gap:8px;
   background:#fff;
@@ -3450,10 +3451,11 @@ dialog#vacDialog.googlePanel[open]{
 }
 
 .panelCloseBtn{
-  width:38px;
-  height:38px;
-  min-height:38px;
+  width:32px;
+  height:32px;
+  min-height:32px;
   padding:0;
+  margin-top:1px;
   border-radius:50%;
   background:transparent;
   color:#111318;
@@ -3467,8 +3469,8 @@ dialog#vacDialog.googlePanel[open]{
   position:absolute;
   left:50%;
   top:50%;
-  width:21px;
-  height:2.4px;
+  width:19px;
+  height:2.25px;
   border-radius:999px;
   background:currentColor;
   transform-origin:center;
@@ -3480,22 +3482,23 @@ dialog#vacDialog.googlePanel[open]{
 
 .panelSaveBtn{
   justify-self:end;
-  min-width:86px;
-  height:38px;
-  min-height:38px;
-  padding:0 16px;
+  min-width:76px;
+  height:34px;
+  min-height:34px;
+  padding:0 14px;
   border-radius:999px;
   background:#4285f4;
   color:#fff;
   box-shadow:none;
-  font-size:14.5px;
+  font-size:13.5px;
   font-weight:650;
 }
 
+/* Chevron zrobiony od nowa: dwie belki spotykają się idealnie w środku */
 .googlePanel .drag-handle{
   justify-self:center;
   align-self:start;
-  width:52px;
+  width:54px;
   height:24px;
   margin:0;
   background:transparent;
@@ -3505,22 +3508,27 @@ dialog#vacDialog.googlePanel[open]{
   touch-action:none;
 }
 
-.googlePanel .drag-handle::before{
+.googlePanel .drag-handle::before,
+.googlePanel .drag-handle::after{
   content:"";
   position:absolute;
-  left:50%;
-  top:8px;
-  width:25px;
-  height:25px;
-  border-right:5px solid #e0e3e7;
-  border-bottom:5px solid #e0e3e7;
-  border-radius:3px;
-  transform:translateX(-50%) rotate(45deg) scale(.82);
-  transform-origin:center;
+  top:10px;
+  width:24px;
+  height:4px;
+  border-radius:999px;
+  background:#e1e4e8;
+}
+
+.googlePanel .drag-handle::before{
+  right:50%;
+  transform-origin:right center;
+  transform:rotate(18deg);
 }
 
 .googlePanel .drag-handle::after{
-  content:none;
+  left:50%;
+  transform-origin:left center;
+  transform:rotate(-18deg);
 }
 
 .googlePanelContent{
@@ -3534,23 +3542,23 @@ dialog#vacDialog.googlePanel[open]{
 }
 
 .googlePanel .modalHead{
-  padding:20px 90px 18px;
+  padding:18px 88px 16px;
   background:#fff;
   border:none;
 }
 
 .googlePanel .modalHead h3{
   margin:0;
-  font-size:30px;
-  line-height:1.13;
-  font-weight:540;
-  letter-spacing:-.034em;
+  font-size:26px;
+  line-height:1.16;
+  font-weight:560;
+  letter-spacing:-.03em;
   color:#111318;
 }
 
 .googlePanel .modalHead .muted{
-  margin-top:9px;
-  font-size:15.5px;
+  margin-top:8px;
+  font-size:14.5px;
   line-height:1.34;
   color:#3c4043;
 }
@@ -3558,26 +3566,45 @@ dialog#vacDialog.googlePanel[open]{
 .googlePanel .modalBody{
   max-height:none;
   overflow:visible;
-  padding:0 90px 34px;
+  padding:0 88px 32px;
   background:#fff;
+}
+
+.googlePanel label,
+.googlePanel .quickTemplatesTitle{
+  font-size:13.5px;
+  line-height:1.2;
+  font-weight:650;
+  color:#3c4043;
 }
 
 .googlePanel .fieldGrid,
 .googlePanel .timeGrid{
-  gap:16px;
+  gap:15px;
 }
 
 .googlePanel input,
 .googlePanel textarea,
 .googlePanel select{
-  min-height:54px;
-  font-size:16px;
-  border-radius:15px 15px 0 0;
+  min-height:50px;
+  font-size:15px;
+  border-radius:14px 14px 0 0;
+}
+
+.googlePanel textarea{
+  min-height:76px;
+}
+
+.googlePanel .templateChip{
+  min-height:32px;
+  height:32px;
+  padding:0 11px;
+  font-size:12.5px;
 }
 
 .googlePanel .actionRow{
   justify-content:flex-start;
-  margin-top:24px;
+  margin-top:22px;
   padding-bottom:8px;
 }
 
@@ -3591,30 +3618,31 @@ dialog#dayDialog.googlePanel .dayCloseRow{
 
 dialog#bulkDialog.googlePanel #bulkRemove,
 dialog#vacDialog.googlePanel #clearVacationRange{
-  min-height:44px;
+  min-height:42px;
   padding:0 4px;
   background:transparent;
   color:#c5221f;
-  font-size:16px;
+  font-size:15px;
   font-weight:650;
 }
 
-/* Dzień ma używać tego samego, prostego układu formularza co Zakres dni */
-dialog#dayDialog.googlePanel .dayPreviewStats{
-  margin-top:2px;
+/* Formularz dnia w trybie dodawania: jak Zakres dni, bez karty i pustych bocznych marginesów */
+dialog#dayDialog.googlePanel.is-form-open .dayPreviewStats,
+dialog#dayDialog.googlePanel.is-form-open #dlgShiftsBlock{
+  display:none;
 }
 
 dialog#dayDialog.googlePanel .dayAddTrigger{
-  min-height:44px;
-  margin:16px 0 18px;
+  min-height:42px;
+  margin:14px 0 18px;
   padding:0 2px;
-  font-size:16px;
+  font-size:15px;
   font-weight:650;
 }
 
 dialog#dayDialog.googlePanel .addShiftPanel{
   display:none;
-  margin:18px 0 8px;
+  margin:0;
   padding:0;
   border-radius:0;
   background:transparent;
@@ -3623,67 +3651,70 @@ dialog#dayDialog.googlePanel .addShiftPanel{
 }
 
 dialog#dayDialog.googlePanel.is-form-open .addShiftPanel{
-  display:block;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
 }
 
 dialog#dayDialog.googlePanel.is-form-open .dayAddTrigger{
   display:none;
 }
 
-dialog#dayDialog.googlePanel .addShiftPanel .quickTemplatesBlock,
-dialog#dayDialog.googlePanel .addShiftPanel .timeGrid,
-dialog#dayDialog.googlePanel .addShiftPanel > div{
-  margin-left:0;
-  margin-right:0;
+dialog#dayDialog.googlePanel .addShiftPanel .timeGrid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:15px;
+  margin:0;
+}
+
+dialog#dayDialog.googlePanel .addShiftPanel .quickTemplatesBlock{
+  order:2;
+  margin:0;
 }
 
 dialog#dayDialog.googlePanel .addShiftPanel .timeGrid{
-  gap:16px;
+  order:1;
+}
+
+dialog#dayDialog.googlePanel .addShiftPanel .dayNoteField{
+  order:3;
+  margin:0;
+}
+
+dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
+  order:4;
 }
 
 dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
-  margin-top:20px;
+  margin-top:4px;
   margin-left:0;
   margin-right:0;
   min-width:0;
-  width:auto;
-  min-height:44px;
-  padding:0 20px;
-  font-size:15px;
+  width:max-content;
+  max-width:100%;
+  min-height:42px;
+  padding:0 18px;
+  font-size:14.5px;
   border-radius:999px;
 }
 
 @media(max-width:679px){
   .googlePanelBar{
-    min-height:calc(58px + env(safe-area-inset-top));
-    padding:calc(8px + env(safe-area-inset-top)) 24px 7px;
-    grid-template-columns:42px 1fr 88px;
-  }
-
-  .panelCloseBtn{
-    width:38px;
-    height:38px;
-    min-height:38px;
-  }
-
-  .panelSaveBtn{
-    min-width:86px;
-    height:38px;
-    min-height:38px;
-    padding:0 15px;
-    font-size:14.5px;
+    min-height:calc(52px + env(safe-area-inset-top));
+    padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
+    grid-template-columns:38px 1fr 78px;
   }
 
   .googlePanel .modalHead{
-    padding:20px 28px 18px;
+    padding:18px 28px 16px;
   }
 
   .googlePanel .modalHead h3{
-    font-size:29px;
+    font-size:26px;
   }
 
   .googlePanel .modalHead .muted{
-    font-size:15.5px;
+    font-size:14.5px;
   }
 
   .googlePanel .modalBody{
@@ -3695,49 +3726,47 @@ dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
   .googlePanelBar{
     padding-left:22px;
     padding-right:22px;
-    grid-template-columns:40px 1fr 84px;
+    grid-template-columns:36px 1fr 76px;
   }
 
   .panelCloseBtn{
-    width:36px;
-    height:36px;
-    min-height:36px;
+    width:31px;
+    height:31px;
+    min-height:31px;
   }
 
   .panelCloseBtn::before,
   .panelCloseBtn::after{
-    width:20px;
-    height:2.3px;
+    width:18px;
+    height:2.2px;
   }
 
   .panelSaveBtn{
-    min-width:82px;
-    height:36px;
-    min-height:36px;
-    padding:0 14px;
-    font-size:14px;
+    min-width:74px;
+    height:33px;
+    min-height:33px;
+    padding:0 13px;
+    font-size:13.5px;
   }
 
   .googlePanel .drag-handle{
-    width:48px;
+    width:50px;
     height:22px;
   }
 
-  .googlePanel .drag-handle::before{
-    top:7px;
-    width:23px;
-    height:23px;
-    border-right-width:4.5px;
-    border-bottom-width:4.5px;
-    transform:translateX(-50%) rotate(45deg) scale(.82);
+  .googlePanel .drag-handle::before,
+  .googlePanel .drag-handle::after{
+    top:9px;
+    width:22px;
+    height:4px;
   }
 
   .googlePanel .modalHead{
-    padding:19px 24px 17px;
+    padding:18px 24px 15px;
   }
 
   .googlePanel .modalHead h3{
-    font-size:28px;
+    font-size:25px;
   }
 
   .googlePanel .modalBody{
@@ -4143,7 +4172,7 @@ dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
           </div>
         </div>
 
-        <div>
+        <div class="dayNoteField">
           <label>Notatka do dnia</label>
           <textarea id="dlgNote" placeholder="Zapisuje się automatycznie..."></textarea>
         </div>
