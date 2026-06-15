@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.17</title>
+  <title>Czas pracy 4.1.18</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -549,14 +549,6 @@
       dialog[open]{animation:slideUp .28s cubic-bezier(.2,0,0,1)}
     }
     @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-
-    .drag-handle{
-      width:48px;
-      height:5px;
-      border-radius:999px;
-      background:#d7dce4;
-      margin:14px auto 12px;
-    }
     .modalHead{
       padding:0 24px 14px;
       background:transparent;
@@ -1256,44 +1248,6 @@ dialog:focus,
 dialog:focus-visible{
   outline:none !important;
 }
-
-/* Chevron modala jako rozwarte V */
-.drag-handle{
-  width:52px;
-  height:28px;
-  margin:7px auto 5px;
-  background:transparent;
-  border:none;
-  border-radius:999px;
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-  touch-action:none;
-  position:relative;
-}
-.drag-handle:hover{
-  background:rgba(60,64,67,.04);
-}
-.drag-handle::before,
-.drag-handle::after{
-  content:"";
-  position:absolute;
-  top:12px;
-  width:20px;
-  height:4px;
-  background:#d5d9df;
-  border:none;
-  border-radius:999px;
-  transform-origin:center;
-}
-.drag-handle::before{
-  left:8px;
-  transform:rotate(22deg);
-}
-.drag-handle::after{
-  right:8px;
-  transform:rotate(-22deg);
-}
 .modalHead{
   padding-top:0;
 }
@@ -1565,16 +1519,6 @@ textarea{
   .pill{
     border-radius:3px !important;
     padding:0 3px !important;
-  }
-  .drag-handle{
-    width:48px;
-    height:26px;
-  }
-  .drag-handle::before,
-  .drag-handle::after{
-    top:11px;
-    width:18px;
-    height:4px;
   }
 }
 
@@ -3452,7 +3396,8 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 }
 
 
-/* ===== Czas pracy 4.1.17: stabilniejszy mini-podgląd dnia ===== */
+
+/* ===== Czas pracy 4.1.18: mini-podgląd dnia bez przeciągania ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel,
@@ -3798,47 +3743,35 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   margin-right:0;
 }
 
-/* Mini-podgląd dnia: jedna geometria headera, stabilna karta i brak zmiany wyglądu w trakcie drag */
-dialog#dayDialog.googlePanel.is-day-sheet{
-  inset:0;
-  height:100dvh;
+/* Mini-podgląd dnia: prosty skrócony panel, bez dragowania i bez kotwic */
+dialog#dayDialog.googlePanel.is-mini-preview{
+  top:auto;
+  bottom:0;
+  height:min(62dvh, 520px);
+  min-height:420px;
   max-height:none;
-  background:transparent;
   border-radius:0;
-  box-shadow:none;
+  box-shadow:0 -10px 32px rgba(32,33,36,.22);
 }
 
-dialog#dayDialog.googlePanel.is-day-sheet::backdrop{
+dialog#dayDialog.googlePanel.is-mini-preview::backdrop{
   background:rgba(32,33,36,.18);
   backdrop-filter:none;
   -webkit-backdrop-filter:none;
 }
 
-dialog#dayDialog.googlePanel.is-day-sheet .googlePanelShell{
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  height:100dvh;
-  border-radius:30px 30px 0 0;
-  box-shadow:0 -12px 38px rgba(32,33,36,.24),0 -2px 8px rgba(32,33,36,.08);
-  transform:translate3d(0, var(--day-sheet-y, 0px), 0);
-  transition:transform .24s cubic-bezier(.2,0,0,1);
-  will-change:transform;
+dialog#dayDialog.googlePanel.is-mini-preview .googlePanelShell{
+  height:100%;
+  border-radius:0;
 }
 
-dialog#dayDialog.googlePanel.is-day-sheet.is-sheet-dragging .googlePanelShell{
-  transition:none;
-}
-
-dialog#dayDialog.googlePanel.is-day-sheet .googlePanelBar{
-  position:relative;
+dialog#dayDialog.googlePanel.is-mini-preview .googlePanelBar{
   min-height:calc(54px + env(safe-area-inset-top));
   padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
   border-bottom:1px solid rgba(60,64,67,.12);
 }
 
-dialog#dayDialog.googlePanel.is-day-sheet .panelCloseBtn{
+dialog#dayDialog.googlePanel.is-mini-preview .panelCloseBtn{
   left:24px;
   top:calc(12px + env(safe-area-inset-top));
   width:32px;
@@ -3846,23 +3779,12 @@ dialog#dayDialog.googlePanel.is-day-sheet .panelCloseBtn{
   min-height:32px;
 }
 
-dialog#dayDialog.googlePanel.is-day-sheet .panelSaveBtn{
-  right:24px;
-  top:calc(8px + env(safe-area-inset-top));
-}
-
-dialog#dayDialog.googlePanel.is-day-sheet .drag-handle{
-  top:calc(15px + env(safe-area-inset-top));
-  cursor:pointer;
-}
-
 dialog#dayDialog.googlePanel.is-mini-preview .panelSaveBtn{
-  display:none;
+  display:inline-flex;
 }
 
-/* Mini: prosty pasek z div-a, bez SVG i bez pseudo-elementów chevrona */
 dialog#dayDialog.googlePanel.is-mini-preview .drag-handle{
-  width:58px;
+  top:calc(15px + env(safe-area-inset-top));
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .drag-handle svg{
@@ -3899,11 +3821,6 @@ dialog#dayDialog.googlePanel.is-mini-preview .modalHead .muted{
 
 dialog#dayDialog.googlePanel.is-mini-preview .modalBody{
   padding:0 24px 24px;
-}
-
-dialog#dayDialog.googlePanel.is-mini-preview .dayPreviewStats{
-  gap:16px;
-  margin:2px 0 16px;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .statMiniValue{
@@ -4006,6 +3923,15 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
   .googlePanel .modalBody{
     padding-left:24px;
     padding-right:24px;
+  }
+
+  dialog#dayDialog.googlePanel.is-mini-preview{
+    height:min(64dvh, 520px);
+    min-height:400px;
+  }
+
+  dialog#dayDialog.googlePanel.is-mini-preview .panelCloseBtn{
+    left:22px;
   }
 
   dialog#dayDialog.googlePanel.is-mini-preview .modalHead{
@@ -5042,7 +4968,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     if (dlg) {
       dlg.classList.add("is-preview-only");
       dlg.classList.remove("is-form-open", "is-empty-day", "is-mini-preview");
-        setDaySheetMode("full", { animate:false });
+        setDayPanelMode("full");
     }
 
     setStatus(`Dodano zakres z szablonu: ${start}–${end}.`);
@@ -5668,19 +5594,17 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     if ($("dlgNote")) $("dlgNote").value = day.note || "";
 
     if (dlg) {
-      dlg.classList.add("is-day-sheet", "is-mini-preview", "is-preview-only");
-      dlg.classList.remove("is-form-open", "is-sheet-dragging");
+      dlg.classList.add("is-mini-preview", "is-preview-only");
+      dlg.classList.remove("is-form-open", "is-day-sheet");
       dlg.classList.toggle("is-empty-day", !hasAnyEvent);
-      dlg.style.setProperty("--day-sheet-y", `${getDaySheetMiniY()}px`);
-      daySheetMode = "mini";
-      daySheetY = getDaySheetMiniY();
+      dlg.style.removeProperty("--day-sheet-y");
     }
 
     renderDayDialog();
 
     if (dlg && typeof dlg.showModal === "function") dlg.showModal();
     else if (dlg) dlg.setAttribute("open", "");
-    setDaySheetMode("mini", { animate:false });
+    setDayPanelMode("mini");
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
   }
 
@@ -5690,8 +5614,10 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
   function closeDay() {
     dlgDate = null;
     if (dlg) {
-      dlg.classList.remove("is-day-sheet", "is-mini-preview", "is-sheet-dragging");
+      dlg.classList.remove("is-day-sheet", "is-mini-preview");
       dlg.style.removeProperty("--day-sheet-y");
+      const done = $("dayPanelDone");
+      if (done) done.textContent = "Gotowe";
     }
     if (dlg && typeof dlg.close === "function") dlg.close();
     else if (dlg) dlg.removeAttribute("open");
@@ -5703,41 +5629,22 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     dlg.addEventListener("cancel", (e) => { e.preventDefault(); closeDay(); });
   }
 
-  let daySheetMode = "mini";
-  let daySheetY = 0;
-  let daySheetMiniY = 0;
-
-  function getDaySheetMiniY() {
-    const vh = window.innerHeight || document.documentElement.clientHeight || 720;
-    const miniHeight = Math.min(Math.round(vh * 0.58), 500);
-    return Math.max(0, vh - miniHeight);
-  }
-
-  function applyDaySheetY(y, { dragging = false } = {}) {
+  function setDayPanelMode(mode) {
     if (!dlg) return;
-    daySheetMiniY = getDaySheetMiniY();
-    daySheetY = Math.max(0, Math.min(daySheetMiniY, Math.round(y)));
-    dlg.style.setProperty("--day-sheet-y", `${daySheetY}px`);
-    dlg.classList.toggle("is-sheet-dragging", dragging);
-  }
+    const isMini = mode !== "full";
+    dlg.classList.toggle("is-mini-preview", isMini);
+    dlg.classList.remove("is-day-sheet");
+    dlg.style.removeProperty("--day-sheet-y");
+    const done = $("dayPanelDone");
+    if (done) done.textContent = isMini ? "Rozwiń" : "Gotowe";
 
-  function setDaySheetMode(mode, { animate = true } = {}) {
-    if (!dlg) return;
-    daySheetMiniY = getDaySheetMiniY();
-    daySheetMode = mode === "full" ? "full" : "mini";
-    dlg.classList.add("is-day-sheet");
-    dlg.classList.toggle("is-mini-preview", daySheetMode === "mini");
-    dlg.classList.toggle("is-sheet-dragging", !animate);
-    applyDaySheetY(daySheetMode === "mini" ? daySheetMiniY : 0, { dragging: !animate });
-    if (!animate) {
-      requestAnimationFrame(() => dlg.classList.remove("is-sheet-dragging"));
-    }
+    const content = dlg.querySelector(".googlePanelContent");
+    if (content) content.scrollTop = 0;
   }
 
   function expandDayPanel({ form = false } = {}) {
     if (!dlg) return;
-    setDaySheetMode("full");
-    dlg.classList.remove("is-mini-preview");
+    setDayPanelMode("full");
     if (form) {
       dlg.classList.add("is-form-open");
       dlg.classList.remove("is-preview-only");
@@ -5747,9 +5654,6 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
       dlg.classList.add("is-preview-only");
       dlg.classList.remove("is-form-open");
     }
-
-    const content = dlg.querySelector(".googlePanelContent");
-    if (content) content.scrollTop = 0;
   }
 
   const dlgShowAddShiftBtn = $("dlgShowAddShift");
@@ -5762,103 +5666,15 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     };
   }
 
-  function toggleDaySheetFromHandle() {
+  function handleDayPanelDone() {
     if (!dlg) return;
-    if (daySheetMode === "mini" || dlg.classList.contains("is-mini-preview")) {
+    if (dlg.classList.contains("is-mini-preview")) {
       expandDayPanel({ form:false });
-    } else {
-      setDaySheetMode("mini");
+      haptic.tap();
+      return;
     }
-    haptic.tap();
+    $("dlgBack")?.click();
   }
-
-  dlg?.querySelector(".drag-handle")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    toggleDaySheetFromHandle();
-  });
-
-  (() => {
-    const shell = dlg?.querySelector(".googlePanelShell");
-    const content = dlg?.querySelector(".googlePanelContent");
-    if (!dlg || !shell) return;
-
-    let startY = 0;
-    let startSheetY = 0;
-    let lastY = 0;
-    let startTime = 0;
-    let dragging = false;
-
-    shell.addEventListener("touchstart", (e) => {
-      if (!dlg.open || e.touches.length !== 1) return;
-      startY = e.touches[0].clientY;
-      lastY = startY;
-      startSheetY = daySheetY;
-      startTime = performance.now();
-      dragging = false;
-      daySheetMiniY = getDaySheetMiniY();
-    }, { passive:true });
-
-    shell.addEventListener("touchmove", (e) => {
-      if (!dlg.open || e.touches.length !== 1 || !startY) return;
-
-      const currentY = e.touches[0].clientY;
-      const dy = currentY - startY;
-      lastY = currentY;
-
-      if (!dragging) {
-        const pullingDown = dy > 0;
-        const pushingUp = dy < 0;
-        const contentAtTop = !content || content.scrollTop <= 1;
-
-        if (Math.abs(dy) < 8) return;
-        if (pullingDown && daySheetY <= 2 && !contentAtTop) return;
-        if (pushingUp && daySheetY <= 2) return;
-
-        dragging = true;
-        dlg.classList.add("is-sheet-dragging");
-      }
-
-      e.preventDefault();
-      applyDaySheetY(startSheetY + dy, { dragging:true });
-    }, { passive:false });
-
-    shell.addEventListener("touchend", () => {
-      if (!startY) return;
-
-      if (dragging) {
-        const dt = Math.max(1, performance.now() - startTime);
-        const velocity = (lastY - startY) / dt;
-        const threshold = daySheetMiniY * 0.48;
-
-        if (velocity > 0.42) {
-          setDaySheetMode("mini");
-        } else if (velocity < -0.42) {
-          expandDayPanel({ form:false });
-        } else if (daySheetY > threshold) {
-          setDaySheetMode("mini");
-        } else {
-          expandDayPanel({ form:false });
-        }
-      }
-
-      startY = 0;
-      dragging = false;
-      dlg.classList.remove("is-sheet-dragging");
-    }, { passive:true });
-
-    shell.addEventListener("touchcancel", () => {
-      if (daySheetY > daySheetMiniY * 0.5) setDaySheetMode("mini");
-      else expandDayPanel({ form:false });
-      startY = 0;
-      dragging = false;
-      dlg.classList.remove("is-sheet-dragging");
-    }, { passive:true });
-
-    window.addEventListener("resize", () => {
-      if (!dlg?.open || !dlg.classList.contains("is-day-sheet")) return;
-      setDaySheetMode(daySheetMode, { animate:false });
-    });
-  })();
 
   function renderDayDialog() {
     if (!dlgDate) return;
@@ -7016,7 +6832,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
   $("bulkPanelClose")?.addEventListener("click", () => { $("bulkBack")?.click(); });
   $("bulkPanelSave")?.addEventListener("click", () => { $("bulkApply")?.click(); });
   $("dayPanelClose")?.addEventListener("click", () => { $("dlgBack")?.click(); });
-  $("dayPanelDone")?.addEventListener("click", () => { $("dlgBack")?.click(); });
+  $("dayPanelDone")?.addEventListener("click", handleDayPanelDone);
 
 
   const drawer = $("mainMenuDialog");
