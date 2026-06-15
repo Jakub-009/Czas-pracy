@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.14</title>
+  <title>Czas pracy 4.1.15</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -3319,7 +3319,108 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 }
 
 
-/* ===== Czas pracy 4.1.14: panele ekranowe i mini-podgląd dnia ===== */
+
+/* ===== Czas pracy 4.1.15: podgląd statystyk rocznych w aplikacji ===== */
+.yearStatsPreview{
+  margin:14px 12px 4px;
+  padding:16px;
+  border-radius:22px;
+  background:#f6f8fc;
+  border:1px solid #e2e6ef;
+}
+
+.yearStatsHead{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.yearStatsHead strong{
+  display:block;
+  font-size:18px;
+  line-height:1.15;
+  color:#202124;
+}
+
+.yearStatsHead span{
+  display:block;
+  margin-top:4px;
+  font-size:13.5px;
+  line-height:1.25;
+  color:#5f6368;
+}
+
+.yearStatsGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.yearStatBox{
+  min-width:0;
+  padding:12px;
+  border-radius:18px;
+  background:#fff;
+  border:1px solid #e7ebf3;
+}
+
+.yearStatBox strong{
+  display:block;
+  font-size:19px;
+  line-height:1.1;
+  color:#202124;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.yearStatBox span{
+  display:block;
+  margin-top:5px;
+  font-size:12.5px;
+  line-height:1.2;
+  color:#5f6368;
+}
+
+.yearStatsTableWrap{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+.yearStatsTable{
+  width:100%;
+  min-width:420px;
+  border-collapse:collapse;
+  font-size:12.5px;
+}
+
+.yearStatsTable th,
+.yearStatsTable td{
+  padding:9px 8px;
+  border-bottom:1px solid #e5e9f1;
+  text-align:right;
+  white-space:nowrap;
+}
+
+.yearStatsTable th:first-child,
+.yearStatsTable td:first-child{
+  text-align:left;
+}
+
+.yearStatsTable th{
+  color:#5f6368;
+  font-weight:650;
+}
+
+.yearStatsTable td{
+  color:#202124;
+  font-weight:520;
+}
+
+
+/* ===== Czas pracy 4.1.15: panele ekranowe i poprawiony mini-podgląd dnia ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel{
@@ -3575,7 +3676,6 @@ dialog#dayDialog.googlePanel .dayCloseRow{
   display:none;
 }
 
-/* Formularz dnia w trybie dodawania: układ jak Zakres dni */
 dialog#dayDialog.googlePanel.is-form-open .dayPreviewStats,
 dialog#dayDialog.googlePanel.is-form-open #dlgShiftsBlock,
 dialog#dayDialog.googlePanel.is-form-open #dlgNotePreview{
@@ -3583,11 +3683,36 @@ dialog#dayDialog.googlePanel.is-form-open #dlgNotePreview{
 }
 
 dialog#dayDialog.googlePanel .dayAddTrigger{
-  min-height:42px;
-  margin:14px 0 18px;
-  padding:0 2px;
+  width:max-content;
+  max-width:100%;
+  min-height:44px;
+  margin:16px 0 18px;
+  padding:0 18px 0 12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  border-radius:999px;
+  background:#e8f0fe;
+  color:#174ea6;
+  box-shadow:none;
   font-size:15px;
+  line-height:1;
   font-weight:650;
+  white-space:nowrap;
+}
+
+dialog#dayDialog.googlePanel .plusMark{
+  width:28px;
+  height:28px;
+  min-width:28px;
+  border-radius:50%;
+  display:inline-grid;
+  place-items:center;
+  font-size:23px;
+  line-height:1;
+  font-weight:450;
+  color:#1a73e8;
 }
 
 dialog#dayDialog.googlePanel .addShiftPanel{
@@ -3638,14 +3763,14 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   margin-right:0;
 }
 
-/* Mini-podgląd dnia: tylko dayDialog */
+/* Mini-podgląd dnia: dialog pełnoekranowy, karta tylko na dole */
 dialog#dayDialog.googlePanel.is-mini-preview{
-  inset:auto 0 0 0;
-  height:auto;
-  min-height:0;
-  max-height:min(58dvh, 480px);
-  border-radius:30px 30px 0 0;
-  box-shadow:0 -12px 38px rgba(32,33,36,.24),0 -2px 8px rgba(32,33,36,.08);
+  inset:0;
+  height:100dvh;
+  max-height:none;
+  background:transparent;
+  border-radius:0;
+  box-shadow:none;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview::backdrop{
@@ -3655,12 +3780,18 @@ dialog#dayDialog.googlePanel.is-mini-preview::backdrop{
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .googlePanelShell{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
   height:auto;
-  max-height:min(58dvh, 480px);
+  max-height:min(64dvh, 520px);
   border-radius:30px 30px 0 0;
+  box-shadow:0 -12px 38px rgba(32,33,36,.24),0 -2px 8px rgba(32,33,36,.08);
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .googlePanelBar{
+  position:relative;
   min-height:46px;
   padding:8px 20px 4px;
   border-bottom:none;
@@ -3690,8 +3821,8 @@ dialog#dayDialog.googlePanel.is-mini-preview .drag-handle{
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .googlePanelContent{
-  max-height:calc(min(58dvh, 480px) - 46px);
-  padding-bottom:calc(18px + env(safe-area-inset-bottom));
+  max-height:calc(min(64dvh, 520px) - 46px);
+  padding-bottom:calc(26px + env(safe-area-inset-bottom));
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .modalHead{
@@ -3709,7 +3840,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .modalHead .muted{
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .modalBody{
-  padding:0 24px 20px;
+  padding:0 24px 24px;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .dayPreviewStats{
@@ -3759,7 +3890,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
   }
 
   dialog#dayDialog.googlePanel.is-mini-preview .modalBody{
-    padding:0 24px 20px;
+    padding:0 24px 24px;
   }
 }
 
@@ -4021,11 +4152,40 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
         <div class="drawerView" id="drawerViewTools">
           <div class="drawerToolGrid">
             <button class="tonal" id="reportPdf" type="button">Raport miesięczny</button>
-            <button class="tonal" id="reportYear" type="button">Raport roczny</button>
+            <button class="tonal" id="reportYear" type="button">Statystyki roczne</button>
             <button class="tonal" id="backupJson" type="button">Pobierz kopię</button>
             <input id="restoreJson" type="file" accept="application/json" style="display:none" />
             <button class="tonal" id="restoreBtn" type="button">Wczytaj dane</button>
             <button class="error-tonal" id="clearMonth" type="button">Wyczyść miesiąc</button>
+          </div>
+
+          <div class="yearStatsPreview" id="yearStatsPreview" hidden>
+            <div class="yearStatsHead">
+              <div>
+                <strong id="yearStatsTitle">Statystyki roczne</strong>
+                <span id="yearStatsSubtitle">—</span>
+              </div>
+            </div>
+            <div class="yearStatsGrid">
+              <div class="yearStatBox"><strong id="yearStatsHours">0:00</strong><span>Godziny</span></div>
+              <div class="yearStatBox"><strong id="yearStatsPay">0,00 zł</strong><span>Wypłata</span></div>
+              <div class="yearStatBox"><strong id="yearStatsWorkDays">0</strong><span>Dni pracy</span></div>
+              <div class="yearStatBox"><strong id="yearStatsAbsences">0</strong><span>Nieobecności</span></div>
+            </div>
+            <div class="yearStatsTableWrap">
+              <table class="yearStatsTable">
+                <thead>
+                  <tr>
+                    <th>Miesiąc</th>
+                    <th>Godz.</th>
+                    <th>Dni</th>
+                    <th>Urlop</th>
+                    <th>L4</th>
+                  </tr>
+                </thead>
+                <tbody id="yearStatsRows"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -5456,22 +5616,56 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
       dlg.classList.remove("is-preview-only");
       renderQuickTemplatesUI();
       setTimeout(() => $("dlgStart")?.focus(), 80);
+    } else {
+      dlg.classList.add("is-preview-only");
+      dlg.classList.remove("is-form-open");
     }
+
+    const content = dlg.querySelector(".googlePanelContent");
+    if (content) content.scrollTop = 0;
   }
 
   const dlgShowAddShiftBtn = $("dlgShowAddShift");
   if (dlgShowAddShiftBtn) {
-    dlgShowAddShiftBtn.onclick = () => {
+    dlgShowAddShiftBtn.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       expandDayPanel({ form:true });
       haptic.tap();
     };
   }
 
-  dlg?.querySelector(".drag-handle")?.addEventListener("click", () => {
+  dlg?.querySelector(".drag-handle")?.addEventListener("click", (e) => {
+    if (!dlg.classList.contains("is-mini-preview")) return;
+    e.preventDefault();
+    expandDayPanel({ form:false });
+    haptic.tap();
+  });
+
+  dlg?.querySelector(".modalHead")?.addEventListener("click", () => {
     if (!dlg.classList.contains("is-mini-preview")) return;
     expandDayPanel({ form:false });
     haptic.tap();
   });
+
+  (() => {
+    const shell = dlg?.querySelector(".googlePanelShell");
+    if (!dlg || !shell) return;
+    let startY = 0;
+    shell.addEventListener("touchstart", (e) => {
+      if (!dlg.classList.contains("is-mini-preview") || e.touches.length !== 1) return;
+      startY = e.touches[0].clientY;
+    }, { passive:true });
+    shell.addEventListener("touchend", (e) => {
+      if (!dlg.classList.contains("is-mini-preview") || !startY) return;
+      const endY = e.changedTouches?.[0]?.clientY ?? startY;
+      if (startY - endY > 45) {
+        expandDayPanel({ form:false });
+        haptic.tap();
+      }
+      startY = 0;
+    }, { passive:true });
+  })();
 
   function renderDayDialog() {
     if (!dlgDate) return;
@@ -5595,6 +5789,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     renderTotals(monthYM);
     renderQuickTemplatesUI();
     renderMonthStrip(monthYM);
+    renderYearStats();
 
     const todayNum = $("todayIconNum");
     if (todayNum) todayNum.textContent = String(new Date().getDate());
@@ -5834,9 +6029,9 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
   }
 
 
-  function buildYearReportHTML(year) {
-    const rows = [];
+  function computeYearStats(year) {
     const totals = { min:0, money:0, workDays:0, paid:0, unpaid:0, sick:0, notes:0 };
+    const months = [];
 
     for (let month = 1; month <= 12; month++) {
       const monthYM = `${year}-${pad2(month)}`;
@@ -5857,112 +6052,49 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
       totals.unpaid += unpaid;
       totals.sick += sick;
 
-      rows.push(`
-        <tr>
-          <td>${escapeHtml(fmtMonthPL(monthYM))}</td>
-          <td class="num">${escapeHtml(fmtHM(min))}</td>
-          <td class="num">${escapeHtml(pln(money))}</td>
-          <td class="num">${workDays}</td>
-          <td class="num">${paid}</td>
-          <td class="num">${unpaid}</td>
-          <td class="num">${sick}</td>
-          <td class="num">${notes}</td>
-        </tr>
-      `);
+      months.push({ monthYM, min, money, workDays, notes, paid, unpaid, sick });
     }
 
-    const gen = new Date();
-    const genText = `${gen.getFullYear()}-${pad2(gen.getMonth() + 1)}-${pad2(gen.getDate())} ${pad2(gen.getHours())}:${pad2(gen.getMinutes())}`;
-
-    return `<!doctype html>
-<html lang="pl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raport roczny</title>
-  <style>
-    @page { size: A4 landscape; margin: 10mm; }
-    *{ box-sizing:border-box; }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#111;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-    .head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;}
-    h1{margin:0;font-size:18px;letter-spacing:.2px;}
-    .meta{font-size:11px;line-height:1.35;color:#333;text-align:right;white-space:nowrap;}
-    .summary{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0 12px;}
-    .box{border:1px solid #dfe3eb;border-radius:8px;padding:7px;background:#f8fafd;min-height:46px;}
-    .box strong{display:block;font-size:15px;line-height:1.1;}
-    .box span{display:block;margin-top:3px;font-size:10px;color:#555;line-height:1.15;}
-    table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:10.5px;}
-    th{text-align:left;padding:7px 6px;border-bottom:1px solid #cfd5e3;background:#f3f5fb;font-weight:800;}
-    td{padding:6px;border-bottom:1px solid #eef1f6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .num{text-align:right;}
-    tfoot td{font-weight:800;background:#f7f9fe;border-top:1px solid #cfd5e3;}
-  </style>
-</head>
-<body onload="setTimeout(function(){window.print();}, 250)">
-  <div class="head">
-    <div>
-      <h1>RAPORT ROCZNY CZASU PRACY</h1>
-      <div style="font-size:11px;color:#333;margin-top:2px;">Rok: <strong>${year}</strong></div>
-    </div>
-    <div class="meta">Wygenerowano: ${escapeHtml(genText)}</div>
-  </div>
-
-  <div class="summary">
-    <div class="box"><strong>${escapeHtml(fmtHM(totals.min))}</strong><span>Godziny w roku</span></div>
-    <div class="box"><strong>${escapeHtml(pln(totals.money))}</strong><span>Szacowana wypłata</span></div>
-    <div class="box"><strong>${totals.workDays}</strong><span>Dni z godzinami</span></div>
-    <div class="box"><strong>${totals.paid + totals.unpaid + totals.sick}</strong><span>Dni nieobecności</span></div>
-    <div class="box"><strong>${totals.notes}</strong><span>Dni z notatką</span></div>
-  </div>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Miesiąc</th>
-        <th class="num">Godziny</th>
-        <th class="num">Wypłata</th>
-        <th class="num">Dni pracy</th>
-        <th class="num">Urlop pł.</th>
-        <th class="num">Urlop bezpł.</th>
-        <th class="num">L4</th>
-        <th class="num">Notatki</th>
-      </tr>
-    </thead>
-    <tbody>${rows.join("")}</tbody>
-    <tfoot>
-      <tr>
-        <td>Razem</td>
-        <td class="num">${escapeHtml(fmtHM(totals.min))}</td>
-        <td class="num">${escapeHtml(pln(totals.money))}</td>
-        <td class="num">${totals.workDays}</td>
-        <td class="num">${totals.paid}</td>
-        <td class="num">${totals.unpaid}</td>
-        <td class="num">${totals.sick}</td>
-        <td class="num">${totals.notes}</td>
-      </tr>
-    </tfoot>
-  </table>
-</body>
-</html>`;
+    return { year, totals, months };
   }
 
-  function openYearReportPdf() {
-    haptic.tap();
+  function renderYearStats() {
+    const box = $("yearStatsPreview");
+    if (!box || box.hidden) return;
 
     const monthPick = $("monthPick");
     const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
     const year = yearFromMonthYM(monthYM);
+    const data = computeYearStats(year);
 
-    const html = buildYearReportHTML(year);
-    const w = window.open("", "_blank");
-    if (!w) {
-      notify("Twoja przeglądarka zablokowała nowe okno. Zezwól na pop-upy dla tej strony i spróbuj ponownie.");
-      return;
+    if ($("yearStatsTitle")) $("yearStatsTitle").textContent = `Statystyki ${year}`;
+    if ($("yearStatsSubtitle")) $("yearStatsSubtitle").textContent = "Podgląd roczny w aplikacji";
+    if ($("yearStatsHours")) $("yearStatsHours").textContent = fmtHM(data.totals.min);
+    if ($("yearStatsPay")) $("yearStatsPay").textContent = pln(data.totals.money);
+    if ($("yearStatsWorkDays")) $("yearStatsWorkDays").textContent = String(data.totals.workDays);
+    if ($("yearStatsAbsences")) $("yearStatsAbsences").textContent = String(data.totals.paid + data.totals.unpaid + data.totals.sick);
+
+    const rows = $("yearStatsRows");
+    if (rows) {
+      rows.innerHTML = data.months.map(m => `
+        <tr>
+          <td>${escapeHtml(monthShortPL(m.monthYM))}</td>
+          <td>${escapeHtml(fmtHM(m.min))}</td>
+          <td>${m.workDays}</td>
+          <td>${m.paid + m.unpaid}</td>
+          <td>${m.sick}</td>
+        </tr>
+      `).join("");
     }
-    w.document.open();
-    w.document.write(html);
-    w.document.close();
-    w.focus();
+  }
+
+  function openYearStatsPreview() {
+    haptic.tap();
+    const box = $("yearStatsPreview");
+    if (!box) return;
+    box.hidden = false;
+    renderYearStats();
+    setTimeout(() => box.scrollIntoView({ behavior:"smooth", block:"start" }), 40);
   }
 
   // ===== UI =====
@@ -6143,7 +6275,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
   if (reportBtn) reportBtn.onclick = openReportPdf;
 
   const reportYearBtn = $("reportYear");
-  if (reportYearBtn) reportYearBtn.onclick = openYearReportPdf;
+  if (reportYearBtn) reportYearBtn.onclick = openYearStatsPreview;
 
   const backupBtn = $("backupJson");
   if (backupBtn) {
