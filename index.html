@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.2</title>
+  <title>Czas pracy 4.2.1</title>
   <meta name="theme-color" content="#f8fafd" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -1796,7 +1796,7 @@ dialog select{
 }
 body.keyboard-open dialog[open]:not(.googlePanel),
 body.keyboard-focus dialog[open]:not(.googlePanel){
-  max-height:92dvh !important;
+  max-height:92dvh;
 }
 body.keyboard-open #dayDialog:not(.googlePanel) .modalBody,
 body.keyboard-focus #dayDialog:not(.googlePanel) .modalBody{
@@ -3623,6 +3623,53 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   display:none;
 }
 
+
+/* ===== Czas pracy 4.2.1 fix: przewijane wykresy i czystszy pasek paneli ===== */
+.googlePanelBar{
+  justify-content:flex-start;
+}
+
+.statsChartCard{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding-bottom:6px;
+}
+
+.statsChartCard::-webkit-scrollbar{
+  display:none;
+}
+
+.statsChart{
+  display:block;
+  height:auto;
+  max-width:none;
+}
+
+.monthStatsChart{
+  width:820px;
+  min-width:820px;
+}
+
+.yearStatsChart{
+  width:560px;
+  min-width:560px;
+}
+
+@media(max-width:430px){
+  .monthStatsChart{
+    width:860px;
+    min-width:860px;
+  }
+
+  .yearStatsChart{
+    width:600px;
+    min-width:600px;
+  }
+}
+
+
 /* ===== Czas pracy 4.2.1: wydarzenia w podglądzie dnia ===== */
 .shiftItem.googleEvent.noteEvent{
   background:#fff8e1;
@@ -3791,44 +3838,6 @@ dialog#vacDialog.googlePanel #clearVacationRange{
   margin-top:18px;
   margin-left:0;
   margin-right:0;
-}
-
-.googlePanel .drag-handle{
-  position:absolute;
-  left:50%;
-  top:calc(15px + env(safe-area-inset-top));
-  transform:translateX(-50%);
-  width:56px;
-  height:24px;
-  margin:0;
-  padding:0;
-  display:grid;
-  place-items:center;
-  background:transparent;
-  border-radius:999px;
-  cursor:default;
-  touch-action:auto;
-}
-
-.googlePanel .drag-handle::before,
-.googlePanel .drag-handle::after{
-  content:none;
-}
-
-.googlePanel .drag-handle svg{
-  display:block;
-  width:56px;
-  height:24px;
-  overflow:visible;
-}
-
-.googlePanel .drag-handle path{
-  fill:none;
-  stroke:#dfe3e8;
-  stroke-width:5;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  vector-effect:non-scaling-stroke;
 }
 
 .googlePanelContent{
@@ -4065,20 +4074,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   .panelSaveBtn{
     right:22px;
-  }
-
-  .googlePanel .drag-handle{
-    top:calc(15px + env(safe-area-inset-top));
-    width:56px;
-    height:24px;
-  }
-
-  .googlePanel .drag-handle svg{
-    width:56px;
-    height:24px;
-  }
-
-  .googlePanel .modalHead{
+  }.googlePanel .modalHead{
     padding:18px 24px 15px;
   }
 
@@ -4319,11 +4315,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     <div class="googlePanelShell">
       <div class="googlePanelBar">
         <button class="panelCloseBtn" id="vacPanelClose" type="button" aria-label="Zamknij"></button>
-        <div class="drag-handle" aria-hidden="true">
-          <svg viewBox="0 0 56 24" focusable="false">
-            <path d="M16 9 L28 15 L40 9"></path>
-          </svg>
-        </div>
         <button class="panelSaveBtn" id="vacPanelSave" type="button">Zapisz</button>
       </div>
       <div class="googlePanelContent">
@@ -4390,11 +4381,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     <div class="googlePanelShell">
       <div class="googlePanelBar">
         <button class="panelCloseBtn" id="bulkPanelClose" type="button" aria-label="Zamknij"></button>
-        <div class="drag-handle" aria-hidden="true">
-          <svg viewBox="0 0 56 24" focusable="false">
-            <path d="M16 9 L28 15 L40 9"></path>
-          </svg>
-        </div>
         <button class="panelSaveBtn" id="bulkPanelSave" type="button">Zapisz</button>
       </div>
       <div class="googlePanelContent">
@@ -4473,12 +4459,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     <div class="googlePanelShell">
       <div class="googlePanelBar">
         <button class="panelCloseBtn" id="dayPanelClose" type="button" aria-label="Zamknij"></button>
-        <div class="drag-handle" aria-hidden="true">
-          <svg viewBox="0 0 56 24" focusable="false">
-            <path d="M16 9 L28 15 L40 9"></path>
-          </svg>
-        </div>
-        <button class="panelSaveBtn" id="dayPanelDone" type="button">Gotowe</button>
       </div>
       <div class="googlePanelContent">
 
@@ -4552,12 +4532,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     <div class="googlePanelShell">
       <div class="googlePanelBar">
         <button class="panelCloseBtn" id="yearStatsPanelClose" type="button" aria-label="Zamknij"></button>
-        <div class="drag-handle" aria-hidden="true">
-          <svg viewBox="0 0 56 24" focusable="false">
-            <path d="M16 9 L28 15 L40 9"></path>
-          </svg>
-        </div>
-        <button class="panelSaveBtn" id="yearStatsPanelDone" type="button">Gotowe</button>
       </div>
 
       <div class="googlePanelContent">
@@ -4608,7 +4582,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               <div class="statsChartHead">
                 <strong>Wykres godzin w miesiącu</strong>
               </div>
-              <svg id="monthStatsChart" class="statsChart" viewBox="0 0 360 190" role="img" aria-label="Godziny w dniach miesiąca"></svg>
+              <svg id="monthStatsChart" class="statsChart monthStatsChart" viewBox="0 0 360 190" role="img" aria-label="Godziny w dniach miesiąca"></svg>
             </div>
 
             <div class="statsTableWrap">
@@ -4659,7 +4633,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               <div class="statsChartHead">
                 <strong>Wykres godzin w roku</strong>
               </div>
-              <svg id="yearStatsChart" class="statsChart" viewBox="0 0 360 190" role="img" aria-label="Suma godzin per miesiąc"></svg>
+              <svg id="yearStatsChart" class="statsChart yearStatsChart" viewBox="0 0 360 190" role="img" aria-label="Suma godzin per miesiąc"></svg>
             </div>
 
             <div class="statsTableWrap">
@@ -6515,7 +6489,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       labelFn:item => String(item.d),
       valueFn:item => item.min,
       titleFn:item => `${item.date}: ${fmtHM(item.min)}`,
-      showLabelFn:(item, idx, count) => item.d === 1 || item.d % 5 === 0 || idx === count - 1
+      showLabelFn:() => true
     });
   }
 
@@ -6638,6 +6612,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   function openYearStatsPreview() {
     openStatsPanel("year");
   }
+
+  window.openStatsPanelFromDrawer = openStatsPanel;
 
   function closeYearStats() {
     const dlgYear = $("yearStatsDialog");
@@ -6972,7 +6948,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   $("yearStatsCsv")?.addEventListener("click", () => exportYearCsv(activeYearStatsYear));
 
   $("yearStatsPanelClose")?.addEventListener("click", closeYearStats);
-  $("yearStatsPanelDone")?.addEventListener("click", closeYearStats);
   $("yearStatsDialog")?.addEventListener("cancel", (e) => { e.preventDefault(); closeYearStats(); });
   $("yearStatsDialog")?.addEventListener("close", () => document.body.classList.remove("modal-open"));
 
@@ -7473,7 +7448,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   $("bulkPanelClose")?.addEventListener("click", () => { $("bulkBack")?.click(); });
   $("bulkPanelSave")?.addEventListener("click", () => { $("bulkApply")?.click(); });
   $("dayPanelClose")?.addEventListener("click", () => { $("dlgBack")?.click(); });
-  $("dayPanelDone")?.addEventListener("click", () => { $("dlgBack")?.click(); });
 
 
   const drawer = $("mainMenuDialog");
@@ -7569,7 +7543,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   $("drawerMonthView")?.addEventListener("click", () => { closeDrawer(); document.querySelector(".calCard")?.scrollIntoView({ behavior:"smooth", block:"start" }); });
   $("drawerYearSummary")?.addEventListener("click", () => {
     closeDrawer();
-    setTimeout(() => openStatsPanel("month"), 120);
+    setTimeout(() => window.openStatsPanelFromDrawer?.("month"), 120);
   });
   ["drawerWeekView","drawerDayView"].forEach((id) => {
     $(id)?.addEventListener("click", () => {
@@ -7646,7 +7620,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     handle.addEventListener("pointercancel", reset);
   }
 
-  ["dayDialog","vacDialog","bulkDialog","yearStatsDialog"].forEach((id) => enableSwipeDownToClose($(id)));
+  // Chevron/drag-handle został usunięty z paneli — zostają jasne akcje: X, Zapisz/Dodaj.
+  [] .forEach((id) => enableSwipeDownToClose($(id)));
 
   function setupKeyboardFriendlyModals() {
     const controls = document.querySelectorAll("dialog input, dialog textarea, dialog select");
