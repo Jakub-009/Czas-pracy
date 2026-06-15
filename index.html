@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.2.0</title>
-  <meta name="theme-color" content="#f8fafd" />
+  <title>Czas pracy 4.2</title>
+  <meta name="theme-color" content="#f8fafd" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
 
@@ -400,36 +400,81 @@
       color:#202124;
     }
 
-    /* ===== Podsumowanie lekkie, bardziej Google ===== */
-    .summaryCard{
-      padding:16px 14px 4px;
-      margin-top:8px;
-    }
-    .statBox{
-      background:transparent;
-      border-radius:0;
-      padding:4px 2px;
-      min-height:58px;
-      display:flex;
-      flex-direction:column-reverse;
-      justify-content:flex-end;
-      border-bottom:1px solid var(--outline-soft);
-    }
-    .statValue{
-      margin:0 0 6px;
-      font-size:26px;
-      line-height:1;
-      font-weight:500;
-      letter-spacing:-.02em;
+    /* ===== Pulpit: karta statystyk miesiąca ===== */
+    .monthSummaryCard{
+      width:calc(100% - 20px);
+      margin:10px 10px 0;
+      padding:14px 14px;
+      display:grid;
+      grid-template-columns:42px minmax(0, 1fr) 24px;
+      align-items:center;
+      gap:13px;
+      border:1px solid var(--outline-soft);
+      border-radius:26px;
+      background:#fff;
       color:var(--text);
+      box-shadow:0 1px 2px rgba(60,64,67,.08);
+      text-align:left;
+      cursor:pointer;
     }
-    .statBox .muted{
+    .monthSummaryCard:active{
+      transform:scale(.995);
+    }
+    .monthSummaryIcon{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--primary-soft);
+      color:var(--primary);
+    }
+    .monthSummaryIcon svg{
+      width:24px;
+      height:24px;
+      fill:currentColor;
+    }
+    .monthSummaryText{
+      min-width:0;
+    }
+    .monthSummaryKicker{
       font-size:13px;
+      line-height:1.2;
+      font-weight:650;
       color:var(--text-2);
     }
-    #status{
+    .monthSummaryMain{
+      margin-top:4px;
+      display:flex;
+      align-items:baseline;
+      gap:7px;
+      min-width:0;
+      font-size:24px;
+      line-height:1.05;
+      font-weight:560;
+      letter-spacing:-.035em;
+      color:var(--text);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .monthSummaryMain span{
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    #monthSummaryMeta{
+      margin-top:5px;
+      font-size:13px;
+    }
+    .monthSummaryArrow{
+      width:24px;
+      height:24px;
+      fill:#5f6368;
+    }
+    .statusLine{
       min-height:18px;
-      margin-top:14px;
+      margin:10px 14px 0;
       text-align:center;
       color:var(--text-2);
     }
@@ -1181,14 +1226,14 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
   margin-top:2px;
 }
 .statBox{
-  min-height:48px !important;
+  min-height:48px;
 }
 .statValue{
-  font-size:clamp(21px, 6vw, 25px) !important;
-  margin-bottom:4px !important;
+  font-size:clamp(21px, 6vw, 25px);
+  margin-bottom:4px;
 }
 .statBox .muted{
-  font-size:12.5px !important;
+  font-size:12.5px;
 }
 .fab-container{
   right:18px;
@@ -1312,14 +1357,14 @@ dialog#dayDialog{
 }
 .shiftItem.googleEvent{
   position:relative;
-  display:flex !important;
-  align-items:center !important;
-  gap:10px !important;
-  padding:9px 8px 9px 0 !important;
-  min-height:54px !important;
-  border:none !important;
-  border-radius:8px !important;
-  background:#eef7f0 !important;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 8px 9px 0;
+  min-height:54px;
+  border:none;
+  border-radius:8px;
+  background:#eef7f0;
   overflow:hidden;
 }
 .shiftItem.googleEvent .eventStripe{
@@ -1334,54 +1379,54 @@ dialog#dayDialog{
   flex:1;
 }
 .shiftItem.googleEvent .times{
-  font-size:16px !important;
-  line-height:1.1 !important;
-  font-weight:650 !important;
-  color:#202124 !important;
-  letter-spacing:-.02em !important;
+  font-size:16px;
+  line-height:1.1;
+  font-weight:650;
+  color:#202124;
+  letter-spacing:-.02em;
 }
 .shiftItem.googleEvent .mins{
-  margin-top:4px !important;
-  font-size:12.5px !important;
-  line-height:1.2 !important;
-  color:#5f6368 !important;
+  margin-top:4px;
+  font-size:12.5px;
+  line-height:1.2;
+  color:#5f6368;
 }
 .shiftItem.googleEvent .delIcon{
-  width:38px !important;
-  height:38px !important;
-  min-height:38px !important;
+  width:38px;
+  height:38px;
+  min-height:38px;
   flex:0 0 auto;
 }
 .shiftItem.googleEvent.workEvent{
-  background:#eaf6ee !important;
+  background:#eaf6ee;
 }
 .shiftItem.googleEvent.workEvent .eventStripe{
-  background:#34a853 !important;
+  background:#34a853;
 }
 .shiftItem.googleEvent.leaveEvent{
-  min-height:50px !important;
+  min-height:50px;
 }
 .shiftItem.googleEvent.leaveEvent.vac{
-  background:#e8f0fe !important;
+  background:#e8f0fe;
 }
 .shiftItem.googleEvent.leaveEvent.vac .eventStripe{
-  background:#8ab4f8 !important;
+  background:#8ab4f8;
 }
 .shiftItem.googleEvent.leaveEvent.unpaid{
-  background:#f3eefe !important;
+  background:#f3eefe;
 }
 .shiftItem.googleEvent.leaveEvent.unpaid .eventStripe{
-  background:#7e57c2 !important;
+  background:#7e57c2;
 }
 .shiftItem.googleEvent.leaveEvent.sick{
-  background:#fce8e6 !important;
+  background:#fce8e6;
 }
 .shiftItem.googleEvent.leaveEvent.sick .eventStripe{
-  background:#ea4335 !important;
+  background:#ea4335;
 }
 .shiftItem.googleEvent.leaveEvent .mins{
-  color:#5f6368 !important;
-  font-weight:500 !important;
+  color:#5f6368;
+  font-weight:500;
 }
 
 .emptyDayHint{
@@ -1558,32 +1603,32 @@ textarea{
 
 /* Notatka i święto jako wydarzenia dnia */
 .shiftItem.googleEvent.noteEvent{
-  background:#fff8e1 !important;
+  background:#fff8e1;
 }
 .shiftItem.googleEvent.noteEvent .eventStripe{
-  background:#fbbc04 !important;
+  background:#fbbc04;
 }
 .shiftItem.googleEvent.noteEvent .times{
-  color:#202124 !important;
+  color:#202124;
 }
 .shiftItem.googleEvent.noteEvent .mins{
-  white-space:normal !important;
-  overflow:visible !important;
-  text-overflow:initial !important;
-  line-height:1.35 !important;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:initial;
+  line-height:1.35;
 }
 
 .shiftItem.googleEvent.holidayEvent{
-  background:#fce8e6 !important;
+  background:#fce8e6;
 }
 .shiftItem.googleEvent.holidayEvent .eventStripe{
-  background:#ea4335 !important;
+  background:#ea4335;
 }
 .shiftItem.googleEvent.holidayEvent .times{
-  color:#202124 !important;
+  color:#202124;
 }
 .shiftItem.googleEvent.holidayEvent .mins{
-  color:#5f6368 !important;
+  color:#5f6368;
 }
 
 /* Opcje dodawania wielu godzin */
@@ -1610,14 +1655,14 @@ textarea{
   font-weight:500;
 }
 .checkRow input{
-  width:20px !important;
-  min-width:20px !important;
-  height:20px !important;
-  min-height:20px !important;
-  margin:0 !important;
-  padding:0 !important;
+  width:20px;
+  min-width:20px;
+  height:20px;
+  min-height:20px;
+  margin:0;
+  padding:0;
   accent-color:#1a73e8;
-  border-radius:4px !important;
+  border-radius:4px;
 }
 .checkRow span{
   line-height:1.2;
@@ -1625,7 +1670,7 @@ textarea{
 
 /* Stary podgląd notatki ukryty, notatka jest teraz wydarzeniem */
 .dayNotePreview{
-  display:none !important;
+  display:none;
 }
 
   
@@ -1824,7 +1869,7 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   flex:0 0 auto;
 }
 .todayIconBtn,
-.summaryIconBtn{
+.profileSoonBtn{
   width:42px;
   height:42px;
   min-height:42px;
@@ -1834,8 +1879,7 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   color:#202124;
   box-shadow:none;
 }
-.todayIconBtn:hover,
-.summaryIconBtn:hover{
+.todayIconBtn:hover{
   background:#dfe3ea;
 }
 .todayIconBtn span{
@@ -1851,10 +1895,34 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   color:#202124;
   background:#fff;
 }
-.summaryIconBtn svg{
-  width:24px;
-  height:24px;
-  fill:#202124;
+.profileSoonBtn{
+  position:relative;
+  cursor:default;
+  opacity:1;
+}
+.profileSoonBtn:disabled{
+  color:#5f6368;
+}
+.profileSoonBtn svg{
+  width:25px;
+  height:25px;
+  fill:currentColor;
+}
+.profileSoonBtn span{
+  position:absolute;
+  right:0;
+  bottom:-2px;
+  max-width:54px;
+  padding:1px 4px;
+  border-radius:999px;
+  background:#eef2f7;
+  color:#5f6368;
+  font-size:8.5px;
+  line-height:1.15;
+  font-weight:700;
+  letter-spacing:-.02em;
+  transform:translateY(100%);
+  white-space:nowrap;
 }
 .monthStrip{
   position:sticky;
@@ -3287,16 +3355,56 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   color:#a50e0e;
 }
 
-/* ===== Czas pracy 4.2.0: modal statystyk rocznych ===== */
-.yearStatsControls{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  margin:0 0 16px;
+
+/* ===== Czas pracy 4.2.1: wspólne statystyki miesiąca i roku ===== */
+.statsBody{
+  padding-top:0;
 }
 
-.yearStatsControls button{
+.statsTabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4px;
+  padding:4px;
+  margin:0 0 16px;
+  border-radius:999px;
+  background:#edf1f7;
+}
+
+.statsTab{
+  min-height:40px;
+  padding:0 14px;
+  border-radius:999px;
+  background:transparent;
+  color:#3c4043;
+  box-shadow:none;
+  font-size:14px;
+  font-weight:650;
+}
+
+.statsTab.active{
+  background:#fff;
+  color:#174ea6;
+  box-shadow:0 1px 2px rgba(60,64,67,.12);
+}
+
+.statsView{
+  display:none;
+}
+
+.statsView.active{
+  display:block;
+}
+
+.statsPeriodBar{
+  display:grid;
+  grid-template-columns:42px 1fr 42px;
+  align-items:center;
+  gap:12px;
+  margin:0 0 14px;
+}
+
+.statsPeriodBar button{
   width:42px;
   height:42px;
   min-height:42px;
@@ -3307,8 +3415,8 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   box-shadow:none;
 }
 
-.yearStatsControls strong{
-  min-width:92px;
+.statsPeriodBar strong{
+  min-width:0;
   text-align:center;
   font-size:22px;
   line-height:1.1;
@@ -3316,24 +3424,70 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   color:#202124;
 }
 
-.yearStatsPanel .yearStatsGrid{
+.statsHero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin:0 0 14px;
+  padding:18px;
+  border-radius:28px;
+  background:linear-gradient(135deg, #e8f0fe, #f8fafd);
+  border:1px solid #dfe7fb;
+}
+
+.statsHero span{
+  display:block;
+  margin-bottom:7px;
+  font-size:13px;
+  line-height:1.2;
+  font-weight:650;
+  color:#3c4043;
+}
+
+.statsHero strong{
+  display:block;
+  font-size:34px;
+  line-height:1;
+  font-weight:560;
+  letter-spacing:-.045em;
+  color:#202124;
+}
+
+.statsHero small{
+  display:block;
+  margin-top:8px;
+  font-size:15px;
+  line-height:1.2;
+  font-weight:650;
+  color:#174ea6;
+}
+
+.statsHero svg{
+  width:42px;
+  height:42px;
+  flex:0 0 auto;
+  fill:#1a73e8;
+}
+
+.statsGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 
-.yearStatsPanel .yearStatBox{
+.statSoftBox{
   min-width:0;
   padding:13px;
-  border-radius:18px;
-  background:#f6f8fc;
+  border-radius:20px;
+  background:#fff;
   border:1px solid #e4e8f1;
 }
 
-.yearStatsPanel .yearStatBox strong{
+.statSoftBox strong{
   display:block;
-  font-size:21px;
+  font-size:22px;
   line-height:1.1;
   color:#202124;
   white-space:nowrap;
@@ -3341,7 +3495,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   text-overflow:ellipsis;
 }
 
-.yearStatsPanel .yearStatBox span{
+.statSoftBox span{
   display:block;
   margin-top:5px;
   font-size:12.5px;
@@ -3349,15 +3503,27 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   color:#5f6368;
 }
 
-.yearChartCard{
-  margin:4px 0 18px;
+.statsActions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:2px 0 16px;
+}
+
+.statsActions button{
+  min-height:40px;
+  padding:0 16px;
+}
+
+.statsChartCard{
+  margin:0 0 18px;
   padding:15px 14px 12px;
-  border-radius:22px;
-  background:#f8fafd;
+  border-radius:24px;
+  background:#fff;
   border:1px solid #e4e8f1;
 }
 
-.yearChartHead{
+.statsChartHead{
   display:flex;
   align-items:flex-end;
   justify-content:space-between;
@@ -3365,87 +3531,131 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   margin-bottom:8px;
 }
 
-.yearChartHead strong{
+.statsChartHead strong{
   font-size:15px;
   line-height:1.2;
   color:#202124;
 }
 
-.yearChartHead span{
+.statsChartHead span{
   font-size:12.5px;
   line-height:1.2;
   color:#5f6368;
 }
 
-.yearStatsChart{
+.statsChart{
   display:block;
   width:100%;
   height:auto;
   min-height:190px;
 }
 
-.yearStatsChart .axis,
-.yearStatsChart .gridLine{
+.statsChart .axis,
+.statsChart .gridLine{
   stroke:#dfe3eb;
   stroke-width:1;
 }
 
-.yearStatsChart .bar{
+.statsChart .bar{
   fill:#4285f4;
 }
 
-.yearStatsChart .barSoft{
+.statsChart .barSoft{
   fill:#d2e3fc;
 }
 
-.yearStatsChart .label{
+.statsChart .label{
   fill:#5f6368;
   font-size:9px;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
 }
 
-.yearStatsChart .value{
+.statsChart .value{
   fill:#202124;
   font-size:8.5px;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
   font-weight:650;
 }
 
-.yearStatsTableWrap{
+.statsTableWrap{
   overflow-x:auto;
   -webkit-overflow-scrolling:touch;
+  background:#fff;
+  border:1px solid #e4e8f1;
+  border-radius:22px;
 }
 
-.yearStatsTable{
+.statsTable{
   width:100%;
   min-width:430px;
   border-collapse:collapse;
   font-size:13px;
 }
 
-.yearStatsTable th,
-.yearStatsTable td{
-  padding:10px 8px;
-  border-bottom:1px solid #e5e9f1;
+.statsTable th,
+.statsTable td{
+  padding:10px 10px;
+  border-bottom:1px solid #eef1f6;
   text-align:right;
   white-space:nowrap;
 }
 
-.yearStatsTable th:first-child,
-.yearStatsTable td:first-child{
+.statsTable tr:last-child td{
+  border-bottom:none;
+}
+
+.statsTable th:first-child,
+.statsTable td:first-child{
   text-align:left;
 }
 
-.yearStatsTable th{
+.statsTable th{
   color:#5f6368;
   font-weight:650;
+  background:#f8fafd;
 }
 
-.yearStatsTable td{
+.statsTable td{
   color:#202124;
   font-weight:520;
 }
-/* ===== Czas pracy 4.2.0: pełny panel dnia bez mini-podglądu ===== */
+
+/* ===== Czas pracy 4.2.1: wydarzenia w podglądzie dnia ===== */
+.shiftItem.googleEvent.noteEvent{
+  background:#fff8e1;
+}
+.shiftItem.googleEvent.noteEvent .eventStripe{
+  background:#fbbc04;
+}
+.shiftItem.googleEvent.noteEvent .times{
+  color:#202124;
+}
+.shiftItem.googleEvent.noteEvent .mins{
+  white-space:normal;
+  overflow:visible;
+  text-overflow:initial;
+  line-height:1.35;
+}
+
+.shiftItem.googleEvent.holidayEvent{
+  background:#fce8e6;
+}
+.shiftItem.googleEvent.holidayEvent .eventStripe{
+  background:#ea4335;
+}
+.shiftItem.googleEvent.holidayEvent .times{
+  color:#202124;
+}
+.shiftItem.googleEvent.holidayEvent .mins{
+  color:#5f6368;
+}
+
+.shiftItem.googleEvent.leaveEvent .delIcon,
+.shiftItem.googleEvent.noteEvent .delIcon{
+  opacity:.88;
+}
+
+/* ===== Czas pracy 4.2.1: pełny panel dnia bez mini-podglądu ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel,
@@ -3904,8 +4114,11 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         <button class="todayIconBtn" id="todayBtn" type="button" aria-label="Przejdź do dzisiaj">
           <span id="todayIconNum">—</span>
         </button>
-        <button class="summaryIconBtn" id="summaryShortcut" type="button" aria-label="Podsumowania">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+        <button class="profileSoonBtn" id="profileSoonBtn" type="button" aria-label="Profil lokalny — wkrótce" title="Profil lokalny — wkrótce" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Zm0 2c-2.67 0-8 1.34-8 4v1.2c0 .44.36.8.8.8h14.4c.44 0 .8-.36.8-.8V18c0-2.66-5.33-4-8-4Z"/>
+          </svg>
+          <span>Wkrótce</span>
         </button>
       </div>
     </header>
@@ -3928,19 +4141,26 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       </div>
     </div>
 
-    <div class="card summaryCard">
-      <div class="grid-2">
-        <div class="statBox">
-          <div class="muted">Suma godzin</div>
-          <div class="statValue" id="sumHours">0:00</div>
-        </div>
-        <div class="statBox">
-          <div class="muted">Szacowana wypłata</div>
-          <div class="statValue" id="sumPay">0,00 zł</div>
-        </div>
+    <button class="card monthSummaryCard" id="monthSummaryCard" type="button" aria-label="Otwórz statystyki miesiąca">
+      <div class="monthSummaryIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="M5 19V9h3v10H5Zm5.5 0V5h3v14h-3ZM16 19v-7h3v7h-3Z"/>
+        </svg>
       </div>
-      <div class="muted" id="status"></div>
-    </div>
+      <div class="monthSummaryText">
+        <div class="monthSummaryKicker">Statystyki miesiąca</div>
+        <div class="monthSummaryMain">
+          <span id="sumHours">0:00</span>
+          <span aria-hidden="true">·</span>
+          <span id="sumPay">0,00 zł</span>
+        </div>
+        <div class="muted" id="monthSummaryMeta">0 dni pracy · 0 nieobecności</div>
+      </div>
+      <svg class="monthSummaryArrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M9.29 6.71a1 1 0 0 1 1.42 0L15.99 12l-5.28 5.29a1 1 0 0 1-1.42-1.42L13.17 12 9.29 8.12a1 1 0 0 1 0-1.41Z"/>
+      </svg>
+    </button>
+    <div class="muted statusLine" id="status"></div>
 
   </div>
 
@@ -4068,10 +4288,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
         <div class="drawerView" id="drawerViewTools">
           <div class="drawerToolGrid">
-            <button class="tonal" id="reportPdf" type="button">Raport miesięczny</button>
-            <button class="tonal" id="reportYear" type="button">Statystyki roczne</button>
-            <button class="tonal" id="exportMonthCsv" type="button">CSV miesiąc</button>
-            <button class="tonal" id="exportYearCsv" type="button">CSV rok</button>
+            <button class="tonal" id="statsTools" type="button">Statystyki</button>
             <button class="tonal" id="checkUpdateBtn" type="button">Sprawdź aktualizację</button>
             <button class="tonal" id="backupJson" type="button">Pobierz kopię</button>
             <input id="restoreJson" type="file" accept="application/json" style="display:none" />
@@ -4330,7 +4547,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
 
 
-  <dialog id="yearStatsDialog" class="googlePanel yearStatsPanel">
+  <dialog id="yearStatsDialog" class="googlePanel statsPanel">
     <div class="googlePanelShell">
       <div class="googlePanelBar">
         <button class="panelCloseBtn" id="yearStatsPanelClose" type="button" aria-label="Zamknij"></button>
@@ -4341,50 +4558,126 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         </div>
         <button class="panelSaveBtn" id="yearStatsPanelDone" type="button">Gotowe</button>
       </div>
+
       <div class="googlePanelContent">
         <div class="modalHead">
           <div class="modalHeadInner">
-            <h3 id="yearStatsTitle">Statystyki roczne</h3>
-            <div class="muted" id="yearStatsSubtitle">Podgląd roku na podstawie wybranego miesiąca.</div>
+            <h3 id="statsTitle">Statystyki</h3>
+            <div class="muted" id="statsSubtitle">Podsumowanie godzin, wypłat i nieobecności.</div>
           </div>
         </div>
 
-        <div class="modalBody">
-          <div class="yearStatsControls">
-            <button class="tonal" id="yearStatsPrev" type="button" aria-label="Poprzedni rok">‹</button>
-            <strong id="yearStatsCurrent">2026</strong>
-            <button class="tonal" id="yearStatsNext" type="button" aria-label="Następny rok">›</button>
+        <div class="modalBody statsBody">
+          <div class="statsTabs" role="tablist" aria-label="Zakres statystyk">
+            <button class="statsTab active" id="statsTabMonth" type="button">Miesiąc</button>
+            <button class="statsTab" id="statsTabYear" type="button">Rok</button>
           </div>
 
-          <div class="yearStatsGrid">
-            <div class="yearStatBox"><strong id="yearStatsHours">0:00</strong><span>Godziny</span></div>
-            <div class="yearStatBox"><strong id="yearStatsPay">0,00 zł</strong><span>Wypłata</span></div>
-            <div class="yearStatBox"><strong id="yearStatsWorkDays">0</strong><span>Dni pracy</span></div>
-            <div class="yearStatBox"><strong id="yearStatsAbsences">0</strong><span>Nieobecności</span></div>
-          </div>
-
-          <div class="yearChartCard">
-            <div class="yearChartHead">
-              <strong>Suma godzin per miesiąc</strong>
-              <span>Wykres słupkowy</span>
+          <section class="statsView active" id="monthStatsView">
+            <div class="statsPeriodBar">
+              <button class="tonal" id="monthStatsPrev" type="button" aria-label="Poprzedni miesiąc">‹</button>
+              <strong id="monthStatsCurrent">—</strong>
+              <button class="tonal" id="monthStatsNext" type="button" aria-label="Następny miesiąc">›</button>
             </div>
-            <svg id="yearStatsChart" class="yearStatsChart" viewBox="0 0 360 170" role="img" aria-label="Suma godzin per miesiąc"></svg>
-          </div>
 
-          <div class="yearStatsTableWrap">
-            <table class="yearStatsTable">
-              <thead>
-                <tr>
-                  <th>Miesiąc</th>
-                  <th>Godziny</th>
-                  <th>Dni</th>
-                  <th>Urlop</th>
-                  <th>L4</th>
-                </tr>
-              </thead>
-              <tbody id="yearStatsRows"></tbody>
-            </table>
-          </div>
+            <div class="statsHero">
+              <div>
+                <span>Miesiąc</span>
+                <strong id="monthStatsHours">0:00</strong>
+                <small id="monthStatsPay">0,00 zł</small>
+              </div>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 19V9h3v10H5Zm5.5 0V5h3v14h-3ZM16 19v-7h3v7h-3Z"/>
+              </svg>
+            </div>
+
+            <div class="statsGrid">
+              <div class="statSoftBox"><strong id="monthStatsWorkDays">0</strong><span>Dni pracy</span></div>
+              <div class="statSoftBox"><strong id="monthStatsAbsences">0</strong><span>Nieobecności</span></div>
+              <div class="statSoftBox"><strong id="monthStatsLeave">0</strong><span>Urlopy</span></div>
+              <div class="statSoftBox"><strong id="monthStatsNotes">0</strong><span>Notatki</span></div>
+            </div>
+
+            <div class="statsActions">
+              <button class="tonal" id="monthStatsPdf" type="button">Raport PDF</button>
+              <button class="tonal" id="monthStatsCsv" type="button">CSV</button>
+            </div>
+
+            <div class="statsChartCard">
+              <div class="statsChartHead">
+                <strong>Godziny w dniach miesiąca</strong>
+                <span>Wykres słupkowy</span>
+              </div>
+              <svg id="monthStatsChart" class="statsChart" viewBox="0 0 360 190" role="img" aria-label="Godziny w dniach miesiąca"></svg>
+            </div>
+
+            <div class="statsTableWrap">
+              <table class="statsTable">
+                <thead>
+                  <tr>
+                    <th>Dzień</th>
+                    <th>Godziny</th>
+                    <th>Status</th>
+                    <th>Notatka</th>
+                  </tr>
+                </thead>
+                <tbody id="monthStatsRows"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="statsView" id="yearStatsView">
+            <div class="statsPeriodBar">
+              <button class="tonal" id="yearStatsPrev" type="button" aria-label="Poprzedni rok">‹</button>
+              <strong id="yearStatsCurrent">2026</strong>
+              <button class="tonal" id="yearStatsNext" type="button" aria-label="Następny rok">›</button>
+            </div>
+
+            <div class="statsHero">
+              <div>
+                <span>Rok</span>
+                <strong id="yearStatsHours">0:00</strong>
+                <small id="yearStatsPay">0,00 zł</small>
+              </div>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 19h16v2H4v-2Zm1-2V9h3v8H5Zm5.5 0V3h3v14h-3ZM16 17v-6h3v6h-3Z"/>
+              </svg>
+            </div>
+
+            <div class="statsGrid">
+              <div class="statSoftBox"><strong id="yearStatsWorkDays">0</strong><span>Dni pracy</span></div>
+              <div class="statSoftBox"><strong id="yearStatsAbsences">0</strong><span>Nieobecności</span></div>
+              <div class="statSoftBox"><strong id="yearStatsLeave">0</strong><span>Urlopy</span></div>
+              <div class="statSoftBox"><strong id="yearStatsNotes">0</strong><span>Notatki</span></div>
+            </div>
+
+            <div class="statsActions">
+              <button class="tonal" id="yearStatsCsv" type="button">CSV</button>
+            </div>
+
+            <div class="statsChartCard">
+              <div class="statsChartHead">
+                <strong>Suma godzin per miesiąc</strong>
+                <span>Wykres słupkowy</span>
+              </div>
+              <svg id="yearStatsChart" class="statsChart" viewBox="0 0 360 190" role="img" aria-label="Suma godzin per miesiąc"></svg>
+            </div>
+
+            <div class="statsTableWrap">
+              <table class="statsTable">
+                <thead>
+                  <tr>
+                    <th>Miesiąc</th>
+                    <th>Godziny</th>
+                    <th>Dni</th>
+                    <th>Urlop</th>
+                    <th>L4</th>
+                  </tr>
+                </thead>
+                <tbody id="yearStatsRows"></tbody>
+              </table>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -5707,6 +6000,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
           <div class="times">${leaveLabel(leaveType)}</div>
           <div class="mins">Cały dzień</div>
         </div>
+        <button class="delIcon" data-clearleave="1" aria-label="Usuń status dnia" type="button"></button>
       </div>
     ` : "";
 
@@ -5746,6 +6040,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
           <div class="times">Notatka</div>
           <div class="mins">${escapeHtml(note)}</div>
         </div>
+        <button class="delIcon" data-clearnote="1" aria-label="Usuń notatkę" type="button"></button>
       </div>
     ` : "";
 
@@ -5753,6 +6048,17 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     if (shiftsTitle) shiftsTitle.textContent = items ? "Wydarzenia dnia" : "Godziny pracy";
     if (shiftsBox) shiftsBox.innerHTML = items || `<div class="emptyDayHint">Brak godzin w tym dniu. Dodaj pierwszy zakres poniżej.</div>`;
+
+    function maybeOpenFormWhenEmpty(dayObj) {
+      const d = dayObj || getDay(dlgDate);
+      const hasUserData = !!(d && ((d.shifts || []).length || d.leaveType || d.vacation || (d.note && d.note.trim())));
+      const [holidayYearCheck] = dlgDate.split("-").map(Number);
+      const hasHolidayOnly = !!getHolidayMap(holidayYearCheck).get(dlgDate);
+      if (dlg && !hasUserData && !hasHolidayOnly) {
+        dlg.classList.add("is-form-open", "is-empty-day");
+        dlg.classList.remove("is-preview-only");
+      }
+    }
 
     shiftsBox?.querySelectorAll("[data-delshift]").forEach(btn => {
       btn.onclick = async () => {
@@ -5764,14 +6070,35 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         save();
         renderAll();
         renderDayDialog();
-
-        if (dlg && d.shifts.length === 0 && !(d.leaveType || d.vacation)) {
-          dlg.classList.add("is-form-open", "is-empty-day");
-          dlg.classList.remove("is-preview-only");
-        }
-
+        maybeOpenFormWhenEmpty(d);
         haptic.danger();
       };
+    });
+
+    shiftsBox?.querySelector("[data-clearleave]")?.addEventListener("click", async () => {
+      if (!(await askConfirm("Usunąć status urlopu/L4 z tego dnia?", "Usuń status"))) return;
+      const d = getDay(dlgDate);
+      if (!d) return;
+      d.leaveType = "";
+      d.vacation = false;
+      save();
+      renderAll();
+      renderDayDialog();
+      maybeOpenFormWhenEmpty(d);
+      haptic.warning();
+    });
+
+    shiftsBox?.querySelector("[data-clearnote]")?.addEventListener("click", async () => {
+      if (!(await askConfirm("Usunąć notatkę z tego dnia?", "Usuń notatkę"))) return;
+      const d = getDay(dlgDate);
+      if (!d) return;
+      d.note = "";
+      if ($("dlgNote")) $("dlgNote").value = "";
+      save();
+      renderAll();
+      renderDayDialog();
+      maybeOpenFormWhenEmpty(d);
+      haptic.warning();
     });
   }
 
@@ -5781,6 +6108,14 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if ($("sumHours")) $("sumHours").textContent = fmtHM(sumMin);
     const money = round2((sumMin / 60) * (db.settings.rate || 0));
     if ($("sumPay")) $("sumPay").textContent = pln(money);
+
+    const monthEntries = db.entries.filter(e => e?.date && ym(e.date) === monthYM);
+    const workDays = monthEntries.filter(e => computeDayMinutes(e) > 0).length;
+    const absences = monthEntries.filter(e => ["paid", "unpaid", "sick"].includes(e.leaveType)).length;
+    const notes = monthEntries.filter(e => e.note && e.note.trim()).length;
+    if ($("monthSummaryMeta")) {
+      $("monthSummaryMeta").textContent = `${workDays} dni pracy · ${absences} nieobecności · ${notes} notatki`;
+    }
 
     updateLeaveCounterUI(yearFromMonthYM(monthYM));
   }
@@ -5799,7 +6134,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     renderTotals(monthYM);
     renderQuickTemplatesUI();
     renderMonthStrip(monthYM);
-    renderYearStats();
+    renderStatsPanel();
 
     const todayNum = $("todayIconNum");
     if (todayNum) todayNum.textContent = String(new Date().getDate());
@@ -6020,11 +6355,11 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 </html>`;
   }
 
-  function openReportPdf() {
+  function openReportPdf(monthOverride = "") {
     haptic.tap();
 
     const monthPick = $("monthPick");
-    const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
+    const monthYM = monthOverride || ((monthPick && monthPick.value) ? monthPick.value : ym(todayISO()));
 
     const html = buildReportHTML(monthYM);
     const w = window.open("", "_blank");
@@ -6039,7 +6374,39 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   }
 
 
+  let activeStatsMode = "month";
+  let activeStatsMonth = "";
   let activeYearStatsYear = null;
+
+  function computeMonthStats(monthYM) {
+    const entries = db.entries
+      .filter(e => e?.date && ym(e.date) === monthYM)
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    const totals = { min:0, money:0, workDays:0, paid:0, unpaid:0, sick:0, notes:0 };
+    const days = [];
+
+    for (const day of entries) {
+      const min = computeDayMinutes(day);
+      const money = round2((min / 60) * (db.settings.rate || 0));
+      const hasNote = !!(day.note && day.note.trim());
+      const leaveType = day.leaveType || (day.vacation ? "paid" : "");
+
+      totals.min += min;
+      totals.money += money;
+      if (min > 0) totals.workDays += 1;
+      if (hasNote) totals.notes += 1;
+      if (leaveType === "paid") totals.paid += 1;
+      if (leaveType === "unpaid") totals.unpaid += 1;
+      if (leaveType === "sick") totals.sick += 1;
+
+      if (min > 0 || leaveType || hasNote) {
+        days.push({ date:day.date, min, money, leaveType, note:day.note || "" });
+      }
+    }
+
+    return { monthYM, totals, days };
+  }
 
   function computeYearStats(year) {
     const totals = { min:0, money:0, workDays:0, paid:0, unpaid:0, sick:0, notes:0 };
@@ -6070,39 +6437,41 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     return { year, totals, months };
   }
 
-  function renderYearStatsChart(months) {
-    const svg = $("yearStatsChart");
+  function renderBarChart(svgId, items, { labelFn, valueFn, titleFn }) {
+    const svg = $(svgId);
     if (!svg) return;
 
-    const maxMin = Math.max(60, ...months.map(m => m.min || 0));
+    const maxMin = Math.max(60, ...items.map(valueFn));
     const chartTop = 18;
     const chartBottom = 152;
     const chartHeight = chartBottom - chartTop;
     const baseY = chartBottom;
-    const gap = 8;
-    const barW = 18;
-    const startX = 18;
-    const monthLabels = months.map(m => monthShortPL(m.monthYM));
+    const count = Math.max(1, items.length);
+    const gap = count > 20 ? 3 : 8;
+    const innerW = 326;
+    const barW = Math.max(5, Math.min(18, Math.floor((innerW - gap * (count - 1)) / count)));
+    const startX = Math.round((360 - (barW * count + gap * (count - 1))) / 2);
 
     const grid = [0.25, 0.5, 0.75, 1].map(fr => {
       const y = Math.round(baseY - chartHeight * fr);
       return `<line class="gridLine" x1="12" y1="${y}" x2="348" y2="${y}"></line>`;
     }).join("");
 
-    const bars = months.map((m, idx) => {
+    const bars = items.map((item, idx) => {
+      const min = valueFn(item);
       const x = startX + idx * (barW + gap);
-      const h = Math.max(2, Math.round((m.min / maxMin) * chartHeight));
+      const h = Math.max(2, Math.round((min / maxMin) * chartHeight));
       const y = baseY - h;
-      const active = m.min > 0 ? "bar" : "barSoft";
-      const hours = Math.round((m.min / 60) * 10) / 10;
-      const value = hours ? String(hours).replace(".", ",") : "";
+      const active = min > 0 ? "bar" : "barSoft";
+      const hours = Math.round((min / 60) * 10) / 10;
+      const value = (hours && count <= 18) ? String(hours).replace(".", ",") : "";
 
       return `
-        <rect class="${active}" x="${x}" y="${y}" width="${barW}" height="${h}" rx="5">
-          <title>${escapeHtml(monthLabels[idx])}: ${escapeHtml(fmtHM(m.min))}</title>
+        <rect class="${active}" x="${x}" y="${y}" width="${barW}" height="${h}" rx="${Math.min(5, Math.floor(barW / 2))}">
+          <title>${escapeHtml(titleFn(item))}</title>
         </rect>
         <text class="value" x="${x + barW / 2}" y="${Math.max(11, y - 5)}" text-anchor="middle">${value}</text>
-        <text class="label" x="${x + barW / 2}" y="176" text-anchor="middle">${escapeHtml(monthLabels[idx])}</text>
+        <text class="label" x="${x + barW / 2}" y="176" text-anchor="middle">${escapeHtml(labelFn(item))}</text>
       `;
     }).join("");
 
@@ -6114,23 +6483,102 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     `;
   }
 
+  function renderMonthStatsChart(monthYM) {
+    const [Y, M] = monthYM.split("-").map(Number);
+    const dim = daysInMonth(Y, M);
+    const statsByDate = new Map();
+    db.entries
+      .filter(e => e?.date && ym(e.date) === monthYM)
+      .forEach(e => statsByDate.set(e.date, computeDayMinutes(e)));
+
+    const items = Array.from({ length:dim }, (_, idx) => {
+      const d = idx + 1;
+      const date = `${Y}-${pad2(M)}-${pad2(d)}`;
+      return { d, date, min:statsByDate.get(date) || 0 };
+    });
+
+    renderBarChart("monthStatsChart", items, {
+      labelFn:item => String(item.d),
+      valueFn:item => item.min,
+      titleFn:item => `${item.date}: ${fmtHM(item.min)}`
+    });
+  }
+
+  function renderYearStatsChart(months) {
+    renderBarChart("yearStatsChart", months, {
+      labelFn:m => monthShortPL(m.monthYM),
+      valueFn:m => m.min,
+      titleFn:m => `${monthShortPL(m.monthYM)}: ${fmtHM(m.min)}`
+    });
+  }
+
+  function setStatsMode(mode) {
+    activeStatsMode = mode === "year" ? "year" : "month";
+    $("statsTabMonth")?.classList.toggle("active", activeStatsMode === "month");
+    $("statsTabYear")?.classList.toggle("active", activeStatsMode === "year");
+    $("monthStatsView")?.classList.toggle("active", activeStatsMode === "month");
+    $("yearStatsView")?.classList.toggle("active", activeStatsMode === "year");
+    renderStatsPanel();
+  }
+
+  function renderMonthStats() {
+    if (!activeStatsMonth) {
+      const monthPick = $("monthPick");
+      activeStatsMonth = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
+    }
+
+    const data = computeMonthStats(activeStatsMonth);
+    const absences = data.totals.paid + data.totals.unpaid + data.totals.sick;
+    const leave = data.totals.paid + data.totals.unpaid;
+
+    if ($("statsTitle")) $("statsTitle").textContent = "Statystyki";
+    if ($("statsSubtitle")) $("statsSubtitle").textContent = "Podsumowanie aktualnego miesiąca.";
+    if ($("monthStatsCurrent")) $("monthStatsCurrent").textContent = fmtMonthPL(activeStatsMonth);
+    if ($("monthStatsHours")) $("monthStatsHours").textContent = fmtHM(data.totals.min);
+    if ($("monthStatsPay")) $("monthStatsPay").textContent = pln(data.totals.money);
+    if ($("monthStatsWorkDays")) $("monthStatsWorkDays").textContent = String(data.totals.workDays);
+    if ($("monthStatsAbsences")) $("monthStatsAbsences").textContent = String(absences);
+    if ($("monthStatsLeave")) $("monthStatsLeave").textContent = String(leave);
+    if ($("monthStatsNotes")) $("monthStatsNotes").textContent = String(data.totals.notes);
+
+    renderMonthStatsChart(activeStatsMonth);
+
+    const rows = $("monthStatsRows");
+    if (rows) {
+      rows.innerHTML = data.days.length ? data.days.map(day => {
+        const status = day.leaveType ? leaveLabel(day.leaveType) : "—";
+        const note = day.note ? escapeHtml(day.note.length > 34 ? day.note.slice(0, 34) + "…" : day.note) : "—";
+        return `
+          <tr>
+            <td>${escapeHtml(fmtDMYText(day.date))}</td>
+            <td>${escapeHtml(day.min ? fmtHM(day.min) : "—")}</td>
+            <td>${escapeHtml(status)}</td>
+            <td>${note}</td>
+          </tr>
+        `;
+      }).join("") : `<tr><td colspan="4">Brak danych w tym miesiącu.</td></tr>`;
+    }
+  }
+
   function renderYearStats() {
-    const dlgYear = $("yearStatsDialog");
-    if (!dlgYear || !dlgYear.open) return;
+    if (!activeYearStatsYear) {
+      const monthPick = $("monthPick");
+      const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
+      activeYearStatsYear = yearFromMonthYM(monthYM);
+    }
 
-    const monthPick = $("monthPick");
-    const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
-    if (!activeYearStatsYear) activeYearStatsYear = yearFromMonthYM(monthYM);
-    const year = activeYearStatsYear;
-    const data = computeYearStats(year);
+    const data = computeYearStats(activeYearStatsYear);
+    const leave = data.totals.paid + data.totals.unpaid;
 
-    if ($("yearStatsTitle")) $("yearStatsTitle").textContent = `Statystyki ${year}`;
-    if ($("yearStatsSubtitle")) $("yearStatsSubtitle").textContent = "Roczne podsumowanie godzin, wypłaty i nieobecności.";
-    if ($("yearStatsCurrent")) $("yearStatsCurrent").textContent = String(year);
+    if ($("statsTitle")) $("statsTitle").textContent = "Statystyki";
+    if ($("statsSubtitle")) $("statsSubtitle").textContent = "Roczne podsumowanie godzin, wypłaty i nieobecności.";
+    if ($("yearStatsCurrent")) $("yearStatsCurrent").textContent = String(activeYearStatsYear);
     if ($("yearStatsHours")) $("yearStatsHours").textContent = fmtHM(data.totals.min);
     if ($("yearStatsPay")) $("yearStatsPay").textContent = pln(data.totals.money);
     if ($("yearStatsWorkDays")) $("yearStatsWorkDays").textContent = String(data.totals.workDays);
     if ($("yearStatsAbsences")) $("yearStatsAbsences").textContent = String(data.totals.paid + data.totals.unpaid + data.totals.sick);
+    if ($("yearStatsLeave")) $("yearStatsLeave").textContent = String(leave);
+    if ($("yearStatsNotes")) $("yearStatsNotes").textContent = String(data.totals.notes);
 
     renderYearStatsChart(data.months);
 
@@ -6148,17 +6596,32 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     }
   }
 
-  function openYearStatsPreview() {
+  function renderStatsPanel() {
+    const dlgYear = $("yearStatsDialog");
+    if (!dlgYear || !dlgYear.open) return;
+    if (activeStatsMode === "year") renderYearStats();
+    else renderMonthStats();
+  }
+
+  function openStatsPanel(mode = "month") {
     haptic.tap();
     const dlgYear = $("yearStatsDialog");
     if (!dlgYear) return;
+
     const monthPick = $("monthPick");
-    const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
-    activeYearStatsYear = yearFromMonthYM(monthYM);
+    activeStatsMonth = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
+    activeYearStatsYear = yearFromMonthYM(activeStatsMonth);
+    activeStatsMode = mode === "year" ? "year" : "month";
+
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
     if (typeof dlgYear.showModal === "function") dlgYear.showModal();
     else dlgYear.setAttribute("open", "");
-    renderYearStats();
+
+    setStatsMode(activeStatsMode);
+  }
+
+  function openYearStatsPreview() {
+    openStatsPanel("year");
   }
 
   function closeYearStats() {
@@ -6256,19 +6719,19 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     return rows.map(row => row.map(csvCell).join(";")).join("\n");
   }
 
-  function exportMonthCsv() {
+  function exportMonthCsv(monthOverride = "") {
     haptic.tap();
     const monthPick = $("monthPick");
-    const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
+    const monthYM = monthOverride || activeStatsMonth || ((monthPick && monthPick.value) ? monthPick.value : ym(todayISO()));
     downloadTextFile(`czas-pracy_${monthYM}.csv`, buildMonthCsv(monthYM), "text/csv;charset=utf-8");
     setStatus("Wyeksportowano CSV miesiąca.");
   }
 
-  function exportYearCsv() {
+  function exportYearCsv(yearOverride = 0) {
     haptic.tap();
     const monthPick = $("monthPick");
     const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
-    const year = yearFromMonthYM(monthYM);
+    const year = yearOverride || activeYearStatsYear || yearFromMonthYM(monthYM);
     downloadTextFile(`czas-pracy_${year}_podsumowanie.csv`, buildYearCsv(year), "text/csv;charset=utf-8");
     setStatus("Wyeksportowano CSV roku.");
   }
@@ -6392,15 +6855,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     };
   }
 
-  const summaryShortcut = $("summaryShortcut");
-  if (summaryShortcut) {
-    summaryShortcut.onclick = () => {
-      haptic.tap();
-      document.querySelector(".summaryCard")?.scrollIntoView({ behavior:"smooth", block:"center" });
-      setStatus("Skrót do podsumowań. Statystyki roczne są dostępne w menu Narzędzia.");
-    };
-  }
-
   const setVacationRangeBtn = $("setVacationRange");
   if (setVacationRangeBtn) {
     setVacationRangeBtn.onclick = () => {
@@ -6468,31 +6922,42 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     };
   }
 
-  const reportBtn = $("reportPdf");
-  if (reportBtn) reportBtn.onclick = openReportPdf;
+  const statsToolsBtn = $("statsTools");
+  if (statsToolsBtn) statsToolsBtn.onclick = () => openStatsPanel("month");
 
-  const reportYearBtn = $("reportYear");
-  if (reportYearBtn) reportYearBtn.onclick = openYearStatsPreview;
-
-  const exportMonthCsvBtn = $("exportMonthCsv");
-  if (exportMonthCsvBtn) exportMonthCsvBtn.onclick = exportMonthCsv;
-
-  const exportYearCsvBtn = $("exportYearCsv");
-  if (exportYearCsvBtn) exportYearCsvBtn.onclick = exportYearCsv;
+  const monthSummaryCard = $("monthSummaryCard");
+  if (monthSummaryCard) monthSummaryCard.onclick = () => openStatsPanel("month");
 
   const checkUpdateBtn = $("checkUpdateBtn");
   if (checkUpdateBtn) checkUpdateBtn.onclick = checkForAppUpdate;
 
+  $("statsTabMonth")?.addEventListener("click", () => { haptic.tap(); setStatsMode("month"); });
+  $("statsTabYear")?.addEventListener("click", () => { haptic.tap(); setStatsMode("year"); });
+
+  $("monthStatsPrev")?.addEventListener("click", () => {
+    activeStatsMonth = addMonths(activeStatsMonth || $("monthPick")?.value || ym(todayISO()), -1);
+    haptic.tap();
+    renderStatsPanel();
+  });
+  $("monthStatsNext")?.addEventListener("click", () => {
+    activeStatsMonth = addMonths(activeStatsMonth || $("monthPick")?.value || ym(todayISO()), 1);
+    haptic.tap();
+    renderStatsPanel();
+  });
+  $("monthStatsPdf")?.addEventListener("click", () => openReportPdf(activeStatsMonth));
+  $("monthStatsCsv")?.addEventListener("click", () => exportMonthCsv(activeStatsMonth));
+
   $("yearStatsPrev")?.addEventListener("click", () => {
     activeYearStatsYear = (activeYearStatsYear || yearFromMonthYM($("monthPick")?.value || ym(todayISO()))) - 1;
     haptic.tap();
-    renderYearStats();
+    renderStatsPanel();
   });
   $("yearStatsNext")?.addEventListener("click", () => {
     activeYearStatsYear = (activeYearStatsYear || yearFromMonthYM($("monthPick")?.value || ym(todayISO()))) + 1;
     haptic.tap();
-    renderYearStats();
+    renderStatsPanel();
   });
+  $("yearStatsCsv")?.addEventListener("click", () => exportYearCsv(activeYearStatsYear));
 
   $("yearStatsPanelClose")?.addEventListener("click", closeYearStats);
   $("yearStatsPanelDone")?.addEventListener("click", closeYearStats);
