@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.10</title>
+  <title>Czas pracy 4.1.12</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2953,13 +2953,6 @@ dialog#mainMenuDialog.drawerDialog{
     to{transform:translateY(0)}
   }
 
-  dialog#dayDialog .drag-handle,
-  dialog#bulkDialog .drag-handle,
-  dialog#vacDialog .drag-handle{
-    margin-top:13px;
-    margin-bottom:11px;
-  }
-
   dialog#dayDialog .modalHead,
   dialog#bulkDialog .modalHead,
   dialog#vacDialog .modalHead{
@@ -3100,11 +3093,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
     max-height:91dvh;
   }
 
-  dialog#bulkDialog .drag-handle{
-    margin-top:16px;
-    margin-bottom:12px;
-  }
-
   dialog#bulkDialog .modalHead{
     padding-top:24px;
     padding-bottom:16px;
@@ -3144,40 +3132,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 /* Strzałka drawera: trochę niżej, ale nadal nad stopką */
 dialog#mainMenuDialog.drawerDialog .drawerBack{
   bottom:calc(92px + env(safe-area-inset-bottom)) !important;
-}
-
-/* Modal zakresu dni: przywrócony szary uchwyt/chevron na górze */
-dialog#bulkDialog .drag-handle{
-  display:grid;
-  place-items:center;
-  width:52px;
-  height:28px;
-  margin:12px auto 10px;
-  background:transparent;
-  border-radius:999px;
-  position:relative;
-  opacity:1;
-}
-
-dialog#bulkDialog .drag-handle::before,
-dialog#bulkDialog .drag-handle::after{
-  content:"";
-  position:absolute;
-  top:12px;
-  width:18px;
-  height:4px;
-  border-radius:999px;
-  background:#d5d9df;
-}
-
-dialog#bulkDialog .drag-handle::before{
-  left:9px;
-  transform:rotate(22deg);
-}
-
-dialog#bulkDialog .drag-handle::after{
-  right:9px;
-  transform:rotate(-22deg);
 }
 
 @media(max-width:679px){
@@ -3249,41 +3203,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 .monthNavArrow{
   flex:0 0 auto !important;
   flex-shrink:0 !important;
-}
-
-/* 4. Modal "Godziny dla zakresu dni": widoczny szary uchwyt i więcej oddechu u góry */
-dialog#bulkDialog > .drag-handle{
-  display:grid;
-  place-items:center;
-  width:56px;
-  height:34px;
-  margin:16px auto 10px;
-  background:transparent;
-  border-radius:999px;
-  position:relative;
-  opacity:1;
-  z-index:3;
-}
-
-dialog#bulkDialog > .drag-handle::before,
-dialog#bulkDialog > .drag-handle::after{
-  content:"";
-  position:absolute;
-  top:15px;
-  width:19px;
-  height:4px;
-  border-radius:999px;
-  background:#d5d9df;
-}
-
-dialog#bulkDialog > .drag-handle::before{
-  left:10px;
-  transform:rotate(22deg);
-}
-
-dialog#bulkDialog > .drag-handle::after{
-  right:10px;
-  transform:rotate(-22deg);
 }
 
 @media(max-width:679px){
@@ -3392,7 +3311,8 @@ dialog#bulkDialog > .drag-handle::after{
 
 
 
-/* ===== Czas pracy 4.1.10: panele ekranowe ===== */
+
+/* ===== Czas pracy 4.1.11: panele ekranowe ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel{
@@ -3409,7 +3329,6 @@ dialog#vacDialog.googlePanel{
   color:var(--text);
   overflow:hidden;
   box-shadow:none;
-  --panel-action-w:128px;
   --panel-action-h:40px;
   --panel-action-font:14.5px;
 }
@@ -3486,12 +3405,12 @@ dialog#vacDialog.googlePanel[open]{
 dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter,
 dialog#bulkDialog.googlePanel #bulkRemove,
 dialog#vacDialog.googlePanel #clearVacationRange{
-  width:var(--panel-action-w);
-  min-width:var(--panel-action-w);
-  max-width:var(--panel-action-w);
+  width:auto;
+  min-width:0;
+  max-width:calc(100vw - 48px);
   height:var(--panel-action-h);
   min-height:var(--panel-action-h);
-  padding:0 14px;
+  padding:0 22px;
   border-radius:999px;
   box-shadow:none;
   font-size:var(--panel-action-font);
@@ -3530,37 +3449,37 @@ dialog#vacDialog.googlePanel #clearVacationRange{
   left:50%;
   top:calc(15px + env(safe-area-inset-top));
   transform:translateX(-50%);
-  width:54px;
+  width:56px;
   height:24px;
   margin:0;
+  padding:0;
+  display:grid;
+  place-items:center;
   background:transparent;
   border-radius:999px;
   cursor:default;
   touch-action:auto;
 }
 
-/* Chevron jest wyśrodkowany względem całego ekranu, niezależnie od szerokości przycisku Zapisz */
 .googlePanel .drag-handle::before,
 .googlePanel .drag-handle::after{
-  content:"";
-  position:absolute;
-  top:11px;
-  width:22px;
-  height:4px;
-  border-radius:999px;
-  background:#dfe3e8;
+  content:none;
 }
 
-.googlePanel .drag-handle::before{
-  left:7px;
-  transform-origin:right center;
-  transform:rotate(18deg);
+.googlePanel .drag-handle svg{
+  display:block;
+  width:56px;
+  height:24px;
+  overflow:visible;
 }
 
-.googlePanel .drag-handle::after{
-  right:7px;
-  transform-origin:left center;
-  transform:rotate(-18deg);
+.googlePanel .drag-handle path{
+  fill:none;
+  stroke:#dfe3e8;
+  stroke-width:5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
 }
 
 .googlePanelContent{
@@ -3715,7 +3634,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   dialog#dayDialog.googlePanel,
   dialog#bulkDialog.googlePanel,
   dialog#vacDialog.googlePanel{
-    --panel-action-w:126px;
     --panel-action-h:40px;
     --panel-action-font:14.5px;
   }
@@ -3746,7 +3664,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   dialog#dayDialog.googlePanel,
   dialog#bulkDialog.googlePanel,
   dialog#vacDialog.googlePanel{
-    --panel-action-w:124px;
     --panel-action-h:39px;
     --panel-action-font:14px;
   }
@@ -3774,23 +3691,14 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   }
 
   .googlePanel .drag-handle{
-    width:50px;
-    height:22px;
+    top:calc(15px + env(safe-area-inset-top));
+    width:56px;
+    height:24px;
   }
 
-  .googlePanel .drag-handle::before,
-  .googlePanel .drag-handle::after{
-    top:10px;
-    width:21px;
-    height:4px;
-  }
-
-  .googlePanel .drag-handle::before{
-    left:7px;
-  }
-
-  .googlePanel .drag-handle::after{
-    right:7px;
+  .googlePanel .drag-handle svg{
+    width:56px;
+    height:24px;
   }
 
   .googlePanel .modalHead{
@@ -4025,7 +3933,11 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     <div class="googlePanelShell">
       <div class="googlePanelBar">
         <button class="panelCloseBtn" id="vacPanelClose" type="button" aria-label="Zamknij"></button>
-        <div class="drag-handle" aria-hidden="true"></div>
+        <div class="drag-handle" aria-hidden="true">
+          <svg viewBox="0 0 56 24" focusable="false">
+            <path d="M16 9 L28 15 L40 9"></path>
+          </svg>
+        </div>
         <button class="panelSaveBtn" id="vacPanelSave" type="button">Zapisz</button>
       </div>
       <div class="googlePanelContent">
@@ -4072,7 +3984,11 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     <div class="googlePanelShell">
       <div class="googlePanelBar">
         <button class="panelCloseBtn" id="bulkPanelClose" type="button" aria-label="Zamknij"></button>
-        <div class="drag-handle" aria-hidden="true"></div>
+        <div class="drag-handle" aria-hidden="true">
+          <svg viewBox="0 0 56 24" focusable="false">
+            <path d="M16 9 L28 15 L40 9"></path>
+          </svg>
+        </div>
         <button class="panelSaveBtn" id="bulkPanelSave" type="button">Zapisz</button>
       </div>
       <div class="googlePanelContent">
@@ -4151,7 +4067,11 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     <div class="googlePanelShell">
       <div class="googlePanelBar">
         <button class="panelCloseBtn" id="dayPanelClose" type="button" aria-label="Zamknij"></button>
-        <div class="drag-handle" aria-hidden="true"></div>
+        <div class="drag-handle" aria-hidden="true">
+          <svg viewBox="0 0 56 24" focusable="false">
+            <path d="M16 9 L28 15 L40 9"></path>
+          </svg>
+        </div>
         <button class="panelSaveBtn" id="dayPanelDone" type="button">Gotowe</button>
       </div>
       <div class="googlePanelContent">
