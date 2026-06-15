@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.16</title>
+  <title>Czas pracy 4.1.17</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -3451,7 +3451,8 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   font-weight:520;
 }
 
-/* ===== Czas pracy 4.1.16: panele ekranowe i ruchomy mini-podgląd dnia ===== */
+
+/* ===== Czas pracy 4.1.17: stabilniejszy mini-podgląd dnia ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel,
@@ -3797,7 +3798,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   margin-right:0;
 }
 
-/* Mini-podgląd dnia: dialog pełnoekranowy, karta płynnie przesuwana między kotwicami */
+/* Mini-podgląd dnia: jedna geometria headera, stabilna karta i brak zmiany wyglądu w trakcie drag */
 dialog#dayDialog.googlePanel.is-day-sheet{
   inset:0;
   height:100dvh;
@@ -3822,7 +3823,7 @@ dialog#dayDialog.googlePanel.is-day-sheet .googlePanelShell{
   border-radius:30px 30px 0 0;
   box-shadow:0 -12px 38px rgba(32,33,36,.24),0 -2px 8px rgba(32,33,36,.08);
   transform:translate3d(0, var(--day-sheet-y, 0px), 0);
-  transition:transform .24s cubic-bezier(.2,0,0,1), border-radius .18s ease;
+  transition:transform .24s cubic-bezier(.2,0,0,1);
   will-change:transform;
 }
 
@@ -3830,41 +3831,38 @@ dialog#dayDialog.googlePanel.is-day-sheet.is-sheet-dragging .googlePanelShell{
   transition:none;
 }
 
-dialog#dayDialog.googlePanel.is-day-sheet:not(.is-mini-preview) .googlePanelShell{
-  border-radius:0;
-}
-
 dialog#dayDialog.googlePanel.is-day-sheet .googlePanelBar{
   position:relative;
+  min-height:calc(54px + env(safe-area-inset-top));
+  padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
+  border-bottom:1px solid rgba(60,64,67,.12);
 }
 
-dialog#dayDialog.googlePanel.is-mini-preview .googlePanelBar{
-  min-height:46px;
-  padding:8px 20px 4px;
-  border-bottom:none;
+dialog#dayDialog.googlePanel.is-day-sheet .panelCloseBtn{
+  left:24px;
+  top:calc(12px + env(safe-area-inset-top));
+  width:32px;
+  height:32px;
+  min-height:32px;
 }
 
-dialog#dayDialog.googlePanel.is-mini-preview .panelCloseBtn{
-  left:20px;
-  top:10px;
-  width:30px;
-  height:30px;
-  min-height:30px;
+dialog#dayDialog.googlePanel.is-day-sheet .panelSaveBtn{
+  right:24px;
+  top:calc(8px + env(safe-area-inset-top));
 }
 
-dialog#dayDialog.googlePanel.is-mini-preview .panelCloseBtn::before,
-dialog#dayDialog.googlePanel.is-mini-preview .panelCloseBtn::after{
-  width:17px;
-  height:2.1px;
+dialog#dayDialog.googlePanel.is-day-sheet .drag-handle{
+  top:calc(15px + env(safe-area-inset-top));
+  cursor:pointer;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .panelSaveBtn{
   display:none;
 }
 
+/* Mini: prosty pasek z div-a, bez SVG i bez pseudo-elementów chevrona */
 dialog#dayDialog.googlePanel.is-mini-preview .drag-handle{
-  top:11px;
-  cursor:pointer;
+  width:58px;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .drag-handle svg{
@@ -3873,28 +3871,30 @@ dialog#dayDialog.googlePanel.is-mini-preview .drag-handle svg{
 
 dialog#dayDialog.googlePanel.is-mini-preview .drag-handle::before{
   content:"";
-  width:42px;
+  display:block;
+  width:44px;
   height:5px;
   border-radius:999px;
   background:#dfe3e8;
+  transform:none;
 }
 
-dialog#dayDialog.googlePanel.is-mini-preview .googlePanelContent{
-  padding-bottom:calc(26px + env(safe-area-inset-bottom));
+dialog#dayDialog.googlePanel.is-mini-preview .drag-handle::after{
+  content:none;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .modalHead{
-  padding:2px 24px 12px;
+  padding:18px 24px 16px;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .modalHead h3{
-  font-size:22px;
-  line-height:1.14;
+  font-size:26px;
+  line-height:1.16;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .modalHead .muted{
-  margin-top:5px;
-  font-size:13.5px;
+  margin-top:8px;
+  font-size:14.5px;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .modalBody{
@@ -3907,7 +3907,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .dayPreviewStats{
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .statMiniValue{
-  font-size:24px;
+  font-size:30px;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
@@ -3945,7 +3945,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
   }
 
   dialog#dayDialog.googlePanel.is-mini-preview .modalHead{
-    padding:2px 24px 12px;
+    padding:18px 24px 16px;
   }
 
   dialog#dayDialog.googlePanel.is-mini-preview .modalBody{
@@ -4008,17 +4008,17 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     padding-right:24px;
   }
 
-  dialog#dayDialog.googlePanel.is-mini-preview .drag-handle{
-    top:11px;
-  }
-
   dialog#dayDialog.googlePanel.is-mini-preview .modalHead{
-    padding:2px 22px 11px;
+    padding:18px 22px 15px;
   }
 
   dialog#dayDialog.googlePanel.is-mini-preview .modalBody{
     padding-left:22px;
     padding-right:22px;
+  }
+
+  dialog#dayDialog.googlePanel.is-mini-preview .statMiniValue{
+    font-size:30px;
   }
 }
 
@@ -5719,7 +5719,6 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     daySheetY = Math.max(0, Math.min(daySheetMiniY, Math.round(y)));
     dlg.style.setProperty("--day-sheet-y", `${daySheetY}px`);
     dlg.classList.toggle("is-sheet-dragging", dragging);
-    dlg.classList.toggle("is-mini-preview", daySheetY > daySheetMiniY * 0.55);
   }
 
   function setDaySheetMode(mode, { animate = true } = {}) {
@@ -5727,6 +5726,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     daySheetMiniY = getDaySheetMiniY();
     daySheetMode = mode === "full" ? "full" : "mini";
     dlg.classList.add("is-day-sheet");
+    dlg.classList.toggle("is-mini-preview", daySheetMode === "mini");
     dlg.classList.toggle("is-sheet-dragging", !animate);
     applyDaySheetY(daySheetMode === "mini" ? daySheetMiniY : 0, { dragging: !animate });
     if (!animate) {
@@ -5737,6 +5737,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
   function expandDayPanel({ form = false } = {}) {
     if (!dlg) return;
     setDaySheetMode("full");
+    dlg.classList.remove("is-mini-preview");
     if (form) {
       dlg.classList.add("is-form-open");
       dlg.classList.remove("is-preview-only");
