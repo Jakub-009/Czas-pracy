@@ -6,7 +6,7 @@
   <title>Czas pracy 4.2.1.2</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
-  <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
+  <link rel="manifest" href="/Czas-pracy/manifest.webmanifest">
 
   <style>
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -4709,7 +4709,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   });
 
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/czas-pracy-pwa/sw.js", { scope: "/czas-pracy-pwa/" }).then((reg) => {
+    navigator.serviceWorker.register("/Czas-pracy/sw.js", { scope: "/Czas-pracy/" }).then((reg) => {
       window.__cpServiceWorkerRegistration = reg;
 
       const markUpdateReady = (worker) => {
