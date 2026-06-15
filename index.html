@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.18</title>
+  <title>Czas pracy 4.1.19</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -3397,7 +3397,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 
 
-/* ===== Czas pracy 4.1.18: mini-podgląd dnia bez przeciągania ===== */
+/* ===== Czas pracy 4.1.19: spójny mini-podgląd dnia bez przeciągania ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel,
@@ -3765,6 +3765,11 @@ dialog#dayDialog.googlePanel.is-mini-preview .googlePanelShell{
   border-radius:0;
 }
 
+
+dialog#dayDialog.googlePanel.is-mini-preview .googlePanelContent{
+  padding-bottom:calc(24px + env(safe-area-inset-bottom));
+}
+
 dialog#dayDialog.googlePanel.is-mini-preview .googlePanelBar{
   min-height:calc(54px + env(safe-area-inset-top));
   padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
@@ -3781,6 +3786,8 @@ dialog#dayDialog.googlePanel.is-mini-preview .panelCloseBtn{
 
 dialog#dayDialog.googlePanel.is-mini-preview .panelSaveBtn{
   display:inline-flex;
+  right:24px;
+  top:calc(8px + env(safe-area-inset-top));
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .drag-handle{
@@ -5676,6 +5683,8 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     $("dlgBack")?.click();
   }
 
+  window.handleDayPanelDone = handleDayPanelDone;
+
   function renderDayDialog() {
     if (!dlgDate) return;
     const day = getDay(dlgDate) || { date: dlgDate, note: "", shifts: [], vacation: false, leaveType:"" };
@@ -6832,7 +6841,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
   $("bulkPanelClose")?.addEventListener("click", () => { $("bulkBack")?.click(); });
   $("bulkPanelSave")?.addEventListener("click", () => { $("bulkApply")?.click(); });
   $("dayPanelClose")?.addEventListener("click", () => { $("dlgBack")?.click(); });
-  $("dayPanelDone")?.addEventListener("click", handleDayPanelDone);
+  $("dayPanelDone")?.addEventListener("click", () => window.handleDayPanelDone?.());
 
 
   const drawer = $("mainMenuDialog");
