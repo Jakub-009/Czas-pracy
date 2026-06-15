@@ -484,7 +484,7 @@
       padding:4px 14px;
       background:var(--surface);
       border:1px solid var(--outline-soft);
-      border-radius:24px;
+      border-radius:22px;
     }
     details summary{
       cursor:pointer;
@@ -739,7 +739,7 @@
     }
     .modalStack{
       background:var(--surface-low);
-      border-radius:28px;
+      border-radius:22px;
       padding:20px;
       margin-bottom:28px;
     }
@@ -783,7 +783,7 @@
     }
     .shiftItem:last-child{border-bottom:none}
     .shiftItem .times{
-      font-size:22px;
+      font-size:21px;
       line-height:1.1;
       font-weight:500;
       letter-spacing:-.02em;
@@ -1510,33 +1510,33 @@ textarea{
 }
 .appInfoCard,
 .appInfoList{
-  display:none !important;
+  display:none;
 }
 .sheetErrorBox,
 .appErrorBox{
-  margin-top:16px !important;
-  padding:14px 0 0 !important;
-  border-radius:0 !important;
-  background:transparent !important;
-  color:#202124 !important;
-  border-top:1px solid var(--outline-soft) !important;
-  font-size:13px !important;
-  line-height:1.35 !important;
+  margin-top:16px;
+  padding:14px 0 0;
+  border-radius:0;
+  background:transparent;
+  color:#202124;
+  border-top:1px solid var(--outline-soft);
+  font-size:13px;
+  line-height:1.35;
 }
 .errorLine{
-  padding:10px 0 !important;
-  border-bottom:1px solid var(--outline-soft) !important;
+  padding:10px 0;
+  border-bottom:1px solid var(--outline-soft);
 }
 .errorLine:last-child{
-  border-bottom:none !important;
+  border-bottom:none;
 }
 .menuFooter{
-  margin:12px 24px 0 !important;
-  padding-top:12px !important;
-  border-top:1px solid var(--outline-soft) !important;
-  color:#6f7785 !important;
-  font-size:12px !important;
-  line-height:1.3 !important;
+  margin:12px 24px 0;
+  padding-top:12px;
+  border-top:1px solid var(--outline-soft);
+  color:#6f7785;
+  font-size:12px;
+  line-height:1.3;
 }
 
 /* S23 i podobne — jeden kontrolowany breakpoint zamiast kilku sprzecznych bloków */
@@ -1639,7 +1639,7 @@ textarea{
   border-bottom:1px solid var(--outline-soft);
 }
 .bulkOptionsTitle{
-  margin-bottom:8px;
+  margin-bottom:4px;
   color:#3c4043;
   font-size:14px;
   font-weight:600;
@@ -1757,10 +1757,10 @@ textarea{
 
 /* Szybkie szablony w modalu dnia i wielu godzin */
 .quickTemplatesBlock{
-  margin:0 0 14px;
+  margin:0 0 10px;
 }
 .quickTemplatesTitle{
-  margin-bottom:8px;
+  margin-bottom:4px;
   color:#3c4043;
   font-size:13px;
   font-weight:650;
@@ -1785,7 +1785,7 @@ textarea{
 }
 .bulkTemplateBlock{
   margin-top:-2px;
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
 
 /* Walidacja i klawiatura */
@@ -1811,9 +1811,9 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   
 /* ===== Czas pracy 4.0: nowa nawigacja ===== */
 .navTopBar{
-  min-height:58px !important;
-  padding:7px 10px 3px !important;
-  gap:8px !important;
+  min-height:58px;
+  padding:7px 10px 3px;
+  gap:8px;
 }
 .navLeft{
   min-width:0;
@@ -1829,7 +1829,7 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   background:transparent;
   color:#202124;
   box-shadow:none;
-  font-size:22px;
+  font-size:21px;
   line-height:1;
   font-weight:500;
   letter-spacing:-.035em;
@@ -1858,14 +1858,14 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   transform:rotate(180deg);
 }
 #monthPick{
-  position:absolute !important;
-  width:1px !important;
-  height:1px !important;
-  opacity:0 !important;
-  pointer-events:none !important;
+  position:absolute;
+  width:1px;
+  height:1px;
+  opacity:0;
+  pointer-events:none;
 }
 .navActions{
-  gap:2px !important;
+  gap:2px;
   flex:0 0 auto;
 }
 .todayIconBtn,
@@ -1896,7 +1896,6 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   background:#fff;
 }
 .profileSoonBtn{
-  position:relative;
   cursor:default;
   opacity:1;
 }
@@ -1908,21 +1907,8 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   height:25px;
   fill:currentColor;
 }
-.profileSoonBtn span{
-  position:absolute;
-  right:0;
-  bottom:-2px;
-  max-width:54px;
-  padding:1px 4px;
-  border-radius:999px;
-  background:#eef2f7;
-  color:#5f6368;
-  font-size:8.5px;
-  line-height:1.15;
-  font-weight:700;
-  letter-spacing:-.02em;
-  transform:translateY(100%);
-  white-space:nowrap;
+.profileSoonBtn:hover{
+  background:transparent;
 }
 .monthStrip{
   position:sticky;
@@ -3025,10 +3011,10 @@ dialog#mainMenuDialog.drawerDialog .drawerFooter{
 
 /* Informacje o aplikacji: czyszczenie błędów */
 .clearErrorsBtn{
-  width:100% !important;
-  min-height:44px !important;
-  margin-top:14px !important;
-  border-radius:999px !important;
+  width:100%;
+  min-height:44px;
+  margin-top:14px;
+  border-radius:999px;
 }
 
 /* Elementy hidden nie mogą się pokazywać przez późniejsze display:flex */
@@ -3183,7 +3169,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   display:flex;
   gap:8px;
   padding:4px;
-  margin:0 0 16px;
+  margin:0 0 12px;
   border-radius:999px;
   background:#f1f4f9;
 }
@@ -3283,7 +3269,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   padding:0;
   margin:auto;
   border:none;
-  border-radius:28px;
+  border-radius:22px;
   background:#fff;
   color:var(--text);
   box-shadow:0 18px 46px rgba(32,33,36,.26),0 2px 8px rgba(32,33,36,.12);
@@ -3301,7 +3287,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 .appConfirmCard h3{
   margin:0 0 10px;
-  font-size:22px;
+  font-size:21px;
   line-height:1.15;
   font-weight:650;
   letter-spacing:-.02em;
@@ -3366,7 +3352,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   grid-template-columns:1fr 1fr;
   gap:4px;
   padding:4px;
-  margin:0 0 16px;
+  margin:0 0 12px;
   border-radius:999px;
   background:#edf1f7;
 }
@@ -3401,7 +3387,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   grid-template-columns:42px 1fr 42px;
   align-items:center;
   gap:12px;
-  margin:0 0 14px;
+  margin:0 0 10px;
 }
 
 .statsPeriodBar button{
@@ -3418,7 +3404,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 .statsPeriodBar strong{
   min-width:0;
   text-align:center;
-  font-size:22px;
+  font-size:21px;
   line-height:1.1;
   font-weight:650;
   color:#202124;
@@ -3429,9 +3415,9 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   align-items:center;
   justify-content:space-between;
   gap:16px;
-  margin:0 0 14px;
-  padding:18px;
-  border-radius:28px;
+  margin:0 0 10px;
+  padding:15px 16px;
+  border-radius:22px;
   background:linear-gradient(135deg, #e8f0fe, #f8fafd);
   border:1px solid #dfe7fb;
 }
@@ -3447,7 +3433,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 .statsHero strong{
   display:block;
-  font-size:34px;
+  font-size:31px;
   line-height:1;
   font-weight:560;
   letter-spacing:-.045em;
@@ -3474,12 +3460,12 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
 
 .statSoftBox{
   min-width:0;
-  padding:13px;
+  padding:11px 12px;
   border-radius:20px;
   background:#fff;
   border:1px solid #e4e8f1;
@@ -3487,7 +3473,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 .statSoftBox strong{
   display:block;
-  font-size:22px;
+  font-size:21px;
   line-height:1.1;
   color:#202124;
   white-space:nowrap;
@@ -3507,7 +3493,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
-  margin:2px 0 16px;
+  margin:0 0 12px;
 }
 
 .statsActions button{
@@ -3517,8 +3503,8 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 .statsChartCard{
   margin:0 0 18px;
-  padding:15px 14px 12px;
-  border-radius:24px;
+  padding:13px 12px 10px;
+  border-radius:22px;
   background:#fff;
   border:1px solid #e4e8f1;
 }
@@ -3528,7 +3514,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   align-items:flex-end;
   justify-content:space-between;
   gap:12px;
-  margin-bottom:8px;
+  margin-bottom:4px;
 }
 
 .statsChartHead strong{
@@ -3547,7 +3533,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   display:block;
   width:100%;
   height:auto;
-  min-height:190px;
+  min-height:164px;
 }
 
 .statsChart .axis,
@@ -3594,7 +3580,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 .statsTable th,
 .statsTable td{
-  padding:10px 10px;
+  padding:9px 10px;
   border-bottom:1px solid #eef1f6;
   text-align:right;
   white-space:nowrap;
@@ -3618,6 +3604,23 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 .statsTable td{
   color:#202124;
   font-weight:520;
+}
+
+
+.statsPanel .modalHead{
+  padding-bottom:12px;
+}
+
+.statsPanel .modalBody{
+  padding-bottom:24px;
+}
+
+.statsChartHead{
+  align-items:center;
+}
+
+.statsChartHead span{
+  display:none;
 }
 
 /* ===== Czas pracy 4.2.1: wydarzenia w podglądzie dnia ===== */
@@ -4118,7 +4121,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Zm0 2c-2.67 0-8 1.34-8 4v1.2c0 .44.36.8.8.8h14.4c.44 0 .8-.36.8-.8V18c0-2.66-5.33-4-8-4Z"/>
           </svg>
-          <span>Wkrótce</span>
         </button>
       </div>
     </header>
@@ -4221,9 +4223,9 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               <span>Dzień <em>wkrótce</em></span>
             </button>
 
-            <button class="drawerItem soon" id="drawerYearSummary" type="button">
+            <button class="drawerItem" id="drawerYearSummary" type="button">
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9.2h3V19H5V9.2Zm5.5-4.2h3V19h-3V5Zm5.5 8h3v6h-3v-6Z"/></svg>
-              <span>Rok / statystyki <em>wkrótce</em></span>
+              <span>Statystyki</span>
             </button>
           </div>
 
@@ -4288,7 +4290,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
         <div class="drawerView" id="drawerViewTools">
           <div class="drawerToolGrid">
-            <button class="tonal" id="statsTools" type="button">Statystyki</button>
             <button class="tonal" id="checkUpdateBtn" type="button">Sprawdź aktualizację</button>
             <button class="tonal" id="backupJson" type="button">Pobierz kopię</button>
             <input id="restoreJson" type="file" accept="application/json" style="display:none" />
@@ -4605,8 +4606,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
             <div class="statsChartCard">
               <div class="statsChartHead">
-                <strong>Godziny w dniach miesiąca</strong>
-                <span>Wykres słupkowy</span>
+                <strong>Wykres godzin w miesiącu</strong>
               </div>
               <svg id="monthStatsChart" class="statsChart" viewBox="0 0 360 190" role="img" aria-label="Godziny w dniach miesiąca"></svg>
             </div>
@@ -4657,8 +4657,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
             <div class="statsChartCard">
               <div class="statsChartHead">
-                <strong>Suma godzin per miesiąc</strong>
-                <span>Wykres słupkowy</span>
+                <strong>Wykres godzin w roku</strong>
               </div>
               <svg id="yearStatsChart" class="statsChart" viewBox="0 0 360 190" role="img" aria-label="Suma godzin per miesiąc"></svg>
             </div>
@@ -5598,6 +5597,19 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     return new Intl.DateTimeFormat("pl-PL", { month: "short" }).format(dt).replace(".", "");
   }
 
+  function monthFullPL(monthYM) {
+    const [Y, M] = monthYM.split("-").map(Number);
+    const dt = new Date(Y, M - 1, 1);
+    return capFirst(new Intl.DateTimeFormat("pl-PL", { month: "long" }).format(dt));
+  }
+
+  function fmtDayMonthShortPL(dateISO) {
+    if (!dateISO) return "";
+    const [Y, M, D] = dateISO.split("-").map(Number);
+    const monthNames = ["stycznia","lutego","marca","kwietnia","maja","czerwca","lipca","sierpnia","września","października","listopada","grudnia"];
+    return `${fmtWeekdayPL(dateISO)}, ${D} ${monthNames[M - 1]}`;
+  }
+
   function renderMonthStrip(centerYM) {
     const box = $("monthStripScroller");
     if (!box) return;
@@ -6437,7 +6449,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     return { year, totals, months };
   }
 
-  function renderBarChart(svgId, items, { labelFn, valueFn, titleFn }) {
+  function renderBarChart(svgId, items, { labelFn, valueFn, titleFn, showLabelFn = null }) {
     const svg = $(svgId);
     if (!svg) return;
 
@@ -6464,14 +6476,16 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       const y = baseY - h;
       const active = min > 0 ? "bar" : "barSoft";
       const hours = Math.round((min / 60) * 10) / 10;
-      const value = (hours && count <= 18) ? String(hours).replace(".", ",") : "";
+      const value = (hours && count <= 14) ? String(hours).replace(".", ",") : "";
+      const showLabel = showLabelFn ? showLabelFn(item, idx, count) : true;
+      const label = showLabel ? labelFn(item) : "";
 
       return `
         <rect class="${active}" x="${x}" y="${y}" width="${barW}" height="${h}" rx="${Math.min(5, Math.floor(barW / 2))}">
           <title>${escapeHtml(titleFn(item))}</title>
         </rect>
         <text class="value" x="${x + barW / 2}" y="${Math.max(11, y - 5)}" text-anchor="middle">${value}</text>
-        <text class="label" x="${x + barW / 2}" y="176" text-anchor="middle">${escapeHtml(labelFn(item))}</text>
+        <text class="label" x="${x + barW / 2}" y="176" text-anchor="middle">${escapeHtml(label)}</text>
       `;
     }).join("");
 
@@ -6500,7 +6514,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     renderBarChart("monthStatsChart", items, {
       labelFn:item => String(item.d),
       valueFn:item => item.min,
-      titleFn:item => `${item.date}: ${fmtHM(item.min)}`
+      titleFn:item => `${item.date}: ${fmtHM(item.min)}`,
+      showLabelFn:(item, idx, count) => item.d === 1 || item.d % 5 === 0 || idx === count - 1
     });
   }
 
@@ -6550,7 +6565,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         const note = day.note ? escapeHtml(day.note.length > 34 ? day.note.slice(0, 34) + "…" : day.note) : "—";
         return `
           <tr>
-            <td>${escapeHtml(fmtDMYText(day.date))}</td>
+            <td>${escapeHtml(fmtDayMonthShortPL(day.date))}</td>
             <td>${escapeHtml(day.min ? fmtHM(day.min) : "—")}</td>
             <td>${escapeHtml(status)}</td>
             <td>${note}</td>
@@ -6586,7 +6601,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if (rows) {
       rows.innerHTML = data.months.map(m => `
         <tr>
-          <td>${escapeHtml(monthShortPL(m.monthYM))}</td>
+          <td>${escapeHtml(monthFullPL(m.monthYM))}</td>
           <td>${escapeHtml(fmtHM(m.min))}</td>
           <td>${m.workDays}</td>
           <td>${m.paid + m.unpaid}</td>
@@ -6921,9 +6936,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       if (res.ok) haptic.warning();
     };
   }
-
-  const statsToolsBtn = $("statsTools");
-  if (statsToolsBtn) statsToolsBtn.onclick = () => openStatsPanel("month");
 
   const monthSummaryCard = $("monthSummaryCard");
   if (monthSummaryCard) monthSummaryCard.onclick = () => openStatsPanel("month");
@@ -7555,10 +7567,14 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   });
 
   $("drawerMonthView")?.addEventListener("click", () => { closeDrawer(); document.querySelector(".calCard")?.scrollIntoView({ behavior:"smooth", block:"start" }); });
-  ["drawerWeekView","drawerDayView","drawerYearSummary"].forEach((id) => {
+  $("drawerYearSummary")?.addEventListener("click", () => {
+    closeDrawer();
+    setTimeout(() => openStatsPanel("month"), 120);
+  });
+  ["drawerWeekView","drawerDayView"].forEach((id) => {
     $(id)?.addEventListener("click", () => {
       closeDrawer();
-      const label = id === "drawerYearSummary" ? "Widok roczny / statystyki" : (id === "drawerWeekView" ? "Widok tygodnia" : "Widok dnia");
+      const label = id === "drawerWeekView" ? "Widok tygodnia" : "Widok dnia";
       const st = $("status");
       if (st) st.textContent = `${label} — wkrótce.`;
     });
@@ -7593,6 +7609,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       if (dlg.id === "dayDialog") $("dlgBack")?.click();
       else if (dlg.id === "vacDialog") $("vacBack")?.click();
       else if (dlg.id === "bulkDialog") $("bulkBack")?.click();
+      else if (dlg.id === "yearStatsDialog") closeYearStats();
       else closeDialog(dlg);
     };
 
@@ -7629,7 +7646,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     handle.addEventListener("pointercancel", reset);
   }
 
-  ["dayDialog","vacDialog","bulkDialog"].forEach((id) => enableSwipeDownToClose($(id)));
+  ["dayDialog","vacDialog","bulkDialog","yearStatsDialog"].forEach((id) => enableSwipeDownToClose($(id)));
 
   function setupKeyboardFriendlyModals() {
     const controls = document.querySelectorAll("dialog input, dialog textarea, dialog select");
