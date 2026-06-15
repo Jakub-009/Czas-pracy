@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.2</title>
+  <title>Czas pracy 4.1.3</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -387,7 +387,7 @@
     }
     .pill.work{background:var(--green-soft);color:var(--green)}
     .pill.vac{background:var(--blue-soft);color:var(--blue)}
-    .pill.unpaid{background:var(--gray-soft);color:var(--text-2)}
+    .pill.unpaid{background:#ede7f6;color:#4a148c}
     .pill.sick{background:var(--red-soft);color:var(--red)}
     .pill.more{
       background:transparent;
@@ -395,15 +395,9 @@
       justify-content:center;
       font-size:11px;
     }
-    .noteDot{
-      position:absolute;
-      width:6px;
-      height:6px;
-      top:8px;
-      right:8px;
-      border-radius:50%;
-      background:var(--yellow);
-      pointer-events:none;
+    .pill.note{
+      background:var(--yellow-soft);
+      color:#7a4d00;
     }
 
     /* ===== Podsumowanie lekkie, bardziej Google ===== */
@@ -903,7 +897,7 @@
   --day-height:clamp(84px, 12.7dvh, 112px);
   --day-num-size:clamp(11.5px, 3.05vw, 14.5px);
   --day-num-box:clamp(19px, 5.25vw, 24px);
-  --today-badge-h:clamp(20px, 5.3vw, 25px);
+  --today-badge-h:clamp(18px, 4.8vw, 22px);
   --today-badge-w:clamp(27px, 6.85vw, 33px);
   --pill-size:clamp(7.2px, 1.92vw, 8.8px);
   --pill-height:clamp(12px, 3.12vw, 15px);
@@ -1140,8 +1134,8 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
   color:#202124 !important;
 }
 .pill.unpaid{
-  background:#fbbc04 !important;
-  color:#202124 !important;
+  background:#d9c8ff !important;
+  color:#3f2573 !important;
 }
 .pill.sick{
   background:#ea4335 !important;
@@ -1152,12 +1146,9 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
   color:#5f6368 !important;
   justify-content:center !important;
 }
-.noteDot{
-  width:5px !important;
-  height:5px !important;
-  top:7px !important;
-  right:7px !important;
-  background:#fbbc04 !important;
+.pill.note{
+  background:#fff8e1 !important;
+  color:#7a4d00 !important;
 }
 
 /* Swipe: tylko w trakcie gestu blokujemy rozmiar komórek na wymiar zmierzony JS-em */
@@ -1423,10 +1414,10 @@ dialog#dayDialog{
   background:#8ab4f8 !important;
 }
 .shiftItem.googleEvent.leaveEvent.unpaid{
-  background:#fff4ce !important;
+  background:#f3eefe !important;
 }
 .shiftItem.googleEvent.leaveEvent.unpaid .eventStripe{
-  background:#fbbc04 !important;
+  background:#7e57c2 !important;
 }
 .shiftItem.googleEvent.leaveEvent.sick{
   background:#fce8e6 !important;
@@ -1605,7 +1596,7 @@ textarea{
     --day-height:clamp(84px, 11.35dvh, 98px);
     --day-num-size:clamp(11px, 3.05vw, 13.5px);
     --day-num-box:clamp(18px, 4.95vw, 23px);
-    --today-badge-h:clamp(19px, 5.05vw, 24px);
+    --today-badge-h:clamp(18px, 4.7vw, 21px);
     --today-badge-w:clamp(26px, 6.55vw, 32px);
     --pill-size:clamp(6.8px, 1.82vw, 8.1px);
     --pill-height:clamp(11px, 2.95vw, 14px);
@@ -1643,7 +1634,7 @@ textarea{
     --day-height:78px;
     --day-num-size:10.5px;
     --day-num-box:18px;
-    --today-badge-h:19px;
+    --today-badge-h:18px;
     --today-badge-w:28px;
     --pill-size:6.6px;
     --pill-height:11px;
@@ -4612,7 +4603,7 @@ dialog#bulkDialog > .drag-handle::after{
 
     const dayNumSize = clampNumber(dayHeight * 0.135, isNarrow ? 10.5 : 11.5, isNarrow ? 13.5 : 14.5);
     const dayNumBox = clampNumber(dayHeight * 0.235, isNarrow ? 18 : 19, isNarrow ? 23 : 24);
-    const todayBadgeH = clampNumber(dayHeight * 0.245, isNarrow ? 19 : 20, isNarrow ? 24 : 25);
+    const todayBadgeH = clampNumber(dayHeight * 0.215, isNarrow ? 18 : 19, isNarrow ? 21 : 22);
     const todayBadgeW = clampNumber(dayHeight * 0.325, isNarrow ? 26 : 27, isNarrow ? 32 : 33);
     const pillHeight = clampNumber(dayHeight * 0.145, isNarrow ? 11 : 12, isNarrow ? 14 : 15);
     const pillSize = clampNumber(dayHeight * 0.078, isNarrow ? 6.4 : 7.1, isNarrow ? 7.7 : 8.7);
@@ -4679,6 +4670,7 @@ dialog#bulkDialog > .drag-handle::after{
     const leaveType = day?.leaveType || "";
     const leaveLbl = leaveLabel(leaveType);
     const leaveCls = leavePillClass(leaveType);
+    const hasNote = !!(day?.note && day.note.trim());
 
     const pills = [];
 
@@ -4687,9 +4679,15 @@ dialog#bulkDialog > .drag-handle::after{
       pills.push(`<div class="pill ${leaveCls}">${leaveLbl}</div>`);
     }
 
-    const maxVisible = leaveLbl ? 2 : 3; // żeby zmieścić status + godziny
-    const visible = shifts.slice(0, maxVisible);
-    const extra = Math.max(0, shifts.length - maxVisible);
+    if (hasNote) {
+      pills.push(`<div class="pill note">Notatka</div>`);
+    }
+
+    const maxTotal = (leaveLbl || hasNote) ? 4 : 3;
+    const shiftSlots = Math.max(0, maxTotal - pills.length);
+    const visibleCount = (shifts.length > shiftSlots && shiftSlots > 0) ? shiftSlots - 1 : shiftSlots;
+    const visible = shifts.slice(0, visibleCount);
+    const extra = Math.max(0, shifts.length - visibleCount);
 
     pills.push(...visible.map(s => {
       const a = (s && s.start) ? s.start : "—";
@@ -4697,7 +4695,7 @@ dialog#bulkDialog > .drag-handle::after{
       return `<div class="pill work">${a}–${b}</div>`;
     }));
 
-    if (extra > 0) pills.push(`<div class="pill more">+${extra}</div>`);
+    if (extra > 0 && pills.length < maxTotal) pills.push(`<div class="pill more">+${extra}</div>`);
 
     return `<div class="pillStack">${pills.join("")}</div>`;
   }
@@ -4732,8 +4730,6 @@ dialog#bulkDialog > .drag-handle::after{
       const jsDow = new Date(Y, M - 1, d).getDay();
 
       const day = getDay(dateISO) || { date: dateISO, note: "", shifts: [], vacation: false, leaveType:"" };
-      const hasNote = !!(day.note && day.note.trim());
-
       const holidayName = holidays.get(dateISO) || "";
       const isHoliday = !!holidayName;
 
@@ -4758,7 +4754,6 @@ dialog#bulkDialog > .drag-handle::after{
 
       cells.push(`
         <div class="${dayCellClass}" data-date="${dateISO}" ${tileTitle ? `title="${tileTitle}"` : ""}>
-          ${hasNote ? `<span class="noteDot" aria-hidden="true"></span>` : ``}
           <div class="dayTop"><div class="${numClass}">${d}</div></div>
           ${pillsHTML}
         </div>
@@ -5480,6 +5475,7 @@ dialog#bulkDialog > .drag-handle::after{
     function freezeSwipeGeometry(area, currentLayer, ghostLayer) {
       if (!area || !currentLayer || !ghostLayer) return;
 
+      const lockedAreaHeight = Math.ceil(area.offsetHeight || currentLayer.offsetHeight || 0);
       const h = getCalendarCellHeight();
       area.style.setProperty("--swipe-cell-height", px(h));
 
@@ -5491,10 +5487,10 @@ dialog#bulkDialog > .drag-handle::after{
         });
       });
 
-      const currentRows = Math.max(1, Math.ceil(currentLayer.querySelectorAll(".dayCell,.blankCell").length / 7));
-      const dowHeight = currentLayer.querySelector("#dowRow")?.offsetHeight || 0;
-      const gapTotal = currentRows > 1 ? (currentRows - 1) * 4 : 0;
-      area.style.height = (dowHeight + currentRows * h + gapTotal + 4) + "px";
+      if (lockedAreaHeight > 0) {
+        area.style.height = lockedAreaHeight + "px";
+      }
+
       area.classList.add("is-swiping");
     }
 
@@ -5516,6 +5512,10 @@ dialog#bulkDialog > .drag-handle::after{
 
     function prepareGhost(delta) {
       if (prepared && activeDelta === delta) return;
+
+      currentLayer.style.transition = "";
+      ghostLayer.style.transition = "";
+      setX(currentLayer, 0);
 
       activeDelta = delta;
       prepared = true;
@@ -5555,12 +5555,14 @@ dialog#bulkDialog > .drag-handle::after{
           currentLayer.style.transition = "";
           ghostLayer.style.transition = "";
           ghostLayer.style.display = "none";
+          setX(ghostLayer, 0);
           unfreezeSwipeGeometry(area, currentLayer, ghostLayer);
           prepared = false;
           activeDelta = 0;
         }, 190);
       } else {
         ghostLayer.style.display = "none";
+        setX(ghostLayer, 0);
         unfreezeSwipeGeometry(area, currentLayer, ghostLayer);
         prepared = false;
         activeDelta = 0;
@@ -5591,6 +5593,7 @@ dialog#bulkDialog > .drag-handle::after{
         ghostLayer.style.transition = "";
         setX(currentLayer, 0);
         ghostLayer.style.display = "none";
+        setX(ghostLayer, 0);
         unfreezeSwipeGeometry(area, currentLayer, ghostLayer);
         prepared = false;
         activeDelta = 0;
