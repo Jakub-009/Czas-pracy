@@ -1,5 +1,5 @@
 const CACHE_NAME = "worktime-pwa-gh-v5";
-const BASE = "/czas-pracy-pwa/";
+const BASE = "/Czas-pracy/";
 
 const ASSETS = [
   BASE,
