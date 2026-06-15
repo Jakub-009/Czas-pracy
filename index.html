@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.20</title>
+  <title>Czas pracy 4.2.0</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -1905,15 +1905,15 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   display:none !important;
 }
 dialog#mainMenuDialog.drawerDialog{
-  width:100vw !important;
-  max-width:100vw !important;
-  height:100dvh !important;
-  max-height:100dvh !important;
-  margin:0 !important;
-  border-radius:0 !important;
-  background:transparent !important;
-  box-shadow:none !important;
-  overflow:hidden !important;
+  width:100vw;
+  max-width:100vw;
+  height:100dvh;
+  max-height:100dvh;
+  margin:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  overflow:hidden;
 }
 dialog#mainMenuDialog.drawerDialog::backdrop{
   background:rgba(32,33,36,.46);
@@ -2018,12 +2018,12 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
 }
 @media(min-width:680px){
   dialog#mainMenuDialog.drawerDialog{
-    width:100vw !important;
-    max-width:100vw !important;
-    height:100dvh !important;
-    max-height:100dvh !important;
-    margin:0 !important;
-    border-radius:0 !important;
+    width:100vw;
+    max-width:100vw;
+    height:100dvh;
+    max-height:100dvh;
+    margin:0;
+    border-radius:0;
   }
 }
 @media(max-width:430px){
@@ -2356,8 +2356,8 @@ dialog#mainMenuDialog.drawerDialog[open]{
   animation:none;
 }
 dialog#mainMenuDialog.drawerDialog .drawerPanel{
-  animation:drawerSlideFromLeftOnly .24s cubic-bezier(.2,0,0,1) !important;
-  transform-origin:left center !important;
+  animation:drawerSlideFromLeftOnly .24s cubic-bezier(.2,0,0,1);
+  transform-origin:left center;
 }
 @keyframes drawerSlideFromLeftOnly{
   from{transform:translateX(-100%)}
@@ -2366,12 +2366,12 @@ dialog#mainMenuDialog.drawerDialog .drawerPanel{
 
 /* Sztywne tło także przy bocznym menu */
 body.drawer-open{
-  overflow:hidden !important;
-  height:100dvh !important;
-  position:fixed !important;
-  inset:0 !important;
-  width:100% !important;
-  touch-action:none !important;
+  overflow:hidden;
+  height:100dvh;
+  position:fixed;
+  inset:0;
+  width:100%;
+  touch-action:none;
 }
 
 /* Margines przy dużych bottom sheetach na telefonie */
@@ -2533,12 +2533,12 @@ dialog#bulkDialog .modalBody{
 /* Gdy modal jest otwarty, tło nie rusza się pod palcem */
 body.modal-open,
 body.drawer-open{
-  overflow:hidden !important;
-  height:100dvh !important;
-  position:fixed !important;
-  inset:0 !important;
-  width:100% !important;
-  touch-action:none !important;
+  overflow:hidden;
+  height:100dvh;
+  position:fixed;
+  inset:0;
+  width:100%;
+  touch-action:none;
 }
 
 @media(max-width:430px){
@@ -2585,28 +2585,28 @@ body.scroll-locked{
 
 /* Drawer: zawsze z lewego boku, bez animacji bottom sheet */
 dialog#mainMenuDialog.drawerDialog[open]{
-  animation:none !important;
+  animation:none;
 }
 dialog#mainMenuDialog.drawerDialog{
-  width:100vw !important;
-  max-width:100vw !important;
-  height:100dvh !important;
-  max-height:100dvh !important;
-  margin:0 !important;
-  border-radius:0 !important;
-  background:transparent !important;
-  box-shadow:none !important;
-  overflow:hidden !important;
+  width:100vw;
+  max-width:100vw;
+  height:100dvh;
+  max-height:100dvh;
+  margin:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  overflow:hidden;
 }
 .drawerPanel{
-  width:min(342px, 90vw) !important;
-  height:100dvh !important;
-  background:#fff !important;
-  display:flex !important;
-  flex-direction:column !important;
-  animation:drawerFromLeft404 .24s cubic-bezier(.2,0,0,1) !important;
-  transform-origin:left center !important;
-  box-shadow:0 12px 34px rgba(60,64,67,.28) !important;
+  width:min(342px, 90vw);
+  height:100dvh;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  animation:drawerFromLeft404 .24s cubic-bezier(.2,0,0,1);
+  transform-origin:left center;
+  box-shadow:0 12px 34px rgba(60,64,67,.28);
 }
 @keyframes drawerFromLeft404{
   from{transform:translateX(-100%)}
@@ -2614,10 +2614,10 @@ dialog#mainMenuDialog.drawerDialog{
 }
 .drawerHeader{
   min-height:80px;
-  padding:14px 20px 12px !important;
-  display:flex !important;
-  align-items:center !important;
-  gap:12px !important;
+  padding:14px 20px 12px;
+  display:flex;
+  align-items:center;
+  gap:12px;
   flex:0 0 auto;
 }
 .drawerBack{
@@ -2645,7 +2645,7 @@ dialog#mainMenuDialog.drawerDialog{
 }
 .drawerView{display:none;padding:0 12px 12px}
 .drawerView.active{display:block}
-.drawerFooter{flex:0 0 auto;margin-top:0 !important;padding:12px 24px calc(16px + env(safe-area-inset-bottom)) !important}
+.drawerFooter{flex:0 0 auto;margin-top:0;padding:12px 24px calc(16px + env(safe-area-inset-bottom))}
 .drawerToolGrid{display:grid;grid-template-columns:1fr;gap:10px;padding:6px 12px 0}
 .drawerToolGrid button{width:100%;min-height:48px;justify-content:center}
 .drawerInfoList{margin:6px 12px 0}
@@ -2731,13 +2731,13 @@ html.scroll-locked-root body{
 
 /* Drawer i scrim nie przepuszczają gestu przewijania do tła */
 dialog#mainMenuDialog.drawerDialog{
-  overscroll-behavior:none !important;
-  touch-action:none !important;
+  overscroll-behavior:none;
+  touch-action:none;
 }
 .drawerPanel,
 .drawerContent{
-  overscroll-behavior:contain !important;
-  touch-action:pan-y !important;
+  overscroll-behavior:contain;
+  touch-action:pan-y;
 }
 .fabScrim{
   overscroll-behavior:none;
@@ -2746,11 +2746,11 @@ dialog#mainMenuDialog.drawerDialog{
 
 /* Strzałka w drawerze zawsze działa jako: zamknij menu / wróć */
 .drawerBack{
-  display:grid !important;
-  place-items:center !important;
+  display:grid;
+  place-items:center;
 }
 .drawerBack[hidden]{
-  display:none !important;
+  display:none;
 }
 
 /* FAB — symbol mniejszy i identyczny stylistycznie w stanie + oraz X */
@@ -2874,85 +2874,85 @@ dialog#mainMenuDialog.drawerDialog{
 
 /* Drawer: mniej martwej lewej przestrzeni, strzałka pod kciukiem */
 dialog#mainMenuDialog.drawerDialog .drawerPanel{
-  position:relative !important;
+  position:relative;
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerHeader{
-  min-height:84px !important;
-  padding:22px 22px 12px 22px !important;
-  gap:0 !important;
+  min-height:84px;
+  padding:22px 22px 12px 22px;
+  gap:0;
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerTitleBlock{
-  padding-left:0 !important;
+  padding-left:0;
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerContent{
-  padding-bottom:96px !important;
+  padding-bottom:96px;
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerBack{
-  position:absolute !important;
-  right:18px !important;
-  bottom:calc(18px + env(safe-area-inset-bottom)) !important;
-  z-index:5 !important;
-  width:54px !important;
-  height:54px !important;
-  min-height:54px !important;
-  padding:0 !important;
-  border-radius:18px !important;
-  background:#4285f4 !important;
-  color:#fff !important;
-  box-shadow:0 8px 20px rgba(60,64,67,.24),0 2px 6px rgba(60,64,67,.16) !important;
-  display:grid !important;
-  place-items:center !important;
-  flex:0 0 auto !important;
+  position:absolute;
+  right:18px;
+  bottom:calc(18px + env(safe-area-inset-bottom));
+  z-index:5;
+  width:54px;
+  height:54px;
+  min-height:54px;
+  padding:0;
+  border-radius:18px;
+  background:#4285f4;
+  color:#fff;
+  box-shadow:0 8px 20px rgba(60,64,67,.24),0 2px 6px rgba(60,64,67,.16);
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerBack svg{
-  display:none !important;
+  display:none;
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerBack::before,
 dialog#mainMenuDialog.drawerDialog .drawerBack::after{
-  content:"" !important;
-  position:absolute !important;
-  background:#fff !important;
-  border-radius:999px !important;
+  content:"";
+  position:absolute;
+  background:#fff;
+  border-radius:999px;
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerBack::before{
-  width:22px !important;
-  height:3px !important;
-  left:18px !important;
-  top:26px !important;
+  width:22px;
+  height:3px;
+  left:18px;
+  top:26px;
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerBack::after{
-  width:13px !important;
-  height:13px !important;
-  left:18px !important;
-  top:20px !important;
-  background:transparent !important;
-  border-left:3px solid #fff !important;
-  border-bottom:3px solid #fff !important;
-  border-radius:2px !important;
-  transform:rotate(45deg) !important;
+  width:13px;
+  height:13px;
+  left:18px;
+  top:20px;
+  background:transparent;
+  border-left:3px solid #fff;
+  border-bottom:3px solid #fff;
+  border-radius:2px;
+  transform:rotate(45deg);
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerItem{
-  padding-left:12px !important;
-  gap:16px !important;
+  padding-left:12px;
+  gap:16px;
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerView{
-  padding-left:10px !important;
-  padding-right:12px !important;
+  padding-left:10px;
+  padding-right:12px;
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerFooter{
-  padding-bottom:calc(18px + env(safe-area-inset-bottom)) !important;
-  line-height:1.25 !important;
+  padding-bottom:calc(18px + env(safe-area-inset-bottom));
+  line-height:1.25;
 }
 
 /* Informacje o aplikacji: czyszczenie błędów */
@@ -2978,7 +2978,7 @@ dialog#mainMenuDialog.drawerDialog .drawerFooter{
 
 /* Strzałka drawera wyżej: ponad stopką i linią wersji */
 dialog#mainMenuDialog.drawerDialog .drawerBack{
-  bottom:calc(112px + env(safe-area-inset-bottom)) !important;
+  bottom:calc(112px + env(safe-area-inset-bottom));
 }
 
 /* Więcej oddechu u góry w panelu zakresu dni */
@@ -3003,29 +3003,29 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 /* Drawer: mniej pustej przestrzeni po prawej stronie panelu */
 @media(max-width:679px){
   dialog#mainMenuDialog.drawerDialog .drawerPanel{
-    width:min(304px, 86vw) !important;
+    width:min(304px, 86vw);
   }
 
   dialog#mainMenuDialog.drawerDialog .drawerHeader{
-    padding-left:20px !important;
-    padding-right:18px !important;
+    padding-left:20px;
+    padding-right:18px;
   }
 
   dialog#mainMenuDialog.drawerDialog .drawerItem{
-    padding-left:10px !important;
-    padding-right:10px !important;
-    gap:15px !important;
+    padding-left:10px;
+    padding-right:10px;
+    gap:15px;
   }
 
   dialog#mainMenuDialog.drawerDialog .drawerView{
-    padding-left:8px !important;
-    padding-right:10px !important;
+    padding-left:8px;
+    padding-right:10px;
   }
 }
 
 /* Strzałka drawera: trochę niżej, ale nadal nad stopką */
 dialog#mainMenuDialog.drawerDialog .drawerBack{
-  bottom:calc(92px + env(safe-area-inset-bottom)) !important;
+  bottom:calc(92px + env(safe-area-inset-bottom));
 }
 
 @media(max-width:679px){
@@ -3044,37 +3044,37 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 /* 1. Drawer: mniej pustej przestrzeni po prawej i lepszy dół pod safe-area */
 @media(max-width:679px){
   dialog#mainMenuDialog.drawerDialog .drawerPanel{
-    width:min(292px, 82vw) !important;
+    width:min(292px, 82vw);
   }
 
   dialog#mainMenuDialog.drawerDialog .drawerHeader{
-    padding-left:20px !important;
-    padding-right:16px !important;
+    padding-left:20px;
+    padding-right:16px;
   }
 
   dialog#mainMenuDialog.drawerDialog .drawerView{
-    padding-left:8px !important;
-    padding-right:8px !important;
+    padding-left:8px;
+    padding-right:8px;
   }
 
   dialog#mainMenuDialog.drawerDialog .drawerItem{
-    padding-left:10px !important;
-    padding-right:10px !important;
-    gap:14px !important;
+    padding-left:10px;
+    padding-right:10px;
+    gap:14px;
   }
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerContent{
-  padding-bottom:calc(112px + env(safe-area-inset-bottom)) !important;
+  padding-bottom:calc(112px + env(safe-area-inset-bottom));
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerFooter{
-  padding-bottom:calc(18px + env(safe-area-inset-bottom)) !important;
+  padding-bottom:calc(18px + env(safe-area-inset-bottom));
 }
 
 /* Strzałka drawera: trochę niżej, ale nadal nad stopką */
 dialog#mainMenuDialog.drawerDialog .drawerBack{
-  bottom:calc(76px + env(safe-area-inset-bottom)) !important;
+  bottom:calc(76px + env(safe-area-inset-bottom));
 }
 
 /* 2. FAB z uwzględnieniem dolnego safe-area na iPhone/PWA */
@@ -3112,89 +3112,89 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 /* 5. Tryb zakresu dni: Urlop jako czytelna zapowiedź bez obniżania opacity */
 .rangeModeTabs{
-  display:flex !important;
-  gap:8px !important;
-  padding:4px !important;
-  margin:0 0 16px !important;
-  border-radius:999px !important;
-  background:#f1f4f9 !important;
+  display:flex;
+  gap:8px;
+  padding:4px;
+  margin:0 0 16px;
+  border-radius:999px;
+  background:#f1f4f9;
 }
 
 .rangeModeTab{
-  flex:1 1 0 !important;
-  min-height:38px !important;
-  height:38px !important;
-  padding:0 12px !important;
-  border-radius:999px !important;
-  background:transparent !important;
-  color:#3c4043 !important;
-  box-shadow:none !important;
-  font-size:14px !important;
-  font-weight:700 !important;
-  white-space:nowrap !important;
-  opacity:1 !important;
+  flex:1 1 0;
+  min-height:38px;
+  height:38px;
+  padding:0 12px;
+  border-radius:999px;
+  background:transparent;
+  color:#3c4043;
+  box-shadow:none;
+  font-size:14px;
+  font-weight:700;
+  white-space:nowrap;
+  opacity:1;
 }
 
 .rangeModeTab.active{
-  background:#d7e3ff !important;
-  color:#174ea6 !important;
+  background:#d7e3ff;
+  color:#174ea6;
 }
 
 .rangeModeTab.soon{
-  color:#6f7785 !important;
-  opacity:1 !important;
+  color:#6f7785;
+  opacity:1;
 }
 
 .rangeModeTab.soon span{
-  display:inline-block !important;
-  margin-left:4px !important;
-  padding:3px 6px !important;
-  border-radius:999px !important;
-  background:#e8eaed !important;
-  color:#5f6368 !important;
-  font-size:10.5px !important;
-  line-height:1 !important;
-  font-weight:700 !important;
+  display:inline-block;
+  margin-left:4px;
+  padding:3px 6px;
+  border-radius:999px;
+  background:#e8eaed;
+  color:#5f6368;
+  font-size:10.5px;
+  line-height:1;
+  font-weight:700;
 }
 
 .rangeModeTab:disabled{
-  cursor:default !important;
+  cursor:default;
 }
 
 /* 6. Chevrony akordeonów ustawień: bez bujania przy animacji */
 .settingsChevron{
-  display:grid !important;
-  place-items:center !important;
-  transform-origin:center !important;
-  transition:transform .18s ease !important;
+  display:grid;
+  place-items:center;
+  transform-origin:center;
+  transition:transform .18s ease;
 }
 
 .settingsChevron::before{
-  left:50% !important;
-  top:50% !important;
-  transform:translate(-50%,-60%) rotate(45deg) !important;
-  transform-origin:center !important;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-60%) rotate(45deg);
+  transform-origin:center;
 }
 
 .settingsAccordion[open] .settingsChevron{
-  transform:scaleY(-1) !important;
+  transform:scaleY(-1);
 }
 
 @media(max-width:430px){
   .rangeModeTabs{
-    gap:6px !important;
+    gap:6px;
   }
 
   .rangeModeTab{
-    min-height:36px !important;
-    height:36px !important;
-    padding:0 10px !important;
-    font-size:13px !important;
+    min-height:36px;
+    height:36px;
+    padding:0 10px;
+    font-size:13px;
   }
 
   .rangeModeTab.soon span{
-    padding:3px 5px !important;
-    font-size:10px !important;
+    padding:3px 5px;
+    font-size:10px;
   }
 }
 
@@ -3207,7 +3207,8 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 
 
-/* ===== Czas pracy 4.1.13: własne dialogi komunikatów ===== */
+
+/* ===== Czas pracy 4.2.0: własne dialogi komunikatów ===== */
 .appConfirmDialog{
   width:min(420px, calc(100vw - 36px));
   max-width:420px;
@@ -3260,12 +3261,61 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   border-radius:999px;
   font-size:14.5px;
   font-weight:650;
+  box-shadow:none;
 }
 
+.appConfirmActions .dialogCancel{
+  background:#f1f3f4;
+  color:#3c4043;
+}
 
+.appConfirmActions .dialogCancel:hover{
+  background:#e8eaed;
+}
 
+.appConfirmActions .dialogPrimary{
+  background:#4285f4;
+  color:#fff;
+}
 
-/* ===== Czas pracy 4.1.16: modal statystyk rocznych ===== */
+.appConfirmActions .dialogPrimary:hover{
+  filter:brightness(.97);
+}
+
+.appConfirmActions .dialogDanger{
+  background:#fce8e6;
+  color:#a50e0e;
+}
+
+/* ===== Czas pracy 4.2.0: modal statystyk rocznych ===== */
+.yearStatsControls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin:0 0 16px;
+}
+
+.yearStatsControls button{
+  width:42px;
+  height:42px;
+  min-height:42px;
+  padding:0;
+  border-radius:50%;
+  font-size:24px;
+  line-height:1;
+  box-shadow:none;
+}
+
+.yearStatsControls strong{
+  min-width:92px;
+  text-align:center;
+  font-size:22px;
+  line-height:1.1;
+  font-weight:650;
+  color:#202124;
+}
+
 .yearStatsPanel .yearStatsGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -3331,10 +3381,11 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   display:block;
   width:100%;
   height:auto;
-  min-height:170px;
+  min-height:190px;
 }
 
-.yearStatsChart .axis{
+.yearStatsChart .axis,
+.yearStatsChart .gridLine{
   stroke:#dfe3eb;
   stroke-width:1;
 }
@@ -3394,11 +3445,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   color:#202124;
   font-weight:520;
 }
-
-
-
-
-/* ===== Czas pracy 4.1.20: pełny panel dnia bez mini-podglądu ===== */
+/* ===== Czas pracy 4.2.0: pełny panel dnia bez mini-podglądu ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel,
@@ -4023,6 +4070,9 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
           <div class="drawerToolGrid">
             <button class="tonal" id="reportPdf" type="button">Raport miesięczny</button>
             <button class="tonal" id="reportYear" type="button">Statystyki roczne</button>
+            <button class="tonal" id="exportMonthCsv" type="button">CSV miesiąc</button>
+            <button class="tonal" id="exportYearCsv" type="button">CSV rok</button>
+            <button class="tonal" id="checkUpdateBtn" type="button">Sprawdź aktualizację</button>
             <button class="tonal" id="backupJson" type="button">Pobierz kopię</button>
             <input id="restoreJson" type="file" accept="application/json" style="display:none" />
             <button class="tonal" id="restoreBtn" type="button">Wczytaj dane</button>
@@ -4300,6 +4350,12 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         </div>
 
         <div class="modalBody">
+          <div class="yearStatsControls">
+            <button class="tonal" id="yearStatsPrev" type="button" aria-label="Poprzedni rok">‹</button>
+            <strong id="yearStatsCurrent">2026</strong>
+            <button class="tonal" id="yearStatsNext" type="button" aria-label="Następny rok">›</button>
+          </div>
+
           <div class="yearStatsGrid">
             <div class="yearStatBox"><strong id="yearStatsHours">0:00</strong><span>Godziny</span></div>
             <div class="yearStatBox"><strong id="yearStatsPay">0,00 zł</strong><span>Wypłata</span></div>
@@ -4339,8 +4395,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       <h3 id="appConfirmTitle">Komunikat</h3>
       <p id="appConfirmMessage">—</p>
       <div class="appConfirmActions">
-        <button class="tonal" id="appConfirmCancel" type="button">Anuluj</button>
-        <button class="filled" id="appConfirmOk" type="button">OK</button>
+        <button class="dialogCancel" id="appConfirmCancel" type="button">Anuluj</button>
+        <button class="dialogPrimary" id="appConfirmOk" type="button">OK</button>
       </div>
     </div>
   </dialog>
@@ -4357,7 +4413,37 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   });
 
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/czas-pracy-pwa/sw.js", { scope: "/czas-pracy-pwa/" });
+    navigator.serviceWorker.register("/czas-pracy-pwa/sw.js", { scope: "/czas-pracy-pwa/" }).then((reg) => {
+      window.__cpServiceWorkerRegistration = reg;
+
+      const markUpdateReady = (worker) => {
+        if (!worker) return;
+        window.__cpWaitingWorker = worker;
+        window.dispatchEvent(new CustomEvent("cp-update-ready"));
+      };
+
+      if (reg.waiting && navigator.serviceWorker.controller) markUpdateReady(reg.waiting);
+
+      reg.addEventListener("updatefound", () => {
+        const worker = reg.installing;
+        if (!worker) return;
+        worker.addEventListener("statechange", () => {
+          if (worker.state === "installed" && navigator.serviceWorker.controller) {
+            markUpdateReady(worker);
+          }
+        });
+      });
+
+      window.addEventListener("focus", () => {
+        try { reg.update?.(); } catch {}
+      });
+    }).catch((err) => console.warn("Service Worker register error:", err));
+
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (window.__cpReloadingAfterUpdate) return;
+      window.__cpReloadingAfterUpdate = true;
+      window.location.reload();
+    });
   }
 
   const $ = (id) => document.getElementById(id);
@@ -4379,13 +4465,14 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   function setAppConfirmTone(tone) {
     const ok = $("appConfirmOk");
-    if (!ok) return;
-    ok.classList.remove("danger");
-    ok.style.background = "";
-    ok.style.color = "";
-    if (tone === "danger") {
-      ok.style.background = "#c5221f";
-      ok.style.color = "#fff";
+    const cancel = $("appConfirmCancel");
+    if (ok) {
+      ok.classList.remove("dialogPrimary", "dialogDanger");
+      ok.classList.add(tone === "danger" ? "dialogDanger" : "dialogPrimary");
+    }
+    if (cancel) {
+      cancel.classList.remove("dialogCancel");
+      cancel.classList.add("dialogCancel");
     }
   }
 
@@ -4435,8 +4522,26 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   }
 
   function askConfirm(message, title = "Potwierdź") {
-    return openAppDialog({ title, message, okText:"Tak", cancelText:"Anuluj", tone:"danger" });
+    return openAppDialog({ title, message, okText:"Tak", cancelText:"Anuluj", tone:"default" });
   }
+
+  window.addEventListener("cp-update-ready", async () => {
+    if (window.__cpUpdatePromptOpen) return;
+    window.__cpUpdatePromptOpen = true;
+    const ok = await openAppDialog({
+      title:"Dostępna nowa wersja",
+      message:"Możesz odświeżyć aplikację, aby wczytać najnowszą wersję plików.",
+      okText:"Odśwież",
+      cancelText:"Później",
+      tone:"default"
+    });
+    window.__cpUpdatePromptOpen = false;
+    if (!ok) return;
+
+    const worker = window.__cpWaitingWorker;
+    if (worker) worker.postMessage({ type:"SKIP_WAITING" });
+    setTimeout(() => window.location.reload(), 450);
+  });
 
   const todayISO = () => {
     const d = new Date();
@@ -4554,9 +4659,15 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   let db = load() || createEmptyDB();
 
+  const calendarHtmlCache = new Map();
+  function clearCalendarHtmlCache() {
+    calendarHtmlCache.clear();
+  }
+
   function save() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+      clearCalendarHtmlCache();
       return true;
     } catch (err) {
       console.error("Nie udało się zapisać danych:", err);
@@ -4851,7 +4962,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     if (dlg) {
       dlg.classList.add("is-preview-only");
-      dlg.classList.remove("is-form-open", "is-empty-day");
+      dlg.classList.remove("is-form-open", "is-empty-day", "is-mini-preview");
     }
 
     setStatus(`Dodano zakres z szablonu: ${start}–${end}.`);
@@ -5376,9 +5487,22 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     renderCalendarInto(monthYM, calGrid, true);
   }
 
-  function renderCalendarInto(monthYM, gridEl, bindClicks) {
-    updateCalendarGeometryVars();
-    if (!gridEl) return;
+  function calendarCacheKey(monthYM) {
+    const entries = db.entries
+      .filter(e => e?.date && ym(e.date) === monthYM)
+      .map(e => ({
+        d:e.date,
+        n:e.note || "",
+        l:e.leaveType || "",
+        v:!!e.vacation,
+        s:(e.shifts || []).map(x => `${x.start || ""}-${x.end || ""}`).join("|")
+      }));
+    return `${monthYM}|${todayISO()}|${JSON.stringify(entries)}`;
+  }
+
+  function buildCalendarHTML(monthYM) {
+    const key = calendarCacheKey(monthYM);
+    if (calendarHtmlCache.has(key)) return calendarHtmlCache.get(key);
 
     const [Y, M] = monthYM.split("-").map(Number);
     const first = new Date(Y, M - 1, 1);
@@ -5432,7 +5556,21 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       for (let i = 0; i < need; i++) cells.push(`<div class="blankCell"></div>`);
     }
 
-    gridEl.innerHTML = cells.join("");
+    const html = cells.join("");
+    calendarHtmlCache.set(key, html);
+    if (calendarHtmlCache.size > 18) {
+      const firstKey = calendarHtmlCache.keys().next().value;
+      calendarHtmlCache.delete(firstKey);
+    }
+    return html;
+  }
+
+  function renderCalendarInto(monthYM, gridEl, bindClicks) {
+    updateCalendarGeometryVars();
+    if (!gridEl) return;
+
+    const today = todayISO();
+    gridEl.innerHTML = buildCalendarHTML(monthYM);
 
     if (bindClicks) {
       gridEl.querySelectorAll(".dayCell[data-date]").forEach(el => {
@@ -5480,7 +5618,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       dlg.classList.toggle("is-form-open", !hasAnyEvent);
       dlg.classList.toggle("is-preview-only", hasAnyEvent);
       dlg.classList.toggle("is-empty-day", !hasAnyEvent);
-      dlg.classList.remove();
+      dlg.classList.remove("is-mini-preview", "is-day-sheet");
+      dlg.style.removeProperty("--day-sheet-y");
     }
 
     renderDayDialog();
@@ -5496,7 +5635,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   function closeDay() {
     dlgDate = null;
     if (dlg) {
-      dlg.classList.remove();
+      dlg.classList.remove("is-day-sheet", "is-mini-preview");
+      dlg.style.removeProperty("--day-sheet-y");
     }
     if (dlg && typeof dlg.close === "function") dlg.close();
     else if (dlg) dlg.removeAttribute("open");
@@ -5510,7 +5650,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   function expandDayPanel({ form = false } = {}) {
     if (!dlg) return;
-    dlg.classList.remove();
+    dlg.classList.remove("is-mini-preview", "is-day-sheet");
+    dlg.style.removeProperty("--day-sheet-y");
 
     if (form) {
       dlg.classList.add("is-form-open");
@@ -5898,6 +6039,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   }
 
 
+  let activeYearStatsYear = null;
+
   function computeYearStats(year) {
     const totals = { min:0, money:0, workDays:0, paid:0, unpaid:0, sick:0, notes:0 };
     const months = [];
@@ -5932,30 +6075,40 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if (!svg) return;
 
     const maxMin = Math.max(60, ...months.map(m => m.min || 0));
-    const chartTop = 16;
-    const chartBottom = 138;
+    const chartTop = 18;
+    const chartBottom = 152;
     const chartHeight = chartBottom - chartTop;
     const baseY = chartBottom;
     const gap = 8;
     const barW = 18;
     const startX = 18;
-
     const monthLabels = months.map(m => monthShortPL(m.monthYM));
+
+    const grid = [0.25, 0.5, 0.75, 1].map(fr => {
+      const y = Math.round(baseY - chartHeight * fr);
+      return `<line class="gridLine" x1="12" y1="${y}" x2="348" y2="${y}"></line>`;
+    }).join("");
+
     const bars = months.map((m, idx) => {
       const x = startX + idx * (barW + gap);
       const h = Math.max(2, Math.round((m.min / maxMin) * chartHeight));
       const y = baseY - h;
       const active = m.min > 0 ? "bar" : "barSoft";
       const hours = Math.round((m.min / 60) * 10) / 10;
+      const value = hours ? String(hours).replace(".", ",") : "";
 
       return `
-        <rect class="${active}" x="${x}" y="${y}" width="${barW}" height="${h}" rx="5"></rect>
-        <text class="value" x="${x + barW / 2}" y="${Math.max(10, y - 5)}" text-anchor="middle">${hours || ""}</text>
-        <text class="label" x="${x + barW / 2}" y="158" text-anchor="middle">${escapeHtml(monthLabels[idx])}</text>
+        <rect class="${active}" x="${x}" y="${y}" width="${barW}" height="${h}" rx="5">
+          <title>${escapeHtml(monthLabels[idx])}: ${escapeHtml(fmtHM(m.min))}</title>
+        </rect>
+        <text class="value" x="${x + barW / 2}" y="${Math.max(11, y - 5)}" text-anchor="middle">${value}</text>
+        <text class="label" x="${x + barW / 2}" y="176" text-anchor="middle">${escapeHtml(monthLabels[idx])}</text>
       `;
     }).join("");
 
+    svg.setAttribute("viewBox", "0 0 360 190");
     svg.innerHTML = `
+      ${grid}
       <line class="axis" x1="12" y1="${baseY}" x2="348" y2="${baseY}"></line>
       ${bars}
     `;
@@ -5967,11 +6120,13 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     const monthPick = $("monthPick");
     const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
-    const year = yearFromMonthYM(monthYM);
+    if (!activeYearStatsYear) activeYearStatsYear = yearFromMonthYM(monthYM);
+    const year = activeYearStatsYear;
     const data = computeYearStats(year);
 
     if ($("yearStatsTitle")) $("yearStatsTitle").textContent = `Statystyki ${year}`;
-    if ($("yearStatsSubtitle")) $("yearStatsSubtitle").textContent = "Podgląd roczny na podstawie wybranego miesiąca.";
+    if ($("yearStatsSubtitle")) $("yearStatsSubtitle").textContent = "Roczne podsumowanie godzin, wypłaty i nieobecności.";
+    if ($("yearStatsCurrent")) $("yearStatsCurrent").textContent = String(year);
     if ($("yearStatsHours")) $("yearStatsHours").textContent = fmtHM(data.totals.min);
     if ($("yearStatsPay")) $("yearStatsPay").textContent = pln(data.totals.money);
     if ($("yearStatsWorkDays")) $("yearStatsWorkDays").textContent = String(data.totals.workDays);
@@ -5997,6 +6152,9 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     haptic.tap();
     const dlgYear = $("yearStatsDialog");
     if (!dlgYear) return;
+    const monthPick = $("monthPick");
+    const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
+    activeYearStatsYear = yearFromMonthYM(monthYM);
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
     if (typeof dlgYear.showModal === "function") dlgYear.showModal();
     else dlgYear.setAttribute("open", "");
@@ -6008,6 +6166,132 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if (dlgYear && typeof dlgYear.close === "function") dlgYear.close();
     else if (dlgYear) dlgYear.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
+  }
+
+  function csvCell(value) {
+    const s = String(value ?? "").replace(/"/g, '""');
+    return `"${s}"`;
+  }
+
+  function csvNumber(value) {
+    return String(value ?? 0).replace(".", ",");
+  }
+
+  function downloadTextFile(filename, content, mime = "text/plain;charset=utf-8") {
+    const blob = new Blob(["\ufeff" + content], { type:mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function buildMonthCsv(monthYM) {
+    const rows = [[
+      "Data", "Dzień tygodnia", "Status", "Wejście", "Wyjście", "Czas", "Godziny dziesiętnie", "Wypłata", "Notatka"
+    ]];
+
+    const entries = db.entries
+      .filter(e => e?.date && ym(e.date) === monthYM)
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    for (const day of entries) {
+      const status = day.leaveType ? leaveLabel(day.leaveType) : "";
+      const note = day.note || "";
+      const shifts = (day.shifts || []).length ? day.shifts : [null];
+
+      for (const shift of shifts) {
+        const mins = shift ? Math.max(0, minutesBetween(day.date, shift.start, shift.end)) : 0;
+        const pay = round2((mins / 60) * (db.settings.rate || 0));
+        rows.push([
+          day.date,
+          capFirst(fmtWeekdayLongPL(day.date)),
+          status,
+          shift?.start || "",
+          shift?.end || "",
+          mins ? fmtHM(mins) : "",
+          mins ? csvNumber(round2(mins / 60)) : "",
+          mins ? csvNumber(pay) : "",
+          note
+        ]);
+      }
+    }
+
+    return rows.map(row => row.map(csvCell).join(";")).join("\n");
+  }
+
+  function buildYearCsv(year) {
+    const data = computeYearStats(year);
+    const rows = [[
+      "Miesiąc", "Godziny", "Godziny dziesiętnie", "Wypłata", "Dni pracy", "Urlop płatny", "Urlop bezpłatny", "L4", "Notatki"
+    ]];
+
+    for (const m of data.months) {
+      rows.push([
+        monthShortPL(m.monthYM),
+        fmtHM(m.min),
+        csvNumber(round2(m.min / 60)),
+        csvNumber(m.money),
+        m.workDays,
+        m.paid,
+        m.unpaid,
+        m.sick,
+        m.notes
+      ]);
+    }
+
+    rows.push([
+      "Razem",
+      fmtHM(data.totals.min),
+      csvNumber(round2(data.totals.min / 60)),
+      csvNumber(data.totals.money),
+      data.totals.workDays,
+      data.totals.paid,
+      data.totals.unpaid,
+      data.totals.sick,
+      data.totals.notes
+    ]);
+
+    return rows.map(row => row.map(csvCell).join(";")).join("\n");
+  }
+
+  function exportMonthCsv() {
+    haptic.tap();
+    const monthPick = $("monthPick");
+    const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
+    downloadTextFile(`czas-pracy_${monthYM}.csv`, buildMonthCsv(monthYM), "text/csv;charset=utf-8");
+    setStatus("Wyeksportowano CSV miesiąca.");
+  }
+
+  function exportYearCsv() {
+    haptic.tap();
+    const monthPick = $("monthPick");
+    const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
+    const year = yearFromMonthYM(monthYM);
+    downloadTextFile(`czas-pracy_${year}_podsumowanie.csv`, buildYearCsv(year), "text/csv;charset=utf-8");
+    setStatus("Wyeksportowano CSV roku.");
+  }
+
+  async function checkForAppUpdate() {
+    haptic.tap();
+    const reg = window.__cpServiceWorkerRegistration;
+    if (!reg || !reg.update) {
+      notify("Nie znaleziono aktywnej usługi aktualizacji. Spróbuj ponownie po odświeżeniu aplikacji.", "Aktualizacja");
+      return;
+    }
+
+    try {
+      await reg.update();
+      if (reg.waiting) {
+        window.__cpWaitingWorker = reg.waiting;
+        window.dispatchEvent(new CustomEvent("cp-update-ready"));
+      } else {
+        notify("Nie wykryto nowszej wersji aplikacji.", "Aktualizacja");
+      }
+    } catch {
+      notify("Nie udało się sprawdzić aktualizacji.", "Aktualizacja");
+    }
   }
 
   // ===== UI =====
@@ -6055,7 +6339,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       renderDayDialog();
       if (dlg) {
         dlg.classList.add("is-preview-only");
-        dlg.classList.remove("is-form-open", "is-empty-day");
+        dlg.classList.remove("is-form-open", "is-empty-day", "is-mini-preview");
       }
       setStatus("Dodano zakres.");
       haptic.success();
@@ -6113,7 +6397,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     summaryShortcut.onclick = () => {
       haptic.tap();
       document.querySelector(".summaryCard")?.scrollIntoView({ behavior:"smooth", block:"center" });
-      setStatus("Skrót do podsumowań. Widok roczny będzie dostępny w kolejnych krokach.");
+      setStatus("Skrót do podsumowań. Statystyki roczne są dostępne w menu Narzędzia.");
     };
   }
 
@@ -6189,6 +6473,26 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   const reportYearBtn = $("reportYear");
   if (reportYearBtn) reportYearBtn.onclick = openYearStatsPreview;
+
+  const exportMonthCsvBtn = $("exportMonthCsv");
+  if (exportMonthCsvBtn) exportMonthCsvBtn.onclick = exportMonthCsv;
+
+  const exportYearCsvBtn = $("exportYearCsv");
+  if (exportYearCsvBtn) exportYearCsvBtn.onclick = exportYearCsv;
+
+  const checkUpdateBtn = $("checkUpdateBtn");
+  if (checkUpdateBtn) checkUpdateBtn.onclick = checkForAppUpdate;
+
+  $("yearStatsPrev")?.addEventListener("click", () => {
+    activeYearStatsYear = (activeYearStatsYear || yearFromMonthYM($("monthPick")?.value || ym(todayISO()))) - 1;
+    haptic.tap();
+    renderYearStats();
+  });
+  $("yearStatsNext")?.addEventListener("click", () => {
+    activeYearStatsYear = (activeYearStatsYear || yearFromMonthYM($("monthPick")?.value || ym(todayISO()))) + 1;
+    haptic.tap();
+    renderYearStats();
+  });
 
   $("yearStatsPanelClose")?.addEventListener("click", closeYearStats);
   $("yearStatsPanelDone")?.addEventListener("click", closeYearStats);
