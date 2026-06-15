@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.0</title>
+  <title>Czas pracy 4.1.1</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -1027,14 +1027,15 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
 #calGridGhost{
   gap:4px !important;
   background:transparent !important;
+  grid-auto-rows:var(--day-height) !important;
   grid-template-rows:none !important;
   align-items:stretch !important;
 }
 .dayCell,
 .blankCell{
+  height:var(--day-height) !important;
   min-height:var(--day-height) !important;
-  height:auto !important;
-  max-height:none !important;
+  max-height:var(--day-height) !important;
   border-radius:6px !important;
   background:#f8f9fa !important;
   box-shadow:none !important;
@@ -1116,16 +1117,18 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
   height:var(--pill-height) !important;
   min-height:var(--pill-height) !important;
   max-height:var(--pill-height) !important;
+  max-width:100% !important;
   font-size:var(--pill-size) !important;
   line-height:1 !important;
-  font-weight:600 !important;
-  border-radius:3px !important;
-  padding:0 4px !important;
+  font-weight:650 !important;
+  border-radius:4px !important;
+  padding:0 3px !important;
   justify-content:flex-start !important;
   text-align:left !important;
-  letter-spacing:-.02em !important;
+  letter-spacing:-.035em !important;
   box-shadow:none !important;
   overflow:hidden !important;
+  white-space:nowrap !important;
   text-overflow:clip !important;
 }
 .pill.work{
@@ -4612,7 +4615,7 @@ dialog#bulkDialog > .drag-handle::after{
     const todayBadgeH = clampNumber(dayHeight * 0.245, isNarrow ? 19 : 20, isNarrow ? 24 : 25);
     const todayBadgeW = clampNumber(dayHeight * 0.325, isNarrow ? 26 : 27, isNarrow ? 32 : 33);
     const pillHeight = clampNumber(dayHeight * 0.145, isNarrow ? 11 : 12, isNarrow ? 14 : 15);
-    const pillSize = clampNumber(dayHeight * 0.084, isNarrow ? 6.6 : 7.2, isNarrow ? 8.1 : 8.8);
+    const pillSize = clampNumber(dayHeight * 0.078, isNarrow ? 6.4 : 7.1, isNarrow ? 7.7 : 8.7);
 
     const geometryKey = [
       width,
@@ -4640,7 +4643,7 @@ dialog#bulkDialog > .drag-handle::after{
     updateCalendarGeometryVars();
     const raw = getComputedStyle(document.documentElement).getPropertyValue("--day-height").trim();
     const parsed = Number.parseFloat(raw);
-    return Number.isFinite(parsed) && parsed > 0 ? Math.round(parsed) : 88;
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : 88;
   }
 
   function refreshCalendarLayoutOnly() {
@@ -4671,6 +4674,19 @@ dialog#bulkDialog > .drag-handle::after{
     }).join("");
   }
 
+
+  function compactTileTime(value) {
+    if (!value || !/^\d{2}:\d{2}$/.test(value)) return value || "";
+    const [hh, mm] = value.split(":");
+    return mm === "00" ? hh : `${hh}:${mm}`;
+  }
+
+  function formatShiftForTile(start, end) {
+    const narrow = window.matchMedia?.("(max-width: 410px)")?.matches;
+    if (!narrow) return `${start}–${end}`;
+    return `${compactTileTime(start)}–${compactTileTime(end)}`;
+  }
+
   function buildPillsHTML(day) {
     const shifts = (day?.shifts || []).slice().sort((a, b) => (a.start || "").localeCompare(b.start || ""));
     const leaveType = day?.leaveType || "";
@@ -4691,7 +4707,7 @@ dialog#bulkDialog > .drag-handle::after{
     pills.push(...visible.map(s => {
       const a = (s && s.start) ? s.start : "—";
       const b = (s && s.end) ? s.end : "—";
-      return `<div class="pill work">${a}–${b}</div>`;
+      return `<div class="pill work">${formatShiftForTile(a, b)}</div>`;
     }));
 
     if (extra > 0) pills.push(`<div class="pill more">+${extra}</div>`);
@@ -5448,13 +5464,14 @@ dialog#bulkDialog > .drag-handle::after{
 
     const LOCK_START = 10;
     const THRESH_X = 60;
+    const LAYER_GAP = 6;
 
     function setX(el, x) { el.style.transform = `translate3d(${x}px,0,0)`; }
 
     function applyDragFrame(dx) {
       const w = area.clientWidth || window.innerWidth;
       setX(currentLayer, dx);
-      setX(ghostLayer, (activeDelta > 0 ? w : -w) + dx);
+      setX(ghostLayer, (activeDelta > 0 ? w + LAYER_GAP : -w - LAYER_GAP) + dx);
     }
 
     function scheduleDrag(dx) {
@@ -5477,13 +5494,13 @@ dialog#bulkDialog > .drag-handle::after{
       if (!area || !currentLayer || !ghostLayer) return;
 
       const h = getCalendarCellHeight();
-      area.style.setProperty("--swipe-cell-height", h + "px");
+      area.style.setProperty("--swipe-cell-height", px(h));
 
       [currentLayer, ghostLayer].forEach((layer) => {
         layer.querySelectorAll(".dayCell,.blankCell").forEach((el) => {
-          el.style.height = h + "px";
-          el.style.minHeight = h + "px";
-          el.style.maxHeight = h + "px";
+          el.style.height = px(h);
+          el.style.minHeight = px(h);
+          el.style.maxHeight = px(h);
         });
       });
 
@@ -5529,7 +5546,7 @@ dialog#bulkDialog > .drag-handle::after{
 
       const w = area.clientWidth || window.innerWidth;
       setX(currentLayer, 0);
-      setX(ghostLayer, delta > 0 ? w : -w);
+      setX(ghostLayer, delta > 0 ? w + LAYER_GAP : -w - LAYER_GAP);
     }
 
     function resetLayers(animated) {
@@ -5546,7 +5563,7 @@ dialog#bulkDialog > .drag-handle::after{
       }
 
       setX(currentLayer, 0);
-      setX(ghostLayer, activeDelta > 0 ? w : -w);
+      setX(ghostLayer, activeDelta > 0 ? w + LAYER_GAP : -w - LAYER_GAP);
 
       if (animated) {
         setTimeout(() => {
@@ -5574,7 +5591,7 @@ dialog#bulkDialog > .drag-handle::after{
       currentLayer.style.transition = "transform 190ms ease";
       ghostLayer.style.transition = "transform 190ms ease";
 
-      setX(currentLayer, delta > 0 ? -w : w);
+      setX(currentLayer, delta > 0 ? -(w + LAYER_GAP) : (w + LAYER_GAP));
       setX(ghostLayer, 0);
 
       currentLayer.classList.add("calFading");
