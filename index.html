@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.15</title>
+  <title>Czas pracy 4.1.16</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -3320,55 +3320,26 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 
 
-/* ===== Czas pracy 4.1.15: podgląd statystyk rocznych w aplikacji ===== */
-.yearStatsPreview{
-  margin:14px 12px 4px;
-  padding:16px;
-  border-radius:22px;
-  background:#f6f8fc;
-  border:1px solid #e2e6ef;
-}
 
-.yearStatsHead{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:14px;
-}
-
-.yearStatsHead strong{
-  display:block;
-  font-size:18px;
-  line-height:1.15;
-  color:#202124;
-}
-
-.yearStatsHead span{
-  display:block;
-  margin-top:4px;
-  font-size:13.5px;
-  line-height:1.25;
-  color:#5f6368;
-}
-
-.yearStatsGrid{
+/* ===== Czas pracy 4.1.16: modal statystyk rocznych ===== */
+.yearStatsPanel .yearStatsGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-bottom:14px;
+  margin-bottom:16px;
 }
 
-.yearStatBox{
+.yearStatsPanel .yearStatBox{
   min-width:0;
-  padding:12px;
+  padding:13px;
   border-radius:18px;
-  background:#fff;
-  border:1px solid #e7ebf3;
+  background:#f6f8fc;
+  border:1px solid #e4e8f1;
 }
 
-.yearStatBox strong{
+.yearStatsPanel .yearStatBox strong{
   display:block;
-  font-size:19px;
+  font-size:21px;
   line-height:1.1;
   color:#202124;
   white-space:nowrap;
@@ -3376,12 +3347,73 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   text-overflow:ellipsis;
 }
 
-.yearStatBox span{
+.yearStatsPanel .yearStatBox span{
   display:block;
   margin-top:5px;
   font-size:12.5px;
   line-height:1.2;
   color:#5f6368;
+}
+
+.yearChartCard{
+  margin:4px 0 18px;
+  padding:15px 14px 12px;
+  border-radius:22px;
+  background:#f8fafd;
+  border:1px solid #e4e8f1;
+}
+
+.yearChartHead{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+}
+
+.yearChartHead strong{
+  font-size:15px;
+  line-height:1.2;
+  color:#202124;
+}
+
+.yearChartHead span{
+  font-size:12.5px;
+  line-height:1.2;
+  color:#5f6368;
+}
+
+.yearStatsChart{
+  display:block;
+  width:100%;
+  height:auto;
+  min-height:170px;
+}
+
+.yearStatsChart .axis{
+  stroke:#dfe3eb;
+  stroke-width:1;
+}
+
+.yearStatsChart .bar{
+  fill:#4285f4;
+}
+
+.yearStatsChart .barSoft{
+  fill:#d2e3fc;
+}
+
+.yearStatsChart .label{
+  fill:#5f6368;
+  font-size:9px;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+}
+
+.yearStatsChart .value{
+  fill:#202124;
+  font-size:8.5px;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  font-weight:650;
 }
 
 .yearStatsTableWrap{
@@ -3391,14 +3423,14 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 .yearStatsTable{
   width:100%;
-  min-width:420px;
+  min-width:430px;
   border-collapse:collapse;
-  font-size:12.5px;
+  font-size:13px;
 }
 
 .yearStatsTable th,
 .yearStatsTable td{
-  padding:9px 8px;
+  padding:10px 8px;
   border-bottom:1px solid #e5e9f1;
   text-align:right;
   white-space:nowrap;
@@ -3419,11 +3451,11 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   font-weight:520;
 }
 
-
-/* ===== Czas pracy 4.1.15: panele ekranowe i poprawiony mini-podgląd dnia ===== */
+/* ===== Czas pracy 4.1.16: panele ekranowe i ruchomy mini-podgląd dnia ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
-dialog#vacDialog.googlePanel{
+dialog#vacDialog.googlePanel,
+dialog#yearStatsDialog.googlePanel{
   position:fixed;
   inset:0;
   width:100vw;
@@ -3443,7 +3475,8 @@ dialog#vacDialog.googlePanel{
 
 dialog#dayDialog.googlePanel::backdrop,
 dialog#bulkDialog.googlePanel::backdrop,
-dialog#vacDialog.googlePanel::backdrop{
+dialog#vacDialog.googlePanel::backdrop,
+dialog#yearStatsDialog.googlePanel::backdrop{
   background:rgba(32,33,36,.34);
   backdrop-filter:blur(2px);
   -webkit-backdrop-filter:blur(2px);
@@ -3451,7 +3484,8 @@ dialog#vacDialog.googlePanel::backdrop{
 
 dialog#dayDialog.googlePanel[open],
 dialog#bulkDialog.googlePanel[open],
-dialog#vacDialog.googlePanel[open]{
+dialog#vacDialog.googlePanel[open],
+dialog#yearStatsDialog.googlePanel[open]{
   animation:googlePanelIn .18s cubic-bezier(.2,0,0,1);
 }
 
@@ -3763,8 +3797,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   margin-right:0;
 }
 
-/* Mini-podgląd dnia: dialog pełnoekranowy, karta tylko na dole */
-dialog#dayDialog.googlePanel.is-mini-preview{
+/* Mini-podgląd dnia: dialog pełnoekranowy, karta płynnie przesuwana między kotwicami */
+dialog#dayDialog.googlePanel.is-day-sheet{
   inset:0;
   height:100dvh;
   max-height:none;
@@ -3773,25 +3807,38 @@ dialog#dayDialog.googlePanel.is-mini-preview{
   box-shadow:none;
 }
 
-dialog#dayDialog.googlePanel.is-mini-preview::backdrop{
+dialog#dayDialog.googlePanel.is-day-sheet::backdrop{
   background:rgba(32,33,36,.18);
   backdrop-filter:none;
   -webkit-backdrop-filter:none;
 }
 
-dialog#dayDialog.googlePanel.is-mini-preview .googlePanelShell{
+dialog#dayDialog.googlePanel.is-day-sheet .googlePanelShell{
   position:absolute;
   left:0;
   right:0;
-  bottom:0;
-  height:auto;
-  max-height:min(64dvh, 520px);
+  top:0;
+  height:100dvh;
   border-radius:30px 30px 0 0;
   box-shadow:0 -12px 38px rgba(32,33,36,.24),0 -2px 8px rgba(32,33,36,.08);
+  transform:translate3d(0, var(--day-sheet-y, 0px), 0);
+  transition:transform .24s cubic-bezier(.2,0,0,1), border-radius .18s ease;
+  will-change:transform;
+}
+
+dialog#dayDialog.googlePanel.is-day-sheet.is-sheet-dragging .googlePanelShell{
+  transition:none;
+}
+
+dialog#dayDialog.googlePanel.is-day-sheet:not(.is-mini-preview) .googlePanelShell{
+  border-radius:0;
+}
+
+dialog#dayDialog.googlePanel.is-day-sheet .googlePanelBar{
+  position:relative;
 }
 
 dialog#dayDialog.googlePanel.is-mini-preview .googlePanelBar{
-  position:relative;
   min-height:46px;
   padding:8px 20px 4px;
   border-bottom:none;
@@ -3820,8 +3867,19 @@ dialog#dayDialog.googlePanel.is-mini-preview .drag-handle{
   cursor:pointer;
 }
 
+dialog#dayDialog.googlePanel.is-mini-preview .drag-handle svg{
+  display:none;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .drag-handle::before{
+  content:"";
+  width:42px;
+  height:5px;
+  border-radius:999px;
+  background:#dfe3e8;
+}
+
 dialog#dayDialog.googlePanel.is-mini-preview .googlePanelContent{
-  max-height:calc(min(64dvh, 520px) - 46px);
   padding-bottom:calc(26px + env(safe-area-inset-bottom));
 }
 
@@ -3859,7 +3917,8 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
 @media(max-width:679px){
   dialog#dayDialog.googlePanel,
   dialog#bulkDialog.googlePanel,
-  dialog#vacDialog.googlePanel{
+  dialog#vacDialog.googlePanel,
+  dialog#yearStatsDialog.googlePanel{
     --panel-action-h:40px;
     --panel-action-font:14.5px;
   }
@@ -3897,7 +3956,8 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
 @media(max-width:430px){
   dialog#dayDialog.googlePanel,
   dialog#bulkDialog.googlePanel,
-  dialog#vacDialog.googlePanel{
+  dialog#vacDialog.googlePanel,
+  dialog#yearStatsDialog.googlePanel{
     --panel-action-h:39px;
     --panel-action-font:14px;
   }
@@ -4158,35 +4218,6 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
             <button class="tonal" id="restoreBtn" type="button">Wczytaj dane</button>
             <button class="error-tonal" id="clearMonth" type="button">Wyczyść miesiąc</button>
           </div>
-
-          <div class="yearStatsPreview" id="yearStatsPreview" hidden>
-            <div class="yearStatsHead">
-              <div>
-                <strong id="yearStatsTitle">Statystyki roczne</strong>
-                <span id="yearStatsSubtitle">—</span>
-              </div>
-            </div>
-            <div class="yearStatsGrid">
-              <div class="yearStatBox"><strong id="yearStatsHours">0:00</strong><span>Godziny</span></div>
-              <div class="yearStatBox"><strong id="yearStatsPay">0,00 zł</strong><span>Wypłata</span></div>
-              <div class="yearStatBox"><strong id="yearStatsWorkDays">0</strong><span>Dni pracy</span></div>
-              <div class="yearStatBox"><strong id="yearStatsAbsences">0</strong><span>Nieobecności</span></div>
-            </div>
-            <div class="yearStatsTableWrap">
-              <table class="yearStatsTable">
-                <thead>
-                  <tr>
-                    <th>Miesiąc</th>
-                    <th>Godz.</th>
-                    <th>Dni</th>
-                    <th>Urlop</th>
-                    <th>L4</th>
-                  </tr>
-                </thead>
-                <tbody id="yearStatsRows"></tbody>
-              </table>
-            </div>
-          </div>
         </div>
 
         <div class="drawerView" id="drawerViewInfo">
@@ -4437,6 +4468,61 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     </div>
   </dialog>
 
+
+
+  <dialog id="yearStatsDialog" class="googlePanel yearStatsPanel">
+    <div class="googlePanelShell">
+      <div class="googlePanelBar">
+        <button class="panelCloseBtn" id="yearStatsPanelClose" type="button" aria-label="Zamknij"></button>
+        <div class="drag-handle" aria-hidden="true">
+          <svg viewBox="0 0 56 24" focusable="false">
+            <path d="M16 9 L28 15 L40 9"></path>
+          </svg>
+        </div>
+        <button class="panelSaveBtn" id="yearStatsPanelDone" type="button">Gotowe</button>
+      </div>
+      <div class="googlePanelContent">
+        <div class="modalHead">
+          <div class="modalHeadInner">
+            <h3 id="yearStatsTitle">Statystyki roczne</h3>
+            <div class="muted" id="yearStatsSubtitle">Podgląd roku na podstawie wybranego miesiąca.</div>
+          </div>
+        </div>
+
+        <div class="modalBody">
+          <div class="yearStatsGrid">
+            <div class="yearStatBox"><strong id="yearStatsHours">0:00</strong><span>Godziny</span></div>
+            <div class="yearStatBox"><strong id="yearStatsPay">0,00 zł</strong><span>Wypłata</span></div>
+            <div class="yearStatBox"><strong id="yearStatsWorkDays">0</strong><span>Dni pracy</span></div>
+            <div class="yearStatBox"><strong id="yearStatsAbsences">0</strong><span>Nieobecności</span></div>
+          </div>
+
+          <div class="yearChartCard">
+            <div class="yearChartHead">
+              <strong>Suma godzin per miesiąc</strong>
+              <span>Wykres słupkowy</span>
+            </div>
+            <svg id="yearStatsChart" class="yearStatsChart" viewBox="0 0 360 170" role="img" aria-label="Suma godzin per miesiąc"></svg>
+          </div>
+
+          <div class="yearStatsTableWrap">
+            <table class="yearStatsTable">
+              <thead>
+                <tr>
+                  <th>Miesiąc</th>
+                  <th>Godziny</th>
+                  <th>Dni</th>
+                  <th>Urlop</th>
+                  <th>L4</th>
+                </tr>
+              </thead>
+              <tbody id="yearStatsRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
 
   <dialog id="appConfirmDialog" class="appConfirmDialog">
     <div class="appConfirmCard">
@@ -4956,6 +5042,7 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     if (dlg) {
       dlg.classList.add("is-preview-only");
       dlg.classList.remove("is-form-open", "is-empty-day", "is-mini-preview");
+        setDaySheetMode("full", { animate:false });
     }
 
     setStatus(`Dodano zakres z szablonu: ${start}–${end}.`);
@@ -5581,15 +5668,19 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     if ($("dlgNote")) $("dlgNote").value = day.note || "";
 
     if (dlg) {
-      dlg.classList.add("is-mini-preview", "is-preview-only");
-      dlg.classList.remove("is-form-open");
+      dlg.classList.add("is-day-sheet", "is-mini-preview", "is-preview-only");
+      dlg.classList.remove("is-form-open", "is-sheet-dragging");
       dlg.classList.toggle("is-empty-day", !hasAnyEvent);
+      dlg.style.setProperty("--day-sheet-y", `${getDaySheetMiniY()}px`);
+      daySheetMode = "mini";
+      daySheetY = getDaySheetMiniY();
     }
 
     renderDayDialog();
 
     if (dlg && typeof dlg.showModal === "function") dlg.showModal();
     else if (dlg) dlg.setAttribute("open", "");
+    setDaySheetMode("mini", { animate:false });
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
   }
 
@@ -5598,6 +5689,10 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
 
   function closeDay() {
     dlgDate = null;
+    if (dlg) {
+      dlg.classList.remove("is-day-sheet", "is-mini-preview", "is-sheet-dragging");
+      dlg.style.removeProperty("--day-sheet-y");
+    }
     if (dlg && typeof dlg.close === "function") dlg.close();
     else if (dlg) dlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
@@ -5608,9 +5703,40 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     dlg.addEventListener("cancel", (e) => { e.preventDefault(); closeDay(); });
   }
 
+  let daySheetMode = "mini";
+  let daySheetY = 0;
+  let daySheetMiniY = 0;
+
+  function getDaySheetMiniY() {
+    const vh = window.innerHeight || document.documentElement.clientHeight || 720;
+    const miniHeight = Math.min(Math.round(vh * 0.58), 500);
+    return Math.max(0, vh - miniHeight);
+  }
+
+  function applyDaySheetY(y, { dragging = false } = {}) {
+    if (!dlg) return;
+    daySheetMiniY = getDaySheetMiniY();
+    daySheetY = Math.max(0, Math.min(daySheetMiniY, Math.round(y)));
+    dlg.style.setProperty("--day-sheet-y", `${daySheetY}px`);
+    dlg.classList.toggle("is-sheet-dragging", dragging);
+    dlg.classList.toggle("is-mini-preview", daySheetY > daySheetMiniY * 0.55);
+  }
+
+  function setDaySheetMode(mode, { animate = true } = {}) {
+    if (!dlg) return;
+    daySheetMiniY = getDaySheetMiniY();
+    daySheetMode = mode === "full" ? "full" : "mini";
+    dlg.classList.add("is-day-sheet");
+    dlg.classList.toggle("is-sheet-dragging", !animate);
+    applyDaySheetY(daySheetMode === "mini" ? daySheetMiniY : 0, { dragging: !animate });
+    if (!animate) {
+      requestAnimationFrame(() => dlg.classList.remove("is-sheet-dragging"));
+    }
+  }
+
   function expandDayPanel({ form = false } = {}) {
     if (!dlg) return;
-    dlg.classList.remove("is-mini-preview");
+    setDaySheetMode("full");
     if (form) {
       dlg.classList.add("is-form-open");
       dlg.classList.remove("is-preview-only");
@@ -5635,36 +5761,102 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     };
   }
 
-  dlg?.querySelector(".drag-handle")?.addEventListener("click", (e) => {
-    if (!dlg.classList.contains("is-mini-preview")) return;
-    e.preventDefault();
-    expandDayPanel({ form:false });
+  function toggleDaySheetFromHandle() {
+    if (!dlg) return;
+    if (daySheetMode === "mini" || dlg.classList.contains("is-mini-preview")) {
+      expandDayPanel({ form:false });
+    } else {
+      setDaySheetMode("mini");
+    }
     haptic.tap();
-  });
+  }
 
-  dlg?.querySelector(".modalHead")?.addEventListener("click", () => {
-    if (!dlg.classList.contains("is-mini-preview")) return;
-    expandDayPanel({ form:false });
-    haptic.tap();
+  dlg?.querySelector(".drag-handle")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    toggleDaySheetFromHandle();
   });
 
   (() => {
     const shell = dlg?.querySelector(".googlePanelShell");
+    const content = dlg?.querySelector(".googlePanelContent");
     if (!dlg || !shell) return;
+
     let startY = 0;
+    let startSheetY = 0;
+    let lastY = 0;
+    let startTime = 0;
+    let dragging = false;
+
     shell.addEventListener("touchstart", (e) => {
-      if (!dlg.classList.contains("is-mini-preview") || e.touches.length !== 1) return;
+      if (!dlg.open || e.touches.length !== 1) return;
       startY = e.touches[0].clientY;
+      lastY = startY;
+      startSheetY = daySheetY;
+      startTime = performance.now();
+      dragging = false;
+      daySheetMiniY = getDaySheetMiniY();
     }, { passive:true });
-    shell.addEventListener("touchend", (e) => {
-      if (!dlg.classList.contains("is-mini-preview") || !startY) return;
-      const endY = e.changedTouches?.[0]?.clientY ?? startY;
-      if (startY - endY > 45) {
-        expandDayPanel({ form:false });
-        haptic.tap();
+
+    shell.addEventListener("touchmove", (e) => {
+      if (!dlg.open || e.touches.length !== 1 || !startY) return;
+
+      const currentY = e.touches[0].clientY;
+      const dy = currentY - startY;
+      lastY = currentY;
+
+      if (!dragging) {
+        const pullingDown = dy > 0;
+        const pushingUp = dy < 0;
+        const contentAtTop = !content || content.scrollTop <= 1;
+
+        if (Math.abs(dy) < 8) return;
+        if (pullingDown && daySheetY <= 2 && !contentAtTop) return;
+        if (pushingUp && daySheetY <= 2) return;
+
+        dragging = true;
+        dlg.classList.add("is-sheet-dragging");
       }
+
+      e.preventDefault();
+      applyDaySheetY(startSheetY + dy, { dragging:true });
+    }, { passive:false });
+
+    shell.addEventListener("touchend", () => {
+      if (!startY) return;
+
+      if (dragging) {
+        const dt = Math.max(1, performance.now() - startTime);
+        const velocity = (lastY - startY) / dt;
+        const threshold = daySheetMiniY * 0.48;
+
+        if (velocity > 0.42) {
+          setDaySheetMode("mini");
+        } else if (velocity < -0.42) {
+          expandDayPanel({ form:false });
+        } else if (daySheetY > threshold) {
+          setDaySheetMode("mini");
+        } else {
+          expandDayPanel({ form:false });
+        }
+      }
+
       startY = 0;
+      dragging = false;
+      dlg.classList.remove("is-sheet-dragging");
     }, { passive:true });
+
+    shell.addEventListener("touchcancel", () => {
+      if (daySheetY > daySheetMiniY * 0.5) setDaySheetMode("mini");
+      else expandDayPanel({ form:false });
+      startY = 0;
+      dragging = false;
+      dlg.classList.remove("is-sheet-dragging");
+    }, { passive:true });
+
+    window.addEventListener("resize", () => {
+      if (!dlg?.open || !dlg.classList.contains("is-day-sheet")) return;
+      setDaySheetMode(daySheetMode, { animate:false });
+    });
   })();
 
   function renderDayDialog() {
@@ -6058,9 +6250,43 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     return { year, totals, months };
   }
 
+  function renderYearStatsChart(months) {
+    const svg = $("yearStatsChart");
+    if (!svg) return;
+
+    const maxMin = Math.max(60, ...months.map(m => m.min || 0));
+    const chartTop = 16;
+    const chartBottom = 138;
+    const chartHeight = chartBottom - chartTop;
+    const baseY = chartBottom;
+    const gap = 8;
+    const barW = 18;
+    const startX = 18;
+
+    const monthLabels = months.map(m => monthShortPL(m.monthYM));
+    const bars = months.map((m, idx) => {
+      const x = startX + idx * (barW + gap);
+      const h = Math.max(2, Math.round((m.min / maxMin) * chartHeight));
+      const y = baseY - h;
+      const active = m.min > 0 ? "bar" : "barSoft";
+      const hours = Math.round((m.min / 60) * 10) / 10;
+
+      return `
+        <rect class="${active}" x="${x}" y="${y}" width="${barW}" height="${h}" rx="5"></rect>
+        <text class="value" x="${x + barW / 2}" y="${Math.max(10, y - 5)}" text-anchor="middle">${hours || ""}</text>
+        <text class="label" x="${x + barW / 2}" y="158" text-anchor="middle">${escapeHtml(monthLabels[idx])}</text>
+      `;
+    }).join("");
+
+    svg.innerHTML = `
+      <line class="axis" x1="12" y1="${baseY}" x2="348" y2="${baseY}"></line>
+      ${bars}
+    `;
+  }
+
   function renderYearStats() {
-    const box = $("yearStatsPreview");
-    if (!box || box.hidden) return;
+    const dlgYear = $("yearStatsDialog");
+    if (!dlgYear || !dlgYear.open) return;
 
     const monthPick = $("monthPick");
     const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
@@ -6068,11 +6294,13 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
     const data = computeYearStats(year);
 
     if ($("yearStatsTitle")) $("yearStatsTitle").textContent = `Statystyki ${year}`;
-    if ($("yearStatsSubtitle")) $("yearStatsSubtitle").textContent = "Podgląd roczny w aplikacji";
+    if ($("yearStatsSubtitle")) $("yearStatsSubtitle").textContent = "Podgląd roczny na podstawie wybranego miesiąca.";
     if ($("yearStatsHours")) $("yearStatsHours").textContent = fmtHM(data.totals.min);
     if ($("yearStatsPay")) $("yearStatsPay").textContent = pln(data.totals.money);
     if ($("yearStatsWorkDays")) $("yearStatsWorkDays").textContent = String(data.totals.workDays);
     if ($("yearStatsAbsences")) $("yearStatsAbsences").textContent = String(data.totals.paid + data.totals.unpaid + data.totals.sick);
+
+    renderYearStatsChart(data.months);
 
     const rows = $("yearStatsRows");
     if (rows) {
@@ -6090,11 +6318,19 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
 
   function openYearStatsPreview() {
     haptic.tap();
-    const box = $("yearStatsPreview");
-    if (!box) return;
-    box.hidden = false;
+    const dlgYear = $("yearStatsDialog");
+    if (!dlgYear) return;
+    if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
+    if (typeof dlgYear.showModal === "function") dlgYear.showModal();
+    else dlgYear.setAttribute("open", "");
     renderYearStats();
-    setTimeout(() => box.scrollIntoView({ behavior:"smooth", block:"start" }), 40);
+  }
+
+  function closeYearStats() {
+    const dlgYear = $("yearStatsDialog");
+    if (dlgYear && typeof dlgYear.close === "function") dlgYear.close();
+    else if (dlgYear) dlgYear.removeAttribute("open");
+    if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
   }
 
   // ===== UI =====
@@ -6276,6 +6512,11 @@ dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
 
   const reportYearBtn = $("reportYear");
   if (reportYearBtn) reportYearBtn.onclick = openYearStatsPreview;
+
+  $("yearStatsPanelClose")?.addEventListener("click", closeYearStats);
+  $("yearStatsPanelDone")?.addEventListener("click", closeYearStats);
+  $("yearStatsDialog")?.addEventListener("cancel", (e) => { e.preventDefault(); closeYearStats(); });
+  $("yearStatsDialog")?.addEventListener("close", () => document.body.classList.remove("modal-open"));
 
   const backupBtn = $("backupJson");
   if (backupBtn) {
