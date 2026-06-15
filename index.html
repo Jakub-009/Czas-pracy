@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.9</title>
+  <title>Czas pracy 4.1.10</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -3391,7 +3391,8 @@ dialog#bulkDialog > .drag-handle::after{
 
 
 
-/* ===== Czas pracy 4.1.9: panele ekranowe ===== */
+
+/* ===== Czas pracy 4.1.10: panele ekranowe ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel{
@@ -3446,25 +3447,22 @@ dialog#vacDialog.googlePanel[open]{
   z-index:5;
   min-height:calc(54px + env(safe-area-inset-top));
   padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
-  display:grid;
-  grid-template-columns:38px 1fr var(--panel-action-w);
-  align-items:start;
-  gap:8px;
   background:#fff;
   border-bottom:1px solid rgba(60,64,67,.12);
 }
 
 .panelCloseBtn{
+  position:absolute;
+  left:24px;
+  top:calc(12px + env(safe-area-inset-top));
   width:32px;
   height:32px;
   min-height:32px;
   padding:0;
-  margin-top:4px;
   border-radius:50%;
   background:transparent;
   color:#111318;
   box-shadow:none;
-  position:relative;
 }
 
 .panelCloseBtn::before,
@@ -3506,6 +3504,12 @@ dialog#vacDialog.googlePanel #clearVacationRange{
   white-space:nowrap;
 }
 
+.panelSaveBtn{
+  position:absolute;
+  right:24px;
+  top:calc(8px + env(safe-area-inset-top));
+}
+
 .panelSaveBtn,
 dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
   background:#4285f4;
@@ -3522,19 +3526,20 @@ dialog#vacDialog.googlePanel #clearVacationRange{
 }
 
 .googlePanel .drag-handle{
-  justify-self:center;
-  align-self:start;
+  position:absolute;
+  left:50%;
+  top:calc(15px + env(safe-area-inset-top));
+  transform:translateX(-50%);
   width:54px;
   height:24px;
   margin:0;
   background:transparent;
   border-radius:999px;
-  position:relative;
-  cursor:pointer;
-  touch-action:none;
+  cursor:default;
+  touch-action:auto;
 }
 
-/* Chevron: dwa identyczne ramiona, jeden punkt styku, bez rombu i bez rozsunięcia */
+/* Chevron jest wyśrodkowany względem całego ekranu, niezależnie od szerokości przycisku Zapisz */
 .googlePanel .drag-handle::before,
 .googlePanel .drag-handle::after{
   content:"";
@@ -3718,7 +3723,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   .googlePanelBar{
     min-height:calc(54px + env(safe-area-inset-top));
     padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
-    grid-template-columns:38px 1fr var(--panel-action-w);
   }
 
   .googlePanel .modalHead{
@@ -3750,10 +3754,10 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   .googlePanelBar{
     padding-left:22px;
     padding-right:22px;
-    grid-template-columns:36px 1fr var(--panel-action-w);
   }
 
   .panelCloseBtn{
+    left:22px;
     width:31px;
     height:31px;
     min-height:31px;
@@ -3763,6 +3767,10 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   .panelCloseBtn::after{
     width:18px;
     height:2.2px;
+  }
+
+  .panelSaveBtn{
+    right:22px;
   }
 
   .googlePanel .drag-handle{
@@ -6276,98 +6284,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   $("dayPanelClose")?.addEventListener("click", () => { $("dlgBack")?.click(); });
   $("dayPanelDone")?.addEventListener("click", () => { $("dlgBack")?.click(); });
 
-  function closeGooglePanelById(id) {
-    if (id === "vacDialog") $("vacBack")?.click();
-    else if (id === "bulkDialog") $("bulkBack")?.click();
-    else if (id === "dayDialog") $("dlgBack")?.click();
-  }
-
-  function setupGooglePanelPullDown(dialogId) {
-    const dialog = $(dialogId);
-    if (!dialog) return;
-
-    let startX = 0;
-    let startY = 0;
-    let lastY = 0;
-    let startTime = 0;
-    let pulling = false;
-
-    const content = () => dialog.querySelector(".googlePanelContent");
-
-    dialog.addEventListener("touchstart", (e) => {
-      if (!dialog.open || e.touches.length !== 1) return;
-      const t = e.touches[0];
-      startX = t.clientX;
-      startY = t.clientY;
-      lastY = startY;
-      startTime = performance.now();
-      pulling = false;
-      dialog.style.transition = "";
-    }, { passive:true });
-
-    dialog.addEventListener("touchmove", (e) => {
-      if (!dialog.open || e.touches.length !== 1) return;
-
-      const t = e.touches[0];
-      const dx = t.clientX - startX;
-      const dy = t.clientY - startY;
-      lastY = t.clientY;
-
-      if (dy <= 0 || Math.abs(dx) > dy * 0.9) return;
-
-      const scrollEl = content();
-      if (scrollEl && scrollEl.scrollTop > 2 && !pulling) return;
-
-      if (dy > 14) pulling = true;
-      if (!pulling) return;
-
-      e.preventDefault();
-      const pull = Math.min(180, dy * 0.55);
-      dialog.style.transform = `translate3d(0, ${pull}px, 0)`;
-    }, { passive:false });
-
-    dialog.addEventListener("touchend", () => {
-      if (!pulling) return;
-
-      const dy = Math.max(0, lastY - startY);
-      const dt = Math.max(1, performance.now() - startTime);
-      const velocity = dy / dt;
-
-      if (dy > 125 || velocity > 0.75) {
-        dialog.style.transition = "transform .16s ease, opacity .16s ease";
-        dialog.style.transform = "translate3d(0, 100%, 0)";
-        setTimeout(() => {
-          dialog.style.transition = "";
-          dialog.style.transform = "";
-          closeGooglePanelById(dialogId);
-        }, 120);
-      } else {
-        dialog.style.transition = "transform .18s cubic-bezier(.2,0,0,1)";
-        dialog.style.transform = "translate3d(0, 0, 0)";
-        setTimeout(() => {
-          dialog.style.transition = "";
-          dialog.style.transform = "";
-        }, 190);
-      }
-
-      pulling = false;
-    }, { passive:true });
-
-    dialog.addEventListener("touchcancel", () => {
-      if (!pulling) return;
-      dialog.style.transition = "transform .18s cubic-bezier(.2,0,0,1)";
-      dialog.style.transform = "translate3d(0, 0, 0)";
-      setTimeout(() => {
-        dialog.style.transition = "";
-        dialog.style.transform = "";
-      }, 190);
-      pulling = false;
-    }, { passive:true });
-  }
-
-  setupGooglePanelPullDown("dayDialog");
-  setupGooglePanelPullDown("bulkDialog");
-  setupGooglePanelPullDown("vacDialog");
 
   const drawer = $("mainMenuDialog");
   const drawerBack = $("drawerBack");
