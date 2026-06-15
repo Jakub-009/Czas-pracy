@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.12</title>
+  <title>Czas pracy 4.1.13</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -1855,17 +1855,17 @@ dialog textarea,
 dialog select{
   scroll-margin-bottom:180px;
 }
-body.keyboard-open dialog[open],
-body.keyboard-focus dialog[open]{
+body.keyboard-open dialog[open]:not(.googlePanel),
+body.keyboard-focus dialog[open]:not(.googlePanel){
   max-height:92dvh !important;
 }
-body.keyboard-open #dayDialog .modalBody,
-body.keyboard-focus #dayDialog .modalBody{
+body.keyboard-open #dayDialog:not(.googlePanel) .modalBody,
+body.keyboard-focus #dayDialog:not(.googlePanel) .modalBody{
   max-height:calc(92dvh - 70px);
   padding-bottom:calc(36px + env(safe-area-inset-bottom));
 }
-body.keyboard-open .modalBody,
-body.keyboard-focus .modalBody{
+body.keyboard-open dialog:not(.googlePanel) .modalBody,
+body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   padding-bottom:calc(28px + env(safe-area-inset-bottom));
 }
 
@@ -3312,6 +3312,62 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 
 
+
+/* ===== Czas pracy 4.1.13: własne dialogi komunikatów ===== */
+.appConfirmDialog{
+  width:min(420px, calc(100vw - 36px));
+  max-width:420px;
+  padding:0;
+  margin:auto;
+  border:none;
+  border-radius:28px;
+  background:#fff;
+  color:var(--text);
+  box-shadow:0 18px 46px rgba(32,33,36,.26),0 2px 8px rgba(32,33,36,.12);
+}
+
+.appConfirmDialog::backdrop{
+  background:rgba(32,33,36,.38);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+
+.appConfirmCard{
+  padding:24px 24px 18px;
+}
+
+.appConfirmCard h3{
+  margin:0 0 10px;
+  font-size:22px;
+  line-height:1.15;
+  font-weight:650;
+  letter-spacing:-.02em;
+}
+
+.appConfirmCard p{
+  margin:0;
+  color:#3c4043;
+  font-size:15px;
+  line-height:1.42;
+  white-space:pre-line;
+}
+
+.appConfirmActions{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:10px;
+  margin-top:22px;
+}
+
+.appConfirmActions button{
+  min-height:40px;
+  padding:0 18px;
+  border-radius:999px;
+  font-size:14.5px;
+  font-weight:650;
+}
+
 /* ===== Czas pracy 4.1.11: panele ekranowe ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
@@ -3969,6 +4025,26 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         </div>
       </div>
 
+      <div class="bulkOptions leaveOptions">
+        <div class="bulkOptionsTitle">Uwzględnij przy operacji</div>
+        <label class="checkRow">
+          <input id="vacIncludeSat" type="checkbox" />
+          <span>Soboty</span>
+        </label>
+        <label class="checkRow">
+          <input id="vacIncludeSun" type="checkbox" />
+          <span>Niedziele</span>
+        </label>
+        <label class="checkRow">
+          <input id="vacIncludeHolidays" type="checkbox" />
+          <span>Święta</span>
+        </label>
+      </div>
+
+      <div class="muted" style="margin-top:10px;">
+        Domyślnie aplikacja pomija soboty, niedziele i święta. Opcje dotyczą zarówno dodawania, jak i usuwania statusu.
+      </div>
+
       <div class="actionRow">
         <button class="backBtn blue" id="vacBack" aria-label="Zamknij" type="button"></button>
         <button class="text" id="clearVacationRange" type="button">Usuń status</button>
@@ -4141,6 +4217,16 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   </dialog>
 
 
+  <dialog id="appConfirmDialog" class="appConfirmDialog">
+    <div class="appConfirmCard">
+      <h3 id="appConfirmTitle">Komunikat</h3>
+      <p id="appConfirmMessage">—</p>
+      <div class="appConfirmActions">
+        <button class="tonal" id="appConfirmCancel" type="button">Anuluj</button>
+        <button class="filled" id="appConfirmOk" type="button">OK</button>
+      </div>
+    </div>
+  </dialog>
 
 <script>
 (() => {
@@ -4173,6 +4259,67 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     danger:  () => vibe([20, 50, 20]),
   };
   window.haptic = haptic;
+
+  function setAppConfirmTone(tone) {
+    const ok = $("appConfirmOk");
+    if (!ok) return;
+    ok.classList.remove("danger");
+    ok.style.background = "";
+    ok.style.color = "";
+    if (tone === "danger") {
+      ok.style.background = "#c5221f";
+      ok.style.color = "#fff";
+    }
+  }
+
+  function openAppDialog({ title = "Komunikat", message = "", okText = "OK", cancelText = "", tone = "" } = {}) {
+    return new Promise((resolve) => {
+      const dlg = $("appConfirmDialog");
+      const titleEl = $("appConfirmTitle");
+      const msgEl = $("appConfirmMessage");
+      const ok = $("appConfirmOk");
+      const cancel = $("appConfirmCancel");
+
+      if (!dlg || !ok || !cancel) {
+        resolve(true);
+        return;
+      }
+
+      if (titleEl) titleEl.textContent = title;
+      if (msgEl) msgEl.textContent = message;
+      ok.textContent = okText || "OK";
+      cancel.textContent = cancelText || "Anuluj";
+      cancel.hidden = !cancelText;
+      setAppConfirmTone(tone);
+
+      const cleanup = (result) => {
+        ok.onclick = null;
+        cancel.onclick = null;
+        dlg.oncancel = null;
+        if (dlg.open) dlg.close();
+        resolve(result);
+      };
+
+      ok.onclick = () => cleanup(true);
+      cancel.onclick = () => cleanup(false);
+      dlg.oncancel = (e) => {
+        e.preventDefault();
+        cleanup(false);
+      };
+
+      if (typeof dlg.showModal === "function") dlg.showModal();
+      else dlg.setAttribute("open", "");
+    });
+  }
+
+  function notify(message, title = "Informacja") {
+    setStatus(message);
+    return openAppDialog({ title, message, okText:"OK" });
+  }
+
+  function askConfirm(message, title = "Potwierdź") {
+    return openAppDialog({ title, message, okText:"Tak", cancelText:"Anuluj", tone:"danger" });
+  }
 
   const todayISO = () => {
     const d = new Date();
@@ -4572,7 +4719,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     const validation = validateShiftNoOverlap(dlgDate, start, end);
     if (!validation.ok) {
       haptic.warning();
-      alert(validation.message);
+      notify(validation.message);
       return;
     }
 
@@ -4682,63 +4829,99 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   }
 
   // ===== Status (urlop/L4): zakres =====
-  function applyLeaveRange(fromISO, toISO, leaveType) {
+  function shouldSkipByCalendar(dt, options = {}) {
+    const dISO = isoFromDate(dt);
+    const jsDow = dt.getDay();
+    const isHoliday = getHolidayMap(dt.getFullYear()).has(dISO);
+
+    return (
+      (jsDow === 6 && !options.includeSat) ||
+      (jsDow === 0 && !options.includeSun) ||
+      (isHoliday && !options.includeHolidays)
+    );
+  }
+
+  function applyLeaveRange(fromISO, toISO, leaveType, options = {}) {
     const a = parseISODate(fromISO);
     const b = parseISODate(toISO);
-    if (!a || !b) { alert("Uzupełnij poprawnie daty 'Od' i 'Do'."); return { ok: false }; }
-    if (b < a) { alert("Data 'Do' nie może być wcześniejsza niż 'Od'."); return { ok: false }; }
-    if (!["paid","unpaid","sick"].includes(leaveType)) { alert("Wybierz poprawny rodzaj."); return { ok:false }; }
+    if (!a || !b) { notify("Uzupełnij poprawnie daty 'Od' i 'Do'."); return { ok: false }; }
+    if (b < a) { notify("Data 'Do' nie może być wcześniejsza niż 'Od'."); return { ok: false }; }
+    if (!["paid","unpaid","sick"].includes(leaveType)) { notify("Wybierz poprawny rodzaj."); return { ok:false }; }
 
     let cur = a;
     let count = 0;
+    let skippedDays = 0;
+
     while (cur <= b) {
+      if (shouldSkipByCalendar(cur, options)) {
+        skippedDays++;
+        cur = addDays(cur, 1);
+        continue;
+      }
+
       const dISO = isoFromDate(cur);
       const day = getDay(dISO) || { date: dISO, note: "", shifts: [], vacation: false, leaveType:"" };
       day.leaveType = leaveType;
+      day.vacation = leaveType === "paid";
       upsertDay(dISO, day);
       count++;
       cur = addDays(cur, 1);
     }
+
     save();
     renderAll();
     if (dlgDate) renderDayDialog();
-    setStatus(`Ustawiono status: ${leaveLabel(leaveType)} (${count} dni).`);
-    return { ok: true, count };
+
+    const skippedText = skippedDays ? ` Pominięto ${skippedDays} dni wolnych.` : "";
+    setStatus(`Ustawiono status: ${leaveLabel(leaveType)} (${count} dni).${skippedText}`);
+    return { ok: true, count, skippedDays };
   }
 
-  function clearLeaveRange(fromISO, toISO) {
+  function clearLeaveRange(fromISO, toISO, options = {}) {
     const a = parseISODate(fromISO);
     const b = parseISODate(toISO);
-    if (!a || !b) { alert("Uzupełnij poprawnie daty 'Od' i 'Do'."); return { ok: false }; }
-    if (b < a) { alert("Data 'Do' nie może być wcześniejsza niż 'Od'."); return { ok: false }; }
+    if (!a || !b) { notify("Uzupełnij poprawnie daty 'Od' i 'Do'."); return { ok: false }; }
+    if (b < a) { notify("Data 'Do' nie może być wcześniejsza niż 'Od'."); return { ok: false }; }
 
     let cur = a;
     let count = 0;
+    let skippedDays = 0;
+
     while (cur <= b) {
+      if (shouldSkipByCalendar(cur, options)) {
+        skippedDays++;
+        cur = addDays(cur, 1);
+        continue;
+      }
+
       const dISO = isoFromDate(cur);
       const day = getDay(dISO);
       if (day && day.leaveType) {
         day.leaveType = "";
+        day.vacation = false;
         upsertDay(dISO, day);
         count++;
       }
       cur = addDays(cur, 1);
     }
+
     save();
     renderAll();
     if (dlgDate) renderDayDialog();
-    setStatus(`Usunięto status w ${count} dniach.`);
-    return { ok: true, count };
+
+    const skippedText = skippedDays ? ` Pominięto ${skippedDays} dni wolnych.` : "";
+    setStatus(`Usunięto status w ${count} dniach.${skippedText}`);
+    return { ok: true, count, skippedDays };
   }
 
   // ===== Godziny dla zakresu dni =====
   function applyBulkHours(fromISO, toISO, start, end, mode, options = {}) {
     const a = parseISODate(fromISO);
     const b = parseISODate(toISO);
-    if (!a || !b) { alert("Uzupełnij poprawnie daty 'Od' i 'Do'."); return { ok: false }; }
-    if (b < a) { alert("Data 'Do' nie może być wcześniejsza niż 'Od'."); return { ok: false }; }
-    if (!start || !end) { alert("Uzupełnij godzinę wejścia i wyjścia."); return { ok: false }; }
-    if (mode === "add" && start === end) { alert("Godzina wejścia i wyjścia nie mogą być takie same."); return { ok: false }; }
+    if (!a || !b) { notify("Uzupełnij poprawnie daty 'Od' i 'Do'."); return { ok: false }; }
+    if (b < a) { notify("Data 'Do' nie może być wcześniejsza niż 'Od'."); return { ok: false }; }
+    if (!start || !end) { notify("Uzupełnij godzinę wejścia i wyjścia."); return { ok: false }; }
+    if (mode === "add" && start === end) { notify("Godzina wejścia i wyjścia nie mogą być takie same."); return { ok: false }; }
 
     let cur = a;
     let changedDays = 0;
@@ -5291,9 +5474,9 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if (shiftsBox) shiftsBox.innerHTML = items || `<div class="emptyDayHint">Brak godzin w tym dniu. Dodaj pierwszy zakres poniżej.</div>`;
 
     shiftsBox?.querySelectorAll("[data-delshift]").forEach(btn => {
-      btn.onclick = () => {
+      btn.onclick = async () => {
         const idx = Number(btn.getAttribute("data-delshift"));
-        if (!confirm("Usunąć ten zakres?")) return;
+        if (!(await askConfirm("Usunąć ten zakres?", "Usuń zakres"))) return;
         const d = getDay(dlgDate);
         if (!d) return;
         d.shifts.splice(idx, 1);
@@ -5406,7 +5589,11 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     const monthLabelReminder = fmtMonthPL(monthYM);
     const sumMin = computeMonthMinutes(monthYM);
+    const money = round2((sumMin / 60) * (db.settings.rate || 0));
 
+    const leaveStats = { paid:0, unpaid:0, sick:0 };
+    let workDays = 0;
+    let noteDays = 0;
     const rows = [];
 
     for (let d = 1; d <= dim; d++) {
@@ -5415,9 +5602,14 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       const day = getDay(dateISO) || { date: dateISO, note: "", shifts: [], vacation: false, leaveType:"" };
 
       const mins = computeDayMinutes(day);
+      const leaveType = day.leaveType || "";
+      if (leaveStats[leaveType] != null) leaveStats[leaveType]++;
+      if (mins > 0) workDays++;
 
-      // pokaż jeśli są godziny albo jest status
-      if (mins === 0 && !day.leaveType) continue;
+      const note = (day.note || "").trim();
+      if (note) noteDays++;
+
+      if (mins === 0 && !leaveType && !note) continue;
 
       const shifts = (day.shifts || []).slice().sort((a, b) => (a.start || "").localeCompare(b.start || ""));
       const shiftText = shifts
@@ -5425,17 +5617,16 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         .filter(Boolean)
         .join(", ");
 
-      const status = day.leaveType ? leaveLabel(day.leaveType) : "";
+      const status = leaveType ? leaveLabel(leaveType) : "";
       let ranges = "";
       if (status && shiftText) ranges = `${status} | ${shiftText}`;
       else if (status) ranges = status;
-      else ranges = shiftText;
+      else ranges = shiftText || "—";
 
-      const note = (day.note || "").trim();
       const noteShort = note.length > 44 ? (note.slice(0, 44) + "…") : note;
 
       rows.push(`
-        <tr>
+        <tr class="${leaveType ? "row-leave" : ""}">
           <td class="c-date">${pad2(d)}.${pad2(M)}.${Y}</td>
           <td class="c-dow">${dow}</td>
           <td class="c-ranges">${escapeHtml(ranges)}</td>
@@ -5473,11 +5664,33 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     }
     h1{ margin:0; font-size:16px; letter-spacing:.2px; }
     .meta{ font-size:11px; line-height:1.35; color:#333; text-align:right; white-space:nowrap; }
-    .sumLine{ margin:8px 0 10px; font-size:12px; color:#111; }
-    .sumLine strong{ font-weight:900; font-size:13px; }
+    .summary{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:6px;
+      margin:8px 0 10px;
+    }
+    .box{
+      border:1px solid #dfe3eb;
+      border-radius:8px;
+      padding:6px;
+      background:#f8fafd;
+      min-height:42px;
+    }
+    .box strong{display:block;font-size:13px;line-height:1.1;}
+    .box span{display:block;margin-top:3px;font-size:10px;color:#555;line-height:1.15;}
+    .absenceLine{
+      margin:0 0 10px;
+      padding:7px 8px;
+      border-radius:8px;
+      background:#f3f5fb;
+      font-size:11px;
+      line-height:1.35;
+    }
     table{ width:100%; border-collapse:collapse; table-layout:fixed; font-size:10px; }
     thead th{ text-align:left; padding:6px 6px; border-bottom:1px solid #cfd5e3; background:#f3f5fb; font-weight:800; }
     tbody td{ padding:4px 6px; border-bottom:1px solid #eef1f6; vertical-align:top; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    tbody tr.row-leave td{ background:#fbfcff; }
     .c-date{ width:72px; }
     .c-dow{ width:34px; }
     .c-sum{ width:52px; text-align:right; }
@@ -5496,8 +5709,15 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     </div>
   </div>
 
-  <div class="sumLine">
-    Łączna liczba godzin: <strong>${escapeHtml(fmtHM(sumMin))}</strong>
+  <div class="summary">
+    <div class="box"><strong>${escapeHtml(fmtHM(sumMin))}</strong><span>Łączna liczba godzin</span></div>
+    <div class="box"><strong>${escapeHtml(pln(money))}</strong><span>Szacowana wypłata</span></div>
+    <div class="box"><strong>${workDays}</strong><span>Dni z godzinami</span></div>
+    <div class="box"><strong>${noteDays}</strong><span>Dni z notatką</span></div>
+  </div>
+
+  <div class="absenceLine">
+    Nieobecności: <strong>urlop płatny ${leaveStats.paid}</strong>, <strong>urlop bezpłatny ${leaveStats.unpaid}</strong>, <strong>L4 ${leaveStats.sick}</strong>.
   </div>
 
   <table>
@@ -5527,7 +5747,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     const html = buildReportHTML(monthYM);
     const w = window.open("", "_blank");
     if (!w) {
-      alert("Twoja przeglądarka zablokowała nowe okno. Zezwól na pop-upy dla tej strony i spróbuj ponownie.");
+      notify("Twoja przeglądarka zablokowała nowe okno. Zezwól na pop-upy dla tej strony i spróbuj ponownie.");
       return;
     }
     w.document.open();
@@ -5559,12 +5779,12 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
       const start = $("dlgStart")?.value;
       const end = $("dlgEnd")?.value;
-      if (!start || !end) return alert("Uzupełnij godzinę wejścia i wyjścia.");
+      if (!start || !end) return notify("Uzupełnij godzinę wejścia i wyjścia.");
 
       const validation = validateShiftNoOverlap(dlgDate, start, end);
       if (!validation.ok) {
         haptic.warning();
-        alert(validation.message);
+        notify(validation.message);
         return;
       }
 
@@ -5649,7 +5869,11 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       const from = $("vacFrom")?.value;
       const to = $("vacTo")?.value;
       const type = $("vacType")?.value || "paid";
-      const res = applyLeaveRange(from, to, type);
+      const res = applyLeaveRange(from, to, type, {
+        includeSat: $("vacIncludeSat")?.checked,
+        includeSun: $("vacIncludeSun")?.checked,
+        includeHolidays: $("vacIncludeHolidays")?.checked
+      });
       if (res.ok) {
         haptic.success();
         closeVac();
@@ -5662,7 +5886,11 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     clearVacationRangeBtn.onclick = () => {
       const from = $("vacFrom")?.value;
       const to = $("vacTo")?.value;
-      const res = clearLeaveRange(from, to);
+      const res = clearLeaveRange(from, to, {
+        includeSat: $("vacIncludeSat")?.checked,
+        includeSun: $("vacIncludeSun")?.checked,
+        includeHolidays: $("vacIncludeHolidays")?.checked
+      });
       if (res.ok) haptic.warning();
     };
   }
@@ -5720,7 +5948,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
       setLastBackupNow();
       haptic.success();
-      alert("Kopia zapisana 👍 Polecam wysłać plik na Google Drive lub maila do siebie.");
+      notify("Kopia zapisana 👍 Polecam wysłać plik na Google Drive lub maila do siebie.");
     };
   }
 
@@ -5744,17 +5972,17 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         setStatus("Przywrócono dane z pliku JSON.");
         haptic.success();
       } catch {
-        alert("Nie udało się wczytać pliku JSON.");
+        notify("Nie udało się wczytać pliku JSON.");
       }
     };
   }
 
   const clearMonthBtn = $("clearMonth");
   if (clearMonthBtn) {
-    clearMonthBtn.onclick = () => {
+    clearMonthBtn.onclick = async () => {
       haptic.tap();
       const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
-      if (!confirm("Usunąć wszystkie wpisy z tego miesiąca?")) return;
+      if (!(await askConfirm("Usunąć wszystkie wpisy z tego miesiąca?", "Wyczyść miesiąc"))) return;
       db.entries = db.entries.filter(e => ym(e.date) !== monthYM);
       save();
       renderAll();
@@ -5782,7 +6010,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       const res = addShiftTemplate(start, end);
       if (!res.ok) {
         haptic.warning();
-        alert(res.message);
+        notify(res.message);
         return;
       }
       if ($("tplStart")) $("tplStart").value = "";
@@ -6071,12 +6299,12 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     const ds = daysSince(last);
 
     if (ds >= BACKUP_REMIND_EVERY_DAYS){
-      setTimeout(()=>{
+      setTimeout(async ()=>{
         const msg = last
           ? `Ostatni backup: ${ds} dni temu.\nZrób kopię zapasową teraz?`
           : `Nie wykryto żadnego backupu.\nZrób kopię zapasową teraz?`;
 
-        if (confirm(msg)){
+        if (await askConfirm(msg, "Kopia zapasowa")){
           $("backupJson").click();
         }
       }, 600);
