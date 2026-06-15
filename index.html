@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.1.13</title>
+  <title>Czas pracy 4.1.14</title>
   <meta name="theme-color" content="#f8fafd" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -1454,56 +1454,6 @@ dialog#dayDialog{
   font-size:14px;
   line-height:1.35;
   color:#202124;
-}
-.dayAddTrigger{
-  width:100%;
-  justify-content:flex-start;
-  min-height:48px;
-  padding:0 4px;
-  margin:14px 0 0;
-  background:transparent !important;
-  color:#1a73e8 !important;
-  border-radius:12px !important;
-  box-shadow:none !important;
-  font-size:15px;
-  font-weight:600;
-}
-.dayAddTrigger:hover{
-  background:#eef3fe !important;
-}
-.plusMark{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  display:inline-grid;
-  place-items:center;
-  font-size:24px;
-  line-height:1;
-  font-weight:400;
-  color:#1a73e8;
-}
-.addShiftPanel{
-  display:none;
-  margin-top:10px !important;
-  margin-bottom:12px !important;
-  animation:addPanelIn .20s cubic-bezier(.2,0,0,1);
-}
-#dayDialog.is-form-open .addShiftPanel{
-  display:block;
-}
-#dayDialog.is-form-open .dayAddTrigger{
-  display:none;
-}
-@keyframes addPanelIn{
-  from{opacity:0;transform:translateY(-6px)}
-  to{opacity:1;transform:translateY(0)}
-}
-.dayCloseRow{
-  margin-top:18px;
-}
-.addShiftPanel{
-  padding:14px !important;
-  border-radius:22px !important;
 }
 input,textarea,select{
   min-height:44px !important;
@@ -3368,7 +3318,8 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   font-weight:650;
 }
 
-/* ===== Czas pracy 4.1.11: panele ekranowe ===== */
+
+/* ===== Czas pracy 4.1.14: panele ekranowe i mini-podgląd dnia ===== */
 dialog#dayDialog.googlePanel,
 dialog#bulkDialog.googlePanel,
 dialog#vacDialog.googlePanel{
@@ -3624,9 +3575,10 @@ dialog#dayDialog.googlePanel .dayCloseRow{
   display:none;
 }
 
-/* Formularz dnia w trybie dodawania: układ jak Zakres dni, bez karty i pustych bocznych marginesów */
+/* Formularz dnia w trybie dodawania: układ jak Zakres dni */
 dialog#dayDialog.googlePanel.is-form-open .dayPreviewStats,
-dialog#dayDialog.googlePanel.is-form-open #dlgShiftsBlock{
+dialog#dayDialog.googlePanel.is-form-open #dlgShiftsBlock,
+dialog#dayDialog.googlePanel.is-form-open #dlgNotePreview{
   display:none;
 }
 
@@ -3686,6 +3638,93 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   margin-right:0;
 }
 
+/* Mini-podgląd dnia: tylko dayDialog */
+dialog#dayDialog.googlePanel.is-mini-preview{
+  inset:auto 0 0 0;
+  height:auto;
+  min-height:0;
+  max-height:min(58dvh, 480px);
+  border-radius:30px 30px 0 0;
+  box-shadow:0 -12px 38px rgba(32,33,36,.24),0 -2px 8px rgba(32,33,36,.08);
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview::backdrop{
+  background:rgba(32,33,36,.18);
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .googlePanelShell{
+  height:auto;
+  max-height:min(58dvh, 480px);
+  border-radius:30px 30px 0 0;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .googlePanelBar{
+  min-height:46px;
+  padding:8px 20px 4px;
+  border-bottom:none;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .panelCloseBtn{
+  left:20px;
+  top:10px;
+  width:30px;
+  height:30px;
+  min-height:30px;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .panelCloseBtn::before,
+dialog#dayDialog.googlePanel.is-mini-preview .panelCloseBtn::after{
+  width:17px;
+  height:2.1px;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .panelSaveBtn{
+  display:none;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .drag-handle{
+  top:11px;
+  cursor:pointer;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .googlePanelContent{
+  max-height:calc(min(58dvh, 480px) - 46px);
+  padding-bottom:calc(18px + env(safe-area-inset-bottom));
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .modalHead{
+  padding:2px 24px 12px;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .modalHead h3{
+  font-size:22px;
+  line-height:1.14;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .modalHead .muted{
+  margin-top:5px;
+  font-size:13.5px;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .modalBody{
+  padding:0 24px 20px;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .dayPreviewStats{
+  gap:16px;
+  margin:2px 0 16px;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .statMiniValue{
+  font-size:24px;
+}
+
+dialog#dayDialog.googlePanel.is-mini-preview .addShiftPanel{
+  display:none;
+}
+
 @media(max-width:679px){
   dialog#dayDialog.googlePanel,
   dialog#bulkDialog.googlePanel,
@@ -3713,6 +3752,14 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   .googlePanel .modalBody{
     padding:0 28px 32px;
+  }
+
+  dialog#dayDialog.googlePanel.is-mini-preview .modalHead{
+    padding:2px 24px 12px;
+  }
+
+  dialog#dayDialog.googlePanel.is-mini-preview .modalBody{
+    padding:0 24px 20px;
   }
 }
 
@@ -3768,6 +3815,19 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   .googlePanel .modalBody{
     padding-left:24px;
     padding-right:24px;
+  }
+
+  dialog#dayDialog.googlePanel.is-mini-preview .drag-handle{
+    top:11px;
+  }
+
+  dialog#dayDialog.googlePanel.is-mini-preview .modalHead{
+    padding:2px 22px 11px;
+  }
+
+  dialog#dayDialog.googlePanel.is-mini-preview .modalBody{
+    padding-left:22px;
+    padding-right:22px;
   }
 }
 
@@ -3960,7 +4020,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
         <div class="drawerView" id="drawerViewTools">
           <div class="drawerToolGrid">
-            <button class="tonal" id="reportPdf" type="button">Generuj PDF</button>
+            <button class="tonal" id="reportPdf" type="button">Raport miesięczny</button>
+            <button class="tonal" id="reportYear" type="button">Raport roczny</button>
             <button class="tonal" id="backupJson" type="button">Pobierz kopię</button>
             <input id="restoreJson" type="file" accept="application/json" style="display:none" />
             <button class="tonal" id="restoreBtn" type="button">Wczytaj dane</button>
@@ -4734,7 +4795,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     if (dlg) {
       dlg.classList.add("is-preview-only");
-      dlg.classList.remove("is-form-open", "is-empty-day");
+      dlg.classList.remove("is-form-open", "is-empty-day", "is-mini-preview");
     }
 
     setStatus(`Dodano zakres z szablonu: ${start}–${end}.`);
@@ -5341,7 +5402,10 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     const day = getDay(dateISO) || { date: dateISO, note: "", shifts: [], vacation: false, leaveType:"" };
     const hasShifts = (day.shifts || []).length > 0;
     const hasLeaveEvent = !!(day.leaveType || day.vacation);
-    const hasAnyEvent = hasShifts || hasLeaveEvent;
+    const hasNote = !!(day.note && day.note.trim());
+    const [holidayYear] = dateISO.split("-").map(Number);
+    const hasHoliday = getHolidayMap(holidayYear).has(dateISO);
+    const hasAnyEvent = hasShifts || hasLeaveEvent || hasNote || hasHoliday;
 
     if ($("dlgTitle")) $("dlgTitle").textContent = fmtDateLongPL(dateISO);
     if ($("dlgMeta")) {
@@ -5357,8 +5421,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if ($("dlgNote")) $("dlgNote").value = day.note || "";
 
     if (dlg) {
-      dlg.classList.toggle("is-form-open", !hasAnyEvent);
-      dlg.classList.toggle("is-preview-only", hasAnyEvent);
+      dlg.classList.add("is-mini-preview", "is-preview-only");
+      dlg.classList.remove("is-form-open");
       dlg.classList.toggle("is-empty-day", !hasAnyEvent);
     }
 
@@ -5384,17 +5448,30 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     dlg.addEventListener("cancel", (e) => { e.preventDefault(); closeDay(); });
   }
 
-  const dlgShowAddShiftBtn = $("dlgShowAddShift");
-  if (dlgShowAddShiftBtn) {
-    dlgShowAddShiftBtn.onclick = () => {
-      if (!dlg) return;
+  function expandDayPanel({ form = false } = {}) {
+    if (!dlg) return;
+    dlg.classList.remove("is-mini-preview");
+    if (form) {
       dlg.classList.add("is-form-open");
       dlg.classList.remove("is-preview-only");
       renderQuickTemplatesUI();
       setTimeout(() => $("dlgStart")?.focus(), 80);
+    }
+  }
+
+  const dlgShowAddShiftBtn = $("dlgShowAddShift");
+  if (dlgShowAddShiftBtn) {
+    dlgShowAddShiftBtn.onclick = () => {
+      expandDayPanel({ form:true });
       haptic.tap();
     };
   }
+
+  dlg?.querySelector(".drag-handle")?.addEventListener("click", () => {
+    if (!dlg.classList.contains("is-mini-preview")) return;
+    expandDayPanel({ form:false });
+    haptic.tap();
+  });
 
   function renderDayDialog() {
     if (!dlgDate) return;
@@ -5756,6 +5833,138 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     w.focus();
   }
 
+
+  function buildYearReportHTML(year) {
+    const rows = [];
+    const totals = { min:0, money:0, workDays:0, paid:0, unpaid:0, sick:0, notes:0 };
+
+    for (let month = 1; month <= 12; month++) {
+      const monthYM = `${year}-${pad2(month)}`;
+      const monthEntries = db.entries.filter(e => e?.date && ym(e.date) === monthYM);
+      const min = computeMonthMinutes(monthYM);
+      const money = round2((min / 60) * (db.settings.rate || 0));
+      const workDays = monthEntries.filter(e => computeDayMinutes(e) > 0).length;
+      const notes = monthEntries.filter(e => e.note && e.note.trim()).length;
+      const paid = monthEntries.filter(e => e.leaveType === "paid").length;
+      const unpaid = monthEntries.filter(e => e.leaveType === "unpaid").length;
+      const sick = monthEntries.filter(e => e.leaveType === "sick").length;
+
+      totals.min += min;
+      totals.money += money;
+      totals.workDays += workDays;
+      totals.notes += notes;
+      totals.paid += paid;
+      totals.unpaid += unpaid;
+      totals.sick += sick;
+
+      rows.push(`
+        <tr>
+          <td>${escapeHtml(fmtMonthPL(monthYM))}</td>
+          <td class="num">${escapeHtml(fmtHM(min))}</td>
+          <td class="num">${escapeHtml(pln(money))}</td>
+          <td class="num">${workDays}</td>
+          <td class="num">${paid}</td>
+          <td class="num">${unpaid}</td>
+          <td class="num">${sick}</td>
+          <td class="num">${notes}</td>
+        </tr>
+      `);
+    }
+
+    const gen = new Date();
+    const genText = `${gen.getFullYear()}-${pad2(gen.getMonth() + 1)}-${pad2(gen.getDate())} ${pad2(gen.getHours())}:${pad2(gen.getMinutes())}`;
+
+    return `<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raport roczny</title>
+  <style>
+    @page { size: A4 landscape; margin: 10mm; }
+    *{ box-sizing:border-box; }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#111;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;}
+    h1{margin:0;font-size:18px;letter-spacing:.2px;}
+    .meta{font-size:11px;line-height:1.35;color:#333;text-align:right;white-space:nowrap;}
+    .summary{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0 12px;}
+    .box{border:1px solid #dfe3eb;border-radius:8px;padding:7px;background:#f8fafd;min-height:46px;}
+    .box strong{display:block;font-size:15px;line-height:1.1;}
+    .box span{display:block;margin-top:3px;font-size:10px;color:#555;line-height:1.15;}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:10.5px;}
+    th{text-align:left;padding:7px 6px;border-bottom:1px solid #cfd5e3;background:#f3f5fb;font-weight:800;}
+    td{padding:6px;border-bottom:1px solid #eef1f6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .num{text-align:right;}
+    tfoot td{font-weight:800;background:#f7f9fe;border-top:1px solid #cfd5e3;}
+  </style>
+</head>
+<body onload="setTimeout(function(){window.print();}, 250)">
+  <div class="head">
+    <div>
+      <h1>RAPORT ROCZNY CZASU PRACY</h1>
+      <div style="font-size:11px;color:#333;margin-top:2px;">Rok: <strong>${year}</strong></div>
+    </div>
+    <div class="meta">Wygenerowano: ${escapeHtml(genText)}</div>
+  </div>
+
+  <div class="summary">
+    <div class="box"><strong>${escapeHtml(fmtHM(totals.min))}</strong><span>Godziny w roku</span></div>
+    <div class="box"><strong>${escapeHtml(pln(totals.money))}</strong><span>Szacowana wypłata</span></div>
+    <div class="box"><strong>${totals.workDays}</strong><span>Dni z godzinami</span></div>
+    <div class="box"><strong>${totals.paid + totals.unpaid + totals.sick}</strong><span>Dni nieobecności</span></div>
+    <div class="box"><strong>${totals.notes}</strong><span>Dni z notatką</span></div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Miesiąc</th>
+        <th class="num">Godziny</th>
+        <th class="num">Wypłata</th>
+        <th class="num">Dni pracy</th>
+        <th class="num">Urlop pł.</th>
+        <th class="num">Urlop bezpł.</th>
+        <th class="num">L4</th>
+        <th class="num">Notatki</th>
+      </tr>
+    </thead>
+    <tbody>${rows.join("")}</tbody>
+    <tfoot>
+      <tr>
+        <td>Razem</td>
+        <td class="num">${escapeHtml(fmtHM(totals.min))}</td>
+        <td class="num">${escapeHtml(pln(totals.money))}</td>
+        <td class="num">${totals.workDays}</td>
+        <td class="num">${totals.paid}</td>
+        <td class="num">${totals.unpaid}</td>
+        <td class="num">${totals.sick}</td>
+        <td class="num">${totals.notes}</td>
+      </tr>
+    </tfoot>
+  </table>
+</body>
+</html>`;
+  }
+
+  function openYearReportPdf() {
+    haptic.tap();
+
+    const monthPick = $("monthPick");
+    const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
+    const year = yearFromMonthYM(monthYM);
+
+    const html = buildYearReportHTML(year);
+    const w = window.open("", "_blank");
+    if (!w) {
+      notify("Twoja przeglądarka zablokowała nowe okno. Zezwól na pop-upy dla tej strony i spróbuj ponownie.");
+      return;
+    }
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+  }
+
   // ===== UI =====
   const dlgBackBtn = $("dlgBack");
   if (dlgBackBtn) dlgBackBtn.onclick = () => { haptic.tap(); closeDay(); };
@@ -5801,7 +6010,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       renderDayDialog();
       if (dlg) {
         dlg.classList.add("is-preview-only");
-        dlg.classList.remove("is-form-open", "is-empty-day");
+        dlg.classList.remove("is-form-open", "is-empty-day", "is-mini-preview");
       }
       setStatus("Dodano zakres.");
       haptic.success();
@@ -5932,6 +6141,9 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   const reportBtn = $("reportPdf");
   if (reportBtn) reportBtn.onclick = openReportPdf;
+
+  const reportYearBtn = $("reportYear");
+  if (reportYearBtn) reportYearBtn.onclick = openYearReportPdf;
 
   const backupBtn = $("backupJson");
   if (backupBtn) {
