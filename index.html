@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.2.2.1</title>
+  <title>Czas pracy 4.2.3</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -986,19 +986,19 @@ body{
 
 /* Pola formularzy */
 input,textarea,select{
-  background:#f5f7fb !important;
-  border:1px solid transparent !important;
-  border-bottom:1px solid #a7afbc !important;
-  border-radius:12px 12px 0 0 !important;
-  box-shadow:none !important;
+  background:#f5f7fb;
+  border:1px solid transparent;
+  border-bottom:1px solid #a7afbc;
+  border-radius:12px 12px 0 0;
+  box-shadow:none;
 }
 input:hover,textarea:hover,select:hover{
-  background:#eef3fa !important;
+  background:#eef3fa;
 }
 input:focus-visible,textarea:focus-visible,select:focus-visible{
-  background:#eef3fa !important;
-  border-bottom:2px solid var(--primary) !important;
-  outline:none !important;
+  background:#eef3fa;
+  border-bottom:2px solid var(--primary);
+  outline:none;
 }
 
 /* Kalendarz — jedna finalna geometria, bez starych konfliktujących bloków */
@@ -1292,7 +1292,7 @@ dialog#appInfoDialog{
 }
 dialog:focus,
 dialog:focus-visible{
-  outline:none !important;
+  outline:none;
 }
 .modalHead{
   padding-top:0;
@@ -1456,12 +1456,12 @@ dialog#dayDialog{
   color:#202124;
 }
 input,textarea,select{
-  min-height:44px !important;
-  padding:11px 12px 9px !important;
-  font-size:14px !important;
+  min-height:44px;
+  padding:11px 12px 9px;
+  font-size:14px;
 }
 textarea{
-  min-height:58px !important;
+  min-height:58px;
 }
 
 /* Narzędzia */
@@ -2188,9 +2188,9 @@ dialog#settingsDialog{
 
 /* Stare settingsSection nie jest już potrzebne, ale zostaje neutralne gdyby gdzieś było */
 .settingsSection{
-  margin-top:0 !important;
-  padding-top:0 !important;
-  border-top:none !important;
+  margin-top:0;
+  padding-top:0;
+  border-top:none;
 }
 
 /* FAB Google-like */
@@ -2717,7 +2717,7 @@ dialog#mainMenuDialog.drawerDialog{
 .settingsAccordion[open] .settingsChevron{transform:rotate(180deg)}
 .settingsAccordionBody{padding:0 0 16px}
 .settingsSoon{margin-top:12px;padding:11px 13px;border-radius:14px;background:#f6f8fb;border:1px solid #e2e6ed;color:#5f6368;font-size:13.5px;line-height:1.35}
-.templateAddBtn{width:100%;min-height:44px !important}
+.templateAddBtn{width:100%;min-height:44px}
 
 /* FAB: plus i X z tych samych kresek, bez SVG */
 .fabGoogle .fab{
@@ -3993,7 +3993,7 @@ dialog#vacDialog.googlePanel #clearVacationRange{
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;
-  padding-bottom:calc(16px + env(safe-area-inset-bottom));
+  padding-bottom:calc(8px + env(safe-area-inset-bottom));
   background:#fff;
   touch-action:pan-y;
 }
@@ -4023,7 +4023,7 @@ dialog#vacDialog.googlePanel #clearVacationRange{
 .googlePanel .modalBody{
   max-height:none;
   overflow:visible;
-  padding:0 88px 18px;
+  padding:0 88px 10px;
   background:#fff;
 }
 
@@ -4061,8 +4061,8 @@ dialog#vacDialog.googlePanel #clearVacationRange{
 
 .googlePanel .actionRow{
   justify-content:flex-start;
-  margin-top:22px;
-  padding-bottom:8px;
+  margin-top:18px;
+  padding-bottom:0;
 }
 
 dialog#bulkDialog.googlePanel #bulkApply,
@@ -4071,6 +4071,23 @@ dialog#vacDialog.googlePanel #setVacationRange,
 dialog#vacDialog.googlePanel #vacBack,
 dialog#dayDialog.googlePanel .dayCloseRow{
   display:none;
+}
+
+
+dialog#bulkDialog.googlePanel .googlePanelContent,
+dialog#vacDialog.googlePanel .googlePanelContent{
+  padding-bottom:calc(4px + env(safe-area-inset-bottom));
+}
+
+dialog#bulkDialog.googlePanel .modalBody,
+dialog#vacDialog.googlePanel .modalBody{
+  padding-bottom:4px;
+}
+
+dialog#bulkDialog.googlePanel .actionRow,
+dialog#vacDialog.googlePanel .actionRow{
+  margin-top:16px;
+  padding-bottom:0;
 }
 
 /* Panel dnia: podgląd pełny albo formularz, bez mini-warstwy */
@@ -4788,8 +4805,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
             </div>
 
             <div class="statsExportBlock">
-              <div class="statsSectionLabel">Eksport</div>
-              <div class="statsSectionHint">CSV do arkusza z podsumowaniem miesięcy.</div>
+              <div class="statsSectionLabel">Eksport danych</div>
+              <div class="statsSectionHint">CSV zawiera miesięczne podsumowanie roku do dalszej obróbki w arkuszu.</div>
               <div class="statsActions">
                 <button class="tonal" id="yearStatsCsv" type="button">CSV</button>
               </div>
@@ -4808,8 +4825,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               </div>
             </div>
 
-            <div class="statsSectionLabel statsTableLabel">Miesięczne podsumowanie roku</div>
-            <div class="statsSectionHint">Godziny, dni pracy i nieobecności w każdym miesiącu.</div>
             <div class="statsTableWrap">
               <table class="statsTable">
                 <thead>
@@ -4902,6 +4917,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     danger:  () => vibe([20, 50, 20]),
   };
   window.haptic = haptic;
+  window.CPApp = window.CPApp || {};
+  Object.assign(window.CPApp, { haptic });
 
   const SYSTEM_BAR_MAIN = "#eef1f6";
   const SYSTEM_BAR_PANEL = "#ffffff";
@@ -4913,6 +4930,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     document.body.style.background = color;
   }
   window.setSystemBars = setSystemBars;
+  Object.assign(window.CPApp, { setSystemBars });
   setSystemBars(SYSTEM_BAR_MAIN);
 
   function setAppConfirmTone(tone) {
@@ -5414,7 +5432,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     if (dlg) {
       dlg.classList.add("is-preview-only");
-      dlg.classList.remove("is-form-open", "is-empty-day", "is-mini-preview");
+      dlg.classList.remove("is-form-open", "is-empty-day");
     }
 
     setStatus(`Dodano zakres z szablonu: ${start}–${end}.`);
@@ -6067,26 +6085,26 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       dlg.classList.toggle("is-form-open", !hasAnyEvent);
       dlg.classList.toggle("is-preview-only", hasAnyEvent);
       dlg.classList.toggle("is-empty-day", !hasAnyEvent);
-      dlg.classList.remove("is-mini-preview", "is-day-sheet");
-      dlg.style.removeProperty("--day-sheet-y");
+
     }
 
     renderDayDialog();
 
-    window.setSystemBars?.("#ffffff");
+    window.CPApp?.setSystemBars?.("#ffffff");
     if (dlg && typeof dlg.showModal === "function") dlg.showModal();
     else if (dlg) dlg.setAttribute("open", "");
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
   }
 
-  window.openWorkDay = openDay;
-  window.workTodayISO = todayISO;
+  Object.assign(window.CPApp, {
+    openWorkDay: openDay,
+    workTodayISO: todayISO
+  });
 
   function closeDay() {
     dlgDate = null;
     if (dlg) {
-      dlg.classList.remove("is-day-sheet", "is-mini-preview");
-      dlg.style.removeProperty("--day-sheet-y");
+
     }
     if (dlg && typeof dlg.close === "function") dlg.close();
     else if (dlg) dlg.removeAttribute("open");
@@ -6100,9 +6118,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   function expandDayPanel({ form = false } = {}) {
     if (!dlg) return;
-    dlg.classList.remove("is-mini-preview", "is-day-sheet");
-    dlg.style.removeProperty("--day-sheet-y");
-
     if (form) {
       dlg.classList.add("is-form-open");
       dlg.classList.remove("is-preview-only");
@@ -6314,7 +6329,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if (typeof vacDlg.close === "function") vacDlg.close();
     else vacDlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
-    window.setSystemBars?.("#eef1f6");
+    window.CPApp?.setSystemBars?.("#eef1f6");
   }
   if (vacDlg) {
     vacDlg.addEventListener("cancel", (e) => { e.preventDefault(); closeVac(); });
@@ -6346,8 +6361,10 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     bulkDlg.addEventListener("close", () => document.body.classList.remove("modal-open"));
   }
 
-  window.openVacationDialogFromFab = openVac;
-  window.openBulkDialogFromFab = openBulk;
+  Object.assign(window.CPApp, {
+    openVacationDialog: openVac,
+    openBulkDialog: openBulk
+  });
 
   // ===== RAPORT PDF =====
   function escapeHtml(s) {
@@ -6846,7 +6863,9 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     openStatsPanel("year");
   }
 
-  window.openStatsPanelFromDrawer = openStatsPanel;
+  Object.assign(window.CPApp, {
+    openStatsPanel
+  });
 
   function closeYearStats() {
     const dlgYear = $("yearStatsDialog");
@@ -7060,7 +7079,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       renderDayDialog();
       if (dlg) {
         dlg.classList.add("is-preview-only");
-        dlg.classList.remove("is-form-open", "is-empty-day", "is-mini-preview");
+        dlg.classList.remove("is-form-open", "is-empty-day");
       }
       setStatus("Dodano zakres.");
       haptic.success();
@@ -7616,7 +7635,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 <script>
 (() => {
   const $ = (id) => document.getElementById(id);
-  const haptic = window.haptic || { tap(){}, commit(){}, success(){}, warning(){}, danger(){} };
+  const haptic = window.CPApp?.haptic || window.haptic || { tap(){}, commit(){}, success(){}, warning(){}, danger(){} };
   const APP_TITLE = document.title || "Czas pracy";
   const APP_VERSION = (APP_TITLE.match(/(\d+(?:\.\d+)*(?:\s*[a-zA-Z]+)?)/) || ["", "dev"])[1];
   window.__appErrors = window.__appErrors || [];
@@ -7710,16 +7729,16 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   $("fabScrim")?.addEventListener("touchmove", (e) => e.preventDefault(), { passive:false });
   $("fabTodayAction")?.addEventListener("click", () => {
     closeFabMenu();
-    setTimeout(() => window.openWorkDay?.(window.workTodayISO?.()), 80);
+    setTimeout(() => window.CPApp?.openWorkDay?.(window.CPApp?.workTodayISO?.()), 80);
   });
   $("fabBulkAction")?.addEventListener("click", () => {
     closeFabMenu();
-    setTimeout(() => window.openBulkDialogFromFab?.(), 80);
+    setTimeout(() => window.CPApp?.openBulkDialog?.(), 80);
   });
 
   $("fabVacationAction")?.addEventListener("click", () => {
     closeFabMenu();
-    setTimeout(() => window.openVacationDialogFromFab?.(), 80);
+    setTimeout(() => window.CPApp?.openVacationDialog?.(), 80);
   });
 
   $("vacPanelClose")?.addEventListener("click", () => { $("vacBack")?.click(); });
@@ -7824,7 +7843,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   $("drawerMonthView")?.addEventListener("click", () => { closeDrawer(); document.querySelector(".calCard")?.scrollIntoView({ behavior:"smooth", block:"start" }); });
   $("drawerYearSummary")?.addEventListener("click", () => {
     closeDrawer();
-    setTimeout(() => window.openStatsPanelFromDrawer?.("month"), 120);
+    setTimeout(() => window.CPApp?.openStatsPanel?.("month"), 120);
   });
   ["drawerWeekView","drawerDayView"].forEach((id) => {
     $(id)?.addEventListener("click", () => {
