@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.2.6</title>
-  <meta name="theme-color" content="#eef3fb" id="themeColorMeta" />
+  <title>Czas pracy 4.2.6.1</title>
+  <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
 
@@ -938,7 +938,7 @@ body.modal-open{
     }
 
 :root{
-  --bg:#e8eaed;
+  --bg:#eef1f6;
   --surface:#ffffff;
   --surface-low:#f6f8fb;
   --surface-mid:#edf0f4;
@@ -4469,15 +4469,15 @@ html,
 body,
 .appHeader,
 .monthStrip{
-  background:#eef3fb;
+  background:#eef1f6;
 }
 
 .appHeader.navTopBar{
-  background:#eef3fb;
+  background:#eef1f6;
 }
 
 .monthStrip{
-  background:#eef3fb;
+  background:#eef1f6;
 }
 
 #dayViewPrev,
@@ -5164,7 +5164,246 @@ dialog#dayDialog.googlePanel,
 .dayViewActions #dayViewOpenModal{
     grid-column:auto;
   }
-}</style>
+}
+
+
+/* 4.2.6.1 — finalny balans kolorów i profilu kafelków po testach na telefonach */
+:root{
+  --bg:#eef1f6;
+}
+
+html,
+body,
+.appHeader,
+.appHeader.navTopBar,
+.monthStrip{
+  background:#eef1f6;
+}
+
+/* Kalendarz: białe, czytelne kafelki zamiast niebieskawej poświaty */
+.calCard{
+  padding-left:7px;
+  padding-right:7px;
+  background:transparent;
+}
+
+#calGrid,
+#calGridGhost{
+  gap:5px;
+  align-items:stretch;
+  grid-auto-rows:var(--day-height);
+}
+
+.dayCell,
+.blankCell{
+  height:var(--day-height);
+  min-height:var(--day-height);
+  max-height:var(--day-height);
+  border-radius:14px;
+  border:1px solid rgba(60,64,67,.045);
+  background:#f8f9fb;
+  box-shadow:0 1px 2px rgba(60,64,67,.035);
+  padding:7px 0 6px;
+}
+
+.dayCell{
+  background:#fbfcff;
+}
+
+.blankCell{
+  background:rgba(244,246,251,.56);
+  border-color:rgba(60,64,67,.028);
+  box-shadow:none;
+}
+
+.dayCell:hover{
+  background:#fff;
+  border-color:rgba(60,64,67,.075);
+  box-shadow:0 2px 6px rgba(60,64,67,.06);
+}
+
+.dayCell:active{
+  transform:scale(.994);
+  background:#f5f7fb;
+}
+
+.dayCell.today{
+  background:linear-gradient(180deg, #f5f9ff 0%, #fbfcff 68%);
+  border-color:rgba(66,133,244,.22);
+  box-shadow:0 1px 3px rgba(66,133,244,.09);
+}
+
+.dayTop{
+  justify-content:flex-start;
+  padding:0 7px 5px;
+}
+
+.dayNum{
+  width:var(--day-num-box);
+  min-width:var(--day-num-box);
+  height:var(--day-num-box);
+  padding:0;
+  border-radius:999px;
+  font-size:var(--day-num-size);
+  font-weight:720;
+  letter-spacing:-.035em;
+  color:#3c4043;
+}
+
+.dayCell.today .dayNum{
+  min-width:var(--today-badge-w);
+  height:var(--today-badge-h);
+  padding:0 9px;
+  background:#4285f4;
+  color:#fff;
+  box-shadow:0 2px 5px rgba(66,133,244,.24);
+}
+
+.dayNum.saturday{
+  color:#5f6368;
+}
+
+.dayNum.sunday,
+.dayNum.holiday{
+  color:#c5221f;
+}
+
+.dayCell.today .dayNum.saturday,
+.dayCell.today .dayNum.sunday,
+.dayCell.today .dayNum.holiday{
+  color:#fff;
+}
+
+/* Wpisy w kafelkach: trochę większe i stabilniejsze na wąskich ekranach */
+.pillStack{
+  gap:3px;
+  padding:0 5px 1px;
+}
+
+.pill{
+  height:var(--pill-height);
+  min-height:var(--pill-height);
+  max-height:var(--pill-height);
+  border-radius:5px;
+  padding:0 5px;
+  font-size:var(--pill-size);
+  line-height:1;
+  font-weight:760;
+  letter-spacing:-.04em;
+  box-shadow:none;
+  text-overflow:clip;
+}
+
+.pill.work{
+  background:#34a853;
+  color:#fff;
+}
+
+.pill.vac{
+  background:#d3e3fd;
+  color:#174ea6;
+}
+
+.pill.unpaid{
+  background:#eee7ff;
+  color:#4a148c;
+}
+
+.pill.sick{
+  background:#fce8e6;
+  color:#a50e0e;
+}
+
+.pill.note{
+  background:#feefc3;
+  color:#5f4200;
+}
+
+.pill.more{
+  background:transparent;
+  color:#5f6368;
+}
+
+/* Karta statystyk zostaje biała, żeby odcinała się od tła */
+.monthSummaryCard{
+  background:#fff;
+  border-color:#dfe3eb;
+  box-shadow:0 1px 3px rgba(60,64,67,.08);
+}
+
+/* Widok dnia: niebieski zostaje akcentem, nie tłem */
+.dayViewHero{
+  background:linear-gradient(135deg, #fff, #f8fafd);
+  border-color:#dfe3eb;
+}
+
+.dayViewActions #dayViewAddLeave{
+  background:#fff;
+  border:1px solid #dfe7fb;
+  color:#174ea6;
+}
+
+.dayViewActions #dayViewOpenModal{
+  background:#fff;
+}
+
+/* FAB i panel główny po powrocie do neutralnego tła */
+.fab{
+  background:#4285f4;
+}
+
+@media(max-width:430px){
+  .calCard{
+    padding-left:6px;
+    padding-right:6px;
+  }
+
+  #calGrid,
+  #calGridGhost{
+    gap:5px;
+  }
+
+  .dayCell,
+  .blankCell{
+    border-radius:13px;
+    padding-top:6px;
+    padding-bottom:5px;
+  }
+
+  .dayTop{
+    padding-left:6px;
+    padding-right:6px;
+    padding-bottom:4px;
+  }
+
+  .pillStack{
+    padding-left:4px;
+    padding-right:4px;
+    gap:2px;
+  }
+
+  .pill{
+    padding-left:4px;
+    padding-right:4px;
+    border-radius:5px;
+  }
+}
+
+@media(max-height:760px) and (max-width:430px){
+  .dayCell,
+  .blankCell{
+    border-radius:12px;
+  }
+
+  .dayTop{
+    padding-bottom:3px;
+  }
+
+  .pillStack{
+    gap:2px;
+  }
+}
+</style>
 
 </head>
 
@@ -6885,18 +7124,21 @@ dialog#dayDialog.googlePanel,
     const isNarrow = viewportW <= 430;
     const isVeryNarrow = viewportW <= 360;
 
+    // 4.2.6.1: finalna geometria kafelków po testach na 6.1" i 6.7".
+    // Wysokość jest lekko niższa i mniej zależna od samej szerokości ekranu,
+    // żeby kafelki nie robiły się "wieżami" na większym telefonie.
     const dayHeight = isVeryNarrow
-      ? clampNumber(cellW * 1.78, 78, 92)
+      ? clampNumber(cellW * 1.48, 72, 82)
       : isNarrow
-        ? clampNumber(cellW * 1.86, 82, 98)
-        : clampNumber(cellW * 1.52, 88, 112);
+        ? clampNumber(cellW * 1.54, 76, 88)
+        : clampNumber(cellW * 1.34, 80, 94);
 
-    const dayNumSize = clampNumber(dayHeight * 0.135, isNarrow ? 10.5 : 11.5, isNarrow ? 13.5 : 14.5);
-    const dayNumBox = clampNumber(dayHeight * 0.235, isNarrow ? 18 : 19, isNarrow ? 23 : 24);
-    const todayBadgeH = clampNumber(dayHeight * 0.215, isNarrow ? 18 : 19, isNarrow ? 21 : 22);
-    const todayBadgeW = clampNumber(dayHeight * 0.325, isNarrow ? 26 : 27, isNarrow ? 32 : 33);
-    const pillHeight = clampNumber(dayHeight * 0.145, isNarrow ? 11 : 12, isNarrow ? 14 : 15);
-    const pillSize = clampNumber(dayHeight * 0.078, isNarrow ? 6.4 : 7.1, isNarrow ? 7.7 : 8.7);
+    const dayNumSize = clampNumber(dayHeight * 0.205, isNarrow ? 14.5 : 15, isNarrow ? 18 : 19);
+    const dayNumBox = clampNumber(dayHeight * 0.34, isNarrow ? 25 : 26, isNarrow ? 31 : 32);
+    const todayBadgeH = clampNumber(dayHeight * 0.34, isNarrow ? 26 : 27, isNarrow ? 31 : 32);
+    const todayBadgeW = clampNumber(dayHeight * 0.44, isNarrow ? 34 : 36, isNarrow ? 43 : 46);
+    const pillHeight = clampNumber(dayHeight * 0.17, isNarrow ? 13 : 14, isNarrow ? 16 : 17);
+    const pillSize = clampNumber(dayHeight * 0.102, isNarrow ? 7.4 : 8.1, isNarrow ? 9.1 : 9.8);
 
     const geometryKey = [
       width,
@@ -7527,7 +7769,7 @@ dialog#dayDialog.googlePanel,
     if (typeof vacDlg.close === "function") vacDlg.close();
     else vacDlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
-    window.CPApp?.setSystemBars?.("#eef3fb");
+    window.CPApp?.setSystemBars?.("#eef1f6");
   }
   function openVacationForDate(dateISO = activeDayISO) {
     const target = isValidDateISO(dateISO) ? dateISO : todayISO();
@@ -7585,7 +7827,7 @@ dialog#dayDialog.googlePanel,
     if (typeof bulkDlg.close === "function") bulkDlg.close();
     else bulkDlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
-    window.setSystemBars?.("#eef3fb");
+    window.setSystemBars?.("#eef1f6");
   }
   if (bulkDlg) {
     bulkDlg.addEventListener("cancel", (e) => { e.preventDefault(); closeBulk(); });
@@ -8308,7 +8550,7 @@ dialog#dayDialog.googlePanel,
     if (dlgYear && typeof dlgYear.close === "function") dlgYear.close();
     else if (dlgYear) dlgYear.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
-    window.setSystemBars?.("#eef3fb");
+    window.setSystemBars?.("#eef1f6");
   }
 
   function csvCell(value) {
@@ -9416,7 +9658,7 @@ dialog#dayDialog.googlePanel,
   function closeDrawer() {
     document.body.classList.remove("drawer-open");
     unlockPageScroll("drawer");
-    window.setSystemBars?.("#eef3fb");
+    window.setSystemBars?.("#eef1f6");
     closeDialog(drawer);
   }
 
