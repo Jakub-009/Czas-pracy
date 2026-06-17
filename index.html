@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.3.0</title>
+  <title>Czas pracy 4.3.1</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -3742,7 +3742,7 @@ dialog#vacDialog.googlePanel .actionRow{
 }
 
 :root{
-  --bg:#eef1f6;
+  --bg:#eef3fb;
 }
 
 html,
@@ -4838,6 +4838,196 @@ body,
   .pill{
     font-size:calc(var(--pill-size) * .94);
     letter-spacing:-.1em;
+  }
+}
+
+
+
+/* ===== Czas pracy 4.3.1 — finalne kafelki po teście na telefonach ===== */
+
+/* To musi być na końcu: hidden ma wygrywać z display:grid kart. */
+.monthViewHidden,
+.calCard.monthViewHidden,
+.monthSummaryCard.monthViewHidden,
+.dayViewPage.monthViewHidden{
+  display:none;
+}
+
+/* Duże kafelki: stary UX proporcji + nowa skórka UI */
+.calCard{
+  padding-left:8px;
+  padding-right:8px;
+}
+
+#calGrid,
+#calGridGhost{
+  gap:var(--cal-gap);
+  grid-auto-rows:var(--day-height);
+}
+
+.dayCell,
+.blankCell{
+  height:var(--day-height);
+  min-height:var(--day-height);
+  max-height:var(--day-height);
+  border-radius:13px;
+}
+
+.dayCell{
+  background:#fbfcff;
+  border:1px solid rgba(60,64,67,.055);
+  box-shadow:0 1px 2px rgba(60,64,67,.04);
+}
+
+.dayCellInner{
+  padding:6px 4px 6px;
+  grid-template-rows:auto minmax(0, 1fr);
+}
+
+.blankCell{
+  background:rgba(255,255,255,.28);
+  border-color:rgba(60,64,67,.025);
+}
+
+.dayTop{
+  padding:0 2px 6px;
+}
+
+.dayNum{
+  width:var(--day-num-box);
+  min-width:var(--day-num-box);
+  height:var(--day-num-box);
+  font-size:var(--day-num-size);
+  font-weight:760;
+  color:#3c4043;
+}
+
+.dayCell.today{
+  background:linear-gradient(180deg, #f8fbff 0%, #ffffff 74%);
+  border-color:rgba(66,133,244,.22);
+  box-shadow:0 1px 3px rgba(66,133,244,.10);
+}
+
+.dayCell.today .dayNum{
+  min-width:var(--today-badge-w);
+  height:var(--today-badge-h);
+  padding:0 10px;
+  background:#4285f4;
+  color:#fff;
+  box-shadow:0 2px 5px rgba(66,133,244,.24);
+}
+
+.pillStack{
+  gap:3px;
+  padding:0 1px;
+}
+
+.pill{
+  height:var(--pill-height);
+  min-height:var(--pill-height);
+  max-height:var(--pill-height);
+  border-radius:5px;
+  padding:0 2px;
+  font-size:var(--pill-size);
+  line-height:1;
+  font-weight:800;
+  letter-spacing:-.105em;
+  font-variant-numeric:tabular-nums;
+}
+
+.pill span{
+  display:inline-block;
+  min-width:max-content;
+  max-width:none;
+  transform:scaleX(.88);
+  transform-origin:left center;
+  overflow:visible;
+  text-overflow:clip;
+}
+
+.pill.work{
+  background:#34a853;
+  color:#fff;
+}
+
+.pill.vac{
+  background:#d3e3fd;
+  color:#174ea6;
+}
+
+.pill.unpaid{
+  background:#eee7ff;
+  color:#4a148c;
+}
+
+.pill.sick{
+  background:#fce8e6;
+  color:#a50e0e;
+}
+
+.pill.note{
+  background:#feefc3;
+  color:#5f4200;
+}
+
+/* W widoku dnia nie ma statystyk miesiąca — tylko podsumowanie konkretnego dnia. */
+body.view-day .monthSummaryCard,
+body.view-day .calCard,
+body.view-day #monthStrip{
+  display:none;
+}
+
+body.view-day .dayViewPage{
+  display:block;
+}
+
+/* Karta dnia i karta statystyk mają tę samą rodzinę UI */
+.dayViewHero,
+.statsHero{
+  background:linear-gradient(180deg, #ffffff 0%, #f8fafd 100%);
+  border-color:#dfe3eb;
+  box-shadow:0 1px 3px rgba(60,64,67,.08);
+}
+
+@media(max-width:430px){
+  .calCard{
+    padding-left:9px;
+    padding-right:9px;
+  }
+
+  .dayCell,
+  .blankCell{
+    border-radius:13px;
+  }
+
+  .dayCellInner{
+    padding-left:4px;
+    padding-right:4px;
+  }
+
+  .pill{
+    padding-left:2px;
+    padding-right:2px;
+  }
+}
+
+@media(max-width:370px){
+  .calCard{
+    padding-left:7px;
+    padding-right:7px;
+  }
+
+  .dayCellInner{
+    padding-left:3px;
+    padding-right:3px;
+  }
+
+  .pill{
+    letter-spacing:-.12em;
+  }
+
+  .pill span{
+    transform:scaleX(.84);
   }
 }
 </style>
@@ -6566,22 +6756,23 @@ body,
     const rows = monthGridRows(monthYM);
     const cellW = Math.max(34, (width - (gap * 6)) / 7);
 
-    // 4.3.0: jedno źródło prawdy dla geometrii.
-    // Treść nie rozpycha kafelka, a miesiące 5/6-tygodniowe dostają osobny limit wysokości.
+    // 4.3.1: duże, stabilne kafelki. Geometria wraca do sprawdzonej wysokości z 4.2.3,
+    // ale działa już na nowej strukturze 4.3. Treść nie rozpycha komórek.
     const isTiny = viewportW <= 360;
     const isPhone = viewportW <= 430;
 
-    const ratio = isTiny ? 1.22 : (isPhone ? 1.18 : 1.12);
-    const minH = isTiny ? 56 : (isPhone ? 60 : 64);
-    const maxH = rows >= 6 ? (isPhone ? 68 : 72) : (isPhone ? 76 : 82);
-    const dayHeight = clampNumber(cellW * ratio, minH, maxH);
+    const dayHeight = isTiny
+      ? clampNumber(cellW * 1.78, 78, 92)
+      : isPhone
+        ? clampNumber(cellW * 1.86, 86, 102)
+        : clampNumber(cellW * 1.52, 90, 112);
 
-    const dayNumSize = clampNumber(dayHeight * 0.29, isPhone ? 16 : 17, isPhone ? 20 : 21);
-    const dayNumBox = clampNumber(dayHeight * 0.43, isPhone ? 27 : 29, isPhone ? 34 : 36);
-    const todayBadgeH = clampNumber(dayHeight * 0.40, isPhone ? 28 : 30, isPhone ? 34 : 36);
-    const todayBadgeW = clampNumber(dayHeight * 0.56, isPhone ? 38 : 42, isPhone ? 50 : 54);
-    const pillHeight = clampNumber(dayHeight * 0.20, isPhone ? 14 : 15, isPhone ? 17 : 18);
-    const pillSize = clampNumber(dayHeight * 0.112, isPhone ? 7.0 : 7.8, isPhone ? 8.8 : 9.6);
+    const dayNumSize = clampNumber(dayHeight * 0.215, isPhone ? 18 : 19, isPhone ? 22 : 23);
+    const dayNumBox = clampNumber(dayHeight * 0.34, isPhone ? 30 : 32, isPhone ? 38 : 40);
+    const todayBadgeH = clampNumber(dayHeight * 0.32, isPhone ? 28 : 30, isPhone ? 36 : 38);
+    const todayBadgeW = clampNumber(dayHeight * 0.46, isPhone ? 42 : 46, isPhone ? 56 : 60);
+    const pillHeight = clampNumber(dayHeight * 0.19, isPhone ? 17 : 18, isPhone ? 21 : 22);
+    const pillSize = clampNumber(dayHeight * 0.088, isPhone ? 7.2 : 7.8, isPhone ? 8.8 : 9.8);
 
     const geometryKey = [
       width,
