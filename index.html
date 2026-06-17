@@ -3,18 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.2.4</title>
+  <title>Czas pracy 4.3.0</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
 
-  <style>
-    /* ===== Czas pracy 4.2.4 stable-rebuild ===== */
+  <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
-    
-    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-
-    :root{
+:root{
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Roboto","Segoe UI",Arial,sans-serif;
 
       --bg:#eef1f6;
@@ -67,9 +63,11 @@
       --calEdgePad:0px;
     }
 
-    html{background:var(--bg)}
-    html,body{width:100%;overflow-x:hidden}
-    body{
+html{background:var(--bg)}
+
+html,body{width:100%;overflow-x:hidden}
+
+body{
       margin:0;
       min-height:100vh;
       background:var(--bg);
@@ -79,15 +77,14 @@
       text-rendering:optimizeLegibility;
     }
 
-    .wrap{
+.wrap{
       width:100%;
       max-width:920px;
       margin:0 auto;
       padding:0 0 96px;
     }
 
-    
-    .appHeader{
+.appHeader{
       min-height:72px;
       display:flex;
       align-items:center;
@@ -99,13 +96,15 @@
       top:0;
       z-index:20;
     }
-    .appLeft{
+
+.appLeft{
       display:flex;
       align-items:center;
       gap:14px;
       min-width:0;
     }
-    .hamburger{
+
+.hamburger{
       width:44px;
       height:44px;
       border-radius:50%;
@@ -114,9 +113,12 @@
       color:var(--text);
       flex:0 0 auto;
     }
-    .hamburger svg{width:26px;height:26px;fill:currentColor}
-    .appTitleWrap{min-width:0}
-    .appHeader h1{
+
+.hamburger svg{width:26px;height:26px;fill:currentColor}
+
+.appTitleWrap{min-width:0}
+
+.appHeader h1{
       margin:0;
       font-size:28px;
       line-height:1.08;
@@ -128,18 +130,19 @@
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    .appHeader .sub{
+
+.appHeader .sub{
       display:none;
     }
 
-    .topActions{
+.topActions{
       display:flex;
       align-items:center;
       gap:4px;
       flex:0 0 auto;
     }
 
-    button{
+button{
       min-height:40px;
       padding:0 18px;
       border-radius:var(--radius-pill);
@@ -156,27 +159,33 @@
       gap:8px;
       transition:background .15s ease,box-shadow .15s ease,transform .08s ease;
     }
-    button:active{transform:scale(.985)}
-    button.filled{background:var(--primary);color:#fff}
-    button.tonal,
+
+button:active{transform:scale(.985)}
+
+button.filled{background:var(--primary);color:#fff}
+
+button.tonal,
     button.secondary{
       background:var(--primary-soft);
       color:var(--on-primary-soft);
       box-shadow:none;
     }
-    button.text{
+
+button.text{
       background:transparent;
       color:var(--primary);
       padding:0 12px;
       box-shadow:none;
     }
-    button.danger,
+
+button.danger,
     button.error-tonal{
       background:var(--red-soft);
       color:#a50e0e;
       box-shadow:none;
     }
-    button.iconBtn{
+
+button.iconBtn{
       width:44px;
       height:44px;
       min-height:44px;
@@ -186,9 +195,10 @@
       color:var(--text);
       box-shadow:none;
     }
-    button.iconBtn:hover,.hamburger:hover{background:var(--surface-mid)}
 
-    label{
+button.iconBtn:hover,.hamburger:hover{background:var(--surface-mid)}
+
+label{
       display:block;
       font-size:13px;
       line-height:1.2;
@@ -196,15 +206,18 @@
       color:var(--text-2);
       margin-bottom:7px;
     }
-    .muted{
+
+.muted{
       font-size:13px;
       line-height:1.35;
       color:var(--text-2);
     }
-    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
-    input,textarea,select{
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+input,textarea,select{
       width:100%;
       min-height:54px;
       padding:16px 16px 12px;
@@ -217,21 +230,23 @@
       font-size:16px;
       transition:background .15s ease,border-color .15s ease;
     }
-    textarea{
+
+textarea{
       min-height:82px;
       resize:vertical;
       line-height:1.4;
     }
-    input:hover,textarea:hover,select:hover{background:#d8e0ec}
-    input:focus-visible,textarea:focus-visible,select:focus-visible{
+
+input:hover,textarea:hover,select:hover{background:#d8e0ec}
+
+input:focus-visible,textarea:focus-visible,select:focus-visible{
       outline:none;
       border-bottom:2px solid var(--primary);
       padding-bottom:11px;
       background:#d8e0ec;
     }
 
-    
-    .card{
+.card{
       background:transparent;
       border:none;
       border-radius:0;
@@ -240,24 +255,22 @@
       margin:0;
     }
 
-    .calCard{
-      padding:0 6px 0;
-      background:transparent;
-    }
-    .monthSelector{
+.monthSelector{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:8px;
       padding:0 8px 12px;
     }
-    .monthLeft{
+
+.monthLeft{
       display:flex;
       align-items:center;
       gap:4px;
       min-width:0;
     }
-    .monthTitle{
+
+.monthTitle{
       margin:0;
       font-size:28px;
       line-height:1.08;
@@ -269,7 +282,8 @@
       text-overflow:ellipsis;
       max-width:70vw;
     }
-    .iconCircle{
+
+.iconCircle{
       width:44px;
       height:44px;
       border-radius:50%;
@@ -281,9 +295,12 @@
       color:var(--text);
       flex:0 0 auto;
     }
-    .iconCircle:hover{background:var(--surface-mid)}
-    .iconCircle svg{width:24px;height:24px;fill:currentColor}
-    #monthPick{
+
+.iconCircle:hover{background:var(--surface-mid)}
+
+.iconCircle svg{width:24px;height:24px;fill:currentColor}
+
+#monthPick{
       position:absolute;
       inset:0;
       opacity:0;
@@ -292,205 +309,22 @@
       -webkit-appearance:none;
     }
 
-    .calGrid{
-      display:grid;
-      grid-template-columns:repeat(7,1fr);
-    }
-    #dowRow,
-    #dowRowGhost{
-      gap:0;
-      padding:0 0 4px;
-    }
-    .calDow{
-      text-align:center;
-      font-size:15px;
-      line-height:1;
-      font-weight:700;
-      color:var(--text);
-      padding:10px 0;
-      text-transform:lowercase;
-    }
-
-    #calGrid,
-    #calGridGhost{
-      gap:4px;
-      background:transparent;
-    }
-
-    .dayCell{
-      position:relative;
-      cursor:pointer;
-      min-height:104px;
-      border-radius:8px;
-      background:#fff;
-      padding:6px 0 6px;
-      display:flex;
-      flex-direction:column;
-      align-items:stretch;
-      overflow:hidden;
-      transition:background .12s ease,transform .08s ease;
-    }
-    .dayCell:hover{background:#f8fafd}
-    .dayCell:active{transform:scale(.992)}
-    .blankCell{
-      min-height:104px;
-      border-radius:8px;
-      background:#fff;
-      pointer-events:none;
-      opacity:.96;
-    }
-    .dayTop{
-      display:flex;
-      justify-content:center;
-      padding-bottom:7px;
-    }
-    .dayNum{
-      width:32px;
-      height:32px;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:20px;
-      line-height:1;
-      font-weight:700;
-      color:var(--text);
-      letter-spacing:-.02em;
-    }
-    .dayCell.today .dayNum{
-      background:#4285f4;
-      color:#fff;
-      font-weight:700;
-    }
-    .dayNum.saturday{color:var(--text)}
-    .dayNum.sunday,.dayNum.holiday{color:var(--red)}
-    .dayCell.today .dayNum.sunday,
-    .dayCell.today .dayNum.holiday{color:#fff}
-
-    .pillStack{
-      display:flex;
-      flex-direction:column;
-      gap:3px;
-      padding:0 1px;
-      min-height:0;
-      flex:1;
-    }
-    .pill{
-      height:19px;
-      border-radius:5px;
-      font-size:12px;
-      line-height:1;
-      font-weight:600;
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:clip;
-      padding:0 4px;
-    }
-    .pill.work{background:var(--green-soft);color:var(--green)}
-    .pill.vac{background:var(--blue-soft);color:var(--blue)}
-    .pill.unpaid{background:#ede7f6;color:#4a148c}
-    .pill.sick{background:var(--red-soft);color:var(--red)}
-    .pill.more{
-      background:transparent;
-      color:var(--text-2);
-      justify-content:center;
-      font-size:11px;
-    }
-    .pill.note{
-      background:#fbbc04;
-      color:#202124;
-    }
-
-    
-    .monthSummaryCard{
-      width:calc(100% - 20px);
-      margin:10px 10px 0;
-      padding:14px 14px;
-      display:grid;
-      grid-template-columns:42px minmax(0, 1fr) 24px;
-      align-items:center;
-      gap:13px;
-      border:1px solid var(--outline-soft);
-      border-radius:26px;
-      background:#fff;
-      color:var(--text);
-      box-shadow:0 1px 2px rgba(60,64,67,.08);
-      text-align:left;
-      cursor:pointer;
-    }
-    .monthSummaryCard:active{
-      transform:scale(.995);
-    }
-    .monthSummaryIcon{
-      width:42px;
-      height:42px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      background:var(--primary-soft);
-      color:var(--primary);
-    }
-    .monthSummaryIcon svg{
-      width:24px;
-      height:24px;
-      fill:currentColor;
-    }
-    .monthSummaryText{
-      min-width:0;
-    }
-    .monthSummaryKicker{
-      font-size:13px;
-      line-height:1.2;
-      font-weight:650;
-      color:var(--text-2);
-    }
-    .monthSummaryMain{
-      margin-top:4px;
-      display:flex;
-      align-items:baseline;
-      gap:7px;
-      min-width:0;
-      font-size:24px;
-      line-height:1.05;
-      font-weight:560;
-      letter-spacing:-.035em;
-      color:var(--text);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .monthSummaryMain span{
-      min-width:0;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    #monthSummaryMeta{
-      margin-top:5px;
-      font-size:13px;
-    }
-    .monthSummaryArrow{
-      width:24px;
-      height:24px;
-      fill:#5f6368;
-    }
-    .statusLine{
+.statusLine{
       min-height:18px;
       margin:10px 14px 0;
       text-align:center;
       color:var(--text-2);
     }
 
-    .compactCard{
+.compactCard{
       margin:12px 10px 0;
       padding:4px 14px;
       background:var(--surface);
       border:1px solid var(--outline-soft);
       border-radius:22px;
     }
-    details summary{
+
+details summary{
       cursor:pointer;
       font-size:16px;
       font-weight:500;
@@ -501,8 +335,10 @@
       padding:14px 0;
       color:var(--text);
     }
-    details summary::-webkit-details-marker{display:none}
-    .chev{
+
+details summary::-webkit-details-marker{display:none}
+
+.chev{
       width:24px;
       height:24px;
       display:inline-flex;
@@ -510,7 +346,8 @@
       justify-content:center;
       transition:transform .2s ease;
     }
-    .chev::before{
+
+.chev::before{
       content:"";
       width:10px;
       height:10px;
@@ -518,16 +355,18 @@
       border-bottom:2px solid var(--text-2);
       transform:rotate(45deg);
     }
-    details[open] .chev{transform:rotate(180deg) translateY(-2px)}
-    .panel{
+
+details[open] .chev{transform:rotate(180deg) translateY(-2px)}
+
+.panel{
       margin-top:2px;
       padding-bottom:14px;
       animation:panelIn .2s cubic-bezier(.2,0,0,1);
     }
-    @keyframes panelIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 
-    
-    .fab-container{
+@keyframes panelIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+
+.fab-container{
       position:fixed;
       right:24px;
       bottom:24px;
@@ -537,7 +376,8 @@
       align-items:flex-end;
       gap:14px;
     }
-    .fab{
+
+.fab{
       width:auto;
       height:64px;
       min-height:64px;
@@ -549,17 +389,19 @@
       font-size:18px;
       font-weight:500;
     }
-    .fab:active{border-radius:24px}
-    .fab svg{
+
+.fab:active{border-radius:24px}
+
+.fab svg{
       width:30px;
       height:30px;
       fill:currentColor;
       flex:0 0 auto;
     }
-    .fabText{display:inline-block}
 
-    
-    dialog{
+.fabText{display:inline-block}
+
+dialog{
       border:none;
       padding:0;
       background:var(--surface);
@@ -567,13 +409,16 @@
       box-shadow:var(--shadow-sheet);
       overflow:hidden;
     }
-    dialog:focus{outline:none}
-    dialog::backdrop{
+
+dialog:focus{outline:none}
+
+dialog::backdrop{
       background:rgba(32,33,36,.46);
       backdrop-filter:blur(3px);
       -webkit-backdrop-filter:blur(3px);
     }
-    dialog#fabMenuDialog,
+
+dialog#fabMenuDialog,
     dialog#vacDialog,
     dialog#bulkDialog,
     dialog#dayDialog{
@@ -582,30 +427,19 @@
       margin:auto 0 0 0;
       border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;
     }
-    @media(min-width:680px){
-      dialog#fabMenuDialog,
-      dialog#vacDialog,
-      dialog#bulkDialog,
-      dialog#dayDialog{
-        width:min(560px,calc(100vw - 32px));
-        max-width:560px;
-        margin:auto;
-        border-radius:var(--radius-sheet);
-      }
-      dialog#dayDialog{max-width:640px}
-    }
-    @media(max-width:679px){
-      dialog[open]{animation:slideUp .28s cubic-bezier(.2,0,0,1)}
-    }
-    @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-    .modalHead{
+
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+.modalHead{
       padding:0 24px 14px;
       background:transparent;
       border:none;
       position:relative;
     }
-    .modalHeadInner{padding-right:0}
-    .modalHead h3,
+
+.modalHeadInner{padding-right:0}
+
+.modalHead h3,
     .modalHeader h3{
       margin:0;
       font-size:28px;
@@ -614,20 +448,23 @@
       color:var(--text);
       letter-spacing:-.025em;
     }
-    .modalHead .muted,
+
+.modalHead .muted,
     .modalHeader p{
       margin:8px 0 0;
       color:var(--text-2);
       font-size:16px;
       line-height:1.35;
     }
-    .modalBody{
+
+.modalBody{
       padding:0 24px 24px;
       background:transparent;
     }
-    .modalHeader{margin-bottom:22px}
 
-    .backBtn{
+.modalHeader{margin-bottom:22px}
+
+.backBtn{
       min-height:40px;
       height:40px;
       padding:0 12px;
@@ -637,18 +474,23 @@
       box-shadow:none;
       font-size:16px;
     }
-    .backBtn svg{display:none}
-    .backBtn::after{content:"Anuluj"}
-    #dlgBack::after{content:"Zamknij"}
 
-    .fieldGrid{
+.backBtn svg{display:none}
+
+.backBtn::after{content:"Anuluj"}
+
+#dlgBack::after{content:"Zamknij"}
+
+.fieldGrid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:12px;
       margin-bottom:16px;
     }
-    .fieldGrid.single{grid-template-columns:1fr}
-    .actionRow{
+
+.fieldGrid.single{grid-template-columns:1fr}
+
+.actionRow{
       display:flex;
       justify-content:flex-end;
       align-items:center;
@@ -656,22 +498,25 @@
       margin-top:32px;
       flex-wrap:wrap;
     }
-    .actionRow > *{flex:0 0 auto}
-    #setVacationRange,#bulkApply,#dlgAddShift{
+
+.actionRow > *{flex:0 0 auto}
+
+#setVacationRange,#bulkApply,#dlgAddShift{
       background:var(--primary);
       color:#fff;
       min-height:52px;
       font-size:16px;
       padding:0 24px;
     }
-    #clearVacationRange,#bulkRemove{
+
+#clearVacationRange,#bulkRemove{
       background:transparent;
       color:var(--red);
       box-shadow:none;
       font-size:16px;
     }
 
-    .menu-item{
+.menu-item{
       width:100%;
       min-height:68px;
       padding:0 24px;
@@ -688,14 +533,17 @@
       text-align:left;
       box-shadow:none;
     }
-    .menu-item:hover{background:var(--surface-low)}
-    .menu-item svg{
+
+.menu-item:hover{background:var(--surface-low)}
+
+.menu-item svg{
       width:26px;
       height:26px;
       fill:var(--text-2);
       flex:0 0 auto;
     }
-    .menu-item .desc{
+
+.menu-item .desc{
       display:block;
       margin-top:3px;
       font-size:13px;
@@ -703,33 +551,37 @@
       color:var(--text-2);
     }
 
-    
-    dialog#dayDialog{
+dialog#dayDialog{
       max-height:96dvh;
     }
-    #dayDialog .modalBody{
+
+#dayDialog .modalBody{
       max-height:calc(96dvh - 60px);
       overflow-y:auto;
       -webkit-overflow-scrolling:touch;
     }
-    .modalStats{
+
+.modalStats{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:28px;
       margin:8px 0 26px;
     }
-    .statMini{
+
+.statMini{
       background:transparent;
       border-radius:0;
       padding:0 0 12px;
       min-width:0;
       border-bottom:1px solid var(--outline-soft);
     }
-    .statMini .muted{
+
+.statMini .muted{
       font-size:14px;
       color:var(--text-2);
     }
-    .statMiniValue{
+
+.statMiniValue{
       display:block;
       margin-top:8px;
       font-size:30px;
@@ -741,26 +593,31 @@
       text-overflow:ellipsis;
       color:var(--text);
     }
-    .modalStack{
+
+.modalStack{
       background:var(--surface-low);
       border-radius:22px;
       padding:20px;
       margin-bottom:28px;
     }
-    .timeGrid{
+
+.timeGrid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:14px;
       margin-bottom:18px;
     }
-    .addBtnCenter{
+
+.addBtnCenter{
       width:auto;
       min-height:52px;
       margin:18px 0 0 auto;
       display:flex;
     }
-    #dlgShiftsBlock{padding-top:0}
-    #dlgShiftsTitle{
+
+#dlgShiftsBlock{padding-top:0}
+
+#dlgShiftsTitle{
       display:block;
       margin:0 0 12px;
       padding:0;
@@ -770,11 +627,13 @@
       font-size:16px;
       font-weight:600;
     }
-    .shiftList,#dlgShifts{
+
+.shiftList,#dlgShifts{
       display:flex;
       flex-direction:column;
     }
-    .shiftItem{
+
+.shiftItem{
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -785,20 +644,24 @@
       border-radius:0;
       box-shadow:none;
     }
-    .shiftItem:last-child{border-bottom:none}
-    .shiftItem .times{
+
+.shiftItem:last-child{border-bottom:none}
+
+.shiftItem .times{
       font-size:21px;
       line-height:1.1;
       font-weight:500;
       letter-spacing:-.02em;
       color:var(--text);
     }
-    .shiftItem .mins{
+
+.shiftItem .mins{
       font-size:16px;
       color:var(--text-2);
       margin-top:8px;
     }
-    .delIcon{
+
+.delIcon{
       width:48px;
       height:48px;
       min-height:48px;
@@ -811,8 +674,10 @@
       flex:0 0 auto;
       font-size:0;
     }
-    .delIcon:hover{background:var(--red-soft)}
-    .delIcon::before,.delIcon::after{
+
+.delIcon:hover{background:var(--red-soft)}
+
+.delIcon::before,.delIcon::after{
       content:"";
       position:absolute;
       width:18px;
@@ -823,104 +688,19 @@
       top:50%;
       transform-origin:center;
     }
-    .delIcon::before{transform:translate(-50%,-50%) rotate(45deg)}
-    .delIcon::after{transform:translate(-50%,-50%) rotate(-45deg)}
 
-    #calSwipeArea{
-      touch-action:pan-y;
-      overflow:hidden;
-      position:relative;
-    }
-    .calLayer{will-change:transform}
-    .calGhost{
-      position:absolute;
-      left:0;
-      right:0;
-      top:0;
-      pointer-events:none;
-      opacity:1;
-    }
-    .calFading{
-      opacity:.92;
-      transition:opacity 120ms ease;
-    }
-    body.modal-open{
+.delIcon::before{transform:translate(-50%,-50%) rotate(45deg)}
+
+.delIcon::after{transform:translate(-50%,-50%) rotate(-45deg)}
+
+body.modal-open{
       overflow:hidden;
       height:100vh;
       touch-action:none;
     }
 
-    @media(max-width:640px){
-      .wrap{padding-bottom:96px}
-      .appHeader{padding:12px 12px 8px}
-      .hamburger{width:40px;height:40px}
-      .appHeader h1{font-size:26px}
-      .topActions button.tonal{
-        min-height:36px;
-        height:36px;
-        padding:0 14px;
-        font-size:13px;
-      }
-      .calCard{padding-left:6px;padding-right:6px}
-      .monthSelector{padding:0 6px 10px}
-      .monthTitle{font-size:26px}
-      .calDow{font-size:14px;padding:8px 0}
-      .dayCell,.blankCell{min-height:103px}
-      .dayNum{
-        width:31px;
-        height:31px;
-        font-size:20px;
-      }
-      .pill{
-        height:19px;
-        font-size:12px;
-        padding:0 3px;
-      }
-      .summaryCard{padding:16px 14px 0}
-      .statValue{font-size:25px}
-      .compactCard{margin-left:10px;margin-right:10px}
-      .fab-container{right:22px;bottom:22px}
-      .fab{
-        height:64px;
-        min-height:64px;
-        padding:0 22px 0 18px;
-      }
-      .modalHead{padding-left:24px;padding-right:24px}
-      .modalBody{padding-left:24px;padding-right:24px}
-    }
-
-    @media(max-width:440px){
-      .appHeader h1{font-size:24px;max-width:48vw}
-      .hamburger{display:grid}
-      .monthTitle{font-size:24px;max-width:72vw}
-      .dayCell,.blankCell{min-height:100px}
-      .dayNum{font-size:19px}
-      .pill{font-size:11px}
-      .grid-2{gap:16px}
-      .fieldGrid{grid-template-columns:1fr}
-      .timeGrid{grid-template-columns:1fr 1fr;gap:12px}
-      .modalHead h3,.modalHeader h3{font-size:26px}
-      .modalHead .muted,.modalHeader p{font-size:15px}
-      .modalStats{gap:20px}
-      .statMiniValue{font-size:28px}
-      .shiftItem .times{font-size:21px}
-      .shiftItem .mins{font-size:15px}
-      .fabText{display:none}
-      .fab{
-        width:64px;
-        padding:0;
-        border-radius:20px;
-      }
-    }
-
-    @media(max-width:360px){
-      .dayCell,.blankCell{min-height:94px}
-      .calDow{font-size:13px}
-      .dayNum{font-size:18px}
-      .pill{height:17px;font-size:10px}
-    }
 :root{
-  --bg:#e8eaed;
+  --bg:#eef1f6;
   --surface:#ffffff;
   --surface-low:#f6f8fb;
   --surface-mid:#edf0f4;
@@ -938,48 +718,56 @@
   --pill-size:clamp(7.2px, 1.92vw, 8.8px);
   --pill-height:clamp(12px, 3.12vw, 15px);
 }
+
 html,body{
   width:100%;
   overflow-x:hidden;
 }
+
 body{
-  background:var(--bg) !important;
-  padding-bottom:82px !important;
-}
-.wrap{
-  padding-bottom:82px !important;
-}
-.appHeader{
-  background:var(--bg) !important;
-  min-height:58px !important;
-  padding:8px 12px 2px !important;
-}
-.appHeader h1{
-  font-size:var(--app-title-size) !important;
-}
-.hamburger{
-  border:none !important;
-  padding:0 !important;
-  min-height:40px !important;
-  width:40px !important;
-  height:40px !important;
-  background:transparent !important;
-  box-shadow:none !important;
-}
-.hamburger svg{
-  width:24px !important;
-  height:24px !important;
-}
-.appLeft{
-  gap:8px !important;
-}
-.topActions button.tonal{
-  height:34px !important;
-  min-height:34px !important;
-  padding:0 13px !important;
-  font-size:13px !important;
+  background:var(--bg);
+  padding-bottom:82px;
 }
 
+.wrap{
+  padding-bottom:82px;
+}
+
+.appHeader{
+  background:var(--bg);
+  min-height:58px;
+  padding:8px 12px 2px;
+}
+
+.appHeader h1{
+  font-size:var(--app-title-size);
+}
+
+.hamburger{
+  border:none;
+  padding:0;
+  min-height:40px;
+  width:40px;
+  height:40px;
+  background:transparent;
+  box-shadow:none;
+}
+
+.hamburger svg{
+  width:24px;
+  height:24px;
+}
+
+.appLeft{
+  gap:8px;
+}
+
+.topActions button.tonal{
+  height:34px;
+  min-height:34px;
+  padding:0 13px;
+  font-size:13px;
+}
 
 input,textarea,select{
   background:#f5f7fb;
@@ -988,246 +776,58 @@ input,textarea,select{
   border-radius:12px 12px 0 0;
   box-shadow:none;
 }
+
 input:hover,textarea:hover,select:hover{
   background:#eef3fa;
 }
+
 input:focus-visible,textarea:focus-visible,select:focus-visible{
   background:#eef3fa;
   border-bottom:2px solid var(--primary);
   outline:none;
 }
-.calCard{
-  background:transparent;
-  padding-left:6px;
-  padding-right:6px;
-}
+
 .monthSelector{
   padding:1px 8px 6px;
 }
+
 .monthTitle{
   font-size:var(--month-title-size);
 }
+
 .iconCircle{
-  width:38px !important;
-  height:38px !important;
+  width:38px;
+  height:38px;
 }
+
 .iconCircle svg{
-  width:22px !important;
-  height:22px !important;
+  width:22px;
+  height:22px;
 }
-
-#calSwipeArea{
-  touch-action:pan-y;
-  overflow:hidden;
-  position:relative;
-  contain:layout paint;
-}
-#calLayerCurrent,
-#calLayerGhost{
-  width:100%;
-  will-change:transform;
-  backface-visibility:hidden;
-  transform:translateZ(0);
-}
-.calGhost{
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  pointer-events:none;
-}
-
-#dowRow,
-#dowRowGhost{
-  gap:0;
-  padding:0 0 4px;
-}
-.calDow{
-  font-size:var(--dow-size);
-  font-weight:600;
-  color:#202124;
-  padding:5px 0 6px;
-  text-transform:lowercase;
-}
-#calGrid,
-#calGridGhost{
-  gap:4px;
-  background:transparent;
-  grid-auto-rows:var(--day-height);
-  grid-template-rows:none;
-  align-items:stretch;
-}
-.dayCell,
-.blankCell{
-  height:var(--day-height);
-  min-height:var(--day-height);
-  max-height:var(--day-height);
-  border-radius:6px;
-  background:#f8f9fa;
-  box-shadow:none;
-}
-.dayCell{
-  contain:layout paint;
-  padding-top:4px;
-  padding-bottom:6px;
-}
-.dayCell:hover{
-  background:#f4f7fb;
-}
-.dayCell:active{
-  background:#edf3fe;
-  transform:scale(.992);
-}
-.blankCell{
-  opacity:1 !important;
-}
-.dayTop{
-  padding-top:2px !important;
-  padding-bottom:4px !important;
-}
-.dayNum{
-  width:var(--day-num-box);
-  min-width:var(--day-num-box);
-  height:var(--day-num-box);
-  padding:0 4px;
-  border-radius:999px;
-  font-size:var(--day-num-size);
-  font-weight:600;
-  line-height:1;
-  letter-spacing:-.015em;
-  color:#202124;
-}
-.dayCell.today .dayNum{
-  width:auto;
-  min-width:var(--today-badge-w);
-  height:var(--today-badge-h);
-  padding:0 7px;
-  border-radius:999px;
-  background:#4285f4;
-  color:#fff;
-}
-.dayNum.saturday{
-  color:#5f6368;
-}
-.dayNum.sunday,
-.dayNum.holiday{
-  color:#c5221f;
-}
-.dayCell.today .dayNum,
-.dayCell.today .dayNum.saturday,
-.dayCell.today .dayNum.sunday,
-.dayCell.today .dayNum.holiday{
-  color:#fff;
-}
-.dayCell.is-saturday,
-.dayCell.is-sunday,
-.dayCell.is-holiday{
-  background:#f8f9fa;
-}
-.dayCell.is-saturday:hover,
-.dayCell.is-sunday:hover,
-.dayCell.is-holiday:hover{
-  background:#f4f7fb;
-}
-
-
-.pillStack{
-  gap:2px;
-  padding:0 2px;
-}
-.pill{
-  height:var(--pill-height);
-  min-height:var(--pill-height);
-  max-height:var(--pill-height);
-  max-width:100%;
-  font-size:var(--pill-size);
-  line-height:1;
-  font-weight:650;
-  border-radius:4px;
-  padding:0 3px;
-  justify-content:flex-start;
-  text-align:left;
-  letter-spacing:-.035em;
-  box-shadow:none;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:clip;
-}
-.pill.work{
-  background:#34a853;
-  color:#fff;
-}
-.pill.vac{
-  background:#8ab4f8;
-  color:#202124;
-}
-.pill.unpaid{
-  background:#d9c8ff;
-  color:#3f2573;
-}
-.pill.sick{
-  background:#ea4335;
-  color:#fff;
-}
-.pill.more{
-  background:transparent;
-  color:#5f6368;
-  justify-content:center;
-}
-.pill.note{
-  background:#fbbc04;
-  color:#202124;
-}
-#calSwipeArea.is-swiping{
-  overflow:hidden;
-  contain:layout paint style;
-}
-#calSwipeArea.is-swiping #calLayerCurrent,
-#calSwipeArea.is-swiping #calLayerGhost{
-  width:100%;
-  min-width:100%;
-  will-change:transform;
-  backface-visibility:hidden;
-}
-#calSwipeArea.is-swiping #calGrid,
-#calSwipeArea.is-swiping #calGridGhost{
-  gap:4px;
-  grid-template-rows:none;
-}
-#calSwipeArea.is-swiping .dayCell,
-#calSwipeArea.is-swiping .blankCell{
-  height:var(--swipe-cell-height);
-  min-height:var(--swipe-cell-height);
-  max-height:var(--swipe-cell-height);
-  transition:none;
-  transform:none;
-}
-#calSwipeArea.is-swiping .dayNum{
-  transition:none;
-}
-#calSwipeArea.is-swiping .pill{
-  transition:none;
-}
-
 
 .summaryCard{
   padding-top:11px;
   margin-top:2px;
 }
+
 .statBox{
   min-height:48px;
 }
+
 .statValue{
   font-size:clamp(21px, 6vw, 25px);
   margin-bottom:4px;
 }
+
 .statBox .muted{
   font-size:12.5px;
 }
+
 .fab-container{
   right:18px;
   bottom:18px;
 }
+
 .fab{
   width:58px;
   height:58px;
@@ -1238,14 +838,15 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
   color:#12355f;
   box-shadow:0 7px 18px rgba(60,64,67,.18), 0 2px 5px rgba(60,64,67,.12);
 }
+
 .fabText{
   display:none;
 }
+
 .fab svg{
   width:28px;
   height:28px;
 }
-
 
 dialog#fabMenuDialog,
 dialog#vacDialog,
@@ -1260,68 +861,59 @@ dialog#appInfoDialog{
   margin:auto 0 0 0;
   border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;
 }
-@media(min-width:680px){
-  dialog#fabMenuDialog,
-  dialog#vacDialog,
-  dialog#bulkDialog,
-  dialog#dayDialog,
-  dialog#mainMenuDialog,
-  dialog#settingsDialog,
-  dialog#toolsDialog,
-  dialog#appInfoDialog{
-    width:min(560px,calc(100vw - 32px));
-    max-width:560px;
-    margin:auto;
-    border-radius:var(--radius-sheet);
-  }
-  dialog#dayDialog{
-    max-width:640px;
-  }
-}
+
 dialog:focus,
 dialog:focus-visible{
   outline:none;
 }
+
 .modalHead{
   padding-top:0;
 }
 
-
 dialog#dayDialog{
   max-height:88dvh;
 }
+
 #dayDialog .modalBody{
   max-height:calc(88dvh - 76px);
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
 }
+
 .dayPreviewHead{
   padding-left:20px;
   padding-right:20px;
   padding-bottom:10px;
 }
+
 .dayPreviewHead h3{
   font-size:clamp(22px, 6vw, 27px);
   line-height:1.16;
   letter-spacing:-.03em;
 }
+
 .dayPreviewHead .muted{
   font-size:14px;
 }
+
 .dayPreviewBody{
   padding-left:20px;
   padding-right:20px;
   padding-top:0;
 }
+
 .dayPreviewStats{
   grid-template-columns:1fr 1fr;
   gap:14px;
   margin:4px 0 16px;
 }
+
 .dayPreviewStats .statMini{
   padding:0 0 9px;
   border-bottom:1px solid var(--outline-soft);
 }
+
 .dayPreviewStats .statMiniValue{
   font-size:clamp(20px, 5.6vw, 25px);
   line-height:1.05;
@@ -1329,21 +921,25 @@ dialog#dayDialog{
   margin:0 0 6px;
   letter-spacing:-.025em;
 }
+
 .dayPreviewStats .muted{
   font-size:12.5px;
 }
+
 #dlgShiftsTitle{
-  display:block !important;
-  margin:0 0 8px !important;
-  font-size:15px !important;
-  color:#3c4043 !important;
-  font-weight:600 !important;
+  display:block;
+  margin:0 0 8px;
+  font-size:15px;
+  color:#3c4043;
+  font-weight:600;
 }
+
 .shiftList{
   display:flex;
   flex-direction:column;
   gap:6px;
 }
+
 .shiftItem.googleEvent{
   position:relative;
   display:flex;
@@ -1356,6 +952,7 @@ dialog#dayDialog{
   background:#eef7f0;
   overflow:hidden;
 }
+
 .shiftItem.googleEvent .eventStripe{
   width:5px;
   align-self:stretch;
@@ -1363,10 +960,12 @@ dialog#dayDialog{
   border-radius:0 3px 3px 0;
   flex:0 0 auto;
 }
+
 .shiftItem.googleEvent .eventContent{
   min-width:0;
   flex:1;
 }
+
 .shiftItem.googleEvent .times{
   font-size:16px;
   line-height:1.1;
@@ -1374,45 +973,57 @@ dialog#dayDialog{
   color:#202124;
   letter-spacing:-.02em;
 }
+
 .shiftItem.googleEvent .mins{
   margin-top:4px;
   font-size:12.5px;
   line-height:1.2;
   color:#5f6368;
 }
+
 .shiftItem.googleEvent .delIcon{
   width:38px;
   height:38px;
   min-height:38px;
   flex:0 0 auto;
 }
+
 .shiftItem.googleEvent.workEvent{
   background:#eaf6ee;
 }
+
 .shiftItem.googleEvent.workEvent .eventStripe{
   background:#34a853;
 }
+
 .shiftItem.googleEvent.leaveEvent{
   min-height:50px;
 }
+
 .shiftItem.googleEvent.leaveEvent.vac{
   background:#e8f0fe;
 }
+
 .shiftItem.googleEvent.leaveEvent.vac .eventStripe{
   background:#8ab4f8;
 }
+
 .shiftItem.googleEvent.leaveEvent.unpaid{
   background:#f3eefe;
 }
+
 .shiftItem.googleEvent.leaveEvent.unpaid .eventStripe{
   background:#7e57c2;
 }
+
 .shiftItem.googleEvent.leaveEvent.sick{
   background:#fce8e6;
 }
+
 .shiftItem.googleEvent.leaveEvent.sick .eventStripe{
   background:#ea4335;
 }
+
 .shiftItem.googleEvent.leaveEvent .mins{
   color:#5f6368;
   font-weight:500;
@@ -1424,6 +1035,7 @@ dialog#dayDialog{
   font-size:14px;
   line-height:1.35;
 }
+
 .dayNotePreview{
   margin:14px 0 4px;
   padding:12px 14px;
@@ -1431,48 +1043,53 @@ dialog#dayDialog{
   background:#f8fafd;
   border:1px solid #e2e6ed;
 }
+
 .dayNotePreview strong{
   display:block;
   margin-bottom:4px;
   font-size:12px;
   color:#5f6368;
 }
+
 .dayNotePreview span{
   display:block;
   font-size:14px;
   line-height:1.35;
   color:#202124;
 }
+
 input,textarea,select{
   min-height:44px;
   padding:11px 12px 9px;
   font-size:14px;
 }
+
 textarea{
   min-height:58px;
 }
-
 
 .toolGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
+
 .toolGrid button{
   width:100%;
   min-height:48px;
 }
 
-
 #appInfoDialog .modalBody{
   padding-top:0;
 }
+
 .sheetList{
   display:flex;
   flex-direction:column;
   margin:4px 0 0;
   background:transparent;
 }
+
 .sheetListRow{
   min-height:58px;
   display:flex;
@@ -1482,14 +1099,17 @@ textarea{
   padding:0;
   border-bottom:1px solid var(--outline-soft);
 }
+
 .sheetListRow:first-child{
   border-top:1px solid var(--outline-soft);
 }
+
 .sheetListRow span{
   font-size:15px;
   line-height:1.25;
   color:#3c4043;
 }
+
 .sheetListRow strong{
   font-size:15px;
   line-height:1.25;
@@ -1497,10 +1117,12 @@ textarea{
   color:#202124;
   text-align:right;
 }
+
 .appInfoCard,
 .appInfoList{
   display:none;
 }
+
 .sheetErrorBox,
 .appErrorBox{
   margin-top:16px;
@@ -1512,13 +1134,16 @@ textarea{
   font-size:13px;
   line-height:1.35;
 }
+
 .errorLine{
   padding:10px 0;
   border-bottom:1px solid var(--outline-soft);
 }
+
 .errorLine:last-child{
   border-bottom:none;
 }
+
 .menuFooter{
   margin:12px 24px 0;
   padding-top:12px;
@@ -1527,72 +1152,19 @@ textarea{
   font-size:12px;
   line-height:1.3;
 }
-@media(max-width:430px){
-  :root{
-    --day-height:clamp(84px, 11.35dvh, 98px);
-    --day-num-size:clamp(11px, 3.05vw, 13.5px);
-    --day-num-box:clamp(18px, 4.95vw, 23px);
-    --today-badge-h:clamp(18px, 4.7vw, 21px);
-    --today-badge-w:clamp(26px, 6.55vw, 32px);
-    --pill-size:clamp(6.8px, 1.82vw, 8.1px);
-    --pill-height:clamp(11px, 2.95vw, 14px);
-  }
-  .monthTitle{
-    font-size:clamp(21px, 5.7vw, 24px);
-  }
-  .calDow{
-    font-size:12px;
-    padding:4px 0 5px;
-  }
-  .dayCell,
-  .blankCell{
-    padding-top:4px;
-  }
-  .pill{
-    border-radius:3px;
-    padding:0 3px;
-  }
-}
-@media(max-height:760px) and (max-width:430px){
-  :root{
-    --day-height:78px;
-    --day-num-size:10.5px;
-    --day-num-box:18px;
-    --today-badge-h:18px;
-    --today-badge-w:28px;
-    --pill-size:6.6px;
-    --pill-height:11px;
-  }
-  dialog#dayDialog{
-    max-height:86dvh;
-  }
-  #dayDialog .modalBody{
-    max-height:calc(86dvh - 72px);
-  }
-  .dayPreviewHead h3{
-    font-size:21px;
-  }
-  .dayPreviewStats .statMiniValue{
-    font-size:20px;
-  }
-}
-
-
-.calDow.dowToday{
-  color:#1a73e8;
-  font-weight:700;
-}
-
 
 .shiftItem.googleEvent.noteEvent{
   background:#fff8e1;
 }
+
 .shiftItem.googleEvent.noteEvent .eventStripe{
   background:#fbbc04;
 }
+
 .shiftItem.googleEvent.noteEvent .times{
   color:#202124;
 }
+
 .shiftItem.googleEvent.noteEvent .mins{
   white-space:normal;
   overflow:visible;
@@ -1603,16 +1175,18 @@ textarea{
 .shiftItem.googleEvent.holidayEvent{
   background:#fce8e6;
 }
+
 .shiftItem.googleEvent.holidayEvent .eventStripe{
   background:#ea4335;
 }
+
 .shiftItem.googleEvent.holidayEvent .times{
   color:#202124;
 }
+
 .shiftItem.googleEvent.holidayEvent .mins{
   color:#5f6368;
 }
-
 
 .bulkOptions{
   margin-top:2px;
@@ -1620,12 +1194,14 @@ textarea{
   border-top:1px solid var(--outline-soft);
   border-bottom:1px solid var(--outline-soft);
 }
+
 .bulkOptionsTitle{
   margin-bottom:4px;
   color:#3c4043;
   font-size:14px;
   font-weight:600;
 }
+
 .checkRow{
   min-height:42px;
   margin:0;
@@ -1636,6 +1212,7 @@ textarea{
   font-size:15px;
   font-weight:500;
 }
+
 .checkRow input{
   width:20px;
   min-width:20px;
@@ -1646,33 +1223,35 @@ textarea{
   accent-color:#1a73e8;
   border-radius:4px;
 }
+
 .checkRow span{
   line-height:1.2;
 }
 
-
 .dayNotePreview{
   display:none;
 }
-
 
 .settingsSection{
   margin-top:22px;
   padding-top:18px;
   border-top:1px solid var(--outline-soft);
 }
+
 .sectionTitle{
   margin-bottom:6px;
   font-size:16px;
   font-weight:650;
   color:#202124;
 }
+
 .templateList{
   display:flex;
   flex-direction:column;
   gap:6px;
   margin:14px 0 12px;
 }
+
 .templateRow{
   min-height:46px;
   display:flex;
@@ -1684,11 +1263,13 @@ textarea{
   background:#f6f8fb;
   border:1px solid #e2e6ed;
 }
+
 .templateRow span{
   font-size:15px;
   font-weight:600;
   color:#202124;
 }
+
 .templateRemove{
   width:42px;
   height:42px;
@@ -1699,9 +1280,11 @@ textarea{
   color:#a50e0e;
   position:relative;
 }
+
 .templateRemove:hover{
   background:#fce8e6;
 }
+
 .templateRemove::before,
 .templateRemove::after{
   content:"";
@@ -1713,20 +1296,25 @@ textarea{
   left:50%;
   top:50%;
 }
+
 .templateRemove::before{
   transform:translate(-50%,-50%) rotate(45deg);
 }
+
 .templateRemove::after{
   transform:translate(-50%,-50%) rotate(-45deg);
 }
+
 .templateAddGrid{
   margin-top:12px;
   margin-bottom:10px;
 }
+
 .templateAddBtn{
   width:100%;
   min-height:48px;
 }
+
 .emptyTemplateHint,
 .templateMuted{
   color:#5f6368;
@@ -1734,21 +1322,23 @@ textarea{
   line-height:1.35;
 }
 
-
 .quickTemplatesBlock{
   margin:0 0 10px;
 }
+
 .quickTemplatesTitle{
   margin-bottom:4px;
   color:#3c4043;
   font-size:13px;
   font-weight:650;
 }
+
 .quickTemplates{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
 }
+
 .templateChip{
   min-height:36px;
   padding:0 12px;
@@ -1759,29 +1349,33 @@ textarea{
   font-weight:650;
   box-shadow:none;
 }
+
 .templateChip:hover{
   background:#d3e3fd;
 }
+
 .bulkTemplateBlock{
   margin-top:-2px;
   margin-bottom:12px;
 }
-
 
 dialog input,
 dialog textarea,
 dialog select{
   scroll-margin-bottom:180px;
 }
+
 body.keyboard-open dialog[open]:not(.googlePanel),
 body.keyboard-focus dialog[open]:not(.googlePanel){
   max-height:92dvh;
 }
+
 body.keyboard-open #dayDialog:not(.googlePanel) .modalBody,
 body.keyboard-focus #dayDialog:not(.googlePanel) .modalBody{
   max-height:calc(92dvh - 70px);
   padding-bottom:calc(36px + env(safe-area-inset-bottom));
 }
+
 body.keyboard-open dialog:not(.googlePanel) .modalBody,
 body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   padding-bottom:calc(28px + env(safe-area-inset-bottom));
@@ -1792,10 +1386,12 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   padding:7px 10px 3px;
   gap:8px;
 }
+
 .navLeft{
   min-width:0;
   flex:1 1 auto;
 }
+
 .monthNavButton{
   min-width:0;
   max-width:58vw;
@@ -1814,9 +1410,11 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   gap:2px;
   overflow:hidden;
 }
+
 .monthNavButton:hover{
   background:#dfe3ea;
 }
+
 .monthNavButton span{
   display:block;
   min-width:0;
@@ -1824,6 +1422,7 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   text-overflow:ellipsis;
   white-space:nowrap;
 }
+
 .monthNavArrow{
   width:24px;
   height:24px;
@@ -1831,9 +1430,11 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   flex:0 0 auto;
   transition:transform .18s ease;
 }
+
 .monthNavButton.is-open .monthNavArrow{
   transform:rotate(180deg);
 }
+
 #monthPick{
   position:absolute;
   width:1px;
@@ -1841,10 +1442,12 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   opacity:0;
   pointer-events:none;
 }
+
 .navActions{
   gap:2px;
   flex:0 0 auto;
 }
+
 .todayIconBtn,
 .profileSoonBtn{
   width:42px;
@@ -1856,9 +1459,11 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   color:#202124;
   box-shadow:none;
 }
+
 .todayIconBtn:hover{
   background:#dfe3ea;
 }
+
 .todayIconBtn span{
   width:28px;
   height:28px;
@@ -1872,21 +1477,26 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   color:#202124;
   background:#fff;
 }
+
 .profileSoonBtn{
   cursor:default;
   opacity:1;
 }
+
 .profileSoonBtn:disabled{
   color:#5f6368;
 }
+
 .profileSoonBtn svg{
   width:25px;
   height:25px;
   fill:currentColor;
 }
+
 .profileSoonBtn:hover{
   background:transparent;
 }
+
 .monthStrip{
   position:sticky;
   top:58px;
@@ -1895,9 +1505,11 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   padding:0 8px 8px;
   border-bottom:1px solid rgba(60,64,67,.08);
 }
+
 .monthStrip[hidden]{
-  display:none !important;
+  display:none;
 }
+
 .monthStripScroller{
   display:flex;
   gap:6px;
@@ -1906,9 +1518,11 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   scrollbar-width:none;
   padding:2px 2px 4px;
 }
+
 .monthStripScroller::-webkit-scrollbar{
   display:none;
 }
+
 .monthChip{
   min-height:34px;
   height:34px;
@@ -1922,19 +1536,24 @@ body.keyboard-focus dialog:not(.googlePanel) .modalBody{
   text-transform:lowercase;
   flex:0 0 auto;
 }
+
 .monthChip:hover{
   background:#dfe3ea;
 }
+
 .monthChip.active{
   background:#d3e3fd;
   color:#174ea6;
 }
+
 .monthChip.todayMonth:not(.active){
   color:#1a73e8;
 }
+
 .monthSelector{
   display:none;
 }
+
 dialog#mainMenuDialog.drawerDialog{
   width:100vw;
   max-width:100vw;
@@ -1946,11 +1565,13 @@ dialog#mainMenuDialog.drawerDialog{
   box-shadow:none;
   overflow:hidden;
 }
+
 dialog#mainMenuDialog.drawerDialog::backdrop{
   background:rgba(32,33,36,.46);
   backdrop-filter:blur(2px);
   -webkit-backdrop-filter:blur(2px);
 }
+
 .drawerPanel{
   width:min(330px, 88vw);
   height:100dvh;
@@ -1961,13 +1582,16 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
   flex-direction:column;
   animation:drawerIn .22s cubic-bezier(.2,0,0,1);
 }
+
 @keyframes drawerIn{
   from{transform:translateX(-100%)}
   to{transform:translateX(0)}
 }
+
 .drawerHeader{
   padding:12px 24px 18px;
 }
+
 .drawerAppName{
   font-size:24px;
   line-height:1.1;
@@ -1975,21 +1599,25 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
   letter-spacing:-.025em;
   color:#202124;
 }
+
 .drawerAppSub{
   margin-top:5px;
   font-size:13px;
   color:#5f6368;
 }
+
 .drawerSection{
   display:flex;
   flex-direction:column;
   padding:2px 12px;
 }
+
 .drawerDivider{
   height:1px;
   background:#e2e6ed;
   margin:10px 0;
 }
+
 .drawerItem{
   width:100%;
   min-height:46px;
@@ -2006,29 +1634,35 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
   font-weight:500;
   text-align:left;
 }
+
 .drawerItem:hover{
   background:#f1f3f4;
 }
+
 .drawerItem.active{
   background:#d3e3fd;
   color:#174ea6;
   font-weight:650;
 }
+
 .drawerItem.soon{
   color:#5f6368;
 }
+
 .drawerItem svg{
   width:22px;
   height:22px;
   fill:currentColor;
   flex:0 0 auto;
 }
+
 .drawerItem span{
   display:flex;
   align-items:center;
   gap:7px;
   min-width:0;
 }
+
 .drawerItem em{
   font-style:normal;
   font-size:11px;
@@ -2039,6 +1673,7 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
   color:#5f6368;
   white-space:nowrap;
 }
+
 .drawerFooter{
   margin-top:auto;
   padding:14px 24px 0;
@@ -2047,53 +1682,26 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
   font-size:12px;
   line-height:1.45;
 }
-@media(min-width:680px){
-  dialog#mainMenuDialog.drawerDialog{
-    width:100vw;
-    max-width:100vw;
-    height:100dvh;
-    max-height:100dvh;
-    margin:0;
-    border-radius:0;
-  }
-}
-@media(max-width:430px){
-  .monthNavButton{
-    max-width:52vw;
-    height:40px;
-    min-height:40px;
-    font-size:21px;
-  }
-  .todayIconBtn,
-  .summaryIconBtn{
-    width:40px;
-    height:40px;
-    min-height:40px;
-  }
-  .monthStrip{
-    top:54px;
-  }
-  .drawerPanel{
-    width:min(320px, 90vw);
-  }
-}
-
 
 dialog#settingsDialog{
   max-height:92dvh;
 }
+
 #settingsDialog .modalBody.settingsBody{
   max-height:calc(92dvh - 96px);
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
   padding-bottom:calc(24px + env(safe-area-inset-bottom));
 }
+
 .settingsAccordion{
   border-top:1px solid var(--outline-soft);
 }
+
 .settingsAccordion:last-of-type{
   border-bottom:1px solid var(--outline-soft);
 }
+
 .settingsAccordion summary{
   min-height:58px;
   padding:0;
@@ -2105,13 +1713,16 @@ dialog#settingsDialog{
   list-style:none;
   color:#202124;
 }
+
 .settingsAccordion summary::-webkit-details-marker{
   display:none;
 }
+
 .settingsAccordion summary span{
   font-size:16px;
   font-weight:650;
 }
+
 .settingsChevron{
   width:22px;
   height:22px;
@@ -2119,6 +1730,7 @@ dialog#settingsDialog{
   flex:0 0 auto;
   transition:transform .18s ease;
 }
+
 .settingsChevron::before{
   content:"";
   position:absolute;
@@ -2130,17 +1742,21 @@ dialog#settingsDialog{
   border-bottom:2px solid #5f6368;
   transform:rotate(45deg);
 }
+
 .settingsAccordion[open] .settingsChevron{
   transform:rotate(180deg);
 }
+
 .settingsAccordionBody{
   padding:0 0 18px;
   animation:settingsAccordionIn .18s cubic-bezier(.2,0,0,1);
 }
+
 @keyframes settingsAccordionIn{
   from{opacity:0;transform:translateY(-4px)}
   to{opacity:1;transform:translateY(0)}
 }
+
 .settingsSoon{
   margin-top:14px;
   padding:12px 14px;
@@ -2151,6 +1767,7 @@ dialog#settingsDialog{
   font-size:14px;
   line-height:1.35;
 }
+
 .settingsCloseRow{
   position:sticky;
   bottom:0;
@@ -2159,13 +1776,11 @@ dialog#settingsDialog{
   background:linear-gradient(to top, var(--surface) 78%, rgba(255,255,255,0));
 }
 
-
 .settingsSection{
   margin-top:0;
   padding-top:0;
   border-top:none;
 }
-
 
 .fabScrim{
   position:fixed;
@@ -2175,15 +1790,18 @@ dialog#settingsDialog{
   backdrop-filter:blur(1.5px);
   -webkit-backdrop-filter:blur(1.5px);
 }
+
 .fabScrim[hidden]{
   display:none;
 }
+
 .fabGoogle{
   z-index:31;
   right:24px;
   bottom:24px;
   gap:14px;
 }
+
 .fabActions{
   display:flex;
   flex-direction:column;
@@ -2191,9 +1809,11 @@ dialog#settingsDialog{
   gap:10px;
   margin-bottom:2px;
 }
+
 .fabActions[hidden]{
   display:none;
 }
+
 .fabActionPill{
   min-height:62px;
   height:62px;
@@ -2212,22 +1832,29 @@ dialog#settingsDialog{
   transform-origin:right center;
   animation:fabActionIn .18s cubic-bezier(.2,0,0,1) both;
 }
+
 .fabActionPill:nth-child(1){animation-delay:.03s}
+
 .fabActionPill:nth-child(2){animation-delay:.015s}
+
 .fabActionPill:nth-child(3){animation-delay:0s}
+
 @keyframes fabActionIn{
   from{opacity:0;transform:translateY(10px) scale(.96)}
   to{opacity:1;transform:translateY(0) scale(1)}
 }
+
 .fabActionPill svg{
   width:28px;
   height:28px;
   fill:currentColor;
   flex:0 0 auto;
 }
+
 .fabActionPill:hover{
   background:#c8d7fb;
 }
+
 .fabGoogle .fab{
   width:64px;
   height:64px;
@@ -2238,57 +1865,38 @@ dialog#settingsDialog{
   color:#fff;
   box-shadow:0 8px 20px rgba(60,64,67,.28),0 2px 6px rgba(60,64,67,.18);
 }
+
 .fabGoogle .fab svg{
   width:30px;
   height:30px;
   fill:currentColor;
 }
+
 .fabCloseIcon{
   display:none;
 }
+
 .fabGoogle.is-open .fabPlusIcon{
   display:none;
 }
+
 .fabGoogle.is-open .fabCloseIcon{
   display:block;
 }
+
 body.fab-open .wrap,
 body.fab-open .monthStrip{
   filter:opacity(.18);
   pointer-events:none;
 }
+
 body.fab-open .appHeader{
   filter:opacity(.18);
 }
 
-
 dialog#fabMenuDialog{
   display:none;
 }
-
-@media(max-width:430px){
-  .fabGoogle{
-    right:20px;
-    bottom:20px;
-  }
-  .fabActionPill{
-    min-height:58px;
-    height:58px;
-    padding:0 22px 0 18px;
-    font-size:19px;
-    gap:14px;
-  }
-  .fabActionPill svg{
-    width:27px;
-    height:27px;
-  }
-  .fabGoogle .fab{
-    width:62px;
-    height:62px;
-    min-height:62px;
-  }
-}
-
 
 .fabActionPill{
   min-height:52px;
@@ -2298,11 +1906,11 @@ dialog#fabMenuDialog{
   font-size:17px;
   font-weight:550;
 }
+
 .fabActionPill svg{
   width:24px;
   height:24px;
 }
-
 
 .fabGoogle .fab{
   width:60px;
@@ -2313,30 +1921,33 @@ dialog#fabMenuDialog{
   place-items:center;
   gap:0;
 }
+
 .fabGoogle .fab svg{
   grid-area:1 / 1;
   margin:auto;
   display:block;
 }
+
 .fabGoogle .fabPlusIcon{
   width:28px;
   height:28px;
 }
+
 .fabGoogle .fabCloseIcon{
   width:25px;
   height:25px;
   transform:none;
 }
 
-
 body.modal-open{
-  overflow:hidden !important;
-  height:100dvh !important;
-  position:fixed !important;
-  inset:0 !important;
-  width:100% !important;
-  touch-action:none !important;
+  overflow:hidden;
+  height:100dvh;
+  position:fixed;
+  inset:0;
+  width:100%;
+  touch-action:none;
 }
+
 dialog#vacDialog .modalBody,
 dialog#bulkDialog .modalBody{
   max-height:calc(92dvh - 74px);
@@ -2345,47 +1956,23 @@ dialog#bulkDialog .modalBody{
   overscroll-behavior:contain;
 }
 
-
 dialog#fabMenuDialog{
   pointer-events:none;
 }
 
-@media(max-width:430px){
-  .fabActionPill{
-    min-height:50px;
-    height:50px;
-    padding:0 18px 0 15px;
-    gap:12px;
-    font-size:16.5px;
-  }
-  .fabActionPill svg{
-    width:23px;
-    height:23px;
-  }
-  .fabGoogle .fab{
-    width:58px;
-    height:58px;
-    min-height:58px;
-  }
-  .fabGoogle .fabCloseIcon{
-    width:24px;
-    height:24px;
-  }
-}
-
-
 dialog#mainMenuDialog.drawerDialog[open]{
   animation:none;
 }
+
 dialog#mainMenuDialog.drawerDialog .drawerPanel{
   animation:drawerSlideFromLeftOnly .24s cubic-bezier(.2,0,0,1);
   transform-origin:left center;
 }
+
 @keyframes drawerSlideFromLeftOnly{
   from{transform:translateX(-100%)}
   to{transform:translateX(0)}
 }
-
 
 body.drawer-open{
   overflow:hidden;
@@ -2395,42 +1982,6 @@ body.drawer-open{
   width:100%;
   touch-action:none;
 }
-
-
-@media(max-width:679px){
-  dialog#vacDialog,
-  dialog#bulkDialog,
-  dialog#dayDialog,
-  dialog#settingsDialog,
-  dialog#toolsDialog,
-  dialog#appInfoDialog{
-    width:calc(100vw - 18px);
-    max-width:calc(100vw - 18px);
-    margin:auto 9px 9px 9px;
-    border-radius:30px;
-  }
-
-  dialog#vacDialog .modalHead,
-  dialog#bulkDialog .modalHead,
-  dialog#dayDialog .modalHead,
-  dialog#settingsDialog .modalHead,
-  dialog#toolsDialog .modalHead,
-  dialog#appInfoDialog .modalHead{
-    padding-left:22px;
-    padding-right:22px;
-  }
-
-  dialog#vacDialog .modalBody,
-  dialog#bulkDialog .modalBody,
-  dialog#dayDialog .modalBody,
-  dialog#settingsDialog .modalBody,
-  dialog#toolsDialog .modalBody,
-  dialog#appInfoDialog .modalBody{
-    padding-left:22px;
-    padding-right:22px;
-  }
-}
-
 
 .fabGoogle .fab{
   width:58px;
@@ -2480,10 +2031,10 @@ body.drawer-open{
 .fabGoogle.is-open .fab::before{
   transform:translate(-50%,-50%) rotate(45deg);
 }
+
 .fabGoogle.is-open .fab::after{
   transform:translate(-50%,-50%) rotate(-45deg);
 }
-
 
 .fabActionPill{
   min-height:48px;
@@ -2494,11 +2045,11 @@ body.drawer-open{
   font-weight:550;
   border-radius:999px;
 }
+
 .fabActionPill svg{
   width:22px;
   height:22px;
 }
-
 
 .templateChip{
   min-height:30px;
@@ -2507,7 +2058,6 @@ body.drawer-open{
   font-size:12.5px;
   font-weight:650;
 }
-
 
 #bulkApply,
 #setVacationRange,
@@ -2539,11 +2089,11 @@ body.drawer-open{
   margin-right:0;
 }
 
-
 dialog#vacDialog,
 dialog#bulkDialog{
   max-height:92dvh;
 }
+
 dialog#vacDialog .modalBody,
 dialog#bulkDialog .modalBody{
   max-height:calc(92dvh - 92px);
@@ -2551,7 +2101,6 @@ dialog#bulkDialog .modalBody{
   -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;
 }
-
 
 body.modal-open,
 body.drawer-open{
@@ -2561,36 +2110,6 @@ body.drawer-open{
   inset:0;
   width:100%;
   touch-action:none;
-}
-
-@media(max-width:430px){
-  .fabActionPill{
-    min-height:46px;
-    height:46px;
-    padding:0 17px 0 14px;
-    gap:11px;
-    font-size:15.5px;
-  }
-  .fabActionPill svg{
-    width:21px;
-    height:21px;
-  }
-  .fabGoogle .fab{
-    width:56px;
-    height:56px;
-    min-height:56px;
-  }
-  .fabGoogle.is-open .fab::before,
-  .fabGoogle.is-open .fab::after{
-    width:23px;
-    height:3.2px;
-  }
-  .templateChip{
-    min-height:29px;
-    height:29px;
-    font-size:12px;
-    padding:0 9px;
-  }
 }
 
 body.scroll-locked{
@@ -2603,10 +2122,10 @@ body.scroll-locked{
   touch-action:none;
 }
 
-
 dialog#mainMenuDialog.drawerDialog[open]{
   animation:none;
 }
+
 dialog#mainMenuDialog.drawerDialog{
   width:100vw;
   max-width:100vw;
@@ -2618,6 +2137,7 @@ dialog#mainMenuDialog.drawerDialog{
   box-shadow:none;
   overflow:hidden;
 }
+
 .drawerPanel{
   width:min(342px, 90vw);
   height:100dvh;
@@ -2628,10 +2148,12 @@ dialog#mainMenuDialog.drawerDialog{
   transform-origin:left center;
   box-shadow:0 12px 34px rgba(60,64,67,.28);
 }
+
 @keyframes drawerFromLeft404{
   from{transform:translateX(-100%)}
   to{transform:translateX(0)}
 }
+
 .drawerHeader{
   min-height:80px;
   padding:14px 20px 12px;
@@ -2640,6 +2162,7 @@ dialog#mainMenuDialog.drawerDialog{
   gap:12px;
   flex:0 0 auto;
 }
+
 .drawerBack{
   width:42px;
   height:42px;
@@ -2651,11 +2174,17 @@ dialog#mainMenuDialog.drawerDialog{
   box-shadow:none;
   flex:0 0 auto;
 }
+
 .drawerBack:hover{background:#f1f3f4}
+
 .drawerBack svg{width:24px;height:24px;fill:currentColor}
+
 .drawerTitleBlock{min-width:0}
+
 .drawerAppName{font-size:24px;line-height:1.1;font-weight:500;letter-spacing:-.025em;color:#202124}
+
 .drawerAppSub{margin-top:4px;font-size:13px;color:#5f6368}
+
 .drawerContent{
   flex:1 1 auto;
   min-height:0;
@@ -2663,27 +2192,42 @@ dialog#mainMenuDialog.drawerDialog{
   -webkit-overflow-scrolling:touch;
   padding-bottom:14px;
 }
+
 .drawerView{display:none;padding:0 12px 12px}
+
 .drawerView.active{display:block}
+
 .drawerFooter{flex:0 0 auto;margin-top:0;padding:12px 24px calc(16px + env(safe-area-inset-bottom))}
+
 .drawerToolGrid{display:grid;grid-template-columns:1fr;gap:10px;padding:6px 12px 0}
+
 .drawerToolGrid button{width:100%;min-height:48px;justify-content:center}
+
 .drawerInfoList{margin:6px 12px 0}
+
 .drawerInfoList .sheetListRow{min-height:54px}
 
-
 .settingsAccordion{border-top:1px solid var(--outline-soft);margin:0 8px}
-.settingsAccordion:last-of-type{border-bottom:1px solid var(--outline-soft)}
-.settingsAccordion summary{min-height:56px;padding:0;display:flex;align-items:center;justify-content:space-between;gap:14px;list-style:none;cursor:pointer}
-.settingsAccordion summary::-webkit-details-marker{display:none}
-.settingsAccordion summary span{font-size:15.5px;font-weight:650;color:#202124}
-.settingsChevron{width:22px;height:22px;position:relative;transition:transform .18s ease}
-.settingsChevron::before{content:"";position:absolute;left:6px;top:5px;width:9px;height:9px;border-right:2px solid #5f6368;border-bottom:2px solid #5f6368;transform:rotate(45deg)}
-.settingsAccordion[open] .settingsChevron{transform:rotate(180deg)}
-.settingsAccordionBody{padding:0 0 16px}
-.settingsSoon{margin-top:12px;padding:11px 13px;border-radius:14px;background:#f6f8fb;border:1px solid #e2e6ed;color:#5f6368;font-size:13.5px;line-height:1.35}
-.templateAddBtn{width:100%;min-height:44px}
 
+.settingsAccordion:last-of-type{border-bottom:1px solid var(--outline-soft)}
+
+.settingsAccordion summary{min-height:56px;padding:0;display:flex;align-items:center;justify-content:space-between;gap:14px;list-style:none;cursor:pointer}
+
+.settingsAccordion summary::-webkit-details-marker{display:none}
+
+.settingsAccordion summary span{font-size:15.5px;font-weight:650;color:#202124}
+
+.settingsChevron{width:22px;height:22px;position:relative;transition:transform .18s ease}
+
+.settingsChevron::before{content:"";position:absolute;left:6px;top:5px;width:9px;height:9px;border-right:2px solid #5f6368;border-bottom:2px solid #5f6368;transform:rotate(45deg)}
+
+.settingsAccordion[open] .settingsChevron{transform:rotate(180deg)}
+
+.settingsAccordionBody{padding:0 0 16px}
+
+.settingsSoon{margin-top:12px;padding:11px 13px;border-radius:14px;background:#f6f8fb;border:1px solid #e2e6ed;color:#5f6368;font-size:13.5px;line-height:1.35}
+
+.templateAddBtn{width:100%;min-height:44px}
 
 .fabGoogle .fab{
   width:58px;
@@ -2696,7 +2240,9 @@ dialog#mainMenuDialog.drawerDialog{
   position:relative;
   overflow:hidden;
 }
+
 .fabGoogle .fab svg{display:none}
+
 .fabGoogle .fab::before,
 .fabGoogle .fab::after{
   content:"";
@@ -2710,34 +2256,30 @@ dialog#mainMenuDialog.drawerDialog{
   transform-origin:center;
   transition:transform .18s cubic-bezier(.2,0,0,1), width .18s cubic-bezier(.2,0,0,1);
 }
+
 .fabGoogle .fab::before{transform:translate(-50%,-50%) rotate(0deg)}
+
 .fabGoogle .fab::after{transform:translate(-50%,-50%) rotate(90deg)}
+
 .fabGoogle.is-open .fab::before{transform:translate(-50%,-50%) rotate(45deg);width:24px}
+
 .fabGoogle.is-open .fab::after{transform:translate(-50%,-50%) rotate(-45deg);width:24px}
+
 .fabActionPill{min-height:46px;height:46px;padding:0 17px 0 14px;gap:11px;font-size:15.5px;font-weight:550;border-radius:999px}
+
 .fabActionPill svg{width:21px;height:21px}
+
 .templateChip{min-height:29px;height:29px;padding:0 9px;font-size:12px;font-weight:650}
 
-
-@media(max-width:679px){
-  dialog#vacDialog,dialog#bulkDialog,dialog#dayDialog{
-    width:calc(100vw - 18px);
-    max-width:calc(100vw - 18px);
-    margin:auto 9px 9px 9px;
-    border-radius:30px;
-  }
-  dialog#vacDialog .modalHead,dialog#bulkDialog .modalHead,dialog#dayDialog .modalHead,
-  dialog#vacDialog .modalBody,dialog#bulkDialog .modalBody,dialog#dayDialog .modalBody{
-    padding-left:22px;
-    padding-right:22px;
-  }
-}
 dialog#vacDialog,dialog#bulkDialog{max-height:92dvh}
-dialog#vacDialog .modalBody,dialog#bulkDialog .modalBody{max-height:calc(92dvh - 92px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-#bulkApply,#setVacationRange,#dlgAddShift{min-height:46px;padding:0 20px;font-size:15px;border-radius:999px}
-#bulkRemove,#clearVacationRange,.backBtn,#dlgBack{min-height:42px;padding:0 16px;font-size:15px;border-radius:999px}
-#dlgAddShift.addBtnCenter{width:auto;min-width:210px;max-width:100%;margin-left:auto;margin-right:0}
 
+dialog#vacDialog .modalBody,dialog#bulkDialog .modalBody{max-height:calc(92dvh - 92px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+
+#bulkApply,#setVacationRange,#dlgAddShift{min-height:46px;padding:0 20px;font-size:15px;border-radius:999px}
+
+#bulkRemove,#clearVacationRange,.backBtn,#dlgBack{min-height:42px;padding:0 16px;font-size:15px;border-radius:999px}
+
+#dlgAddShift.addBtnCenter{width:auto;min-width:210px;max-width:100%;margin-left:auto;margin-right:0}
 
 html.scroll-locked-root,
 html.scroll-locked-root body{
@@ -2746,30 +2288,30 @@ html.scroll-locked-root body{
   touch-action:none;
 }
 
-
 dialog#mainMenuDialog.drawerDialog{
   overscroll-behavior:none;
   touch-action:none;
 }
+
 .drawerPanel,
 .drawerContent{
   overscroll-behavior:contain;
   touch-action:pan-y;
 }
+
 .fabScrim{
   overscroll-behavior:none;
   touch-action:none;
 }
 
-
 .drawerBack{
   display:grid;
   place-items:center;
 }
+
 .drawerBack[hidden]{
   display:none;
 }
-
 
 .fabGoogle .fab{
   width:56px;
@@ -2792,6 +2334,7 @@ dialog#mainMenuDialog.drawerDialog{
 .fabGoogle .fab::before{
   transform:translate(-50%,-50%) rotate(0deg);
 }
+
 .fabGoogle .fab::after{
   transform:translate(-50%,-50%) rotate(90deg);
 }
@@ -2801,91 +2344,12 @@ dialog#mainMenuDialog.drawerDialog{
   height:3px;
   transform:translate(-50%,-50%) rotate(45deg);
 }
+
 .fabGoogle.is-open .fab::after{
   width:19px;
   height:3px;
   transform:translate(-50%,-50%) rotate(-45deg);
 }
-
-@media(max-width:430px){
-  .fabGoogle .fab{
-    width:54px;
-    height:54px;
-    min-height:54px;
-    border-radius:18px;
-  }
-
-  .fabGoogle .fab::before,
-  .fabGoogle .fab::after{
-    width:19px;
-    height:2.8px;
-  }
-
-  .fabGoogle.is-open .fab::before,
-  .fabGoogle.is-open .fab::after{
-    width:18px;
-    height:2.8px;
-  }
-}
-
-
-@media(max-width:679px){
-  dialog#dayDialog,
-  dialog#bulkDialog,
-  dialog#vacDialog{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    top:auto;
-    width:100vw;
-    max-width:100vw;
-    margin:0;
-    border-radius:30px 30px 0 0;
-    max-height:92dvh;
-    box-shadow:0 -10px 36px rgba(32,33,36,.24);
-  }
-
-  dialog#dayDialog{
-    max-height:90dvh;
-  }
-
-  dialog#dayDialog[open],
-  dialog#bulkDialog[open],
-  dialog#vacDialog[open]{
-    animation:sheetUp410 .24s cubic-bezier(.2,0,0,1);
-  }
-
-  @keyframes sheetUp410{
-    from{transform:translateY(100%)}
-    to{transform:translateY(0)}
-  }
-
-  dialog#dayDialog .modalHead,
-  dialog#bulkDialog .modalHead,
-  dialog#vacDialog .modalHead{
-    padding:6px 24px 17px;
-  }
-
-  dialog#dayDialog .modalBody,
-  dialog#bulkDialog .modalBody,
-  dialog#vacDialog .modalBody{
-    padding-left:24px;
-    padding-right:24px;
-    padding-bottom:calc(24px + env(safe-area-inset-bottom));
-    overscroll-behavior:contain;
-  }
-
-  dialog#dayDialog .modalBody{
-    max-height:calc(90dvh - 88px);
-  }
-
-  dialog#bulkDialog .modalBody,
-  dialog#vacDialog .modalBody{
-    max-height:calc(92dvh - 96px);
-  }
-}
-
 
 dialog#mainMenuDialog.drawerDialog .drawerPanel{
   position:relative;
@@ -2969,14 +2433,12 @@ dialog#mainMenuDialog.drawerDialog .drawerFooter{
   line-height:1.25;
 }
 
-
 .clearErrorsBtn{
   width:100%;
   min-height:44px;
   margin-top:14px;
   border-radius:999px;
 }
-
 
 .fabActions[hidden],
 .fabScrim[hidden],
@@ -2987,86 +2449,12 @@ dialog#mainMenuDialog.drawerDialog .drawerFooter{
   display:none;
 }
 
-
 dialog#mainMenuDialog.drawerDialog .drawerBack{
   bottom:calc(112px + env(safe-area-inset-bottom));
 }
 
-
-@media(max-width:679px){
-  dialog#bulkDialog{
-    max-height:91dvh;
-  }
-
-  dialog#bulkDialog .modalHead{
-    padding-top:24px;
-    padding-bottom:16px;
-  }
-
-  dialog#bulkDialog .modalBody{
-    max-height:calc(91dvh - 116px);
-  }
-}
-
-
-@media(max-width:679px){
-  dialog#mainMenuDialog.drawerDialog .drawerPanel{
-    width:min(304px, 86vw);
-  }
-
-  dialog#mainMenuDialog.drawerDialog .drawerHeader{
-    padding-left:20px;
-    padding-right:18px;
-  }
-
-  dialog#mainMenuDialog.drawerDialog .drawerItem{
-    padding-left:10px;
-    padding-right:10px;
-    gap:15px;
-  }
-
-  dialog#mainMenuDialog.drawerDialog .drawerView{
-    padding-left:8px;
-    padding-right:10px;
-  }
-}
-
-
 dialog#mainMenuDialog.drawerDialog .drawerBack{
   bottom:calc(92px + env(safe-area-inset-bottom));
-}
-
-@media(max-width:679px){
-  dialog#bulkDialog .modalHead{
-    padding-top:8px;
-  }
-
-  dialog#bulkDialog .modalBody{
-    max-height:calc(91dvh - 102px);
-  }
-}
-
-
-@media(max-width:679px){
-  dialog#mainMenuDialog.drawerDialog .drawerPanel{
-    width:min(292px, 82vw);
-  }
-
-  dialog#mainMenuDialog.drawerDialog .drawerHeader{
-    padding-left:20px;
-    padding-right:16px;
-  }
-
-  dialog#mainMenuDialog.drawerDialog .drawerView{
-    padding-left:8px;
-    padding-right:8px;
-  }
-
-  dialog#mainMenuDialog.drawerDialog .drawerItem{
-    padding-left:10px;
-    padding-right:10px;
-    gap:14px;
-  }
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerContent{
@@ -3077,22 +2465,13 @@ dialog#mainMenuDialog.drawerDialog .drawerFooter{
   padding-bottom:calc(18px + env(safe-area-inset-bottom));
 }
 
-
 dialog#mainMenuDialog.drawerDialog .drawerBack{
   bottom:calc(76px + env(safe-area-inset-bottom));
 }
 
-
 .fab-container.fabGoogle{
   bottom:calc(20px + env(safe-area-inset-bottom));
 }
-
-@media(min-width:680px){
-  .fab-container.fabGoogle{
-    bottom:calc(32px + env(safe-area-inset-bottom));
-  }
-}
-
 
 .drawerItem svg,
 .fabActionPill svg,
@@ -3103,18 +2482,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   flex:0 0 auto;
   flex-shrink:0;
 }
-
-@media(max-width:679px){
-  dialog#bulkDialog .modalHead{
-    padding-top:10px;
-    padding-bottom:16px;
-  }
-
-  dialog#bulkDialog .modalBody{
-    max-height:calc(91dvh - 114px);
-  }
-}
-
 
 .rangeModeTabs{
   display:flex;
@@ -3166,7 +2533,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   cursor:default;
 }
 
-
 .settingsChevron{
   display:grid;
   place-items:center;
@@ -3183,24 +2549,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 .settingsAccordion[open] .settingsChevron{
   transform:scaleY(-1);
-}
-
-@media(max-width:430px){
-  .rangeModeTabs{
-    gap:6px;
-  }
-
-  .rangeModeTab{
-    min-height:36px;
-    height:36px;
-    padding:0 10px;
-    font-size:13px;
-  }
-
-  .rangeModeTab.soon span{
-    padding:3px 5px;
-    font-size:10px;
-  }
 }
 
 .appConfirmDialog{
@@ -3346,52 +2694,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   line-height:1.1;
   font-weight:650;
   color:#202124;
-}
-
-.statsHero{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  margin:0 0 10px;
-  padding:15px 16px;
-  border-radius:22px;
-  background:linear-gradient(135deg, #e8f0fe, #f8fafd);
-  border:1px solid #dfe7fb;
-}
-
-.statsHero span{
-  display:block;
-  margin-bottom:7px;
-  font-size:13px;
-  line-height:1.2;
-  font-weight:650;
-  color:#3c4043;
-}
-
-.statsHero strong{
-  display:block;
-  font-size:31px;
-  line-height:1;
-  font-weight:560;
-  letter-spacing:-.045em;
-  color:#202124;
-}
-
-.statsHero small{
-  display:block;
-  margin-top:8px;
-  font-size:15px;
-  line-height:1.2;
-  font-weight:650;
-  color:#174ea6;
-}
-
-.statsHero svg{
-  width:42px;
-  height:42px;
-  flex:0 0 auto;
-  fill:#1a73e8;
 }
 
 .statsGrid{
@@ -3544,7 +2846,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   font-weight:520;
 }
 
-
 .statsPanel .modalHead{
   padding-bottom:12px;
 }
@@ -3596,10 +2897,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   height:auto;
   max-width:none;
 }
-
-@media(max-width:430px){
-  }
-
 
 .yearStatsGrid .statSoftBox{
   padding:10px 11px;
@@ -3716,43 +3013,18 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   margin-top:8px;
 }
 
-@media(max-width:430px){
-  .statsHero{
-    padding:14px 15px;
-  }
-
-  .statsHero strong{
-    font-size:29px;
-  }
-
-  .statsGrid{
-    gap:8px;
-  }
-
-  .statSoftBox{
-    border-radius:18px;
-  }
-
-  .statsTable{
-    min-width:0;
-    font-size:12.5px;
-  }
-
-  .statsTable th,
-  .statsTable td{
-    padding:8px 8px;
-  }
-}
-
 .shiftItem.googleEvent.noteEvent{
   background:#fff8e1;
 }
+
 .shiftItem.googleEvent.noteEvent .eventStripe{
   background:#fbbc04;
 }
+
 .shiftItem.googleEvent.noteEvent .times{
   color:#202124;
 }
+
 .shiftItem.googleEvent.noteEvent .mins{
   white-space:normal;
   overflow:visible;
@@ -3763,12 +3035,15 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 .shiftItem.googleEvent.holidayEvent{
   background:#fce8e6;
 }
+
 .shiftItem.googleEvent.holidayEvent .eventStripe{
   background:#ea4335;
 }
+
 .shiftItem.googleEvent.holidayEvent .times{
   color:#202124;
 }
+
 .shiftItem.googleEvent.holidayEvent .mins{
   color:#5f6368;
 }
@@ -3866,7 +3141,9 @@ dialog#yearStatsDialog.googlePanel[open]{
 }
 
 .panelCloseBtn::before{transform:translate(-50%,-50%) rotate(45deg)}
+
 .panelCloseBtn::after{transform:translate(-50%,-50%) rotate(-45deg)}
+
 .panelCloseBtn:hover{background:#f1f3f4}
 
 .panelSaveBtn,
@@ -3998,7 +3275,6 @@ dialog#dayDialog.googlePanel .dayCloseRow{
   display:none;
 }
 
-
 dialog#bulkDialog.googlePanel .googlePanelContent,
 dialog#vacDialog.googlePanel .googlePanelContent{
   padding-bottom:calc(4px + env(safe-area-inset-bottom));
@@ -4014,7 +3290,6 @@ dialog#vacDialog.googlePanel .actionRow{
   margin-top:16px;
   padding-bottom:0;
 }
-
 
 dialog#dayDialog.googlePanel.is-form-open .dayPreviewStats,
 dialog#dayDialog.googlePanel.is-form-open #dlgShiftsBlock,
@@ -4103,80 +3378,1468 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   margin-right:0;
 }
 
-@media(max-width:679px){
-  dialog#dayDialog.googlePanel,
+.statusLine{
+  min-height:0;
+  margin:0;
+  height:0;
+  overflow:hidden;
+}
+
+.statusLine.has-error{
+  height:auto;
+  min-height:18px;
+  margin:10px 14px 0;
+  color:#a50e0e;
+}
+
+.appToast{
+  position:fixed;
+  left:50%;
+  bottom:calc(18px + env(safe-area-inset-bottom));
+  transform:translate(-50%, 18px);
+  z-index:80;
+  max-width:min(520px, calc(100vw - 28px));
+  padding:12px 16px;
+  border-radius:999px;
+  background:#202124;
+  color:#fff;
+  box-shadow:0 8px 24px rgba(32,33,36,.26);
+  font-size:14px;
+  line-height:1.25;
+  font-weight:550;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease, transform .18s ease;
+}
+
+.appToast.show{
+  opacity:1;
+  transform:translate(-50%, 0);
+}
+
+.monthViewHidden{
+  display:none;
+}
+
+.dayViewPage{
+  width:calc(100% - 20px);
+  margin:10px 10px 0;
+  padding:0 0 18px;
+  animation:dayViewIn .18s cubic-bezier(.2,0,0,1);
+}
+
+@keyframes dayViewIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.dayViewTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:0 0 10px;
+}
+
+.dayViewBack{
+  min-height:38px;
+  height:38px;
+  padding:0 14px;
+  flex:0 0 auto;
+}
+
+.dayViewNav{
+  flex:1 1 auto;
+  min-width:0;
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr) 40px;
+  align-items:center;
+  gap:8px;
+}
+
+.dayViewNav button{
+  width:40px;
+  height:40px;
+  min-height:40px;
+  padding:0;
+  border-radius:50%;
+  font-size:24px;
+  line-height:1;
+}
+
+.dayViewDateBlock{
+  min-width:0;
+  text-align:center;
+}
+
+.dayViewDateBlock strong{
+  display:block;
+  font-size:20px;
+  line-height:1.1;
+  font-weight:650;
+  color:#202124;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.dayViewDateBlock span{
+  display:block;
+  margin-top:3px;
+  font-size:12.5px;
+  line-height:1.2;
+  color:#5f6368;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.dayViewActions{
+  display:flex;
+  gap:10px;
+  margin:0 0 10px;
+}
+
+.dayViewActions button{
+  min-height:44px;
+  padding:0 16px;
+}
+
+.dayViewCard{
+  padding:14px 13px 13px;
+  border-radius:24px;
+  background:#fff;
+  border:1px solid #e4e8f1;
+  box-shadow:0 1px 2px rgba(60,64,67,.06);
+}
+
+.dayViewCardHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+}
+
+.dayViewCardHead strong{
+  font-size:15px;
+  line-height:1.2;
+  color:#202124;
+}
+
+.dayViewCardHead span{
+  font-size:12.5px;
+  line-height:1;
+  color:#5f6368;
+}
+
+.dayViewEvents .emptyDayHint{
+  padding:10px 2px 4px;
+}
+
+.settingsHint{
+  margin:0 0 10px;
+}
+
+dialog.googlePanel{
+  background:#fff;
+}
+
+.googlePanelShell{
+  background:#fff;
+}
+
+.googlePanelBar{
+  min-height:calc(58px + env(safe-area-inset-top));
+  padding:calc(10px + env(safe-area-inset-top)) 22px 7px;
+  border-bottom:1px solid rgba(60,64,67,.10);
+}
+
+.googlePanelContent{
+  padding-bottom:calc(4px + env(safe-area-inset-bottom));
+}
+
+.googlePanel .modalHead{
+  padding-top:20px;
+  padding-bottom:14px;
+}
+
+.googlePanel .modalHead h3{
+  font-size:26px;
+  font-weight:580;
+  letter-spacing:-.035em;
+}
+
+.googlePanel .modalHead .muted{
+  max-width:640px;
+  font-size:14px;
+  line-height:1.38;
+  color:#5f6368;
+}
+
+.googlePanel .modalBody{
+  padding-bottom:10px;
+}
+
+.googlePanel .fieldGrid,
+.googlePanel .timeGrid{
+  gap:14px;
+  margin-bottom:16px;
+}
+
+.googlePanel input,
+.googlePanel textarea,
+.googlePanel select{
+  background:#f4f7fb;
+  border-bottom-color:#a7afbc;
+}
+
+.googlePanel input:hover,
+.googlePanel textarea:hover,
+.googlePanel select:hover,
+.googlePanel input:focus-visible,
+.googlePanel textarea:focus-visible,
+.googlePanel select:focus-visible{
+  background:#eef3fa;
+}
+
+.quickTemplatesBlock,
+.bulkOptions,
+.dayNoteField{
+  border-radius:20px;
+}
+
+.quickTemplatesBlock{
+  padding:12px 12px 10px;
+  background:#f8fafd;
+  border:1px solid #e4e8f1;
+}
+
+.quickTemplatesTitle,
+.bulkOptionsTitle{
+  margin-bottom:8px;
+  font-size:13px;
+  line-height:1.2;
+  font-weight:750;
+  color:#3c4043;
+}
+
+.bulkOptions{
+  margin-top:0;
+  padding:13px 14px 9px;
+  border:1px solid #e4e8f1;
+  background:#f8fafd;
+}
+
+.checkRow{
+  min-height:38px;
+}
+
+.rangeModeTabs{
+  margin-bottom:16px;
+  background:#edf1f7;
+}
+
+.rangeModeTab.active{
+  background:#fff;
+  color:#174ea6;
+  box-shadow:0 1px 2px rgba(60,64,67,.10);
+}
+
+.panelSaveBtn{
+  top:calc(10px + env(safe-area-inset-top));
+  right:22px;
+  min-height:38px;
+  height:38px;
+  padding:0 20px;
+}
+
+.panelCloseBtn{
+  top:calc(13px + env(safe-area-inset-top));
+  left:22px;
+}
+
+dialog#bulkDialog.googlePanel #bulkRemove,
+dialog#vacDialog.googlePanel #clearVacationRange{
+  width:max-content;
+  max-width:100%;
+  min-height:40px;
+  height:40px;
+  margin:14px 0 0;
+  padding:0 18px;
+  border-radius:999px;
+  background:#fce8e6;
+  color:#a50e0e;
+}
+
+dialog#bulkDialog.googlePanel .actionRow,
+dialog#vacDialog.googlePanel .actionRow{
+  margin-top:12px;
+  padding-bottom:0;
+}
+
+.dayPreviewStats{
+  margin-bottom:18px;
+}
+
+.shiftItem.googleEvent{
+  border-radius:16px;
+  padding:10px 10px 10px 0;
+  border:1px solid rgba(60,64,67,.05);
+}
+
+.shiftItem.googleEvent .eventStripe{
+  width:6px;
+  border-radius:0 999px 999px 0;
+}
+
+.shiftItem.googleEvent .times{
+  font-size:16px;
+}
+
+.shiftItem.googleEvent .mins{
+  font-size:12.5px;
+}
+
+.dayAddTrigger{
+  margin-top:14px;
+}
+
+.statsChartCard,
+.statsTableWrap,
+.statSoftBox{
+  border-color:#e4e8f1;
+  box-shadow:0 1px 2px rgba(60,64,67,.04);
+}
+
+.statsTable th{
+  background:#f8fafd;
+}
+
+.statsTable td,
+.statsTable th{
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+[hidden],
+.fabActions[hidden],
+.fabScrim[hidden],
+.monthStrip[hidden],
+.drawerFooter[hidden],
+.drawerBack[hidden],
+.clearErrorsBtn[hidden],
+.statsView[hidden]{
+  display:none;
+}
+
+.statsChart [data-chart-date]{
+  cursor:pointer;
+}
+
+.dayViewPage{
+  touch-action:pan-y;
+}
+
+:root{
+  --bg:#eef1f6;
+}
+
+html,
+body,
+.appHeader,
+.monthStrip{
+  background:#eef1f6;
+}
+
+.appHeader.navTopBar{
+  background:#eef1f6;
+}
+
+.monthStrip{
+  background:#eef1f6;
+}
+
+#dayViewPrev,
+#dayViewNext,
+#monthStatsPrev,
+#monthStatsNext,
+#yearStatsPrev,
+#yearStatsNext{
+  position:relative;
+  font-size:0;
+  color:#174ea6;
+}
+
+#dayViewPrev::before,
+#dayViewNext::before,
+#monthStatsPrev::before,
+#monthStatsNext::before,
+#yearStatsPrev::before,
+#yearStatsNext::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:10px;
+  height:10px;
+  border-bottom:2.4px solid currentColor;
+  transform-origin:center;
+}
+
+#dayViewPrev::before,
+#monthStatsPrev::before,
+#yearStatsPrev::before{
+  border-left:2.4px solid currentColor;
+  transform:translate(-42%,-50%) rotate(45deg);
+}
+
+#dayViewNext::before,
+#monthStatsNext::before,
+#yearStatsNext::before{
+  border-right:2.4px solid currentColor;
+  transform:translate(-58%,-50%) rotate(-45deg);
+}
+
+.dayViewActions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.dayViewActions #dayViewOpenModal{
+  grid-column:1 / -1;
+  background:#fff;
+  border:1px solid #e4e8f1;
+  color:#174ea6;
+}
+
+.dayViewActions #dayViewAddLeave{
+  background:#e8f0fe;
+  color:#174ea6;
+}
+
+.dayAddActions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:16px 0 18px;
+}
+
+dialog#dayDialog.googlePanel .dayAddActions .dayAddTrigger{
+  margin:0;
+}
+
+dialog#dayDialog.googlePanel .dayAddLeaveTrigger{
+  background:#fff;
+  border:1px solid #dfe7fb;
+}
+
+dialog#dayDialog.googlePanel.is-form-open .dayAddActions{
+  display:none;
+}
+
+.bulkModePane[hidden]{
+  display:none;
+}
+
+.bulkLeaveFields{
+  margin-bottom:14px;
+}
+
+.rangeModeTab{
+  cursor:pointer;
+}
+
+.rangeModeTab.active{
+  background:#fff;
+  color:#174ea6;
+  box-shadow:0 1px 2px rgba(60,64,67,.10);
+}
+
+.rangeModeTab.soon,
+.rangeModeTab.soon span{
+  display:none;
+}
+
+@media (max-width:640px){
+.wrap{padding-bottom:96px}
+.appHeader{padding:12px 12px 8px}
+.hamburger{width:40px;height:40px}
+.appHeader h1{font-size:26px}
+.topActions button.tonal{
+        min-height:36px;
+        height:36px;
+        padding:0 14px;
+        font-size:13px;
+      }
+.monthSelector{padding:0 6px 10px}
+.monthTitle{font-size:26px}
+.summaryCard{padding:16px 14px 0}
+.statValue{font-size:25px}
+.compactCard{margin-left:10px;margin-right:10px}
+.fab-container{right:22px;bottom:22px}
+.fab{
+        height:64px;
+        min-height:64px;
+        padding:0 22px 0 18px;
+      }
+.modalHead{padding-left:24px;padding-right:24px}
+.modalBody{padding-left:24px;padding-right:24px}
+}
+
+@media (max-width:440px){
+.appHeader h1{font-size:24px;max-width:48vw}
+.hamburger{display:grid}
+.monthTitle{font-size:24px;max-width:72vw}
+.grid-2{gap:16px}
+.fieldGrid{grid-template-columns:1fr}
+.timeGrid{grid-template-columns:1fr 1fr;gap:12px}
+.modalHead h3,.modalHeader h3{font-size:26px}
+.modalHead .muted,.modalHeader p{font-size:15px}
+.modalStats{gap:20px}
+.statMiniValue{font-size:28px}
+.shiftItem .times{font-size:21px}
+.shiftItem .mins{font-size:15px}
+.fabText{display:none}
+.fab{
+        width:64px;
+        padding:0;
+        border-radius:20px;
+      }
+}
+
+@media (min-width:680px){
+dialog#fabMenuDialog,
+      dialog#vacDialog,
+      dialog#bulkDialog,
+      dialog#dayDialog{
+        width:min(560px,calc(100vw - 32px));
+        max-width:560px;
+        margin:auto;
+        border-radius:var(--radius-sheet);
+      }
+dialog#dayDialog{max-width:640px}
+dialog#fabMenuDialog,
+  dialog#vacDialog,
+  dialog#bulkDialog,
+  dialog#dayDialog,
+  dialog#mainMenuDialog,
+  dialog#settingsDialog,
+  dialog#toolsDialog,
+  dialog#appInfoDialog{
+    width:min(560px,calc(100vw - 32px));
+    max-width:560px;
+    margin:auto;
+    border-radius:var(--radius-sheet);
+  }
+dialog#dayDialog{
+    max-width:640px;
+  }
+dialog#mainMenuDialog.drawerDialog{
+    width:100vw;
+    max-width:100vw;
+    height:100dvh;
+    max-height:100dvh;
+    margin:0;
+    border-radius:0;
+  }
+.fab-container.fabGoogle{
+    bottom:calc(32px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width:679px){
+dialog[open]{animation:slideUp .28s cubic-bezier(.2,0,0,1)}
+dialog#vacDialog,
+  dialog#bulkDialog,
+  dialog#dayDialog,
+  dialog#settingsDialog,
+  dialog#toolsDialog,
+  dialog#appInfoDialog{
+    width:calc(100vw - 18px);
+    max-width:calc(100vw - 18px);
+    margin:auto 9px 9px 9px;
+    border-radius:30px;
+  }
+dialog#vacDialog .modalHead,
+  dialog#bulkDialog .modalHead,
+  dialog#dayDialog .modalHead,
+  dialog#settingsDialog .modalHead,
+  dialog#toolsDialog .modalHead,
+  dialog#appInfoDialog .modalHead{
+    padding-left:22px;
+    padding-right:22px;
+  }
+dialog#vacDialog .modalBody,
+  dialog#bulkDialog .modalBody,
+  dialog#dayDialog .modalBody,
+  dialog#settingsDialog .modalBody,
+  dialog#toolsDialog .modalBody,
+  dialog#appInfoDialog .modalBody{
+    padding-left:22px;
+    padding-right:22px;
+  }
+dialog#vacDialog,dialog#bulkDialog,dialog#dayDialog{
+    width:calc(100vw - 18px);
+    max-width:calc(100vw - 18px);
+    margin:auto 9px 9px 9px;
+    border-radius:30px;
+  }
+dialog#vacDialog .modalHead,dialog#bulkDialog .modalHead,dialog#dayDialog .modalHead,
+  dialog#vacDialog .modalBody,dialog#bulkDialog .modalBody,dialog#dayDialog .modalBody{
+    padding-left:22px;
+    padding-right:22px;
+  }
+dialog#dayDialog,
+  dialog#bulkDialog,
+  dialog#vacDialog{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    top:auto;
+    width:100vw;
+    max-width:100vw;
+    margin:0;
+    border-radius:30px 30px 0 0;
+    max-height:92dvh;
+    box-shadow:0 -10px 36px rgba(32,33,36,.24);
+  }
+dialog#dayDialog{
+    max-height:90dvh;
+  }
+dialog#dayDialog[open],
+  dialog#bulkDialog[open],
+  dialog#vacDialog[open]{
+    animation:sheetUp410 .24s cubic-bezier(.2,0,0,1);
+  }
+@keyframes sheetUp410{
+    from{transform:translateY(100%)}
+    to{transform:translateY(0)}
+  }
+dialog#dayDialog .modalHead,
+  dialog#bulkDialog .modalHead,
+  dialog#vacDialog .modalHead{
+    padding:6px 24px 17px;
+  }
+dialog#dayDialog .modalBody,
+  dialog#bulkDialog .modalBody,
+  dialog#vacDialog .modalBody{
+    padding-left:24px;
+    padding-right:24px;
+    padding-bottom:calc(24px + env(safe-area-inset-bottom));
+    overscroll-behavior:contain;
+  }
+dialog#dayDialog .modalBody{
+    max-height:calc(90dvh - 88px);
+  }
+dialog#bulkDialog .modalBody,
+  dialog#vacDialog .modalBody{
+    max-height:calc(92dvh - 96px);
+  }
+dialog#bulkDialog{
+    max-height:91dvh;
+  }
+dialog#bulkDialog .modalHead{
+    padding-top:24px;
+    padding-bottom:16px;
+  }
+dialog#bulkDialog .modalBody{
+    max-height:calc(91dvh - 116px);
+  }
+dialog#mainMenuDialog.drawerDialog .drawerPanel{
+    width:min(304px, 86vw);
+  }
+dialog#mainMenuDialog.drawerDialog .drawerHeader{
+    padding-left:20px;
+    padding-right:18px;
+  }
+dialog#mainMenuDialog.drawerDialog .drawerItem{
+    padding-left:10px;
+    padding-right:10px;
+    gap:15px;
+  }
+dialog#mainMenuDialog.drawerDialog .drawerView{
+    padding-left:8px;
+    padding-right:10px;
+  }
+dialog#bulkDialog .modalHead{
+    padding-top:8px;
+  }
+dialog#bulkDialog .modalBody{
+    max-height:calc(91dvh - 102px);
+  }
+dialog#mainMenuDialog.drawerDialog .drawerPanel{
+    width:min(292px, 82vw);
+  }
+dialog#mainMenuDialog.drawerDialog .drawerHeader{
+    padding-left:20px;
+    padding-right:16px;
+  }
+dialog#mainMenuDialog.drawerDialog .drawerView{
+    padding-left:8px;
+    padding-right:8px;
+  }
+dialog#mainMenuDialog.drawerDialog .drawerItem{
+    padding-left:10px;
+    padding-right:10px;
+    gap:14px;
+  }
+dialog#bulkDialog .modalHead{
+    padding-top:10px;
+    padding-bottom:16px;
+  }
+dialog#bulkDialog .modalBody{
+    max-height:calc(91dvh - 114px);
+  }
+dialog#dayDialog.googlePanel,
   dialog#bulkDialog.googlePanel,
   dialog#vacDialog.googlePanel,
   dialog#yearStatsDialog.googlePanel{
     --panel-action-h:40px;
     --panel-action-font:14.5px;
   }
-
-  .googlePanelBar{
+.googlePanelBar{
     min-height:calc(54px + env(safe-area-inset-top));
     padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
   }
-
-  .googlePanel .modalHead{
+.googlePanel .modalHead{
     padding:18px 28px 16px;
   }
-
-  .googlePanel .modalHead h3{
+.googlePanel .modalHead h3{
     font-size:26px;
   }
-
-  .googlePanel .modalHead .muted{
+.googlePanel .modalHead .muted{
     font-size:14.5px;
   }
-
-  .googlePanel .modalBody{
+.googlePanel .modalBody{
     padding:0 28px 32px;
   }
 }
 
-@media(max-width:430px){
-  dialog#dayDialog.googlePanel,
+@media (max-height:760px) and (max-width:430px){
+:root{
+    --day-height:78px;
+    --day-num-size:10.5px;
+    --day-num-box:18px;
+    --today-badge-h:18px;
+    --today-badge-w:28px;
+    --pill-size:6.6px;
+    --pill-height:11px;
+  }
+dialog#dayDialog{
+    max-height:86dvh;
+  }
+#dayDialog .modalBody{
+    max-height:calc(86dvh - 72px);
+  }
+.dayPreviewHead h3{
+    font-size:21px;
+  }
+.dayPreviewStats .statMiniValue{
+    font-size:20px;
+  }
+}
+
+@media (max-width:430px){
+:root{
+    --day-height:clamp(84px, 11.35dvh, 98px);
+    --day-num-size:clamp(11px, 3.05vw, 13.5px);
+    --day-num-box:clamp(18px, 4.95vw, 23px);
+    --today-badge-h:clamp(18px, 4.7vw, 21px);
+    --today-badge-w:clamp(26px, 6.55vw, 32px);
+    --pill-size:clamp(6.8px, 1.82vw, 8.1px);
+    --pill-height:clamp(11px, 2.95vw, 14px);
+  }
+.monthTitle{
+    font-size:clamp(21px, 5.7vw, 24px);
+  }
+.monthNavButton{
+    max-width:52vw;
+    height:40px;
+    min-height:40px;
+    font-size:21px;
+  }
+.todayIconBtn,
+  .summaryIconBtn{
+    width:40px;
+    height:40px;
+    min-height:40px;
+  }
+.monthStrip{
+    top:54px;
+  }
+.drawerPanel{
+    width:min(320px, 90vw);
+  }
+.fabGoogle{
+    right:20px;
+    bottom:20px;
+  }
+.fabActionPill{
+    min-height:58px;
+    height:58px;
+    padding:0 22px 0 18px;
+    font-size:19px;
+    gap:14px;
+  }
+.fabActionPill svg{
+    width:27px;
+    height:27px;
+  }
+.fabGoogle .fab{
+    width:62px;
+    height:62px;
+    min-height:62px;
+  }
+.fabActionPill{
+    min-height:50px;
+    height:50px;
+    padding:0 18px 0 15px;
+    gap:12px;
+    font-size:16.5px;
+  }
+.fabActionPill svg{
+    width:23px;
+    height:23px;
+  }
+.fabGoogle .fab{
+    width:58px;
+    height:58px;
+    min-height:58px;
+  }
+.fabGoogle .fabCloseIcon{
+    width:24px;
+    height:24px;
+  }
+.fabActionPill{
+    min-height:46px;
+    height:46px;
+    padding:0 17px 0 14px;
+    gap:11px;
+    font-size:15.5px;
+  }
+.fabActionPill svg{
+    width:21px;
+    height:21px;
+  }
+.fabGoogle .fab{
+    width:56px;
+    height:56px;
+    min-height:56px;
+  }
+.fabGoogle.is-open .fab::before,
+  .fabGoogle.is-open .fab::after{
+    width:23px;
+    height:3.2px;
+  }
+.templateChip{
+    min-height:29px;
+    height:29px;
+    font-size:12px;
+    padding:0 9px;
+  }
+.fabGoogle .fab{
+    width:54px;
+    height:54px;
+    min-height:54px;
+    border-radius:18px;
+  }
+.fabGoogle .fab::before,
+  .fabGoogle .fab::after{
+    width:19px;
+    height:2.8px;
+  }
+.fabGoogle.is-open .fab::before,
+  .fabGoogle.is-open .fab::after{
+    width:18px;
+    height:2.8px;
+  }
+.rangeModeTabs{
+    gap:6px;
+  }
+.rangeModeTab{
+    min-height:36px;
+    height:36px;
+    padding:0 10px;
+    font-size:13px;
+  }
+.rangeModeTab.soon span{
+    padding:3px 5px;
+    font-size:10px;
+  }
+.statsGrid{
+    gap:8px;
+  }
+.statSoftBox{
+    border-radius:18px;
+  }
+.statsTable{
+    min-width:0;
+    font-size:12.5px;
+  }
+.statsTable th,
+  .statsTable td{
+    padding:8px 8px;
+  }
+dialog#dayDialog.googlePanel,
   dialog#bulkDialog.googlePanel,
   dialog#vacDialog.googlePanel,
   dialog#yearStatsDialog.googlePanel{
     --panel-action-h:39px;
     --panel-action-font:14px;
   }
-
-  .googlePanelBar{
+.googlePanelBar{
     padding-left:22px;
     padding-right:22px;
   }
-
-  .panelCloseBtn{
+.panelCloseBtn{
     left:22px;
     width:31px;
     height:31px;
     min-height:31px;
   }
-
-  .panelCloseBtn::before,
+.panelCloseBtn::before,
   .panelCloseBtn::after{
     width:18px;
     height:2.2px;
   }
-
-  .panelSaveBtn{
+.panelSaveBtn{
     right:22px;
-  }.googlePanel .modalHead{
+  }
+.googlePanel .modalHead{
     padding:18px 24px 15px;
   }
-
-  .googlePanel .modalHead h3{
+.googlePanel .modalHead h3{
     font-size:25px;
   }
-
-  .googlePanel .modalBody{
+.googlePanel .modalBody{
     padding-left:24px;
     padding-right:24px;
   }
+.dayViewPage{
+    width:calc(100% - 16px);
+    margin-left:8px;
+    margin-right:8px;
+  }
+.dayViewTop{
+    align-items:flex-start;
+  }
+.dayViewBack{
+    padding:0 12px;
+  }
+.dayViewDateBlock strong{
+    font-size:18px;
+  }
+.dayViewActions{
+    flex-wrap:wrap;
+  }
+.googlePanel .modalHead{
+    padding-top:18px;
+  }
+.googlePanel .modalBody{
+    padding-bottom:8px;
+  }
+.dayViewActions{
+    grid-template-columns:1fr;
+  }
+.dayViewActions #dayViewOpenModal{
+    grid-column:auto;
+  }
 }
 
+
+/* ===== Czas pracy 4.3.0 — nowy odporny moduł kalendarza ===== */
+:root{
+  --bg:#eef1f6;
+  --cal-gap:5px;
+  --day-height:68px;
+  --day-num-size:18px;
+  --day-num-box:30px;
+  --today-badge-h:30px;
+  --today-badge-w:44px;
+  --pill-height:15px;
+  --pill-size:8px;
+}
+
+html,
+body,
+.appHeader,
+.appHeader.navTopBar,
+.monthStrip{
+  background:#eef1f6;
+}
+
+.calCard{
+  width:100%;
+  margin:0;
+  padding:0 10px;
+  background:transparent;
+  border:none;
+  box-shadow:none;
+}
+
+#calSwipeArea{
+  width:100%;
+  overflow:hidden;
+  position:relative;
+  touch-action:pan-y;
+  contain:layout paint;
+}
+
+#calLayerCurrent,
+#calLayerGhost{
+  width:100%;
+  min-width:100%;
+  backface-visibility:hidden;
+  transform:translateZ(0);
+  will-change:transform;
+}
+
+.calGhost{
+  position:absolute;
+  inset:0 auto auto 0;
+  right:0;
+  pointer-events:none;
+}
+
+.calFading{
+  opacity:.94;
+  transition:opacity 120ms ease;
+}
+
+.calGrid{
+  display:grid;
+  grid-template-columns:repeat(7, minmax(0, 1fr));
+}
+
+#dowRow,
+#dowRowGhost{
+  gap:var(--cal-gap);
+  padding:0 0 7px;
+}
+
+.calDow{
+  min-width:0;
+  padding:4px 0 7px;
+  text-align:center;
+  font-size:clamp(13px, 3.3vw, 15px);
+  line-height:1;
+  font-weight:760;
+  color:#202124;
+  text-transform:lowercase;
+}
+
+.calDow.dowToday{
+  color:#1a73e8;
+}
+
+#calGrid,
+#calGridGhost{
+  gap:var(--cal-gap);
+  grid-auto-rows:var(--day-height);
+  align-items:stretch;
+  background:transparent;
+}
+
+.dayCell,
+.blankCell{
+  min-width:0;
+  height:var(--day-height);
+  min-height:var(--day-height);
+  max-height:var(--day-height);
+  border-radius:14px;
+  overflow:hidden;
+}
+
+.dayCell{
+  position:relative;
+  cursor:pointer;
+  background:#fbfcff;
+  border:1px solid rgba(60,64,67,.052);
+  box-shadow:0 1px 2px rgba(60,64,67,.038);
+  transition:background .12s ease, border-color .12s ease, box-shadow .12s ease, transform .08s ease;
+  contain:layout paint;
+}
+
+.dayCellInner{
+  height:100%;
+  min-width:0;
+  display:grid;
+  grid-template-rows:auto minmax(0, 1fr);
+  padding:5px 4px 5px;
+}
+
+.blankCell{
+  background:rgba(255,255,255,.34);
+  border:1px solid rgba(60,64,67,.026);
+}
+
+.dayCell:hover{
+  background:#fff;
+  border-color:rgba(60,64,67,.085);
+  box-shadow:0 2px 6px rgba(60,64,67,.06);
+}
+
+.dayCell:active{
+  transform:scale(.995);
+  background:#f6f8fc;
+}
+
+.dayCell.today{
+  background:linear-gradient(180deg, #f8fbff 0%, #ffffff 72%);
+  border-color:rgba(66,133,244,.22);
+  box-shadow:0 1px 3px rgba(66,133,244,.10);
+}
+
+.dayTop{
+  min-width:0;
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+  padding:0 1px 4px;
+}
+
+.dayNum{
+  width:var(--day-num-box);
+  min-width:var(--day-num-box);
+  height:var(--day-num-box);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  border-radius:999px;
+  font-size:var(--day-num-size);
+  line-height:1;
+  font-weight:760;
+  letter-spacing:-.045em;
+  color:#3c4043;
+}
+
+.dayCell.today .dayNum{
+  width:auto;
+  min-width:var(--today-badge-w);
+  height:var(--today-badge-h);
+  padding:0 9px;
+  background:#4285f4;
+  color:#fff;
+  box-shadow:0 2px 5px rgba(66,133,244,.24);
+}
+
+.dayNum.saturday{
+  color:#5f6368;
+}
+
+.dayNum.sunday,
+.dayNum.holiday{
+  color:#c5221f;
+}
+
+.dayCell.today .dayNum.saturday,
+.dayCell.today .dayNum.sunday,
+.dayCell.today .dayNum.holiday{
+  color:#fff;
+}
+
+.pillStack{
+  min-width:0;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  overflow:hidden;
+  padding:0;
+}
+
+.pill{
+  width:100%;
+  min-width:0;
+  height:var(--pill-height);
+  min-height:var(--pill-height);
+  max-height:var(--pill-height);
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  border-radius:5px;
+  padding:0 3px;
+  overflow:hidden;
+  white-space:nowrap;
+  font-size:var(--pill-size);
+  line-height:1;
+  font-weight:780;
+  letter-spacing:-.075em;
+  font-variant-numeric:tabular-nums;
+  box-shadow:none;
+}
+
+.pill span{
+  min-width:0;
+  max-width:100%;
+  display:block;
+  overflow:hidden;
+  text-overflow:clip;
+  white-space:nowrap;
+}
+
+.pill.work{
+  background:#34a853;
+  color:#fff;
+}
+
+.pill.vac{
+  background:#d3e3fd;
+  color:#174ea6;
+}
+
+.pill.unpaid{
+  background:#eee7ff;
+  color:#4a148c;
+}
+
+.pill.sick{
+  background:#fce8e6;
+  color:#a50e0e;
+}
+
+.pill.note{
+  background:#feefc3;
+  color:#5f4200;
+}
+
+.pill.more{
+  background:transparent;
+  color:#5f6368;
+  justify-content:center;
+  text-align:center;
+}
+
+/* Jedna rodzina kart: statystyki miesiąca, podsumowanie dnia i hero w statystykach */
+.monthSummaryCard,
+.dayViewHero,
+.statsHero{
+  border:1px solid #dfe3eb;
+  border-radius:28px;
+  background:linear-gradient(180deg, #ffffff 0%, #f8fafd 100%);
+  box-shadow:0 1px 3px rgba(60,64,67,.08);
+  color:#202124;
+}
+
+.monthSummaryCard{
+  width:calc(100% - 20px);
+  margin:12px 10px 0;
+  padding:14px 14px;
+  display:grid;
+  grid-template-columns:42px minmax(0, 1fr) 24px;
+  align-items:center;
+  gap:13px;
+  text-align:left;
+  cursor:pointer;
+}
+
+.monthSummaryCard:active{
+  transform:scale(.995);
+}
+
+.monthSummaryIcon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#e8f0fe;
+  color:#1a73e8;
+}
+
+.monthSummaryIcon svg{
+  width:24px;
+  height:24px;
+  fill:currentColor;
+}
+
+.monthSummaryText{
+  min-width:0;
+}
+
+.monthSummaryKicker{
+  font-size:13px;
+  line-height:1.2;
+  font-weight:700;
+  color:#3c4043;
+}
+
+.monthSummaryMain{
+  margin-top:4px;
+  display:flex;
+  align-items:baseline;
+  gap:7px;
+  min-width:0;
+  font-size:24px;
+  line-height:1.05;
+  font-weight:620;
+  letter-spacing:-.045em;
+  color:#111318;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.monthSummaryMain span{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+#monthSummaryMeta{
+  margin-top:5px;
+  font-size:13px;
+  font-weight:650;
+  color:#3c4043;
+}
+
+.monthSummaryArrow{
+  width:24px;
+  height:24px;
+  fill:#5f6368;
+}
+
+.dayViewHero,
+.statsHero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin:0 0 12px;
+  padding:20px 24px;
+}
+
+.dayViewHero span,
+.statsHero span{
+  display:block;
+  margin-bottom:8px;
+  font-size:13px;
+  line-height:1.2;
+  font-weight:750;
+  color:#3c4043;
+}
+
+.dayViewHero strong,
+.statsHero strong{
+  display:block;
+  font-size:34px;
+  line-height:1;
+  font-weight:640;
+  letter-spacing:-.055em;
+  color:#111318;
+}
+
+.dayViewHero small,
+.statsHero small{
+  display:block;
+  margin-top:8px;
+  font-size:15px;
+  line-height:1.2;
+  font-weight:750;
+  color:#174ea6;
+}
+
+.dayViewHero svg,
+.statsHero svg{
+  width:42px;
+  height:42px;
+  flex:0 0 auto;
+  fill:#1a73e8;
+}
+
+#calSwipeArea.is-swiping{
+  overflow:hidden;
+  contain:layout paint style;
+}
+
+#calSwipeArea.is-swiping #calLayerCurrent,
+#calSwipeArea.is-swiping #calLayerGhost{
+  width:100%;
+  min-width:100%;
+  will-change:transform;
+  backface-visibility:hidden;
+}
+
+#calSwipeArea.is-swiping #calGrid,
+#calSwipeArea.is-swiping #calGridGhost{
+  gap:var(--cal-gap);
+}
+
+#calSwipeArea.is-swiping .dayCell,
+#calSwipeArea.is-swiping .blankCell{
+  height:var(--swipe-cell-height);
+  min-height:var(--swipe-cell-height);
+  max-height:var(--swipe-cell-height);
+  transition:none;
+  transform:none;
+}
+
+#calSwipeArea.is-swiping .dayNum,
+#calSwipeArea.is-swiping .pill{
+  transition:none;
+}
+
+@media(max-width:430px){
+  .calCard{
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  #dowRow,
+  #dowRowGhost{
+    padding-bottom:7px;
+  }
+
+  .dayCell,
+  .blankCell{
+    border-radius:13px;
+  }
+
+  .dayCellInner{
+    padding:5px 3px 4px;
+  }
+
+  .dayTop{
+    padding-bottom:3px;
+  }
+
+  .pill{
+    border-radius:4px;
+    padding-left:2px;
+    padding-right:2px;
+    letter-spacing:-.085em;
+  }
+
+  .monthSummaryCard{
+    margin-top:12px;
+  }
+
+  .dayViewHero,
+  .statsHero{
+    padding:18px 22px;
+  }
+}
+
+@media(max-width:370px){
+  .calCard{
+    padding-left:8px;
+    padding-right:8px;
+  }
+
+  .dayCellInner{
+    padding-left:2px;
+    padding-right:2px;
+  }
+
+  .pill{
+    font-size:calc(var(--pill-size) * .94);
+    letter-spacing:-.1em;
+  }
+}
 </style>
 
 </head>
@@ -4249,20 +4912,56 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     </button>
     <div class="muted statusLine" id="status"></div>
 
+    <section class="dayViewPage monthViewHidden" id="dayViewPage" aria-label="Widok dnia">
+      <div class="dayViewTop">
+        <button class="tonal dayViewBack" id="dayViewBackToMonth" type="button">Miesiąc</button>
+        <div class="dayViewNav">
+          <button class="tonal" id="dayViewPrev" type="button" aria-label="Poprzedni dzień">‹</button>
+          <div class="dayViewDateBlock">
+            <strong id="dayViewDate">—</strong>
+            <span id="dayViewMeta">—</span>
+          </div>
+          <button class="tonal" id="dayViewNext" type="button" aria-label="Następny dzień">›</button>
+        </div>
+      </div>
+
+      <div class="dayViewHero">
+        <div>
+          <span>Podsumowanie dnia</span>
+          <strong id="dayViewHours">0:00</strong>
+          <small id="dayViewPay">0,00 zł</small>
+        </div>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm0 16H5V9h14v10ZM5 7V5h14v2H5Zm4 4h6v2H9v-2Zm0 4h4v2H9v-2Z"/>
+        </svg>
+      </div>
+
+      <div class="dayViewActions">
+        <button class="filled" id="dayViewAddHours" type="button">Dodaj godziny</button>
+        <button class="tonal" id="dayViewAddLeave" type="button">Dodaj urlop / L4</button>
+        <button class="tonal" id="dayViewOpenModal" type="button">Edytuj dzień</button>
+      </div>
+
+      <div class="dayViewCard">
+        <div class="dayViewCardHead">
+          <strong>Wydarzenia dnia</strong>
+          <span id="dayViewEventsCount">0</span>
+        </div>
+        <div class="shiftList dayViewEvents" id="dayViewEvents"></div>
+      </div>
+    </section>
+
+    <div class="appToast" id="appToast" hidden role="status" aria-live="polite"></div>
+
   </div>
 
   <div class="fabScrim" id="fabScrim" hidden></div>
 
   <div class="fab-container fabGoogle" id="fabContainer">
     <div class="fabActions" id="fabActions" hidden>
-      <button class="fabActionPill" id="fabVacationAction" type="button">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm0 16H5V9h14v10ZM5 7V5h14v2H5Zm7 4c-1.66 0-3 1.34-3 3 0 2.25 3 5 3 5s3-2.75 3-5c0-1.66-1.34-3-3-3Zm0 4.2a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4Z"/></svg>
-        <span>Urlop / L4</span>
-      </button>
-
       <button class="fabActionPill" id="fabBulkAction" type="button">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm0 16H5V8h14v11ZM7 10h5v5H7v-5Zm7 0h3v2h-3v-2Zm0 4h3v2h-3v-2Z"/></svg>
-        <span>Zakres dni</span>
+        <span>Zbiorczy wpis</span>
       </button>
 
       <button class="fabActionPill" id="fabTodayAction" type="button">
@@ -4271,7 +4970,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       </button>
     </div>
 
-    <button class="fab" id="mainFab" type="button" aria-label="Dodaj wpis" aria-expanded="false">
+    <button class="fab" id="mainFab" type="button" aria-label="Szybkie akcje" aria-expanded="false">
       <svg class="fabPlusIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       <svg class="fabCloseIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.41L10.59 13.41 4.29 19.71 2.88 18.3 9.17 12 2.88 5.71 4.29 4.29l6.3 6.3 6.29-6.3z"/></svg>
     </button>
@@ -4303,9 +5002,9 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               <span>Tydzień <em>wkrótce</em></span>
             </button>
 
-            <button class="drawerItem soon" id="drawerDayView" type="button">
+            <button class="drawerItem" id="drawerDayView" type="button">
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm0 16H5V8h14v11ZM7 10h10v2H7v-2Zm0 4h7v2H7v-2Z"/></svg>
-              <span>Dzień <em>wkrótce</em></span>
+              <span>Dzień</span>
             </button>
 
             <button class="drawerItem" id="drawerYearSummary" type="button">
@@ -4336,7 +5035,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
         <div class="drawerView" id="drawerViewSettings">
           <details class="settingsAccordion" open>
-            <summary><span>Szczegóły pracodawcy</span><i class="settingsChevron" aria-hidden="true"></i></summary>
+            <summary><span>Praca i rozliczenia</span><i class="settingsChevron" aria-hidden="true"></i></summary>
             <div class="settingsAccordionBody">
               <div style="margin-bottom:16px;">
                 <label>Stawka godzinowa (PLN)</label>
@@ -4347,15 +5046,41 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
                 <label>Limit urlopu płatnego (dni / rok)</label>
                 <input id="leaveQuota" type="number" step="1" min="0" placeholder="np. 26" />
               </div>
+            </div>
+          </details>
 
-              <div class="settingsSoon">Więcej ustawień wkrótce.</div>
+          <details class="settingsAccordion">
+            <summary><span>Zakresy dni</span><i class="settingsChevron" aria-hidden="true"></i></summary>
+            <div class="settingsAccordionBody">
+              <div class="muted settingsHint">Te opcje ustawiają domyślne zaznaczenie w panelach „Zakres dni” oraz „Urlop / L4”. W samym panelu nadal można zmienić je jednorazowo.</div>
+              <label class="checkRow">
+                <input id="defaultIncludeSat" type="checkbox" />
+                <span>Domyślnie uwzględniaj soboty</span>
+              </label>
+              <label class="checkRow">
+                <input id="defaultIncludeSun" type="checkbox" />
+                <span>Domyślnie uwzględniaj niedziele</span>
+              </label>
+              <label class="checkRow">
+                <input id="defaultIncludeHolidays" type="checkbox" />
+                <span>Domyślnie uwzględniaj święta</span>
+              </label>
+            </div>
+          </details>
+
+          <details class="settingsAccordion">
+            <summary><span>Kopia zapasowa</span><i class="settingsChevron" aria-hidden="true"></i></summary>
+            <div class="settingsAccordionBody">
+              <label>Przypomnienie o kopii co ile dni?</label>
+              <input id="backupReminderDays" type="number" step="1" min="1" max="60" placeholder="np. 5" />
+              <div class="muted settingsHint">Dane nadal zapisują się lokalnie w telefonie. To ustawienie dotyczy tylko przypomnienia o ręcznym pobraniu kopii JSON.</div>
             </div>
           </details>
 
           <details class="settingsAccordion">
             <summary><span>Szablony godzin pracy</span><i class="settingsChevron" aria-hidden="true"></i></summary>
             <div class="settingsAccordionBody">
-              <div class="muted">Szablony stałych godzin dostępne w modalu dnia i przy dodawaniu wielu dni.</div>
+              <div class="muted">Szablony stałych godzin dostępne w panelu dnia i przy dodawaniu zakresu dni.</div>
               <div class="templateList" id="templateList"></div>
               <div class="fieldGrid templateAddGrid">
                 <div>
@@ -4419,7 +5144,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         <select id="vacType">
           <option value="paid">Urlop płatny</option>
           <option value="unpaid">Urlop bezpłatny</option>
-          <option value="sick">Zwolnienie L4</option>
+          <option value="sick">Zwolnienie lekarskie (L4)</option>
         </select>
       </div>
 
@@ -4474,18 +5199,19 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       <div class="googlePanelContent">
     <div class="modalHead">
       <div class="modalHeadInner">
-        <h3>Godziny dla zakresu dni</h3>
-        <div class="muted">Ustaw te same godziny pracy dla wybranego zakresu dni.</div>
+        <h3 id="bulkTitle">Godziny dla zakresu dni</h3>
+        <div class="muted" id="bulkSubtitle">Ustaw te same godziny pracy dla wybranego zakresu dni.</div>
       </div>
     </div>
 
     <div class="modalBody">
 
-            <div class="rangeModeTabs" aria-label="Tryb zakresu dni">
-        <button class="rangeModeTab active" type="button" aria-pressed="true">Godziny pracy</button>
-        <button class="rangeModeTab soon" type="button" disabled>Urlop <span>wkrótce</span></button>
+      <div class="rangeModeTabs" aria-label="Tryb zakresu dni">
+        <button class="rangeModeTab active" id="bulkModeHours" type="button" aria-pressed="true">Godziny pracy</button>
+        <button class="rangeModeTab" id="bulkModeLeave" type="button" aria-pressed="false">Urlop / L4</button>
       </div>
-<div class="fieldGrid">
+
+      <div class="fieldGrid">
         <div>
           <label>Od</label>
           <input id="bulkFrom" type="date" />
@@ -4496,20 +5222,33 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         </div>
       </div>
 
-      <div class="fieldGrid">
-        <div>
-          <label>Wejście</label>
-          <input id="bulkStart" type="time" />
+      <div class="bulkModePane" id="bulkHoursFields">
+        <div class="fieldGrid">
+          <div>
+            <label>Wejście</label>
+            <input id="bulkStart" type="time" />
+          </div>
+          <div>
+            <label>Wyjście</label>
+            <input id="bulkEnd" type="time" />
+          </div>
         </div>
-        <div>
-          <label>Wyjście</label>
-          <input id="bulkEnd" type="time" />
+
+        <div class="quickTemplatesBlock bulkTemplateBlock" id="bulkTemplatesBlock">
+          <div class="quickTemplatesTitle">Szablon stałych godzin</div>
+          <div class="quickTemplates" id="bulkTemplates"></div>
         </div>
       </div>
 
-      <div class="quickTemplatesBlock bulkTemplateBlock" id="bulkTemplatesBlock">
-        <div class="quickTemplatesTitle">Szablony stałych godzin</div>
-        <div class="quickTemplates" id="bulkTemplates"></div>
+      <div class="bulkModePane bulkLeaveFields" id="bulkLeaveFields" hidden>
+        <div style="margin-bottom:16px;">
+          <label>Rodzaj absencji</label>
+          <select id="bulkLeaveType">
+            <option value="paid">Urlop płatny</option>
+            <option value="unpaid">Urlop bezpłatny</option>
+            <option value="sick">Zwolnienie lekarskie (L4)</option>
+          </select>
+        </div>
       </div>
 
       <div class="bulkOptions">
@@ -4576,14 +5315,20 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
       <div class="dayNotePreview" id="dlgNotePreview" hidden></div>
 
-      <button id="dlgShowAddShift" type="button" class="dayAddTrigger">
-        <span class="plusMark">+</span>
-        <span>Dodaj godziny</span>
-      </button>
+      <div class="dayAddActions">
+        <button id="dlgShowAddShift" type="button" class="dayAddTrigger">
+          <span class="plusMark">+</span>
+          <span>Dodaj godziny</span>
+        </button>
+        <button id="dlgShowAddLeave" type="button" class="dayAddTrigger dayAddLeaveTrigger">
+          <span class="plusMark">+</span>
+          <span>Dodaj urlop / L4</span>
+        </button>
+      </div>
 
       <div class="modalStack addShiftPanel" id="dlgWorkBlock">
         <div class="quickTemplatesBlock" id="dayTemplatesBlock">
-          <div class="quickTemplatesTitle">Szablony stałych godzin</div>
+          <div class="quickTemplatesTitle">Szablon stałych godzin</div>
           <div class="quickTemplates" id="dayTemplates"></div>
         </div>
 
@@ -4645,7 +5390,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
             <div class="statsHero">
               <div>
-                <span>Podsumowanie miesiąca</span>
+                <span>Miesiąc</span>
                 <strong id="monthStatsHours">0:00</strong>
                 <small id="monthStatsPay">0,00 zł</small>
               </div>
@@ -4709,7 +5454,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
             <div class="statsHero">
               <div>
-                <span>Podsumowanie roku</span>
+                <span>Rok</span>
                 <strong id="yearStatsHours">0:00</strong>
                 <small id="yearStatsPay">0,00 zł</small>
               </div>
@@ -4746,7 +5491,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
                 <svg id="yearStatsChart" class="statsChart yearStatsChart" viewBox="0 0 360 190" role="img" aria-label="Suma godzin per miesiąc"></svg>
               </div>
             </div>
-            
+
             <div class="statsSectionLabel statsTableLabel">Podsumowanie roku</div>
             <div class="statsTableWrap">
               <table class="statsTable">
@@ -4756,7 +5501,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
                     <th>Godziny</th>
                     <th>Dni</th>
                     <th>Urlop</th>
-                    <th>L4</th>
+                    <th>Zwolnienie L4</th>
                   </tr>
                 </thead>
                 <tbody id="yearStatsRows"></tbody>
@@ -4783,7 +5528,10 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 (() => {
   const showErr = (msg) => {
     const el = document.getElementById("status");
-    if (el) el.textContent = "BŁĄD: " + msg;
+    if (el) {
+      el.textContent = "BŁĄD: " + msg;
+      el.classList.add("has-error");
+    }
   };
   window.addEventListener("error", (e) => showErr(e.message || "Nieznany błąd JS"));
   window.addEventListener("unhandledrejection", (e) => {
@@ -4923,17 +5671,13 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     window.__cpUpdatePromptOpen = true;
     const ok = await openAppDialog({
       title:"Dostępna nowa wersja",
-      message:"Możesz odświeżyć aplikację, aby wczytać najnowszą wersję plików.",
+      message:"Możesz odświeżyć aplikację, aby wczytać najnowszą wersję plików. Dane godzin zostaną zachowane.",
       okText:"Odśwież",
       cancelText:"Później",
       tone:"default"
     });
     window.__cpUpdatePromptOpen = false;
-    if (!ok) return;
-
-    const worker = window.__cpWaitingWorker;
-    if (worker) worker.postMessage({ type:"SKIP_WAITING" });
-    setTimeout(() => window.location.reload(), 450);
+    if (ok) await forceRefreshAppFiles();
   });
 
   const todayISO = () => {
@@ -4988,7 +5732,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   let pendingStorageWarning = "";
 
   function createEmptyDB() {
-    return { settings:{ rate:0, leaveQuota:26 }, entries:[] };
+    return { settings:{ rate:0, leaveQuota:26, defaultIncludeSat:false, defaultIncludeSun:false, defaultIncludeHolidays:false, backupReminderDays:5 }, entries:[] };
   }
 
   function isPlainObject(v) {
@@ -5114,6 +5858,10 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     db.settings = db.settings || {};
     db.settings.rate = Number(db.settings.rate ?? 40);
     db.settings.leaveQuota = Number(db.settings.leaveQuota ?? 26);
+    db.settings.defaultIncludeSat = !!db.settings.defaultIncludeSat;
+    db.settings.defaultIncludeSun = !!db.settings.defaultIncludeSun;
+    db.settings.defaultIncludeHolidays = !!db.settings.defaultIncludeHolidays;
+    db.settings.backupReminderDays = Math.max(1, Number(db.settings.backupReminderDays ?? 5) || 5);
     if (!Array.isArray(db.settings.shiftTemplates)) {
       db.settings.shiftTemplates = [
         { start: "06:00", end: "14:00" },
@@ -5136,7 +5884,10 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   }
 
   const LAST_BACKUP_KEY = "worktime_last_backup_iso";
-  const BACKUP_REMIND_EVERY_DAYS = 5;
+  function getBackupReminderDays(){
+    const n = Number(db?.settings?.backupReminderDays ?? 5);
+    return Math.max(1, Number.isFinite(n) ? n : 5);
+  }
 
   function getLastBackupISO(){
     return localStorage.getItem(LAST_BACKUP_KEY) || "";
@@ -5151,7 +5902,28 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     return Math.floor((Date.now() - t) / (1000*60*60*24));
   }
 
-  function setStatus(t) { const el = $("status"); if (el) el.textContent = t || ""; }
+  let toastTimer = null;
+  function showToast(message) {
+    const toast = $("appToast");
+    if (!toast || !message) return;
+    toast.textContent = message;
+    toast.hidden = false;
+    requestAnimationFrame(() => toast.classList.add("show"));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => { toast.hidden = true; }, 180);
+    }, 3200);
+  }
+
+  function setStatus(t) {
+    const el = $("status");
+    if (el) {
+      el.textContent = "";
+      el.classList.remove("has-error");
+    }
+    if (t) showToast(t);
+  }
 
   function minutesBetween(dateISO, start, end) {
     const [y, m, d] = dateISO.split("-").map(Number);
@@ -5375,6 +6147,18 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     const qEl = $("leaveQuota");
     if (qEl) db.settings.leaveQuota = Number(qEl.value || 0);
+
+    const satEl = $("defaultIncludeSat");
+    if (satEl) db.settings.defaultIncludeSat = !!satEl.checked;
+
+    const sunEl = $("defaultIncludeSun");
+    if (sunEl) db.settings.defaultIncludeSun = !!sunEl.checked;
+
+    const holEl = $("defaultIncludeHolidays");
+    if (holEl) db.settings.defaultIncludeHolidays = !!holEl.checked;
+
+    const reminderEl = $("backupReminderDays");
+    if (reminderEl) db.settings.backupReminderDays = Math.max(1, Number(reminderEl.value || 5));
   }
   function hydrateSettingsUI() {
     const rateEl = $("rate");
@@ -5382,6 +6166,18 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     const qEl = $("leaveQuota");
     if (qEl) qEl.value = db.settings.leaveQuota;
+
+    const satEl = $("defaultIncludeSat");
+    if (satEl) satEl.checked = !!db.settings.defaultIncludeSat;
+
+    const sunEl = $("defaultIncludeSun");
+    if (sunEl) sunEl.checked = !!db.settings.defaultIncludeSun;
+
+    const holEl = $("defaultIncludeHolidays");
+    if (holEl) holEl.checked = !!db.settings.defaultIncludeHolidays;
+
+    const reminderEl = $("backupReminderDays");
+    if (reminderEl) reminderEl.value = getBackupReminderDays();
 
     renderShiftTemplatesUI();
     renderQuickTemplatesUI();
@@ -5728,7 +6524,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     const strip = $("monthStrip");
     const btn = $("monthNavToggle");
     if (!strip || !btn) return;
-    strip.hidden = !open;
+    strip.hidden = !open || activeView === "day";
+    document.body.classList.toggle("month-strip-open", open);
     btn.classList.toggle("is-open", open);
     btn.setAttribute("aria-expanded", open ? "true" : "false");
     if (open) renderMonthStrip(getCurrentMonthYM());
@@ -5740,6 +6537,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   function daysInMonth(year, month1) { return new Date(year, month1, 0).getDate(); }
 
   let shouldScrollToToday = false;
+  let activeView = "month";
+  let activeDayISO = todayISO();
 
   let lastCalendarGeometryKey = "";
 
@@ -5751,32 +6550,42 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     return `${Math.round(value * 10) / 10}px`;
   }
 
-  function updateCalendarGeometryVars() {
+  function monthGridRows(monthYM = getCurrentMonthYM()) {
+    const [Y, M] = monthYM.split("-").map(Number);
+    const firstIdx = mondayIndex(new Date(Y, M - 1, 1).getDay());
+    const dim = daysInMonth(Y, M);
+    return Math.max(5, Math.ceil((firstIdx + dim) / 7));
+  }
+
+  function updateCalendarGeometryVars(monthYM = getCurrentMonthYM()) {
     const area = $("calSwipeArea");
     const root = document.documentElement;
     const width = Math.round(area?.clientWidth || document.documentElement.clientWidth || window.innerWidth || 360);
     const viewportW = Math.round(window.innerWidth || width);
-    const gap = 4;
-    const cellW = Math.max(36, (width - (gap * 6)) / 7);
+    const gap = viewportW <= 430 ? 5 : 6;
+    const rows = monthGridRows(monthYM);
+    const cellW = Math.max(34, (width - (gap * 6)) / 7);
 
-    const isNarrow = viewportW <= 430;
-    const isVeryNarrow = viewportW <= 360;
+    // 4.3.0: jedno źródło prawdy dla geometrii.
+    // Treść nie rozpycha kafelka, a miesiące 5/6-tygodniowe dostają osobny limit wysokości.
+    const isTiny = viewportW <= 360;
+    const isPhone = viewportW <= 430;
 
-    const dayHeight = isVeryNarrow
-      ? clampNumber(cellW * 1.78, 78, 92)
-      : isNarrow
-        ? clampNumber(cellW * 1.86, 82, 98)
-        : clampNumber(cellW * 1.52, 88, 112);
+    const ratio = isTiny ? 1.22 : (isPhone ? 1.18 : 1.12);
+    const minH = isTiny ? 56 : (isPhone ? 60 : 64);
+    const maxH = rows >= 6 ? (isPhone ? 68 : 72) : (isPhone ? 76 : 82);
+    const dayHeight = clampNumber(cellW * ratio, minH, maxH);
 
-    const dayNumSize = clampNumber(dayHeight * 0.135, isNarrow ? 10.5 : 11.5, isNarrow ? 13.5 : 14.5);
-    const dayNumBox = clampNumber(dayHeight * 0.235, isNarrow ? 18 : 19, isNarrow ? 23 : 24);
-    const todayBadgeH = clampNumber(dayHeight * 0.215, isNarrow ? 18 : 19, isNarrow ? 21 : 22);
-    const todayBadgeW = clampNumber(dayHeight * 0.325, isNarrow ? 26 : 27, isNarrow ? 32 : 33);
-    const pillHeight = clampNumber(dayHeight * 0.145, isNarrow ? 11 : 12, isNarrow ? 14 : 15);
-    const pillSize = clampNumber(dayHeight * 0.078, isNarrow ? 6.4 : 7.1, isNarrow ? 7.7 : 8.7);
+    const dayNumSize = clampNumber(dayHeight * 0.29, isPhone ? 16 : 17, isPhone ? 20 : 21);
+    const dayNumBox = clampNumber(dayHeight * 0.43, isPhone ? 27 : 29, isPhone ? 34 : 36);
+    const todayBadgeH = clampNumber(dayHeight * 0.40, isPhone ? 28 : 30, isPhone ? 34 : 36);
+    const todayBadgeW = clampNumber(dayHeight * 0.56, isPhone ? 38 : 42, isPhone ? 50 : 54);
+    const pillHeight = clampNumber(dayHeight * 0.20, isPhone ? 14 : 15, isPhone ? 17 : 18);
+    const pillSize = clampNumber(dayHeight * 0.112, isPhone ? 7.0 : 7.8, isPhone ? 8.8 : 9.6);
 
     const geometryKey = [
       width,
+      rows,
       Math.round(dayHeight),
       Math.round(dayNumSize * 10),
       Math.round(pillHeight * 10)
@@ -5785,6 +6594,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if (geometryKey === lastCalendarGeometryKey) return false;
     lastCalendarGeometryKey = geometryKey;
 
+    root.style.setProperty("--cal-gap", px(gap));
+    root.style.setProperty("--cal-rows", String(rows));
     root.style.setProperty("--day-height", px(dayHeight));
     root.style.setProperty("--day-num-size", px(dayNumSize));
     root.style.setProperty("--day-num-box", px(dayNumBox));
@@ -5805,8 +6616,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   }
 
   function refreshCalendarLayoutOnly() {
-    updateCalendarGeometryVars();
     const monthYM = getCurrentMonthYM();
+    updateCalendarGeometryVars(monthYM);
     renderDow();
     renderCalendar(monthYM);
     renderTotals(monthYM);
@@ -5832,6 +6643,12 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     }).join("");
   }
 
+  function calendarPill(title, cls, text) {
+    const safeText = escapeHtml(text);
+    const safeTitle = escapeHtml(title || text);
+    return `<div class="pill ${cls}" title="${safeTitle}"><span>${safeText}</span></div>`;
+  }
+
   function buildPillsHTML(day) {
     const shifts = (day?.shifts || []).slice().sort((a, b) => (a.start || "").localeCompare(b.start || ""));
     const leaveType = day?.leaveType || "";
@@ -5841,16 +6658,15 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     const pills = [];
 
-    // status zawsze pierwszy (jeśli jest)
     if (leaveLbl) {
-      pills.push(`<div class="pill ${leaveCls}">${leaveLbl}</div>`);
+      pills.push(calendarPill(leaveLbl, leaveCls, leaveLbl));
     }
 
     if (hasNote) {
-      pills.push(`<div class="pill note">Notatka</div>`);
+      pills.push(calendarPill("Notatka", "note", "Notatka"));
     }
 
-    const maxTotal = (leaveLbl || hasNote) ? 4 : 3;
+    const maxTotal = 3;
     const shiftSlots = Math.max(0, maxTotal - pills.length);
     const visibleCount = (shifts.length > shiftSlots && shiftSlots > 0) ? shiftSlots - 1 : shiftSlots;
     const visible = shifts.slice(0, visibleCount);
@@ -5859,16 +6675,17 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     pills.push(...visible.map(s => {
       const a = (s && s.start) ? s.start : "—";
       const b = (s && s.end) ? s.end : "—";
-      return `<div class="pill work">${a}–${b}</div>`;
+      const label = `${a}–${b}`;
+      return calendarPill(label, "work", label);
     }));
 
-    if (extra > 0 && pills.length < maxTotal) pills.push(`<div class="pill more">+${extra}</div>`);
+    if (extra > 0 && pills.length < maxTotal) pills.push(calendarPill(`${extra} więcej`, "more", `+${extra}`));
 
     return `<div class="pillStack">${pills.join("")}</div>`;
   }
 
   function renderCalendar(monthYM) {
-    updateCalendarGeometryVars();
+    updateCalendarGeometryVars(monthYM);
     const monthLabel = $("monthLabelText");
     const calGrid = $("calGrid");
     if (!monthLabel || !calGrid) return;
@@ -5903,7 +6720,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     const cells = [];
     const today = todayISO();
 
-    for (let i = 0; i < firstIdx; i++) cells.push(`<div class="blankCell"></div>`);
+    for (let i = 0; i < firstIdx; i++) cells.push(`<div class="blankCell" aria-hidden="true"></div>`);
 
     for (let d = 1; d <= dim; d++) {
       const dateISO = `${Y}-${pad2(M)}-${pad2(d)}`;
@@ -5932,10 +6749,19 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
       const pillsHTML = buildPillsHTML(day);
 
+      const ariaBits = [
+        fmtDateLongPL(dateISO),
+        tileTitle,
+        computeDayMinutes(day) ? `Godziny ${fmtHM(computeDayMinutes(day))}` : "",
+        (day.shifts || []).length ? `${(day.shifts || []).length} wpisów` : ""
+      ].filter(Boolean).join(", ");
+
       cells.push(`
-        <div class="${dayCellClass}" data-date="${dateISO}" ${tileTitle ? `title="${tileTitle}"` : ""}>
-          <div class="dayTop"><div class="${numClass}">${d}</div></div>
-          ${pillsHTML}
+        <div class="${dayCellClass}" data-date="${dateISO}" ${tileTitle ? `title="${escapeHtml(tileTitle)}"` : ""} aria-label="${escapeHtml(ariaBits)}">
+          <div class="dayCellInner">
+            <div class="dayTop"><div class="${numClass}">${d}</div></div>
+            ${pillsHTML}
+          </div>
         </div>
       `);
     }
@@ -5943,7 +6769,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     const mod = cells.length % 7;
     if (mod !== 0) {
       const need = 7 - mod;
-      for (let i = 0; i < need; i++) cells.push(`<div class="blankCell"></div>`);
+      for (let i = 0; i < need; i++) cells.push(`<div class="blankCell" aria-hidden="true"></div>`);
     }
 
     const html = cells.join("");
@@ -5956,23 +6782,34 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   }
 
   function renderCalendarInto(monthYM, gridEl, bindClicks) {
-    updateCalendarGeometryVars();
+    if (bindClicks) updateCalendarGeometryVars(monthYM);
     if (!gridEl) return;
+
+    gridEl.dataset.month = monthYM;
+    gridEl.dataset.rows = String(monthGridRows(monthYM));
 
     const today = todayISO();
     gridEl.innerHTML = buildCalendarHTML(monthYM);
 
-    if (bindClicks) {
-      gridEl.querySelectorAll(".dayCell[data-date]").forEach(el => {
-        el.onclick = () => openDay(el.getAttribute("data-date"));
-      });
-
-      if (shouldScrollToToday) {
-        shouldScrollToToday = false;
-        const el = document.querySelector('.dayCell[data-date="' + today + '"]');
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
+    if (bindClicks && shouldScrollToToday) {
+      shouldScrollToToday = false;
+      const el = document.querySelector('.dayCell[data-date="' + today + '"]');
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
     }
+  }
+
+  function setupCalendarDayDelegation() {
+    const grid = $("calGrid");
+    if (!grid || grid.dataset.dayDelegated) return;
+
+    grid.addEventListener("click", (e) => {
+      const cell = e.target.closest?.(".dayCell[data-date]");
+      if (!cell || !grid.contains(cell)) return;
+      const date = cell.getAttribute("data-date");
+      if (date) setActiveView("day", date);
+    });
+
+    grid.dataset.dayDelegated = "1";
   }
 
   // ===== MODAL DNIA =====
@@ -6029,14 +6866,10 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if (dlg && typeof dlg.close === "function") dlg.close();
     else if (dlg) dlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
-    window.CPApp?.setSystemBars?.(SYSTEM_BAR_MAIN);
   }
 
   if (dlg) {
-    dlg.addEventListener("close", () => {
-      document.body.classList.remove("modal-open");
-      if (!document.querySelector("dialog[open]")) window.CPApp?.setSystemBars?.(SYSTEM_BAR_MAIN);
-    });
+    dlg.addEventListener("close", () => document.body.classList.remove("modal-open"));
     dlg.addEventListener("cancel", (e) => { e.preventDefault(); closeDay(); });
   }
 
@@ -6056,6 +6889,15 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if (content) content.scrollTop = 0;
   }
 
+  function openDayAddForm(dateISO = activeDayISO) {
+    openDay(dateISO);
+    setTimeout(() => expandDayPanel({ form:true }), 90);
+  }
+
+  Object.assign(window.CPApp, {
+    openDayAddForm
+  });
+
   const dlgShowAddShiftBtn = $("dlgShowAddShift");
   if (dlgShowAddShiftBtn) {
     dlgShowAddShiftBtn.onclick = (e) => {
@@ -6063,6 +6905,15 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       e.stopPropagation();
       expandDayPanel({ form:true });
       haptic.tap();
+    };
+  }
+
+  const dlgShowAddLeaveBtn = $("dlgShowAddLeave");
+  if (dlgShowAddLeaveBtn) {
+    dlgShowAddLeaveBtn.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (dlgDate) openVacationForDate(dlgDate);
     };
   }
 
@@ -6198,6 +7049,130 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     });
   }
 
+
+  // ===== WIDOK DNIA =====
+  function buildDayEventsHTML(dateISO) {
+    const day = getDay(dateISO) || { date: dateISO, note: "", shifts: [], vacation: false, leaveType:"" };
+    const events = [];
+    const [holidayYear] = dateISO.split("-").map(Number);
+    const holidayName = getHolidayMap(holidayYear).get(dateISO) || "";
+    const note = (day.note || "").trim();
+    const leaveType = day.leaveType || (day.vacation ? "paid" : "");
+
+    if (holidayName) {
+      events.push(`
+        <div class="shiftItem googleEvent holidayEvent">
+          <div class="eventStripe" aria-hidden="true"></div>
+          <div class="eventContent">
+            <div class="times">${escapeHtml(holidayName)}</div>
+            <div class="mins">Święto · cały dzień</div>
+          </div>
+        </div>
+      `);
+    }
+
+    if (leaveType) {
+      events.push(`
+        <div class="shiftItem googleEvent leaveEvent ${leavePillClass(leaveType)}">
+          <div class="eventStripe" aria-hidden="true"></div>
+          <div class="eventContent">
+            <div class="times">${escapeHtml(leaveLabel(leaveType))}</div>
+            <div class="mins">Cały dzień</div>
+          </div>
+        </div>
+      `);
+    }
+
+    (day.shifts || []).slice().sort((a, b) => (a.start || "").localeCompare(b.start || "")).forEach(s => {
+      const m = (s.start && s.end) ? Math.max(0, minutesBetween(day.date, s.start, s.end)) : 0;
+      events.push(`
+        <div class="shiftItem googleEvent workEvent">
+          <div class="eventStripe" aria-hidden="true"></div>
+          <div class="eventContent">
+            <div class="times">${escapeHtml(s.start || "—")} – ${escapeHtml(s.end || "—")}</div>
+            <div class="mins">${m ? (fmtHM(m) + " godz.") : "-"}</div>
+          </div>
+        </div>
+      `);
+    });
+
+    if (note) {
+      events.push(`
+        <div class="shiftItem googleEvent noteEvent">
+          <div class="eventStripe" aria-hidden="true"></div>
+          <div class="eventContent">
+            <div class="times">Notatka</div>
+            <div class="mins">${escapeHtml(note)}</div>
+          </div>
+        </div>
+      `);
+    }
+
+    return {
+      count:events.length,
+      html:events.join("") || `<div class="emptyDayHint">Brak wpisów w tym dniu. Dodaj godziny albo ustaw urlop/L4 z przycisku plus.</div>`
+    };
+  }
+
+  function renderDayView(dateISO = activeDayISO) {
+    activeDayISO = dateISO || todayISO();
+    const day = getDay(activeDayISO) || { date: activeDayISO, note: "", shifts: [], vacation: false, leaveType:"" };
+    const mins = computeDayMinutes(day);
+    const pay = round2((mins / 60) * (db.settings.rate || 0));
+    const [Y] = activeDayISO.split("-").map(Number);
+    const holidayName = getHolidayMap(Y).get(activeDayISO) || "";
+
+    if ($("dayViewDate")) $("dayViewDate").textContent = fmtDateLongPL(activeDayISO);
+    if ($("dayViewMeta")) {
+      $("dayViewMeta").textContent = holidayName
+        ? `${capFirst(fmtWeekdayLongPL(activeDayISO))} · ${holidayName}`
+        : capFirst(fmtWeekdayLongPL(activeDayISO));
+    }
+    if ($("dayViewHours")) $("dayViewHours").textContent = fmtHM(mins);
+    if ($("dayViewPay")) $("dayViewPay").textContent = pln(pay);
+
+    const rendered = buildDayEventsHTML(activeDayISO);
+    if ($("dayViewEvents")) $("dayViewEvents").innerHTML = rendered.html;
+    if ($("dayViewEventsCount")) $("dayViewEventsCount").textContent = rendered.count ? `${rendered.count} wpisy` : "brak wpisów";
+  }
+
+  function applyActiveView() {
+    const isDay = activeView === "day";
+    document.body.classList.toggle("view-day", isDay);
+    document.body.classList.toggle("view-month", !isDay);
+
+    document.querySelector(".calCard")?.classList.toggle("monthViewHidden", isDay);
+    $("monthSummaryCard")?.classList.toggle("monthViewHidden", isDay);
+    $("dayViewPage")?.classList.toggle("monthViewHidden", !isDay);
+    $("monthStrip")?.toggleAttribute("hidden", isDay || !document.body.classList.contains("month-strip-open"));
+
+    $("drawerMonthView")?.classList.toggle("active", !isDay);
+    $("drawerDayView")?.classList.toggle("active", isDay);
+
+    if (isDay) renderDayView(activeDayISO);
+  }
+
+  function setActiveView(view, dateISO = "") {
+    activeView = view === "day" ? "day" : "month";
+    if (dateISO) activeDayISO = dateISO;
+
+    const mp = $("monthPick");
+    if (activeView === "day" && mp && activeDayISO) {
+      const nextYM = ym(activeDayISO);
+      if (mp.value !== nextYM) mp.value = nextYM;
+    }
+
+    renderAll();
+    applyActiveView();
+    haptic.tap();
+  }
+
+  Object.assign(window.CPApp, {
+    setActiveView,
+    renderDayView
+  });
+
+
   // ===== TOTALS =====
   function renderTotals(monthYM) {
     const sumMin = computeMonthMinutes(monthYM);
@@ -6229,6 +7204,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     renderQuickTemplatesUI();
     renderMonthStrip(monthYM);
     renderStatsPanel();
+    if (activeView === "day") renderDayView(activeDayISO);
+    applyActiveView();
 
     const todayNum = $("todayIconNum");
     if (todayNum) todayNum.textContent = String(new Date().getDate());
@@ -6236,12 +7213,15 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   // ===== MODALE: STATUS / BULK =====
   const vacDlg = $("vacDialog");
-  function openVac() {
+  function openVac(dateISO = "") {
     haptic.tap();
     if (!vacDlg) return;
-    const t = todayISO();
-    if ($("vacFrom") && !$("vacFrom").value) $("vacFrom").value = t;
-    if ($("vacTo") && !$("vacTo").value) $("vacTo").value = t;
+    const t = isValidDateISO(dateISO) ? dateISO : todayISO();
+    if ($("vacFrom")) $("vacFrom").value = t;
+    if ($("vacTo")) $("vacTo").value = t;
+    if ($("vacIncludeSat")) $("vacIncludeSat").checked = !!db.settings.defaultIncludeSat;
+    if ($("vacIncludeSun")) $("vacIncludeSun").checked = !!db.settings.defaultIncludeSun;
+    if ($("vacIncludeHolidays")) $("vacIncludeHolidays").checked = !!db.settings.defaultIncludeHolidays;
     window.setSystemBars?.("#ffffff");
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
     if (typeof vacDlg.showModal === "function") vacDlg.showModal();
@@ -6255,21 +7235,51 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
     window.CPApp?.setSystemBars?.("#eef1f6");
   }
+  function openVacationForDate(dateISO = activeDayISO) {
+    const target = isValidDateISO(dateISO) ? dateISO : todayISO();
+    const wasDayDialogOpen = !!(dlg && dlg.open);
+    if (wasDayDialogOpen) closeDay();
+    setTimeout(() => openVac(target), wasDayDialogOpen ? 80 : 0);
+  }
   if (vacDlg) {
     vacDlg.addEventListener("cancel", (e) => { e.preventDefault(); closeVac(); });
-    vacDlg.addEventListener("close", () => {
-      document.body.classList.remove("modal-open");
-      if (!document.querySelector("dialog[open]")) window.CPApp?.setSystemBars?.(SYSTEM_BAR_MAIN);
-    });
+    vacDlg.addEventListener("close", () => document.body.classList.remove("modal-open"));
   }
 
   const bulkDlg = $("bulkDialog");
-  function openBulk() {
+  let bulkMode = "hours";
+
+  function setBulkMode(mode = "hours") {
+    bulkMode = mode === "leave" ? "leave" : "hours";
+    const isLeave = bulkMode === "leave";
+
+    $("bulkModeHours")?.classList.toggle("active", !isLeave);
+    $("bulkModeLeave")?.classList.toggle("active", isLeave);
+    $("bulkModeHours")?.setAttribute("aria-pressed", !isLeave ? "true" : "false");
+    $("bulkModeLeave")?.setAttribute("aria-pressed", isLeave ? "true" : "false");
+
+    $("bulkHoursFields")?.toggleAttribute("hidden", isLeave);
+    $("bulkLeaveFields")?.toggleAttribute("hidden", !isLeave);
+
+    if ($("bulkTitle")) $("bulkTitle").textContent = isLeave ? "Urlop / L4 dla zakresu dni" : "Godziny dla zakresu dni";
+    if ($("bulkSubtitle")) $("bulkSubtitle").textContent = isLeave
+      ? "Ustaw urlop lub L4 dla wybranego zakresu dni."
+      : "Ustaw te same godziny pracy dla wybranego zakresu dni.";
+
+    if ($("bulkApply")) $("bulkApply").textContent = isLeave ? "Zapisz" : "Dodaj";
+    if ($("bulkRemove")) $("bulkRemove").textContent = isLeave ? "Usuń status" : "Usuń godziny";
+  }
+
+  function openBulk(mode = "hours") {
     haptic.tap();
     if (!bulkDlg) return;
     const t = todayISO();
     if ($("bulkFrom") && !$("bulkFrom").value) $("bulkFrom").value = t;
     if ($("bulkTo") && !$("bulkTo").value) $("bulkTo").value = t;
+    if ($("bulkIncludeSat")) $("bulkIncludeSat").checked = !!db.settings.defaultIncludeSat;
+    if ($("bulkIncludeSun")) $("bulkIncludeSun").checked = !!db.settings.defaultIncludeSun;
+    if ($("bulkIncludeHolidays")) $("bulkIncludeHolidays").checked = !!db.settings.defaultIncludeHolidays;
+    setBulkMode(mode);
     window.setSystemBars?.("#ffffff");
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
     if (typeof bulkDlg.showModal === "function") bulkDlg.showModal();
@@ -6285,14 +7295,12 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   }
   if (bulkDlg) {
     bulkDlg.addEventListener("cancel", (e) => { e.preventDefault(); closeBulk(); });
-    bulkDlg.addEventListener("close", () => {
-      document.body.classList.remove("modal-open");
-      if (!document.querySelector("dialog[open]")) window.CPApp?.setSystemBars?.(SYSTEM_BAR_MAIN);
-    });
+    bulkDlg.addEventListener("close", () => document.body.classList.remove("modal-open"));
   }
 
   Object.assign(window.CPApp, {
     openVacationDialog: openVac,
+    openVacationForDate,
     openBulkDialog: openBulk
   });
 
@@ -6341,122 +7349,324 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         .join(", ");
 
       const status = leaveType ? leaveLabel(leaveType) : "";
-      let ranges = "";
-      if (status && shiftText) ranges = `${status} | ${shiftText}`;
-      else if (status) ranges = status;
-      else ranges = shiftText || "—";
+      const statusHtml = status
+        ? `<span class="statusBadge ${escapeHtml(leaveType)}">${escapeHtml(status)}</span>`
+        : "";
+      const shiftHtml = shiftText
+        ? `<span class="hoursText">${escapeHtml(shiftText)}</span>`
+        : "";
+      const rangesHtml = [statusHtml, shiftHtml].filter(Boolean).join("");
 
-      const noteShort = note.length > 44 ? (note.slice(0, 44) + "…") : note;
+      const noteShort = note.length > 80 ? (note.slice(0, 80) + "…") : note;
 
       rows.push(`
-        <tr class="${leaveType ? "row-leave" : ""}">
-          <td class="c-date">${pad2(d)}.${pad2(M)}.${Y}</td>
-          <td class="c-dow">${dow}</td>
-          <td class="c-ranges">${escapeHtml(ranges)}</td>
-          <td class="c-sum">${fmtHM(mins)}</td>
-          <td class="c-note">${escapeHtml(noteShort)}</td>
+        <tr class="${leaveType ? `row-leave row-${leaveType}` : ""}">
+          <td class="c-date"><strong>${pad2(d)}.${pad2(M)}</strong><span>${Y}</span></td>
+          <td class="c-dow">${escapeHtml(dow)}</td>
+          <td class="c-ranges">${rangesHtml || "—"}</td>
+          <td class="c-sum">${mins ? fmtHM(mins) : "—"}</td>
+          <td class="c-note">${noteShort ? escapeHtml(noteShort) : "—"}</td>
         </tr>
       `);
     }
 
     const gen = new Date();
     const genText = `${gen.getFullYear()}-${pad2(gen.getMonth() + 1)}-${pad2(gen.getDate())} ${pad2(gen.getHours())}:${pad2(gen.getMinutes())}`;
+    const appTitle = escapeHtml(document.title || "Czas pracy");
 
     return `<!doctype html>
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raport godzin pracy</title>
+  <title>Raport godzin pracy — ${escapeHtml(monthLabelReminder)}</title>
   <style>
-    @page { size: A4; margin: 10mm; }
+    @page { size: A4; margin: 11mm; }
     *{ box-sizing:border-box; }
     body{
       margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
-      color:#111;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      color:#202124;
+      background:#fff;
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
     }
-    .head{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:8px;
+    .doc{
+      width:100%;
     }
-    h1{ margin:0; font-size:16px; letter-spacing:.2px; }
-    .meta{ font-size:11px; line-height:1.35; color:#333; text-align:right; white-space:nowrap; }
+    .top{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:16px;
+      align-items:start;
+      padding-bottom:12px;
+      border-bottom:2px solid #d2e3fc;
+      margin-bottom:10px;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      min-height:24px;
+      padding:0 10px;
+      border-radius:999px;
+      background:#e8f0fe;
+      color:#174ea6;
+      font-size:10.5px;
+      line-height:1;
+      font-weight:800;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
+    h1{
+      margin:8px 0 0;
+      font-size:24px;
+      line-height:1.05;
+      font-weight:760;
+      letter-spacing:-.045em;
+      color:#111318;
+    }
+    .month{
+      margin-top:5px;
+      font-size:13px;
+      line-height:1.25;
+      color:#5f6368;
+    }
+    .month strong{
+      color:#202124;
+      font-weight:750;
+    }
+    .meta{
+      min-width:145px;
+      text-align:right;
+      font-size:10.5px;
+      line-height:1.45;
+      color:#5f6368;
+      white-space:nowrap;
+    }
+    .meta strong{
+      display:block;
+      color:#202124;
+      font-size:11.5px;
+      font-weight:750;
+    }
     .summary{
       display:grid;
       grid-template-columns:repeat(4,1fr);
-      gap:6px;
-      margin:8px 0 10px;
+      gap:7px;
+      margin:10px 0 8px;
     }
     .box{
-      border:1px solid #dfe3eb;
-      border-radius:8px;
-      padding:6px;
+      min-height:58px;
+      padding:9px 10px;
+      border:1px solid #e4e8f1;
+      border-radius:14px;
       background:#f8fafd;
-      min-height:42px;
     }
-    .box strong{display:block;font-size:13px;line-height:1.1;}
-    .box span{display:block;margin-top:3px;font-size:10px;color:#555;line-height:1.15;}
-    .absenceLine{
+    .box strong{
+      display:block;
+      font-size:17px;
+      line-height:1.05;
+      font-weight:780;
+      letter-spacing:-.035em;
+      color:#111318;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .box span{
+      display:block;
+      margin-top:7px;
+      font-size:9.8px;
+      line-height:1.15;
+      font-weight:650;
+      color:#5f6368;
+    }
+    .absence{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:7px;
       margin:0 0 10px;
-      padding:7px 8px;
-      border-radius:8px;
-      background:#f3f5fb;
-      font-size:11px;
-      line-height:1.35;
+      padding:8px;
+      border:1px solid #e4e8f1;
+      border-radius:16px;
+      background:#fff;
     }
-    table{ width:100%; border-collapse:collapse; table-layout:fixed; font-size:10px; }
-    thead th{ text-align:left; padding:6px 6px; border-bottom:1px solid #cfd5e3; background:#f3f5fb; font-weight:800; }
-    tbody td{ padding:4px 6px; border-bottom:1px solid #eef1f6; vertical-align:top; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    tbody tr.row-leave td{ background:#fbfcff; }
-    .c-date{ width:72px; }
-    .c-dow{ width:34px; }
-    .c-sum{ width:52px; text-align:right; }
-    .c-note{ width:170px; }
-    .c-ranges{ width:auto; }
+    .absenceItem{
+      min-height:34px;
+      padding:7px 9px;
+      border-radius:12px;
+      background:#f8fafd;
+      font-size:10.5px;
+      line-height:1.2;
+      color:#5f6368;
+    }
+    .absenceItem strong{
+      display:block;
+      margin-bottom:3px;
+      font-size:13px;
+      line-height:1;
+      color:#202124;
+    }
+    .absenceItem.paid{background:#e8f0fe;}
+    .absenceItem.unpaid{background:#f3eefe;}
+    .absenceItem.sick{background:#fce8e6;}
+    .tableWrap{
+      border:1px solid #e4e8f1;
+      border-radius:14px;
+      overflow:hidden;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      table-layout:fixed;
+      font-size:10.2px;
+    }
+    thead th{
+      padding:8px 7px;
+      text-align:left;
+      background:#f8fafd;
+      border-bottom:1px solid #dfe3eb;
+      color:#5f6368;
+      font-weight:800;
+      white-space:nowrap;
+    }
+    tbody td{
+      padding:7px 7px;
+      border-bottom:1px solid #eef1f6;
+      vertical-align:top;
+      color:#202124;
+    }
+    tbody tr:last-child td{
+      border-bottom:none;
+    }
+    tbody tr.row-leave td{
+      background:#fbfcff;
+    }
+    .c-date{width:70px;}
+    .c-date strong{
+      display:block;
+      font-size:11px;
+      line-height:1;
+    }
+    .c-date span{
+      display:block;
+      margin-top:3px;
+      color:#6f7785;
+      font-size:9px;
+      line-height:1;
+    }
+    .c-dow{width:36px;color:#5f6368;font-weight:700;}
+    .c-sum{width:52px;text-align:right;font-weight:800;white-space:nowrap;}
+    .c-note{width:178px;color:#3c4043;line-height:1.25;white-space:normal;word-break:break-word;}
+    .c-ranges{
+      width:auto;
+      line-height:1.25;
+    }
+    .statusBadge,
+    .hoursText{
+      display:inline-flex;
+      align-items:center;
+      max-width:100%;
+      min-height:18px;
+      padding:0 7px;
+      margin:0 4px 3px 0;
+      border-radius:999px;
+      font-size:9.4px;
+      line-height:1;
+      font-weight:800;
+      vertical-align:middle;
+      white-space:nowrap;
+    }
+    .hoursText{
+      background:#eaf6ee;
+      color:#137333;
+    }
+    .statusBadge.paid{
+      background:#e8f0fe;
+      color:#174ea6;
+    }
+    .statusBadge.unpaid{
+      background:#f3eefe;
+      color:#4a148c;
+    }
+    .statusBadge.sick{
+      background:#fce8e6;
+      color:#a50e0e;
+    }
+    .empty{
+      padding:12px 8px;
+      color:#5f6368;
+      text-align:center;
+      font-size:11px;
+    }
+    .footer{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:9px;
+      padding-top:8px;
+      border-top:1px solid #eef1f6;
+      color:#6f7785;
+      font-size:9.5px;
+      line-height:1.3;
+    }
+    @media print{
+      body{background:#fff;}
+      .doc{break-inside:auto;}
+      .box,.absence,.tableWrap{box-shadow:none;}
+      tr{break-inside:avoid;}
+    }
   </style>
 </head>
-<body onload="setTimeout(function(){window.print();}, 250)">
-  <div class="head">
-    <div>
-      <h1>RAPORT GODZIN PRACY</h1>
-      <div style="font-size:11px; color:#333; margin-top:2px;">Miesiąc: <strong>${escapeHtml(monthLabelReminder)}</strong></div>
-    </div>
-    <div class="meta">
-      Wygenerowano: ${escapeHtml(genText)}
-    </div>
-  </div>
+<body onload="setTimeout(function(){window.print();}, 300)">
+  <main class="doc">
+    <section class="top">
+      <div>
+        <span class="eyebrow">Raport miesięczny</span>
+        <h1>Raport godzin pracy</h1>
+        <div class="month">Miesiąc: <strong>${escapeHtml(monthLabelReminder)}</strong></div>
+      </div>
+      <div class="meta">
+        <span>Wygenerowano</span>
+        <strong>${escapeHtml(genText)}</strong>
+      </div>
+    </section>
 
-  <div class="summary">
-    <div class="box"><strong>${escapeHtml(fmtHM(sumMin))}</strong><span>Łączna liczba godzin</span></div>
-    <div class="box"><strong>${escapeHtml(pln(money))}</strong><span>Szacowana wypłata</span></div>
-    <div class="box"><strong>${workDays}</strong><span>Dni pracujące</span></div>
-    <div class="box"><strong>${noteDays}</strong><span>Dni z notatką</span></div>
-  </div>
+    <section class="summary" aria-label="Podsumowanie miesiąca">
+      <div class="box"><strong>${escapeHtml(fmtHM(sumMin))}</strong><span>Łączna liczba godzin</span></div>
+      <div class="box"><strong>${escapeHtml(pln(money))}</strong><span>Szacowana wypłata</span></div>
+      <div class="box"><strong>${workDays}</strong><span>Dni pracujące</span></div>
+      <div class="box"><strong>${noteDays}</strong><span>Dni z notatką</span></div>
+    </section>
 
-  <div class="absenceLine">
-    Nieobecności: <strong>urlop płatny ${leaveStats.paid}</strong>, <strong>urlop bezpłatny ${leaveStats.unpaid}</strong>, <strong>L4 ${leaveStats.sick}</strong>.
-  </div>
+    <section class="absence" aria-label="Nieobecności">
+      <div class="absenceItem paid"><strong>${leaveStats.paid} dni</strong>Urlop płatny</div>
+      <div class="absenceItem unpaid"><strong>${leaveStats.unpaid} dni</strong>Urlop bezpłatny</div>
+      <div class="absenceItem sick"><strong>${leaveStats.sick} dni</strong>Zwolnienie L4</div>
+    </section>
 
-  <table>
-    <thead>
-      <tr>
-        <th class="c-date">Data</th>
-        <th class="c-dow">Dzień</th>
-        <th class="c-ranges">Godziny / status</th>
-        <th class="c-sum">Suma</th>
-        <th class="c-note">Notatka (skrót)</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${rows.length ? rows.join("") : `<tr><td colspan="5" style="padding:8px 6px; color:#666;">Brak wpisów do wyświetlenia.</td></tr>`}
-    </tbody>
-  </table>
+    <section class="tableWrap" aria-label="Lista wpisów">
+      <table>
+        <thead>
+          <tr>
+            <th class="c-date">Data</th>
+            <th class="c-dow">Dzień</th>
+            <th class="c-ranges">Godziny / status</th>
+            <th class="c-sum">Suma</th>
+            <th class="c-note">Notatka</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.length ? rows.join("") : `<tr><td colspan="5" class="empty">Brak wpisów do wyświetlenia.</td></tr>`}
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="footer">
+      <span>Raport wygenerowany lokalnie w aplikacji ${appTitle}.</span>
+      <span>Dane pochodzą z pamięci urządzenia.</span>
+    </footer>
+  </main>
 </body>
 </html>`;
   }
@@ -6467,12 +7677,17 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     const monthPick = $("monthPick");
     const monthYM = monthOverride || ((monthPick && monthPick.value) ? monthPick.value : ym(todayISO()));
 
-    const html = buildReportHTML(monthYM);
+    // Ważne na iOS/Safari: nowe okno otwieramy natychmiast po tapnięciu,
+    // a dopiero potem budujemy HTML raportu.
     const w = window.open("", "_blank");
+    const html = buildReportHTML(monthYM);
+
     if (!w) {
-      notify("Twoja przeglądarka zablokowała nowe okno. Zezwól na pop-upy dla tej strony i spróbuj ponownie.");
+      downloadTextFile(`czas-pracy_${monthYM}_raport.html`, html, "text/html;charset=utf-8");
+      notify("Przeglądarka zablokowała nowe okno, więc pobrałem raport jako plik HTML. Otwórz go i wybierz drukowanie / zapisz jako PDF.");
       return;
     }
+
     w.document.open();
     w.document.write(html);
     w.document.close();
@@ -6566,12 +7781,12 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     const chartHeight = chartBottom - chartTop;
     const baseY = chartBottom;
     const count = Math.max(1, items.length);
-    const sidePad = 34;
+    const sidePad = type === "line" ? 22 : 20;
     const gap = type === "line" ? Math.max(24, gapWidth) : gapWidth;
     const pointStep = type === "line" ? Math.max(38, barWidth + gap) : barWidth + gap;
     const usedW = type === "line" ? pointStep * Math.max(0, count - 1) : (barWidth * count + gap * (count - 1));
     chartWidth = Math.max(chartWidth, usedW + sidePad * 2);
-    const startX = type === "line" ? sidePad : Math.max(sidePad, Math.round((chartWidth - usedW) / 2));
+    const startX = sidePad;
 
     const grid = [0.25, 0.5, 0.75, 1].map(fr => {
       const y = Math.round(baseY - chartHeight * fr);
@@ -6580,7 +7795,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     const points = items.map((item, idx) => {
       const min = valueFn(item);
-      const x = type === "line" ? startX + idx * pointStep : Math.max(sidePad, Math.round((chartWidth - usedW) / 2)) + idx * (barWidth + gap);
+      const x = type === "line" ? startX + idx * pointStep : startX + idx * (barWidth + gap);
       const h = Math.max(2, Math.round((min / maxMin) * chartHeight));
       const y = baseY - h;
       const hours = Math.round((min / 60) * 10) / 10;
@@ -6603,7 +7818,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
         ${areaD ? `<path class="lineArea" d="${areaD}"></path>` : ""}
         ${lineD ? `<path class="linePath" d="${lineD}"></path>` : ""}
         ${points.map(p => `
-          ${p.min > 0 ? `<circle class="lineDot" cx="${p.x}" cy="${p.y}" r="6"><title>${escapeHtml(titleFn(p.item))}</title></circle>` : ""}
+          ${p.min > 0 ? `<circle class="lineDot" ${p.item.date ? `data-chart-date="${escapeHtml(p.item.date)}"` : ""} cx="${p.x}" cy="${p.y}" r="6"><title>${escapeHtml(titleFn(p.item))}</title></circle>` : ""}
           <text class="value" x="${p.x}" y="${Math.max(13, p.y - 10)}" text-anchor="middle">${escapeHtml(p.value)}</text>
           <text class="label" x="${p.x}" y="${labelY}" text-anchor="middle">${escapeHtml(p.label)}</text>
         `).join("")}
@@ -6612,7 +7827,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       chartBody = points.map(p => {
         const active = p.min > 0 ? "bar" : "barSoft";
         return `
-          <rect class="${active}" x="${p.x}" y="${p.y}" width="${barWidth}" height="${p.h}" rx="8">
+          <rect class="${active}" ${p.item.date ? `data-chart-date="${escapeHtml(p.item.date)}"` : ""} x="${p.x}" y="${p.y}" width="${barWidth}" height="${p.h}" rx="8">
             <title>${escapeHtml(titleFn(p.item))}</title>
           </rect>
           <text class="value" x="${p.x + barWidth / 2}" y="${Math.max(13, p.y - 7)}" text-anchor="middle">${escapeHtml(p.value)}</text>
@@ -6657,7 +7872,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
       valueFn:item => item.min,
       titleFn:item => `${item.date}: ${fmtHM(item.min)}`,
       showLabelFn:() => true,
-      chartWidth:Math.max(340, Math.min(760, items.length * 42 + 70)),
+      chartWidth:Math.max(300, Math.min(720, items.length * 42 + 44)),
       barWidth:22,
       gapWidth:18
     });
@@ -6681,7 +7896,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     $("statsTabYear")?.classList.toggle("active", activeStatsMode === "year");
     $("monthStatsView")?.classList.toggle("active", activeStatsMode === "month");
     $("yearStatsView")?.classList.toggle("active", activeStatsMode === "year");
-    if (typeof updateChartModeButtons === "function") updateChartModeButtons();
+    updateChartModeButtons();
     renderStatsPanel();
   }
 
@@ -6789,9 +8004,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     setStatsMode(activeStatsMode);
   }
 
-  function openYearStatsPreview() {
-    openStatsPanel("year");
-  }
 
   Object.assign(window.CPApp, {
     openStatsPanel
@@ -6861,7 +8073,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   function buildYearCsv(year) {
     const data = computeYearStats(year);
     const rows = [[
-      "Miesiąc", "Godziny", "Godziny dziesiętnie", "Wypłata", "Dni pracy", "Urlop płatny", "Urlop bezpłatny", "L4", "Notatki"
+      "Miesiąc", "Godziny", "Godziny dziesiętnie", "Wypłata", "Dni pracujące", "Urlop płatny", "Urlop bezpłatny", "Zwolnienie L4", "Notatki"
     ]];
 
     for (const m of data.months) {
@@ -6965,14 +8177,94 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   }
 
   // ===== UI =====
+  $("dayViewPage")?.addEventListener("click", (e) => {
+    const btn = e.target.closest?.("button");
+    if (!btn || !$("dayViewPage")?.contains(btn)) return;
+
+    const base = parseISODate(activeDayISO) || new Date();
+
+    switch (btn.id) {
+      case "dayViewBackToMonth":
+        setActiveView("month");
+        break;
+      case "dayViewPrev":
+        setActiveView("day", isoFromDate(addDays(base, -1)));
+        break;
+      case "dayViewNext":
+        setActiveView("day", isoFromDate(addDays(base, 1)));
+        break;
+      case "dayViewAddHours":
+        openDayAddForm(activeDayISO);
+        break;
+      case "dayViewAddLeave":
+        openVacationForDate(activeDayISO);
+        break;
+      case "dayViewOpenModal":
+        openDay(activeDayISO);
+        break;
+    }
+  });
+
+  (function enableDayViewSwipe() {
+    const page = $("dayViewPage");
+    if (!page || page.dataset.swipeReady) return;
+
+    let sx = 0, sy = 0, tracking = false, locked = null;
+    const LOCK_START = 10;
+    const THRESH_X = 56;
+
+    const nextDay = (delta) => {
+      const base = parseISODate(activeDayISO) || new Date();
+      setActiveView("day", isoFromDate(addDays(base, delta)));
+    };
+
+    page.addEventListener("touchstart", (e) => {
+      if (e.touches.length !== 1) return;
+      if (e.target.closest?.("button,input,textarea,select,a")) return;
+      const t = e.touches[0];
+      sx = t.clientX;
+      sy = t.clientY;
+      tracking = true;
+      locked = null;
+    }, { passive:true });
+
+    page.addEventListener("touchmove", (e) => {
+      if (!tracking || e.touches.length !== 1) return;
+      const t = e.touches[0];
+      const dx = t.clientX - sx;
+      const dy = t.clientY - sy;
+
+      if (!locked && (Math.abs(dx) > LOCK_START || Math.abs(dy) > LOCK_START)) {
+        locked = Math.abs(dx) > Math.abs(dy) ? "h" : "v";
+      }
+
+      if (locked === "h") e.preventDefault();
+    }, { passive:false });
+
+    page.addEventListener("touchend", (e) => {
+      if (!tracking) return;
+      tracking = false;
+      if (locked !== "h") return;
+
+      const t = e.changedTouches[0];
+      const dx = t.clientX - sx;
+      if (Math.abs(dx) < THRESH_X) return;
+
+      haptic.commit();
+      nextDay(dx < 0 ? 1 : -1);
+    }, { passive:true });
+
+    page.addEventListener("touchcancel", () => {
+      tracking = false;
+      locked = null;
+    }, { passive:true });
+
+    page.dataset.swipeReady = "1";
+  })();
+
   const dlgBackBtn = $("dlgBack");
   if (dlgBackBtn) dlgBackBtn.onclick = () => { haptic.tap(); closeDay(); };
 
-  const openVacDialogBtn = $("openVacDialog");
-  if (openVacDialogBtn) openVacDialogBtn.onclick = openVac;
-
-  const openBulkDialogBtn = $("openBulkDialog");
-  if (openBulkDialogBtn) openBulkDialogBtn.onclick = openBulk;
 
   const vacBackBtn = $("vacBack");
   if (vacBackBtn) vacBackBtn.onclick = closeVac;
@@ -7099,13 +8391,16 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     bulkApplyBtn.onclick = () => {
       const from = $("bulkFrom")?.value;
       const to = $("bulkTo")?.value;
-      const start = $("bulkStart")?.value;
-      const end = $("bulkEnd")?.value;
-      const res = applyBulkHours(from, to, start, end, "add", {
+      const opts = {
         includeSat: $("bulkIncludeSat")?.checked,
         includeSun: $("bulkIncludeSun")?.checked,
         includeHolidays: $("bulkIncludeHolidays")?.checked
-      });
+      };
+
+      const res = bulkMode === "leave"
+        ? applyLeaveRange(from, to, $("bulkLeaveType")?.value || "paid", opts)
+        : applyBulkHours(from, to, $("bulkStart")?.value, $("bulkEnd")?.value, "add", opts);
+
       if (res.ok) {
         haptic.success();
         closeBulk();
@@ -7118,25 +8413,32 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     bulkRemoveBtn.onclick = () => {
       const from = $("bulkFrom")?.value;
       const to = $("bulkTo")?.value;
-      const start = $("bulkStart")?.value;
-      const end = $("bulkEnd")?.value;
-      const res = applyBulkHours(from, to, start, end, "remove", {
+      const opts = {
         includeSat: $("bulkIncludeSat")?.checked,
         includeSun: $("bulkIncludeSun")?.checked,
         includeHolidays: $("bulkIncludeHolidays")?.checked
-      });
+      };
+
+      const res = bulkMode === "leave"
+        ? clearLeaveRange(from, to, opts)
+        : applyBulkHours(from, to, $("bulkStart")?.value, $("bulkEnd")?.value, "remove", opts);
+
       if (res.ok) haptic.warning();
     };
   }
+
+  document.querySelector(".rangeModeTabs")?.addEventListener("click", (e) => {
+    const btn = e.target.closest?.(".rangeModeTab");
+    if (!btn) return;
+    if (btn.id === "bulkModeHours") { haptic.tap(); setBulkMode("hours"); }
+    if (btn.id === "bulkModeLeave") { haptic.tap(); setBulkMode("leave"); }
+  });
 
   const monthSummaryCard = $("monthSummaryCard");
   if (monthSummaryCard) monthSummaryCard.onclick = () => openStatsPanel("month");
 
   const checkUpdateBtn = $("checkUpdateBtn");
   if (checkUpdateBtn) checkUpdateBtn.onclick = checkForAppUpdate;
-
-  $("statsTabMonth")?.addEventListener("click", () => { haptic.tap(); setStatsMode("month"); });
-  $("statsTabYear")?.addEventListener("click", () => { haptic.tap(); setStatsMode("year"); });
 
   function updateChartModeButtons() {
     $("monthChartBars")?.classList.toggle("active", activeMonthChartType === "bar");
@@ -7145,42 +8447,89 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     $("yearChartLine")?.classList.toggle("active", activeYearChartType === "line");
   }
 
-  $("monthChartBars")?.addEventListener("click", () => { activeMonthChartType = "bar"; haptic.tap(); updateChartModeButtons(); renderMonthStats(); });
-  $("monthChartLine")?.addEventListener("click", () => { activeMonthChartType = "line"; haptic.tap(); updateChartModeButtons(); renderMonthStats(); });
-  $("yearChartBars")?.addEventListener("click", () => { activeYearChartType = "bar"; haptic.tap(); updateChartModeButtons(); renderYearStats(); });
-  $("yearChartLine")?.addEventListener("click", () => { activeYearChartType = "line"; haptic.tap(); updateChartModeButtons(); renderYearStats(); });
+  $("yearStatsDialog")?.addEventListener("click", (e) => {
+    const chartTarget = e.target.closest?.("[data-chart-date]");
+    if (chartTarget) {
+      const date = chartTarget.getAttribute("data-chart-date");
+      if (date) {
+        closeYearStats();
+        setTimeout(() => setActiveView("day", date), 90);
+      }
+      return;
+    }
 
-  $("monthStatsPrev")?.addEventListener("click", () => {
-    activeStatsMonth = addMonths(activeStatsMonth || $("monthPick")?.value || ym(todayISO()), -1);
-    haptic.tap();
-    renderStatsPanel();
-  });
-  $("monthStatsNext")?.addEventListener("click", () => {
-    activeStatsMonth = addMonths(activeStatsMonth || $("monthPick")?.value || ym(todayISO()), 1);
-    haptic.tap();
-    renderStatsPanel();
-  });
-  $("monthStatsPdf")?.addEventListener("click", () => openReportPdf(activeStatsMonth));
-  $("monthStatsCsv")?.addEventListener("click", () => exportMonthCsv(activeStatsMonth));
+    const btn = e.target.closest?.("button");
+    if (!btn) return;
 
-  $("yearStatsPrev")?.addEventListener("click", () => {
-    activeYearStatsYear = (activeYearStatsYear || yearFromMonthYM($("monthPick")?.value || ym(todayISO()))) - 1;
-    haptic.tap();
-    renderStatsPanel();
+    switch (btn.id) {
+      case "statsTabMonth":
+        haptic.tap();
+        setStatsMode("month");
+        break;
+      case "statsTabYear":
+        haptic.tap();
+        setStatsMode("year");
+        break;
+      case "monthChartBars":
+        activeMonthChartType = "bar";
+        haptic.tap();
+        updateChartModeButtons();
+        renderMonthStats();
+        break;
+      case "monthChartLine":
+        activeMonthChartType = "line";
+        haptic.tap();
+        updateChartModeButtons();
+        renderMonthStats();
+        break;
+      case "yearChartBars":
+        activeYearChartType = "bar";
+        haptic.tap();
+        updateChartModeButtons();
+        renderYearStats();
+        break;
+      case "yearChartLine":
+        activeYearChartType = "line";
+        haptic.tap();
+        updateChartModeButtons();
+        renderYearStats();
+        break;
+      case "monthStatsPrev":
+        activeStatsMonth = addMonths(activeStatsMonth || $("monthPick")?.value || ym(todayISO()), -1);
+        haptic.tap();
+        renderStatsPanel();
+        break;
+      case "monthStatsNext":
+        activeStatsMonth = addMonths(activeStatsMonth || $("monthPick")?.value || ym(todayISO()), 1);
+        haptic.tap();
+        renderStatsPanel();
+        break;
+      case "monthStatsPdf":
+        openReportPdf(activeStatsMonth);
+        break;
+      case "monthStatsCsv":
+        exportMonthCsv(activeStatsMonth);
+        break;
+      case "yearStatsPrev":
+        activeYearStatsYear = (activeYearStatsYear || yearFromMonthYM($("monthPick")?.value || ym(todayISO()))) - 1;
+        haptic.tap();
+        renderStatsPanel();
+        break;
+      case "yearStatsNext":
+        activeYearStatsYear = (activeYearStatsYear || yearFromMonthYM($("monthPick")?.value || ym(todayISO()))) + 1;
+        haptic.tap();
+        renderStatsPanel();
+        break;
+      case "yearStatsCsv":
+        exportYearCsv(activeYearStatsYear);
+        break;
+      case "yearStatsPanelClose":
+        closeYearStats();
+        break;
+    }
   });
-  $("yearStatsNext")?.addEventListener("click", () => {
-    activeYearStatsYear = (activeYearStatsYear || yearFromMonthYM($("monthPick")?.value || ym(todayISO()))) + 1;
-    haptic.tap();
-    renderStatsPanel();
-  });
-  $("yearStatsCsv")?.addEventListener("click", () => exportYearCsv(activeYearStatsYear));
-
-  $("yearStatsPanelClose")?.addEventListener("click", closeYearStats);
   $("yearStatsDialog")?.addEventListener("cancel", (e) => { e.preventDefault(); closeYearStats(); });
-  $("yearStatsDialog")?.addEventListener("close", () => {
-    document.body.classList.remove("modal-open");
-    if (!document.querySelector("dialog[open]")) window.CPApp?.setSystemBars?.(SYSTEM_BAR_MAIN);
-  });
+  $("yearStatsDialog")?.addEventListener("close", () => document.body.classList.remove("modal-open"));
 
   const backupBtn = $("backupJson");
   if (backupBtn) {
@@ -7250,6 +8599,18 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     leaveQuotaEl.addEventListener("input", renderAll);
     leaveQuotaEl.addEventListener("change", renderAll);
   }
+
+  ["defaultIncludeSat", "defaultIncludeSun", "defaultIncludeHolidays", "backupReminderDays"].forEach((id) => {
+    const el = $(id);
+    if (!el) return;
+    const saveSettings = () => {
+      readSettingsFromUI();
+      save();
+      setStatus("Zapisano ustawienia.");
+    };
+    el.addEventListener("change", saveSettings);
+    if (id === "backupReminderDays") el.addEventListener("input", saveSettings);
+  });
 
   const tplAddBtn = $("tplAdd");
   if (tplAddBtn) {
@@ -7526,6 +8887,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     migrateIfNeeded();
     hydrateSettingsUI();
     setupTemplateDelegation();
+    setupCalendarDayDelegation();
 
     const t = todayISO();
     const monthPickEl = $("monthPick");
@@ -7547,7 +8909,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     const last = getLastBackupISO();
     const ds = daysSince(last);
 
-    if (ds >= BACKUP_REMIND_EVERY_DAYS){
+    if (ds >= getBackupReminderDays()){
       setTimeout(async ()=>{
         const msg = last
           ? `Ostatni backup: ${ds} dni temu.\nZrób kopię zapasową teraz?`
@@ -7660,18 +9022,20 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   $("fabScrim")?.addEventListener("click", () => { closeFabMenu(); haptic.tap(); });
   $("fabScrim")?.addEventListener("touchmove", (e) => e.preventDefault(), { passive:false });
-  $("fabTodayAction")?.addEventListener("click", () => {
-    closeFabMenu();
-    setTimeout(() => window.CPApp?.openWorkDay?.(window.CPApp?.workTodayISO?.()), 80);
-  });
-  $("fabBulkAction")?.addEventListener("click", () => {
-    closeFabMenu();
-    setTimeout(() => window.CPApp?.openBulkDialog?.(), 80);
-  });
 
-  $("fabVacationAction")?.addEventListener("click", () => {
+  $("fabActions")?.addEventListener("click", (e) => {
+    const btn = e.target.closest?.(".fabActionPill");
+    if (!btn) return;
+
     closeFabMenu();
-    setTimeout(() => window.CPApp?.openVacationDialog?.(), 80);
+
+    if (btn.id === "fabTodayAction") {
+      setTimeout(() => window.CPApp?.openWorkDay?.(window.CPApp?.workTodayISO?.()), 80);
+    }
+
+    if (btn.id === "fabBulkAction") {
+      setTimeout(() => window.CPApp?.openBulkDialog?.(), 80);
+    }
   });
 
   $("vacPanelClose")?.addEventListener("click", () => { $("vacBack")?.click(); });
@@ -7718,7 +9082,7 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
   const drawerMeta = {
     main: { title:"Czas pracy", sub:"Kalendarz godzin i urlopów", footer:true },
-    settings: { title:"Ustawienia", sub:"Stawka, urlop i szablony pracy", footer:false },
+    settings: { title:"Ustawienia", sub:"Stawka, zakresy i szablony pracy", footer:false },
     tools: { title:"Narzędzia", sub:"Raporty, kopia danych i czyszczenie", footer:false },
     info: { title:"Informacje", sub:"Wersja aplikacji i status błędów", footer:false }
   };
@@ -7766,29 +9130,38 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   drawer?.addEventListener("click", (e) => { if (e.target === drawer) closeDrawer(); });
   drawer?.addEventListener("touchmove", (e) => { if (e.target === drawer) e.preventDefault(); }, { passive:false });
   drawer?.addEventListener("cancel", (e) => { e.preventDefault(); closeDrawer(); });
-  drawer?.addEventListener("close", () => {
-    document.body.classList.remove("drawer-open");
-    unlockPageScroll("drawer");
-    if (!document.querySelector("dialog[open]")) window.CPApp?.setSystemBars?.(SYSTEM_BAR_MAIN);
-  });
+  drawer?.addEventListener("close", () => { document.body.classList.remove("drawer-open"); unlockPageScroll("drawer"); });
   drawerBack?.addEventListener("click", () => {
     if (currentDrawerView === "main") closeDrawer();
     else showDrawerView("main");
     haptic.tap();
   });
 
-  $("drawerMonthView")?.addEventListener("click", () => { closeDrawer(); document.querySelector(".calCard")?.scrollIntoView({ behavior:"smooth", block:"start" }); });
+  $("drawerMonthView")?.addEventListener("click", () => {
+    closeDrawer();
+    setTimeout(() => window.CPApp?.setActiveView?.("month"), 90);
+  });
+  $("drawerDayView")?.addEventListener("click", () => {
+    closeDrawer();
+    setTimeout(() => window.CPApp?.setActiveView?.("day"), 90);
+  });
   $("drawerYearSummary")?.addEventListener("click", () => {
     closeDrawer();
     setTimeout(() => window.CPApp?.openStatsPanel?.("month"), 120);
   });
-  ["drawerWeekView","drawerDayView"].forEach((id) => {
-    $(id)?.addEventListener("click", () => {
-      closeDrawer();
-      const label = id === "drawerWeekView" ? "Widok tygodnia" : "Widok dnia";
-      const st = $("status");
-      if (st) st.textContent = `${label} — wkrótce.`;
-    });
+  $("drawerWeekView")?.addEventListener("click", () => {
+    closeDrawer();
+    window.CPApp?.haptic?.tap?.();
+    const toast = $("appToast");
+    if (toast) {
+      toast.textContent = "Widok tygodnia — wkrótce.";
+      toast.hidden = false;
+      requestAnimationFrame(() => toast.classList.add("show"));
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => { toast.hidden = true; }, 180);
+      }, 2400);
+    }
   });
   $("openEmployerSettings")?.addEventListener("click", () => { showDrawerView("settings"); haptic.tap(); });
   $("openSystemTools")?.addEventListener("click", () => { showDrawerView("tools"); haptic.tap(); });
@@ -7797,8 +9170,16 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   $("clearAppErrors")?.addEventListener("click", () => {
     window.__appErrors = [];
     refreshAppInfo();
-    const st = $("status");
-    if (st) st.textContent = "Lista błędów została wyczyszczona.";
+    const toast = $("appToast");
+    if (toast) {
+      toast.textContent = "Lista błędów została wyczyszczona.";
+      toast.hidden = false;
+      requestAnimationFrame(() => toast.classList.add("show"));
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => { toast.hidden = true; }, 180);
+      }, 2400);
+    }
     haptic.success();
   });
 
