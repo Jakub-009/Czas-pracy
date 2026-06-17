@@ -4730,20 +4730,19 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
             </div>
 
             <div class="statsGrid monthStatsGrid">
-              <div class="statSoftBox"><strong id="monthStatsWorkDays">0</strong><span>Dni z godzinami</span></div>
+              <div class="statSoftBox"><strong id="monthStatsWorkDays">0</strong><span>Dni pracujące</span></div>
               <div class="statSoftBox"><strong id="monthStatsAbsences">0</strong><span>Nieobecności razem</span></div>
               <div class="statSoftBox"><strong id="monthStatsPaid">0 dni</strong><span>Urlop płatny</span></div>
               <div class="statSoftBox"><strong id="monthStatsUnpaid">0 dni</strong><span>Urlop bezpłatny</span></div>
-              <div class="statSoftBox"><strong id="monthStatsSick">0 dni</strong><span>L4</span></div>
+              <div class="statSoftBox"><strong id="monthStatsSick">0 dni</strong><span>Zwolnienie L4</span></div>
               <div class="statSoftBox"><strong id="monthStatsNotes">0</strong><span>Dni z notatką</span></div>
             </div>
 
             <div class="statsExportBlock">
-              <div class="statsSectionLabel">Eksport</div>
-              <div class="statsSectionHint">PDF do wydruku · CSV do arkusza.</div>
+              <div class="statsSectionLabel">Wyeksportuj statystyki</div>
               <div class="statsActions">
                 <button class="tonal" id="monthStatsPdf" type="button">Raport PDF</button>
-                <button class="tonal" id="monthStatsCsv" type="button">CSV</button>
+                <button class="tonal" id="monthStatsCsv" type="button">Raport CSV</button>
               </div>
             </div>
 
@@ -4751,8 +4750,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               <div class="statsChartHead">
                 <strong>Wykres godzin w miesiącu</strong>
                 <div class="chartModeToggle" aria-label="Typ wykresu miesiąca">
-                  <button class="active" id="monthChartBars" type="button">Słupki</button>
-                  <button id="monthChartLine" type="button">Linia</button>
+                  <button class="active" id="monthChartBars" type="button">Słupkowy</button>
+                  <button id="monthChartLine" type="button">Liniowy</button>
                 </div>
               </div>
               <div class="statsChartScroll">
@@ -4760,8 +4759,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               </div>
             </div>
 
-            <div class="statsSectionLabel statsTableLabel">Wpisy w miesiącu</div>
-            <div class="statsSectionHint">Dni z godzinami, nieobecnością albo notatką.</div>
+            <div class="statsSectionLabel statsTableLabel">Podsumowanie miesiąca</div>
+            <div class="statsSectionHint">Dni pracujące, z nieobecnością albo notatką.</div>
             <div class="statsTableWrap">
               <table class="statsTable">
                 <thead>
@@ -4796,19 +4795,18 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
             </div>
 
             <div class="statsGrid yearStatsGrid">
-              <div class="statSoftBox"><strong id="yearStatsWorkDays">0</strong><span>Dni pracy</span></div>
+              <div class="statSoftBox"><strong id="yearStatsWorkDays">0</strong><span>Dni pracujące</span></div>
               <div class="statSoftBox"><strong id="yearStatsAbsences">0</strong><span>Nieobecności razem</span></div>
-              <div class="statSoftBox"><strong id="yearStatsPaidUsed">0 dni</strong><span>Urlop płatny wykorzystany</span></div>
-              <div class="statSoftBox"><strong id="yearStatsPaidLeft">0 dni</strong><span>Pozostało urlopu płatnego</span></div>
+              <div class="statSoftBox"><strong id="yearStatsPaidUsed">0 dni</strong><span>Urlop wykorzystany</span></div>
+              <div class="statSoftBox"><strong id="yearStatsPaidLeft">0 dni</strong><span>Pozostało urlopu</span></div>
               <div class="statSoftBox"><strong id="yearStatsUnpaid">0 dni</strong><span>Urlop bezpłatny</span></div>
-              <div class="statSoftBox"><strong id="yearStatsSick">0 dni</strong><span>L4</span></div>
+              <div class="statSoftBox"><strong id="yearStatsSick">0 dni</strong><span>Zwolnienie L4</span></div>
             </div>
 
             <div class="statsExportBlock">
-              <div class="statsSectionLabel">Eksport danych</div>
-              <div class="statsSectionHint">CSV zawiera miesięczne podsumowanie roku do dalszej obróbki w arkuszu.</div>
+              <div class="statsSectionLabel">Wyeksportuj statystyki</div>
               <div class="statsActions">
-                <button class="tonal" id="yearStatsCsv" type="button">CSV</button>
+                <button class="tonal" id="yearStatsCsv" type="button">Raport CSV</button>
               </div>
             </div>
 
@@ -4816,8 +4814,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               <div class="statsChartHead">
                 <strong>Wykres godzin w roku</strong>
                 <div class="chartModeToggle" aria-label="Typ wykresu roku">
-                  <button class="active" id="yearChartBars" type="button">Słupki</button>
-                  <button id="yearChartLine" type="button">Linia</button>
+                  <button class="active" id="yearChartBars" type="button">Słupkowy</button>
+                  <button id="yearChartLine" type="button">Liniowy</button>
                 </div>
               </div>
               <div class="statsChartScroll">
