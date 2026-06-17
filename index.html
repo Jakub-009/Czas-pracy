@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.2.2.0</title>
+  <title>Czas pracy 4.2.2.1</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2534,11 +2534,11 @@ body.drawer-open{
 
 /* Mniejsze chipy szablonów w modalach */
 .templateChip{
-  min-height:30px !important;
-  height:30px !important;
-  padding:0 10px !important;
-  font-size:12.5px !important;
-  font-weight:650 !important;
+  min-height:30px;
+  height:30px;
+  padding:0 10px;
+  font-size:12.5px;
+  font-weight:650;
 }
 
 /* Przyciski akcji w modalach — mniej toporne */
@@ -2619,10 +2619,10 @@ body.drawer-open{
     height:3.2px;
   }
   .templateChip{
-    min-height:29px !important;
-    height:29px !important;
-    font-size:12px !important;
-    padding:0 9px !important;
+    min-height:29px;
+    height:29px;
+    font-size:12px;
+    padding:0 9px;
   }
 }
 
@@ -2751,7 +2751,7 @@ dialog#mainMenuDialog.drawerDialog{
 .fabGoogle.is-open .fab::after{transform:translate(-50%,-50%) rotate(-45deg);width:24px}
 .fabActionPill{min-height:46px;height:46px;padding:0 17px 0 14px;gap:11px;font-size:15.5px;font-weight:550;border-radius:999px}
 .fabActionPill svg{width:21px;height:21px}
-.templateChip{min-height:29px !important;height:29px !important;padding:0 9px !important;font-size:12px !important;font-weight:650 !important}
+.templateChip{min-height:29px;height:29px;padding:0 9px;font-size:12px;font-weight:650}
 
 /* Margines i przewijanie dużych bottom sheetów */
 @media(max-width:679px){
@@ -3663,27 +3663,8 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   max-width:none;
 }
 
-.monthStatsChart{
-  width:930px;
-  min-width:930px;
-}
-
-.yearStatsChart{
-  width:620px;
-  min-width:620px;
-}
-
 @media(max-width:430px){
-  .monthStatsChart{
-    width:1180px;
-    min-width:1180px;
   }
-
-  .yearStatsChart{
-    width:640px;
-    min-width:640px;
-  }
-}
 
 
 
@@ -3770,6 +3751,69 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 .statsChart .lineArea{
   fill:#d2e3fc;
   opacity:.45;
+}
+
+
+
+/* ===== Czas pracy 4.2.2.1: poprawione statystyki miesięczne ===== */
+.monthStatsGrid .statSoftBox,
+.yearStatsGrid .statSoftBox{
+  padding:10px 11px;
+}
+
+.monthStatsGrid .statSoftBox strong,
+.yearStatsGrid .statSoftBox strong{
+  font-size:19.5px;
+}
+
+.statsChart{
+  width:auto;
+  min-width:0;
+  min-height:0;
+}
+
+.statsChartCard{
+  margin-bottom:14px;
+}
+
+.statsChartScroll{
+  padding-bottom:0;
+}
+
+.statsSectionHint{
+  max-width:560px;
+}
+
+.statsTableWrap{
+  margin-top:8px;
+}
+
+@media(max-width:430px){
+  .statsHero{
+    padding:14px 15px;
+  }
+
+  .statsHero strong{
+    font-size:29px;
+  }
+
+  .statsGrid{
+    gap:8px;
+  }
+
+  .statSoftBox{
+    border-radius:18px;
+  }
+
+  .statsTable{
+    min-width:0;
+    font-size:12.5px;
+  }
+
+  .statsTable th,
+  .statsTable td{
+    padding:8px 8px;
+  }
 }
 
 
@@ -3949,7 +3993,7 @@ dialog#vacDialog.googlePanel #clearVacationRange{
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;
-  padding-bottom:calc(8px + env(safe-area-inset-bottom));
+  padding-bottom:calc(16px + env(safe-area-inset-bottom));
   background:#fff;
   touch-action:pan-y;
 }
@@ -4668,16 +4712,18 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               </svg>
             </div>
 
-            <div class="statsGrid">
-              <div class="statSoftBox"><strong id="monthStatsWorkDays">0</strong><span>Dni pracy</span></div>
-              <div class="statSoftBox"><strong id="monthStatsAbsences">0</strong><span>Nieobecności</span></div>
-              <div class="statSoftBox"><strong id="monthStatsLeave">0</strong><span>Urlopy</span></div>
-              <div class="statSoftBox"><strong id="monthStatsNotes">0</strong><span>Notatki</span></div>
+            <div class="statsGrid monthStatsGrid">
+              <div class="statSoftBox"><strong id="monthStatsWorkDays">0</strong><span>Dni z godzinami</span></div>
+              <div class="statSoftBox"><strong id="monthStatsAbsences">0</strong><span>Nieobecności razem</span></div>
+              <div class="statSoftBox"><strong id="monthStatsPaid">0 dni</strong><span>Urlop płatny</span></div>
+              <div class="statSoftBox"><strong id="monthStatsUnpaid">0 dni</strong><span>Urlop bezpłatny</span></div>
+              <div class="statSoftBox"><strong id="monthStatsSick">0 dni</strong><span>L4</span></div>
+              <div class="statSoftBox"><strong id="monthStatsNotes">0</strong><span>Dni z notatką</span></div>
             </div>
 
             <div class="statsExportBlock">
-              <div class="statsSectionLabel">Eksport danych</div>
-              <div class="statsSectionHint">PDF przygotowuje czytelny raport do wydruku, a CSV otworzysz w Excelu lub Google Sheets.</div>
+              <div class="statsSectionLabel">Eksport</div>
+              <div class="statsSectionHint">PDF do wydruku · CSV do arkusza.</div>
               <div class="statsActions">
                 <button class="tonal" id="monthStatsPdf" type="button">Raport PDF</button>
                 <button class="tonal" id="monthStatsCsv" type="button">CSV</button>
@@ -4697,10 +4743,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               </div>
             </div>
 
-            <div class="statsSectionLabel statsTableLabel">Dni uwzględnione w miesiącu</div>
-            <div class="statsSectionHint">Tabela pokazuje dni, w których zapisano godziny, nieobecność albo notatkę.</div>
-            <div class="statsSectionLabel statsTableLabel">Miesięczne podsumowanie roku</div>
-            <div class="statsSectionHint">Tabela pokazuje godziny, dni pracy oraz nieobecności w każdym miesiącu.</div>
+            <div class="statsSectionLabel statsTableLabel">Wpisy w miesiącu</div>
+            <div class="statsSectionHint">Dni z godzinami, nieobecnością albo notatką.</div>
             <div class="statsTableWrap">
               <table class="statsTable">
                 <thead>
@@ -4744,8 +4788,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
             </div>
 
             <div class="statsExportBlock">
-              <div class="statsSectionLabel">Eksport danych</div>
-              <div class="statsSectionHint">CSV zawiera miesięczne podsumowanie roku do dalszej obróbki w arkuszu.</div>
+              <div class="statsSectionLabel">Eksport</div>
+              <div class="statsSectionHint">CSV do arkusza z podsumowaniem miesięcy.</div>
               <div class="statsActions">
                 <button class="tonal" id="yearStatsCsv" type="button">CSV</button>
               </div>
@@ -4764,6 +4808,8 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
               </div>
             </div>
 
+            <div class="statsSectionLabel statsTableLabel">Miesięczne podsumowanie roku</div>
+            <div class="statsSectionHint">Godziny, dni pracy i nieobecności w każdym miesiącu.</div>
             <div class="statsTableWrap">
               <table class="statsTable">
                 <thead>
@@ -4944,7 +4990,9 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     window.__cpUpdatePromptOpen = false;
     if (!ok) return;
 
-    await forceRefreshAppFiles();
+    const worker = window.__cpWaitingWorker;
+    if (worker) worker.postMessage({ type:"SKIP_WAITING" });
+    setTimeout(() => window.location.reload(), 450);
   });
 
   const todayISO = () => {
@@ -6658,12 +6706,12 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     renderStatsChart("monthStatsChart", items, {
       type:activeMonthChartType,
-      labelFn:item => String(item.d),
+      labelFn:item => `${item.d} ${monthShortPL(monthYM)}`,
       valueFn:item => item.min,
       titleFn:item => `${item.date}: ${fmtHM(item.min)}`,
       showLabelFn:() => true,
-      chartWidth:Math.max(420, items.length * 48),
-      barWidth:26,
+      chartWidth:Math.max(340, Math.min(760, items.length * 42 + 70)),
+      barWidth:22,
       gapWidth:18
     });
   }
@@ -6698,7 +6746,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
 
     const data = computeMonthStats(activeStatsMonth);
     const absences = data.totals.paid + data.totals.unpaid + data.totals.sick;
-    const leave = data.totals.paid + data.totals.unpaid;
 
     if ($("statsTitle")) $("statsTitle").textContent = "Statystyki";
     if ($("statsSubtitle")) $("statsSubtitle").textContent = "Podsumowanie aktualnego miesiąca.";
@@ -6707,7 +6754,9 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
     if ($("monthStatsPay")) $("monthStatsPay").textContent = pln(data.totals.money);
     if ($("monthStatsWorkDays")) $("monthStatsWorkDays").textContent = String(data.totals.workDays);
     if ($("monthStatsAbsences")) $("monthStatsAbsences").textContent = String(absences);
-    if ($("monthStatsLeave")) $("monthStatsLeave").textContent = String(leave);
+    if ($("monthStatsPaid")) $("monthStatsPaid").textContent = `${data.totals.paid} dni`;
+    if ($("monthStatsUnpaid")) $("monthStatsUnpaid").textContent = `${data.totals.unpaid} dni`;
+    if ($("monthStatsSick")) $("monthStatsSick").textContent = `${data.totals.sick} dni`;
     if ($("monthStatsNotes")) $("monthStatsNotes").textContent = String(data.totals.notes);
 
     renderMonthStatsChart(activeStatsMonth);
