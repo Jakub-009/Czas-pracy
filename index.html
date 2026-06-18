@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.3.12</title>
+  <title>Czas pracy 4.3.15</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -678,12 +678,6 @@ dialog::backdrop{
 .delIcon::before{transform:translate(-50%,-50%) rotate(45deg)}
 
 .delIcon::after{transform:translate(-50%,-50%) rotate(-45deg)}
-
-body.modal-open{
-      overflow:hidden;
-      height:100vh;
-      touch-action:none;
-    }
 
 :root{
   --bg:#e8eaed;
@@ -1846,15 +1840,6 @@ dialog#fabMenuDialog{
   transform:none;
 }
 
-body.modal-open{
-  overflow:hidden;
-  height:100dvh;
-  position:fixed;
-  inset:0;
-  width:100%;
-  touch-action:none;
-}
-
 dialog#fabMenuDialog{
   pointer-events:none;
 }
@@ -3001,7 +2986,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   left:50%;
   bottom:calc(18px + env(safe-area-inset-bottom));
   transform:translate(-50%, 18px);
-  z-index:80;
+  z-index:90;
   max-width:min(520px, calc(100vw - 28px));
   padding:12px 16px;
   border-radius:999px;
@@ -3799,7 +3784,7 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
 }
 
 
-/* ===== Czas pracy 4.3.12 — finalny porządek UI paneli roboczych i statystyk ===== */
+/* ===== Czas pracy 4.3.15 — finalny UI + safety cleanup ===== */
 html,
 body,
 .wrap,
@@ -4091,7 +4076,7 @@ dialog#dayDialog input[type="date"],
 dialog#dayDialog input[type="time"],
 dialog#vacDialog input[type="date"],
 dialog#vacDialog input[type="time"]{
-  padding-right:42px;
+  padding-right:52px;
 }
 
 dialog#bulkDialog input[type="date"]::-webkit-calendar-picker-indicator,
@@ -4100,7 +4085,7 @@ dialog#dayDialog input[type="date"]::-webkit-calendar-picker-indicator,
 dialog#dayDialog input[type="time"]::-webkit-calendar-picker-indicator,
 dialog#vacDialog input[type="date"]::-webkit-calendar-picker-indicator,
 dialog#vacDialog input[type="time"]::-webkit-calendar-picker-indicator{
-  margin-right:5px;
+  margin-right:12px;
   opacity:.78;
 }
 
@@ -4109,10 +4094,10 @@ dialog#dayDialog select,
 dialog#vacDialog select{
   appearance:none;
   -webkit-appearance:none;
-  padding-right:46px;
+  padding-right:58px;
   background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='18'%20height='18'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23202124'%20d='M7.41%208.59%2012%2013.17l4.59-4.58L18%2010l-6%206-6-6z'/%3E%3C/svg%3E");
   background-repeat:no-repeat;
-  background-position:right 18px center;
+  background-position:right 28px center;
   background-size:18px 18px;
 }
 
@@ -4214,19 +4199,36 @@ dialog#vacDialog .bulkOptions{
 
 dialog#bulkDialog .checkRow input[type="checkbox"],
 dialog#vacDialog .checkRow input[type="checkbox"]{
-  width:22px;
-  max-width:22px;
-  min-width:22px;
-  height:22px;
-  max-height:22px;
-  min-height:22px;
+  width:19px;
+  max-width:19px;
+  min-width:19px;
+  height:19px;
+  max-height:19px;
+  min-height:19px;
   padding:0;
   margin:0;
   border-radius:5px;
   background:#fff;
   box-shadow:none;
   accent-color:#1a73e8;
-  flex:0 0 22px;
+  flex:0 0 19px;
+  align-self:center;
+}
+
+dialog#bulkDialog .checkRow,
+dialog#vacDialog .checkRow{
+  min-height:42px;
+  align-items:center;
+  gap:12px;
+  line-height:1.2;
+}
+
+dialog#bulkDialog .checkRow span,
+dialog#vacDialog .checkRow span{
+  display:inline-flex;
+  align-items:center;
+  min-height:19px;
+  line-height:1.2;
 }
 
 dialog#bulkDialog .actionRow,
@@ -4783,7 +4785,7 @@ body.view-stats .fab-container{
     </section>
 
 
-        <section id="yearStatsDialog" class="statsPage monthViewHidden" aria-label="Statystyki">
+        <section id="statsPage" class="statsPage monthViewHidden" aria-label="Statystyki">
       <div class="statsPageShell">
         <article class="statsFullCard">
           <header class="statsFullHeader">
@@ -4936,7 +4938,7 @@ body.view-stats .fab-container{
           </div>
 
           <div class="statsBottomActions">
-            <button class="filled statsCloseBottom" id="yearStatsPanelClose" type="button">Wróć</button>
+            <button class="filled statsCloseBottom" id="statsPageClose" type="button">Wróć</button>
           </div>
         </article>
       </div>
@@ -5592,7 +5594,10 @@ body.view-stats .fab-container{
   };
 
   const STORAGE_KEY = "worktime_pwa_v1";
+  const BROKEN_STORAGE_PREFIX = `${STORAGE_KEY}_broken_`;
+  const MAX_BROKEN_STORAGE_BACKUPS = 3;
   let pendingStorageWarning = "";
+  let storageWriteWarningShown = false;
 
   function createEmptyDB() {
     return { settings:{ rate:0, leaveQuota:26, defaultIncludeSat:false, defaultIncludeSun:false, defaultIncludeHolidays:false, backupReminderDays:5 }, entries:[] };
@@ -5606,8 +5611,20 @@ body.view-stats .fab-container{
     return typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v);
   }
 
+  function normalizeTimeHHMM(v) {
+    const m = String(v ?? "").trim().match(/^(\d{1,2}):(\d{1,2})$/);
+    if (!m) return "";
+
+    const h = Number(m[1]);
+    const min = Number(m[2]);
+    if (!Number.isInteger(h) || !Number.isInteger(min)) return "";
+    if (h < 0 || h > 23 || min < 0 || min > 59) return "";
+
+    return `${pad2(h)}:${pad2(min)}`;
+  }
+
   function isValidTimeHHMM(v) {
-    return typeof v === "string" && /^\d{2}:\d{2}$/.test(v);
+    return normalizeTimeHHMM(v) === v;
   }
 
   function validateDbShape(obj) {
@@ -5631,11 +5648,40 @@ body.view-stats .fab-container{
     return true;
   }
 
+  function cleanupBrokenStorageBackups(maxBackups = MAX_BROKEN_STORAGE_BACKUPS) {
+    try {
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith(BROKEN_STORAGE_PREFIX)) keys.push(key);
+      }
+
+      keys.sort().reverse();
+      keys.slice(Math.max(0, maxBackups)).forEach(key => {
+        try { localStorage.removeItem(key); } catch {}
+      });
+    } catch (err) {
+      console.warn("Nie udało się wyczyścić starych kopii awaryjnych:", err);
+    }
+  }
+
   function backupBrokenStorage(raw, reason) {
     try {
       if (!raw) return;
+      cleanupBrokenStorageBackups(2);
+
       const suffix = new Date().toISOString().replace(/[:.]/g, "-");
-      localStorage.setItem(`${STORAGE_KEY}_broken_${suffix}`, raw.slice(0, 250000));
+      const key = `${BROKEN_STORAGE_PREFIX}${suffix}`;
+      const value = String(raw).slice(0, 250000);
+
+      try {
+        localStorage.setItem(key, value);
+      } catch (err) {
+        cleanupBrokenStorageBackups(0);
+        localStorage.setItem(key, value);
+      }
+
+      cleanupBrokenStorageBackups(MAX_BROKEN_STORAGE_BACKUPS);
       console.warn("Zapisano awaryjną kopię uszkodzonych danych:", reason);
     } catch (err) {
       console.warn("Nie udało się zapisać awaryjnej kopii localStorage:", err);
@@ -5664,13 +5710,31 @@ body.view-stats .fab-container{
     calendarHtmlCache.clear();
   }
 
+  function warnStorageWriteError(err) {
+    console.error("Nie udało się zapisać danych:", err);
+
+    if (storageWriteWarningShown) return;
+    storageWriteWarningShown = true;
+
+    const msg = "KRYTYCZNY BŁĄD: Nie udało się zapisać danych. Zrób kopię zapasową JSON i zwolnij miejsce w telefonie.";
+    try { setStatus(msg); } catch {}
+
+    window.setTimeout(() => {
+      try {
+        notify(msg, "Błąd zapisu danych");
+      } catch {
+        try { alert(msg); } catch {}
+      }
+    }, 80);
+  }
+
   function save() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
       clearCalendarHtmlCache();
       return true;
     } catch (err) {
-      console.error("Nie udało się zapisać danych:", err);
+      warnStorageWriteError(err);
       return false;
     }
   }
@@ -5712,6 +5776,7 @@ body.view-stats .fab-container{
     } catch (err) {
       try { backupBrokenStorage(JSON.stringify(db), err?.message || "Błąd migracji"); } catch {}
       db = createEmptyDB();
+      normalize();
       save();
       pendingStorageWarning = "Migracja danych nie powiodła się — aplikacja utworzyła pustą bazę i zapisała kopię awaryjną.";
     }
@@ -5789,17 +5854,17 @@ body.view-stats .fab-container{
   }
 
   function minutesBetween(dateISO, start, end) {
-    const [y, m, d] = dateISO.split("-").map(Number);
-    const [sh, sm] = start.split(":").map(Number);
-    const [eh, em] = end.split(":").map(Number);
-    const a = new Date(y, m - 1, d, sh, sm, 0, 0);
-    let b = new Date(y, m - 1, d, eh, em, 0, 0);
-    if (b < a) b = new Date(y, m - 1, d + 1, eh, em, 0, 0);
-    return Math.round((b - a) / 60000);
+    const range = shiftAbsRange(dateISO, start, end);
+    if (!range) return 0;
+    return Math.round((range.endMs - range.startMs) / 60000);
   }
 
   function shiftAbsRange(dateISO, start, end) {
+    start = normalizeTimeHHMM(start);
+    end = normalizeTimeHHMM(end);
+
     if (!dateISO || !start || !end) return null;
+
     const [y, m, d] = dateISO.split("-").map(Number);
     const [sh, sm] = start.split(":").map(Number);
     const [eh, em] = end.split(":").map(Number);
@@ -5808,10 +5873,11 @@ body.view-stats .fab-container{
     const a = new Date(y, m - 1, d, sh, sm, 0, 0).getTime();
     let b = new Date(y, m - 1, d, eh, em, 0, 0).getTime();
 
+    if (!Number.isFinite(a) || !Number.isFinite(b)) return null;
     if (b === a) return null;
     if (b < a) b = new Date(y, m - 1, d + 1, eh, em, 0, 0).getTime();
 
-    if (b <= a) return null;
+    if (!Number.isFinite(b) || b <= a) return null;
     return { startMs: a, endMs: b };
   }
 
@@ -5820,6 +5886,9 @@ body.view-stats .fab-container{
   }
 
   function validateShiftNoOverlap(dateISO, start, end, options = {}) {
+    start = normalizeTimeHHMM(start);
+    end = normalizeTimeHHMM(end);
+
     if (start && end && start === end) {
       return { ok:false, message:"Godzina wejścia i wyjścia nie mogą być takie same." };
     }
@@ -5827,8 +5896,16 @@ body.view-stats .fab-container{
     const candidate = shiftAbsRange(dateISO, start, end);
     if (!candidate) return { ok:false, message:"Uzupełnij poprawnie godzinę wejścia i wyjścia." };
 
+    const baseDate = parseISODate(dateISO);
+    const relevantDates = new Set([dateISO]);
+    if (baseDate) {
+      relevantDates.add(isoFromDate(addDays(baseDate, -1)));
+      relevantDates.add(isoFromDate(addDays(baseDate, 1)));
+    }
+
     for (const day of db.entries || []) {
       if (!day?.date || !Array.isArray(day.shifts)) continue;
+      if (!relevantDates.has(day.date)) continue;
 
       for (let i = 0; i < day.shifts.length; i++) {
         if (options.skipDate === day.date && options.skipIndex === i) continue;
@@ -5972,6 +6049,9 @@ body.view-stats .fab-container{
   function addShiftFromTemplate(start, end) {
     if (!dlgDate) return;
 
+    start = normalizeTimeHHMM(start);
+    end = normalizeTimeHHMM(end);
+
     const validation = validateShiftNoOverlap(dlgDate, start, end);
     if (!validation.ok) {
       haptic.warning();
@@ -6058,10 +6138,15 @@ body.view-stats .fab-container{
   function computeDayMinutes(day) {
     // status (urlop/L4) NIE blokuje godzin
     let total = 0;
-    for (const s of day.shifts) {
+    const shifts = Array.isArray(day?.shifts) ? day.shifts : [];
+
+    for (const s of shifts) {
       if (!s?.start || !s?.end) continue;
-      total += Math.max(0, minutesBetween(day.date, s.start, s.end));
+
+      const mins = minutesBetween(day.date, s.start, s.end);
+      if (Number.isFinite(mins)) total += Math.max(0, mins);
     }
+
     return total;
   }
 
@@ -6182,6 +6267,9 @@ body.view-stats .fab-container{
   function applyBulkHours(fromISO, toISO, start, end, mode, options = {}) {
     const a = parseISODate(fromISO);
     const b = parseISODate(toISO);
+    start = normalizeTimeHHMM(start);
+    end = normalizeTimeHHMM(end);
+
     if (!a || !b) { notify("Uzupełnij poprawnie daty 'Od' i 'Do'."); return { ok: false }; }
     if (b < a) { notify("Data 'Do' nie może być wcześniejsza niż 'Od'."); return { ok: false }; }
     if (!start || !end) { notify("Uzupełnij godzinę wejścia i wyjścia."); return { ok: false }; }
@@ -6232,7 +6320,7 @@ body.view-stats .fab-container{
 
       if (mode === "remove") {
         const before = day.shifts.length;
-        day.shifts = day.shifts.filter(s => !(s && s.start === start && s.end === end));
+        day.shifts = day.shifts.filter(s => !(s && normalizeTimeHHMM(s.start) === start && normalizeTimeHHMM(s.end) === end));
         if (day.shifts.length !== before) {
           upsertDay(dISO, day);
           changedDays++;
@@ -6696,7 +6784,7 @@ body.view-stats .fab-container{
 
   function closeDay() {
     dlgDate = null;
-    if (dlg && typeof dlg.close === "function") dlg.close();
+    if (dlg && typeof dlg.close === "function" && dlg.open) dlg.close();
     else if (dlg) dlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
     window.CPApp?.setSystemBars?.("#eef1f6");
@@ -6982,7 +7070,7 @@ body.view-stats .fab-container{
     document.querySelector(".calCard")?.classList.toggle("monthViewHidden", !isMonth);
     $("monthSummaryCard")?.classList.toggle("monthViewHidden", !isMonth);
     $("dayViewPage")?.classList.toggle("monthViewHidden", !isDay);
-    $("yearStatsDialog")?.classList.toggle("monthViewHidden", !isStats);
+    $("statsPage")?.classList.toggle("monthViewHidden", !isStats);
     $("monthStrip")?.toggleAttribute("hidden", !isMonth || !document.body.classList.contains("month-strip-open"));
 
     $("drawerMonthView")?.classList.toggle("active", isMonth);
@@ -6994,6 +7082,10 @@ body.view-stats .fab-container{
 
   function setActiveView(view, dateISO = "") {
     activeView = view === "day" ? "day" : (view === "stats" ? "stats" : "month");
+    if (activeView !== "month") {
+      document.body.classList.remove("month-strip-open");
+      $("monthStrip")?.setAttribute("hidden", "");
+    }
     if (dateISO) activeDayISO = dateISO;
 
     const mp = $("monthPick");
@@ -7019,13 +7111,13 @@ body.view-stats .fab-container{
     renderDayView(activeDayISO);
   }
 
-  function changeDayWithAnimation(dateISO, direction = 0) {
+  function changeDay(dateISO) {
     setDayViewDateOnly(dateISO);
     haptic.tap();
   }
 
   Object.assign(window.CPApp, {
-    changeDayWithAnimation
+    changeDay
   });
 
   Object.assign(window.CPApp, {
@@ -7050,10 +7142,10 @@ body.view-stats .fab-container{
     }
   }
 
-  function renderAll() {
+  function renderAll(options = {}) {
     normalize();
-    readSettingsFromUI();
-    save();
+    if (!options.skipReadSettings) readSettingsFromUI();
+    if (!options.skipSave) save();
     updateCalendarGeometryVars();
 
     const monthPick = $("monthPick");
@@ -7071,6 +7163,23 @@ body.view-stats .fab-container{
     const todayNum = $("todayIconNum");
     if (todayNum) todayNum.textContent = String(new Date().getDate());
   }
+
+  window.addEventListener("storage", (e) => {
+    if (e.key !== STORAGE_KEY || !e.newValue) return;
+
+    try {
+      const incoming = JSON.parse(e.newValue);
+      if (!validateDbShape(incoming)) throw new Error("Nieprawidłowa struktura danych z innej karty.");
+
+      db = incoming;
+      normalize();
+      clearCalendarHtmlCache();
+      renderAll({ skipSave:true, skipReadSettings:true });
+      setStatus("Dane odświeżone z innej karty.");
+    } catch (err) {
+      console.warn("Nie udało się odświeżyć danych z innej karty:", err);
+    }
+  });
 
   // ===== MODALE: STATUS / BULK =====
   const vacDlg = $("vacDialog");
@@ -7091,7 +7200,7 @@ body.view-stats .fab-container{
   function closeVac() {
     haptic.tap();
     if (!vacDlg) return;
-    if (typeof vacDlg.close === "function") vacDlg.close();
+    if (typeof vacDlg.close === "function" && vacDlg.open) vacDlg.close();
     else vacDlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
     window.CPApp?.setSystemBars?.("#eef1f6");
@@ -7149,7 +7258,7 @@ body.view-stats .fab-container{
   function closeBulk() {
     haptic.tap();
     if (!bulkDlg) return;
-    if (typeof bulkDlg.close === "function") bulkDlg.close();
+    if (typeof bulkDlg.close === "function" && bulkDlg.open) bulkDlg.close();
     else bulkDlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
     window.setSystemBars?.("#eef1f6");
@@ -7541,7 +7650,16 @@ body.view-stats .fab-container{
     // Ważne na iOS/Safari: nowe okno otwieramy natychmiast po tapnięciu,
     // a dopiero potem budujemy HTML raportu.
     const w = window.open("", "_blank");
-    const html = buildReportHTML(monthYM);
+    let html = "";
+
+    try {
+      html = buildReportHTML(monthYM);
+    } catch (err) {
+      console.error("Nie udało się zbudować raportu PDF:", err);
+      try { if (w && !w.closed) w.close(); } catch {}
+      notify("Nie udało się wygenerować raportu. Dane w aplikacji nie zostały zmienione.");
+      return;
+    }
 
     if (!w) {
       downloadTextFile(`czas-pracy_${monthYM}_raport.html`, html, "text/html;charset=utf-8");
@@ -7549,10 +7667,17 @@ body.view-stats .fab-container{
       return;
     }
 
-    w.document.open();
-    w.document.write(html);
-    w.document.close();
-    w.focus();
+    try {
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
+      w.focus();
+    } catch (err) {
+      console.error("Nie udało się otworzyć raportu w nowym oknie:", err);
+      try { if (!w.closed) w.close(); } catch {}
+      downloadTextFile(`czas-pracy_${monthYM}_raport.html`, html, "text/html;charset=utf-8");
+      notify("Nie udało się otworzyć raportu w nowym oknie, więc pobrałem go jako plik HTML.");
+    }
   }
 
 
@@ -7841,7 +7966,7 @@ body.view-stats .fab-container{
   }
 
   function renderStatsPanel() {
-    const statsPage = $("yearStatsDialog");
+    const statsPage = $("statsPage");
     if (!statsPage || activeView !== "stats") return;
     if (activeStatsMode === "year") renderYearStats();
     else renderMonthStats();
@@ -7849,7 +7974,7 @@ body.view-stats .fab-container{
 
   function openStatsPanel(mode = "month") {
     haptic.tap();
-    const statsPage = $("yearStatsDialog");
+    const statsPage = $("statsPage");
     if (!statsPage) return;
 
     const monthPick = $("monthPick");
@@ -7869,7 +7994,7 @@ body.view-stats .fab-container{
     openStatsPanel
   });
 
-  function closeYearStats() {
+  function closeStatsPage() {
     setActiveView("month");
     window.setSystemBars?.("#eef1f6");
   }
@@ -8046,10 +8171,10 @@ body.view-stats .fab-container{
         break;
 
       case "dayViewPrev":
-        changeDayWithAnimation(isoFromDate(addDays(base, -1)), -1);
+        changeDay(isoFromDate(addDays(base, -1)));
         break;
       case "dayViewNext":
-        changeDayWithAnimation(isoFromDate(addDays(base, 1)), 1);
+        changeDay(isoFromDate(addDays(base, 1)));
         break;
       case "dayViewAddHours":
         openDayAddForm(activeDayISO);
@@ -8073,7 +8198,7 @@ body.view-stats .fab-container{
 
     const nextDay = (delta) => {
       const base = parseISODate(activeDayISO) || new Date();
-      changeDayWithAnimation(isoFromDate(addDays(base, delta)), delta);
+      changeDay(isoFromDate(addDays(base, delta)));
     };
 
     page.addEventListener("touchstart", (e) => {
@@ -8135,8 +8260,8 @@ body.view-stats .fab-container{
     dlgAddShiftBtn.onclick = () => {
       if (!dlgDate) return;
 
-      const start = $("dlgStart")?.value;
-      const end = $("dlgEnd")?.value;
+      const start = normalizeTimeHHMM($("dlgStart")?.value);
+      const end = normalizeTimeHHMM($("dlgEnd")?.value);
       if (!start || !end) return notify("Uzupełnij godzinę wejścia i wyjścia.");
 
       const validation = validateShiftNoOverlap(dlgDate, start, end);
@@ -8171,15 +8296,19 @@ body.view-stats .fab-container{
   if (dlgNoteEl) {
     dlgNoteEl.addEventListener("input", () => {
       if (!dlgDate) return;
+
+      const noteDate = dlgDate;
+      const noteValue = dlgNoteEl.value || "";
+
       clearTimeout(noteTimer);
       noteTimer = setTimeout(() => {
-        const note = (dlgNoteEl.value || "").trim();
-        const day = getDay(dlgDate) || { date: dlgDate, note: "", shifts: [], vacation: false, leaveType:"" };
+        const note = noteValue.trim();
+        const day = getDay(noteDate) || { date: noteDate, note: "", shifts: [], vacation: false, leaveType:"" };
         day.note = note;
-        upsertDay(dlgDate, day);
+        upsertDay(noteDate, day);
         save();
         renderAll();
-        renderDayDialog();
+        if (dlgDate === noteDate) renderDayDialog();
         setStatus("Zapisano notatkę.");
         // bez haptics, żeby nie wibrowało podczas pisania
       }, 250);
@@ -8306,12 +8435,12 @@ body.view-stats .fab-container{
     $("yearChartLine")?.classList.toggle("active", activeYearChartType === "line");
   }
 
-  $("yearStatsDialog")?.addEventListener("click", (e) => {
+  $("statsPage")?.addEventListener("click", (e) => {
     const chartTarget = e.target.closest?.("[data-chart-date]");
     if (chartTarget) {
       const date = chartTarget.getAttribute("data-chart-date");
       if (date) {
-        closeYearStats();
+        closeStatsPage();
         setTimeout(() => setActiveView("day", date), 90);
       }
       return;
@@ -8382,13 +8511,12 @@ body.view-stats .fab-container{
       case "yearStatsCsv":
         exportYearCsv(activeYearStatsYear);
         break;
-      case "yearStatsPanelClose":
-        closeYearStats();
+      case "statsPageClose":
+        closeStatsPage();
         break;
     }
   });
-  $("yearStatsDialog")?.addEventListener("cancel", (e) => { e.preventDefault(); closeYearStats(); });
-  $("yearStatsDialog")?.addEventListener("close", () => document.body.classList.remove("modal-open"));
+
 
   const backupBtn = $("backupJson");
   if (backupBtn) {
