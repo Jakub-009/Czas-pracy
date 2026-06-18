@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.3.8</title>
+  <title>Czas pracy 4.3.9</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -4441,7 +4441,7 @@ dialog#dayDialog.googlePanel,
 }
 
 
-/* ===== Czas pracy 4.3.8 — kalendarz stable: szkielet 4.2.3 + lekki UI polish ===== */
+/* ===== Czas pracy 4.3.9 — kalendarz stable: szkielet 4.2.3 + lekki UI polish ===== */
 :root{
   --bg:#eef1f6;
   --surface:#ffffff;
@@ -4536,7 +4536,16 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
 }
 
 
-/* ===== Czas pracy 4.3.8 — spójny widok dnia i statystyk ===== */
+/* ===== Czas pracy 4.3.9 — spójne widoki, formularze i statystyki ===== */
+html,
+body,
+.wrap,
+body.view-month,
+body.view-day,
+body.view-stats{
+  background:#eef1f6;
+}
+
 .dayViewTop{
   display:flex;
   align-items:center;
@@ -4569,7 +4578,9 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
   margin:12px 0 16px;
 }
 
-.dayViewActions button{
+.dayViewActions button,
+.dayViewBottomActions button,
+.statsCloseBottom{
   width:auto;
   min-width:0;
   min-height:42px;
@@ -4586,18 +4597,96 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
   color:#fff;
 }
 
-.dayViewActions #dayViewAddLeave{
-  background:#fff;
-  border:1px solid #cddaf3;
-  color:#174ea6;
-  box-shadow:0 1px 2px rgba(60,64,67,.05);
-}
-
-.dayViewActions #dayViewOpenModal{
+.dayViewActions #dayViewAddLeave,
+.dayViewActions #dayViewOpenModal,
+.dayViewBottomActions button{
   background:#fff;
   border:1px solid #dfe3eb;
   color:#174ea6;
   box-shadow:0 1px 2px rgba(60,64,67,.04);
+}
+
+.dayViewActions #dayViewAddLeave{
+  border-color:#cddaf3;
+}
+
+.dayViewBottomActions{
+  display:flex;
+  justify-content:center;
+  padding:14px 0 0;
+}
+
+/* Modale robocze: ten sam spokojny język UI co karty dnia i statystyk */
+dialog#bulkDialog.googlePanel,
+dialog#dayDialog.googlePanel,
+dialog#vacDialog.googlePanel{
+  background:#eef1f6;
+}
+
+dialog#bulkDialog .googlePanelShell,
+dialog#dayDialog .googlePanelShell,
+dialog#vacDialog .googlePanelShell,
+dialog#bulkDialog .googlePanelContent,
+dialog#dayDialog .googlePanelContent,
+dialog#vacDialog .googlePanelContent{
+  background:#eef1f6;
+}
+
+dialog#bulkDialog .googlePanelBar,
+dialog#dayDialog .googlePanelBar,
+dialog#vacDialog .googlePanelBar{
+  background:#eef1f6;
+  border-bottom:1px solid #dfe3eb;
+}
+
+dialog#bulkDialog .modalHead h3,
+dialog#dayDialog .modalHead h3,
+dialog#vacDialog .modalHead h3{
+  font-weight:680;
+  letter-spacing:-.04em;
+}
+
+dialog#bulkDialog .modalHead .muted,
+dialog#dayDialog .modalHead .muted,
+dialog#vacDialog .modalHead .muted{
+  color:#5f6368;
+}
+
+dialog#bulkDialog input,
+dialog#bulkDialog select,
+dialog#dayDialog input,
+dialog#dayDialog select,
+dialog#dayDialog textarea,
+dialog#vacDialog input,
+dialog#vacDialog select{
+  background:#fff;
+  border:1px solid #dfe3eb;
+  border-radius:18px;
+}
+
+dialog#bulkDialog .quickTemplatesBlock,
+dialog#bulkDialog .bulkOptions,
+dialog#dayDialog .quickTemplatesBlock,
+dialog#dayDialog .modalStats,
+dialog#dayDialog .daySection,
+dialog#dayDialog .dayNotePreview,
+dialog#dayDialog .dayNoteField,
+dialog#vacDialog .bulkOptions{
+  background:#fff;
+  border:1px solid #e4e8f1;
+  box-shadow:0 1px 2px rgba(60,64,67,.045);
+}
+
+dialog#bulkDialog .rangeModeTabs,
+dialog#vacDialog .rangeModeTabs{
+  background:#f1f4f9;
+}
+
+dialog#bulkDialog .rangeModeTab.active,
+dialog#vacDialog .rangeModeTab.active{
+  background:#d7e3ff;
+  color:#174ea6;
+  box-shadow:none;
 }
 
 body.view-stats .appHeader,
@@ -4660,33 +4749,8 @@ body.view-stats .fab-container{
   padding:0;
 }
 
-/* Przełącznik Miesiąc/Rok spójny ze Zbiorczym wpisem */
-.statsPage .statsTabs{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:3px;
-  padding:4px;
+.statsPage .statsRangeTabs{
   margin:0 0 14px;
-  border-radius:999px;
-  background:#edf1f7;
-}
-
-.statsPage .statsTab{
-  min-height:40px;
-  height:40px;
-  padding:0 14px;
-  border-radius:999px;
-  background:transparent;
-  color:#3c4043;
-  box-shadow:none;
-  font-size:14px;
-  font-weight:760;
-}
-
-.statsPage .statsTab.active{
-  background:#fff;
-  color:#174ea6;
-  box-shadow:0 1px 2px rgba(60,64,67,.12);
 }
 
 .statsPage .statsHero{
@@ -4729,17 +4793,17 @@ body.view-stats .fab-container{
 }
 
 .statsBottomActions{
+  display:flex;
+  justify-content:center;
   padding:16px 0 0;
   margin-top:auto;
 }
 
 .statsCloseBottom{
-  width:100%;
-  min-height:48px;
-  height:48px;
-  border-radius:999px;
-  font-size:15px;
-  font-weight:800;
+  background:#fff;
+  color:#174ea6;
+  border:1px solid #dfe3eb;
+  box-shadow:0 1px 2px rgba(60,64,67,.04);
 }
 
 @media(max-width:430px){
@@ -4747,7 +4811,9 @@ body.view-stats .fab-container{
     gap:8px;
   }
 
-  .dayViewActions button{
+  .dayViewActions button,
+  .dayViewBottomActions button,
+  .statsCloseBottom{
     height:40px;
     min-height:40px;
     padding:0 14px;
@@ -4765,7 +4831,9 @@ body.view-stats .fab-container{
 }
 
 @media(max-width:370px){
-  .dayViewActions button{
+  .dayViewActions button,
+  .dayViewBottomActions button,
+  .statsCloseBottom{
     padding:0 12px;
     font-size:13px;
   }
@@ -4882,6 +4950,10 @@ body.view-stats .fab-container{
         </div>
         <div class="shiftList dayViewEvents" id="dayViewEvents"></div>
       </div>
+
+      <div class="dayViewBottomActions">
+        <button class="tonal" id="dayViewBackToMonth" type="button">Wróć</button>
+      </div>
     </section>
 
 
@@ -4902,9 +4974,9 @@ body.view-stats .fab-container{
         </div>
 
         <div class="modalBody statsBody">
-          <div class="statsTabs" role="tablist" aria-label="Zakres statystyk">
-            <button class="statsTab active" id="statsTabMonth" type="button">Miesiąc</button>
-            <button class="statsTab" id="statsTabYear" type="button">Rok</button>
+          <div class="rangeModeTabs statsRangeTabs" role="tablist" aria-label="Zakres statystyk">
+            <button class="rangeModeTab active" id="statsTabMonth" type="button">Miesiąc</button>
+            <button class="rangeModeTab" id="statsTabYear" type="button">Rok</button>
           </div>
 
           <section class="statsView active" id="monthStatsView">
@@ -6801,10 +6873,11 @@ body.view-stats .fab-container{
     if (dlg && typeof dlg.close === "function") dlg.close();
     else if (dlg) dlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
+    window.CPApp?.setSystemBars?.("#eef1f6");
   }
 
   if (dlg) {
-    dlg.addEventListener("close", () => document.body.classList.remove("modal-open"));
+    dlg.addEventListener("close", () => { document.body.classList.remove("modal-open"); window.CPApp?.setSystemBars?.("#eef1f6"); });
     dlg.addEventListener("cancel", (e) => { e.preventDefault(); closeDay(); });
   }
 
@@ -7205,7 +7278,7 @@ body.view-stats .fab-container{
   }
   if (vacDlg) {
     vacDlg.addEventListener("cancel", (e) => { e.preventDefault(); closeVac(); });
-    vacDlg.addEventListener("close", () => document.body.classList.remove("modal-open"));
+    vacDlg.addEventListener("close", () => { document.body.classList.remove("modal-open"); window.CPApp?.setSystemBars?.("#eef1f6"); });
   }
 
   const bulkDlg = $("bulkDialog");
@@ -7257,7 +7330,7 @@ body.view-stats .fab-container{
   }
   if (bulkDlg) {
     bulkDlg.addEventListener("cancel", (e) => { e.preventDefault(); closeBulk(); });
-    bulkDlg.addEventListener("close", () => document.body.classList.remove("modal-open"));
+    bulkDlg.addEventListener("close", () => { document.body.classList.remove("modal-open"); window.CPApp?.setSystemBars?.("#eef1f6"); });
   }
 
   Object.assign(window.CPApp, {
@@ -8142,6 +8215,9 @@ body.view-stats .fab-container{
     const base = parseISODate(activeDayISO) || new Date();
 
     switch (btn.id) {
+      case "dayViewBackToMonth":
+        setActiveView("month");
+        break;
 
       case "dayViewPrev":
         changeDayWithAnimation(isoFromDate(addDays(base, -1)), -1);
