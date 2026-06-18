@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.3.15</title>
+  <title>Czas pracy 4.4</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -15,8 +15,8 @@
 
       --bg:#eef1f6;
       --surface:#ffffff;
-      --surface-low:#f4f6fb;
-      --surface-mid:#edf1f7;
+      --surface-low:#f6f8fb;
+      --surface-mid:#edf0f4;
       --surface-high:#e1e7f0;
 
       --text:#111318;
@@ -25,7 +25,7 @@
 
       --outline:#c4cad4;
       --outline-soft:#e2e6ed;
-      --grid:#e6e8ee;
+      --grid:#e0e0e0;
 
       --primary:#1a73e8;
       --primary-soft:#d3e3fd;
@@ -61,6 +61,17 @@
 
       --wrapPad:0px;
       --calEdgePad:0px;
+
+      --app-title-size:clamp(20px, 5.2vw, 28px);
+      --month-title-size:clamp(22px, 6.1vw, 28px);
+      --dow-size:clamp(12px, 3vw, 15px);
+      --day-height:clamp(84px, 12.7dvh, 112px);
+      --day-num-size:clamp(10.5px, 2.75vw, 13px);
+      --day-num-box:clamp(17px, 4.55vw, 21px);
+      --today-badge-h:clamp(17px, 4.25vw, 20px);
+      --today-badge-w:clamp(24px, 5.95vw, 30px);
+      --pill-size:clamp(7.2px, 1.92vw, 8.8px);
+      --pill-height:clamp(12px, 3.12vw, 15px);
     }
 
 html{background:var(--bg)}
@@ -366,17 +377,6 @@ details[open] .chev{transform:rotate(180deg) translateY(-2px)}
 
 @keyframes panelIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 
-.fab-container{
-      position:fixed;
-      right:24px;
-      bottom:24px;
-      z-index:30;
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      gap:14px;
-    }
-
 .fab{
       width:auto;
       height:64px;
@@ -679,26 +679,6 @@ dialog::backdrop{
 
 .delIcon::after{transform:translate(-50%,-50%) rotate(-45deg)}
 
-:root{
-  --bg:#e8eaed;
-  --surface:#ffffff;
-  --surface-low:#f6f8fb;
-  --surface-mid:#edf0f4;
-  --grid:#e0e0e0;
-
-  --app-title-size:clamp(20px, 5.2vw, 28px);
-  --month-title-size:clamp(22px, 6.1vw, 28px);
-  --dow-size:clamp(12px, 3vw, 15px);
-
-  --day-height:clamp(84px, 12.7dvh, 112px);
-  --day-num-size:clamp(10.5px, 2.75vw, 13px);
-  --day-num-box:clamp(17px, 4.55vw, 21px);
-  --today-badge-h:clamp(17px, 4.25vw, 20px);
-  --today-badge-w:clamp(24px, 5.95vw, 30px);
-  --pill-size:clamp(7.2px, 1.92vw, 8.8px);
-  --pill-height:clamp(12px, 3.12vw, 15px);
-}
-
 html,body{
   width:100%;
   overflow-x:hidden;
@@ -801,11 +781,6 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
 
 .statBox .muted{
   font-size:12.5px;
-}
-
-.fab-container{
-  right:18px;
-  bottom:18px;
 }
 
 .fab{
@@ -1683,165 +1658,8 @@ dialog#settingsDialog{
   border-top:none;
 }
 
-.fabScrim{
-  position:fixed;
-  inset:0;
-  z-index:29;
-  background:rgba(248,249,250,.82);
-  backdrop-filter:blur(1.5px);
-  -webkit-backdrop-filter:blur(1.5px);
-}
-
-.fabScrim[hidden]{
-  display:none;
-}
-
-.fabGoogle{
-  z-index:31;
-  right:24px;
-  bottom:24px;
-  gap:14px;
-}
-
-.fabActions{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  gap:10px;
-  margin-bottom:2px;
-}
-
-.fabActions[hidden]{
-  display:none;
-}
-
-.fabActionPill{
-  min-height:62px;
-  height:62px;
-  padding:0 24px 0 20px;
-  border-radius:999px;
-  background:#d7e3ff;
-  color:#27446f;
-  box-shadow:none;
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  gap:16px;
-  font-size:20px;
-  font-weight:500;
-  letter-spacing:-.02em;
-  transform-origin:right center;
-  animation:fabActionIn .18s cubic-bezier(.2,0,0,1) both;
-}
-
-.fabActionPill:nth-child(1){animation-delay:.03s}
-
-.fabActionPill:nth-child(2){animation-delay:.015s}
-
-.fabActionPill:nth-child(3){animation-delay:0s}
-
-@keyframes fabActionIn{
-  from{opacity:0;transform:translateY(10px) scale(.96)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
-
-.fabActionPill svg{
-  width:28px;
-  height:28px;
-  fill:currentColor;
-  flex:0 0 auto;
-}
-
-.fabActionPill:hover{
-  background:#c8d7fb;
-}
-
-.fabGoogle .fab{
-  width:64px;
-  height:64px;
-  min-height:64px;
-  padding:0;
-  border-radius:22px;
-  background:#4285f4;
-  color:#fff;
-  box-shadow:0 8px 20px rgba(60,64,67,.28),0 2px 6px rgba(60,64,67,.18);
-}
-
-.fabGoogle .fab svg{
-  width:30px;
-  height:30px;
-  fill:currentColor;
-}
-
 .fabCloseIcon{
   display:none;
-}
-
-.fabGoogle.is-open .fabPlusIcon{
-  display:none;
-}
-
-.fabGoogle.is-open .fabCloseIcon{
-  display:block;
-}
-
-body.fab-open .wrap,
-body.fab-open .monthStrip{
-  filter:opacity(.18);
-  pointer-events:none;
-}
-
-body.fab-open .appHeader{
-  filter:opacity(.18);
-}
-
-dialog#fabMenuDialog{
-  display:none;
-}
-
-.fabActionPill{
-  min-height:52px;
-  height:52px;
-  padding:0 20px 0 16px;
-  gap:13px;
-  font-size:17px;
-  font-weight:550;
-}
-
-.fabActionPill svg{
-  width:24px;
-  height:24px;
-}
-
-.fabGoogle .fab{
-  width:60px;
-  height:60px;
-  min-height:60px;
-  border-radius:20px;
-  display:grid;
-  place-items:center;
-  gap:0;
-}
-
-.fabGoogle .fab svg{
-  grid-area:1 / 1;
-  margin:auto;
-  display:block;
-}
-
-.fabGoogle .fabPlusIcon{
-  width:28px;
-  height:28px;
-}
-
-.fabGoogle .fabCloseIcon{
-  width:25px;
-  height:25px;
-  transform:none;
-}
-
-dialog#fabMenuDialog{
-  pointer-events:none;
 }
 
 dialog#mainMenuDialog.drawerDialog[open]{
@@ -1865,74 +1683,6 @@ body.drawer-open{
   inset:0;
   width:100%;
   touch-action:none;
-}
-
-.fabGoogle .fab{
-  width:58px;
-  height:58px;
-  min-height:58px;
-  border-radius:20px;
-  padding:0;
-  display:grid;
-  place-items:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.fabGoogle .fab svg{
-  grid-area:1 / 1;
-  margin:0;
-}
-
-.fabGoogle .fabPlusIcon{
-  width:27px;
-  height:27px;
-  display:block;
-}
-
-.fabGoogle .fabCloseIcon{
-  display:none;
-}
-
-.fabGoogle.is-open .fabPlusIcon,
-.fabGoogle.is-open .fabCloseIcon{
-  display:none;
-}
-
-.fabGoogle.is-open .fab::before,
-.fabGoogle.is-open .fab::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:25px;
-  height:3.5px;
-  background:#fff;
-  border-radius:999px;
-  transform-origin:center;
-}
-
-.fabGoogle.is-open .fab::before{
-  transform:translate(-50%,-50%) rotate(45deg);
-}
-
-.fabGoogle.is-open .fab::after{
-  transform:translate(-50%,-50%) rotate(-45deg);
-}
-
-.fabActionPill{
-  min-height:48px;
-  height:48px;
-  padding:0 18px 0 15px;
-  gap:12px;
-  font-size:16px;
-  font-weight:550;
-  border-radius:999px;
-}
-
-.fabActionPill svg{
-  width:22px;
-  height:22px;
 }
 
 .templateChip{
@@ -2100,46 +1850,6 @@ dialog#mainMenuDialog.drawerDialog{
 
 .templateAddBtn{width:100%;min-height:44px}
 
-.fabGoogle .fab{
-  width:58px;
-  height:58px;
-  min-height:58px;
-  padding:0;
-  border-radius:20px;
-  display:grid;
-  place-items:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.fabGoogle .fab svg{display:none}
-
-.fabGoogle .fab::before,
-.fabGoogle .fab::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:26px;
-  height:3.4px;
-  border-radius:2px;
-  background:#fff;
-  transform-origin:center;
-  transition:transform .18s cubic-bezier(.2,0,0,1), width .18s cubic-bezier(.2,0,0,1);
-}
-
-.fabGoogle .fab::before{transform:translate(-50%,-50%) rotate(0deg)}
-
-.fabGoogle .fab::after{transform:translate(-50%,-50%) rotate(90deg)}
-
-.fabGoogle.is-open .fab::before{transform:translate(-50%,-50%) rotate(45deg);width:24px}
-
-.fabGoogle.is-open .fab::after{transform:translate(-50%,-50%) rotate(-45deg);width:24px}
-
-.fabActionPill{min-height:46px;height:46px;padding:0 17px 0 14px;gap:11px;font-size:15.5px;font-weight:550;border-radius:999px}
-
-.fabActionPill svg{width:21px;height:21px}
-
 .templateChip{min-height:29px;height:29px;padding:0 9px;font-size:12px;font-weight:650}
 
 #bulkApply,#setVacationRange,#dlgAddShift{min-height:46px;padding:0 20px;font-size:15px;border-radius:999px}
@@ -2166,11 +1876,6 @@ dialog#mainMenuDialog.drawerDialog{
   touch-action:pan-y;
 }
 
-.fabScrim{
-  overscroll-behavior:none;
-  touch-action:none;
-}
-
 .drawerBack{
   display:grid;
   place-items:center;
@@ -2178,44 +1883,6 @@ dialog#mainMenuDialog.drawerDialog{
 
 .drawerBack[hidden]{
   display:none;
-}
-
-.fabGoogle .fab{
-  width:56px;
-  height:56px;
-  min-height:56px;
-  border-radius:19px;
-}
-
-.fabGoogle .fab::before,
-.fabGoogle .fab::after{
-  width:20px;
-  height:3px;
-  border-radius:2px;
-  left:50%;
-  top:50%;
-  background:#fff;
-  transform-origin:center;
-}
-
-.fabGoogle .fab::before{
-  transform:translate(-50%,-50%) rotate(0deg);
-}
-
-.fabGoogle .fab::after{
-  transform:translate(-50%,-50%) rotate(90deg);
-}
-
-.fabGoogle.is-open .fab::before{
-  width:19px;
-  height:3px;
-  transform:translate(-50%,-50%) rotate(45deg);
-}
-
-.fabGoogle.is-open .fab::after{
-  width:19px;
-  height:3px;
-  transform:translate(-50%,-50%) rotate(-45deg);
 }
 
 dialog#mainMenuDialog.drawerDialog .drawerPanel{
@@ -2307,23 +1974,6 @@ dialog#mainMenuDialog.drawerDialog .drawerFooter{
   border-radius:999px;
 }
 
-.fabActions[hidden],
-.fabScrim[hidden],
-.monthStrip[hidden],
-.drawerFooter[hidden],
-.drawerBack[hidden],
-.clearErrorsBtn[hidden]{
-  display:none;
-}
-
-dialog#mainMenuDialog.drawerDialog .drawerBack{
-  bottom:calc(112px + env(safe-area-inset-bottom));
-}
-
-dialog#mainMenuDialog.drawerDialog .drawerBack{
-  bottom:calc(92px + env(safe-area-inset-bottom));
-}
-
 dialog#mainMenuDialog.drawerDialog .drawerContent{
   padding-bottom:calc(112px + env(safe-area-inset-bottom));
 }
@@ -2334,20 +1984,6 @@ dialog#mainMenuDialog.drawerDialog .drawerFooter{
 
 dialog#mainMenuDialog.drawerDialog .drawerBack{
   bottom:calc(76px + env(safe-area-inset-bottom));
-}
-
-.fab-container.fabGoogle{
-  bottom:calc(20px + env(safe-area-inset-bottom));
-}
-
-.drawerItem svg,
-.fabActionPill svg,
-.hamburger svg,
-.todayIconBtn svg,
-.summaryIconBtn svg,
-.monthNavArrow{
-  flex:0 0 auto;
-  flex-shrink:0;
 }
 
 .rangeModeTabs{
@@ -2922,41 +2558,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   margin-top:8px;
 }
 
-.shiftItem.googleEvent.noteEvent{
-  background:#fff8e1;
-}
-
-.shiftItem.googleEvent.noteEvent .eventStripe{
-  background:#fbbc04;
-}
-
-.shiftItem.googleEvent.noteEvent .times{
-  color:#202124;
-}
-
-.shiftItem.googleEvent.noteEvent .mins{
-  white-space:normal;
-  overflow:visible;
-  text-overflow:initial;
-  line-height:1.35;
-}
-
-.shiftItem.googleEvent.holidayEvent{
-  background:#fce8e6;
-}
-
-.shiftItem.googleEvent.holidayEvent .eventStripe{
-  background:#ea4335;
-}
-
-.shiftItem.googleEvent.holidayEvent .times{
-  color:#202124;
-}
-
-.shiftItem.googleEvent.holidayEvent .mins{
-  color:#5f6368;
-}
-
 .shiftItem.googleEvent.leaveEvent .delIcon,
 .shiftItem.googleEvent.noteEvent .delIcon{
   opacity:.88;
@@ -3238,27 +2839,12 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   padding-bottom:10px;
 }
 
-[hidden],
-.fabActions[hidden],
-.fabScrim[hidden],
-.monthStrip[hidden],
-.drawerFooter[hidden],
-.drawerBack[hidden],
-.clearErrorsBtn[hidden],
-.statsView[hidden]{
-  display:none;
-}
-
 .statsChart [data-chart-date]{
   cursor:pointer;
 }
 
 .dayViewPage{
   touch-action:pan-y;
-}
-
-:root{
-  --bg:#eef1f6;
 }
 
 html,
@@ -3366,7 +2952,7 @@ body,
 .summaryCard{padding:16px 14px 0}
 .statValue{font-size:25px}
 .compactCard{margin-left:10px;margin-right:10px}
-.fab-container{right:22px;bottom:22px}
+
 .fab{
         height:64px;
         min-height:64px;
@@ -3406,9 +2992,7 @@ dialog#mainMenuDialog.drawerDialog{
     margin:0;
     border-radius:0;
   }
-.fab-container.fabGoogle{
-    bottom:calc(32px + env(safe-area-inset-bottom));
-  }
+
 }
 
 @media (max-width:679px){
@@ -3452,30 +3036,14 @@ dialog#mainMenuDialog.drawerDialog .drawerItem{
 }
 
 @media (max-height:760px) and (max-width:430px){
-:root{
-    --day-height:78px;
-    --day-num-size:9.8px;
-    --day-num-box:16px;
-    --today-badge-h:16px;
-    --today-badge-w:24px;
-    --pill-size:6.3px;
-    --pill-height:10px;
-  }
+
 #dayDialog .modalBody{
     max-height:calc(86dvh - 72px);
   }
 }
 
 @media (max-width:430px){
-:root{
-    --day-height:clamp(84px, 11.35dvh, 98px);
-    --day-num-size:clamp(11px, 3.05vw, 13.5px);
-    --day-num-box:clamp(18px, 4.95vw, 23px);
-    --today-badge-h:clamp(18px, 4.7vw, 21px);
-    --today-badge-w:clamp(26px, 6.55vw, 32px);
-    --pill-size:clamp(6.8px, 1.82vw, 8.1px);
-    --pill-height:clamp(11px, 2.95vw, 14px);
-  }
+
 .monthTitle{
     font-size:clamp(21px, 5.7vw, 24px);
   }
@@ -3497,89 +3065,14 @@ dialog#mainMenuDialog.drawerDialog .drawerItem{
 .drawerPanel{
     width:min(320px, 90vw);
   }
-.fabGoogle{
-    right:20px;
-    bottom:20px;
-  }
-.fabActionPill{
-    min-height:58px;
-    height:58px;
-    padding:0 22px 0 18px;
-    font-size:19px;
-    gap:14px;
-  }
-.fabActionPill svg{
-    width:27px;
-    height:27px;
-  }
-.fabGoogle .fab{
-    width:62px;
-    height:62px;
-    min-height:62px;
-  }
-.fabActionPill{
-    min-height:50px;
-    height:50px;
-    padding:0 18px 0 15px;
-    gap:12px;
-    font-size:16.5px;
-  }
-.fabActionPill svg{
-    width:23px;
-    height:23px;
-  }
-.fabGoogle .fab{
-    width:58px;
-    height:58px;
-    min-height:58px;
-  }
-.fabGoogle .fabCloseIcon{
-    width:24px;
-    height:24px;
-  }
-.fabActionPill{
-    min-height:46px;
-    height:46px;
-    padding:0 17px 0 14px;
-    gap:11px;
-    font-size:15.5px;
-  }
-.fabActionPill svg{
-    width:21px;
-    height:21px;
-  }
-.fabGoogle .fab{
-    width:56px;
-    height:56px;
-    min-height:56px;
-  }
-.fabGoogle.is-open .fab::before,
-  .fabGoogle.is-open .fab::after{
-    width:23px;
-    height:3.2px;
-  }
+
 .templateChip{
     min-height:29px;
     height:29px;
     font-size:12px;
     padding:0 9px;
   }
-.fabGoogle .fab{
-    width:54px;
-    height:54px;
-    min-height:54px;
-    border-radius:18px;
-  }
-.fabGoogle .fab::before,
-  .fabGoogle .fab::after{
-    width:19px;
-    height:2.8px;
-  }
-.fabGoogle.is-open .fab::before,
-  .fabGoogle.is-open .fab::after{
-    width:18px;
-    height:2.8px;
-  }
+
 .rangeModeTabs{
     gap:6px;
   }
@@ -3639,24 +3132,6 @@ dialog#mainMenuDialog.drawerDialog .drawerItem{
 .dayViewActions #dayViewOpenModal{
     grid-column:auto;
   }
-}
-
-:root{
-  --bg:#eef1f6;
-  --surface:#ffffff;
-  --surface-low:#f6f8fb;
-  --surface-mid:#edf0f4;
-  --grid:#e0e0e0;
-  --app-title-size:clamp(20px, 5.2vw, 28px);
-  --month-title-size:clamp(22px, 6.1vw, 28px);
-  --dow-size:clamp(12px, 3vw, 15px);
-  --day-height:clamp(84px, 12.7dvh, 112px);
-  --day-num-size:clamp(10.5px, 2.75vw, 13px);
-  --day-num-box:clamp(17px, 4.55vw, 21px);
-  --today-badge-h:clamp(17px, 4.25vw, 20px);
-  --today-badge-w:clamp(24px, 5.95vw, 30px);
-  --pill-size:clamp(7.2px, 1.92vw, 8.8px);
-  --pill-height:clamp(12px, 3.12vw, 15px);
 }
 
 html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
@@ -3758,33 +3233,175 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
 .monthSummaryArrow{width:24px;height:24px;fill:#5f6368;}
 
 @media (max-width:430px){
-:root{
-    --day-height:clamp(84px,11.35dvh,98px);
-    --day-num-size:clamp(10px,2.75vw,12.5px);
-    --day-num-box:clamp(16px,4.35vw,20px);
-    --today-badge-h:clamp(16px,4.15vw,19px);
-    --today-badge-w:clamp(23px,5.75vw,28px);
-    --pill-size:clamp(6.6px,1.72vw,7.8px);
-    --pill-height:clamp(10px,2.75vw,13px);
-  }
+
 .dayCell,.blankCell{border-radius:7px;}
 .pill{border-radius:3px;padding:0 3px;}
 }
 
-@media (max-height:720px) and (max-width:430px){
-:root{
-    --day-height:78px;
-    --day-num-size:9.8px;
-    --day-num-box:16px;
-    --today-badge-h:16px;
-    --today-badge-w:24px;
-    --pill-size:6.3px;
-    --pill-height:10px;
+/* ===== Czas pracy 4.4.1 — clean FAB / szybkie akcje ===== */
+.fabScrim{
+  position:fixed;
+  inset:0;
+  z-index:29;
+  background:rgba(248,249,250,.82);
+  backdrop-filter:blur(1.5px);
+  -webkit-backdrop-filter:blur(1.5px);
+  overscroll-behavior:none;
+  touch-action:none;
+}
+
+.fabScrim[hidden],
+.fabActions[hidden]{
+  display:none;
+}
+
+.fab-container.fabGoogle{
+  position:fixed;
+  right:24px;
+  bottom:calc(32px + env(safe-area-inset-bottom));
+  z-index:31;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:14px;
+}
+
+.fabActions{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:10px;
+  margin-bottom:2px;
+}
+
+.fabActionPill{
+  min-height:48px;
+  height:48px;
+  padding:0 18px 0 15px;
+  border-radius:999px;
+  background:#d7e3ff;
+  color:#27446f;
+  box-shadow:none;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:12px;
+  font-size:16px;
+  font-weight:550;
+  letter-spacing:-.02em;
+  transform-origin:right center;
+  animation:fabActionIn .18s cubic-bezier(.2,0,0,1) both;
+}
+
+.fabActionPill:nth-child(1){animation-delay:.03s}
+.fabActionPill:nth-child(2){animation-delay:.015s}
+.fabActionPill:nth-child(3){animation-delay:0s}
+
+@keyframes fabActionIn{
+  from{opacity:0;transform:translateY(10px) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.fabActionPill svg{
+  width:22px;
+  height:22px;
+  fill:currentColor;
+  flex:0 0 auto;
+}
+
+.fabActionPill:hover{
+  background:#c8d7fb;
+}
+
+.fabGoogle .fab{
+  width:56px;
+  height:56px;
+  min-height:56px;
+  padding:0;
+  border-radius:19px;
+  background:#4285f4;
+  color:#fff;
+  box-shadow:0 8px 20px rgba(60,64,67,.28),0 2px 6px rgba(60,64,67,.18);
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.fabGoogle .fab svg{
+  display:none;
+}
+
+.fabGoogle .fab::before,
+.fabGoogle .fab::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:20px;
+  height:3px;
+  border-radius:2px;
+  background:#fff;
+  transform-origin:center;
+  transition:transform .18s cubic-bezier(.2,0,0,1), width .18s cubic-bezier(.2,0,0,1);
+}
+
+.fabGoogle .fab::before{transform:translate(-50%,-50%) rotate(0deg)}
+.fabGoogle .fab::after{transform:translate(-50%,-50%) rotate(90deg)}
+
+.fabGoogle.is-open .fab::before{
+  width:19px;
+  transform:translate(-50%,-50%) rotate(45deg);
+}
+
+.fabGoogle.is-open .fab::after{
+  width:19px;
+  transform:translate(-50%,-50%) rotate(-45deg);
+}
+
+body.fab-open .wrap,
+body.fab-open .monthStrip,
+body.fab-open .appHeader{
+  filter:opacity(.18);
+  pointer-events:none;
+}
+
+dialog#fabMenuDialog{
+  display:none;
+  pointer-events:none;
+}
+
+body.view-stats .fab-container{
+  display:none;
+}
+
+@media(max-width:430px){
+  .fab-container.fabGoogle{
+    right:20px;
+    bottom:calc(32px + env(safe-area-inset-bottom));
+  }
+
+  .fabGoogle .fab{
+    width:54px;
+    height:54px;
+    min-height:54px;
+    border-radius:18px;
+  }
+
+  .fabGoogle .fab::before,
+  .fabGoogle .fab::after{
+    width:19px;
+    height:2.8px;
+  }
+
+  .fabGoogle.is-open .fab::before,
+  .fabGoogle.is-open .fab::after{
+    width:18px;
+    height:2.8px;
   }
 }
 
-
-/* ===== Czas pracy 4.3.15 — finalny UI + safety cleanup ===== */
+/* ===== Czas pracy 4.4.1 — finalny UI + safety cleanup ===== */
 html,
 body,
 .wrap,
@@ -4440,13 +4057,6 @@ dialog#dayDialog .dayCloseRow{
   display:none;
 }
 
-/* Statystyki */
-body.view-stats .appHeader,
-body.view-stats .monthStrip,
-body.view-stats .fab-container{
-  display:none;
-}
-
 .statsPage{
   width:100%;
   padding:calc(12px + env(safe-area-inset-top)) 10px calc(20px + env(safe-area-inset-bottom));
@@ -4669,8 +4279,7 @@ body.view-stats .fab-container{
   .statsFullHeader h2{
     font-size:25px;
   }
-}
-</style>
+}</style>
 
 </head>
 
@@ -7083,6 +6692,7 @@ body.view-stats .fab-container{
   function setActiveView(view, dateISO = "") {
     activeView = view === "day" ? "day" : (view === "stats" ? "stats" : "month");
     if (activeView !== "month") {
+      window.CPApp?.closeFabMenu?.();
       document.body.classList.remove("month-strip-open");
       $("monthStrip")?.setAttribute("hidden", "");
     }
@@ -7143,6 +6753,8 @@ body.view-stats .fab-container{
   }
 
   function renderAll(options = {}) {
+    if (!options || options instanceof Event) options = {};
+
     normalize();
     if (!options.skipReadSettings) readSettingsFromUI();
     if (!options.skipSave) save();
@@ -7974,6 +7586,7 @@ body.view-stats .fab-container{
 
   function openStatsPanel(mode = "month") {
     haptic.tap();
+    window.CPApp?.closeFabMenu?.();
     const statsPage = $("statsPage");
     if (!statsPage) return;
 
@@ -9005,6 +8618,10 @@ body.view-stats .fab-container{
   }
 
   function closeFabMenu() { setFabOpen(false); }
+
+  Object.assign(window.CPApp, {
+    closeFabMenu
+  });
 
   $("mainFab")?.addEventListener("click", () => {
     const next = !$("fabContainer")?.classList.contains("is-open");
