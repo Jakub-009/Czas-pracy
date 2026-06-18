@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.3.1</title>
+  <title>Czas pracy 4.3.8</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -700,7 +700,7 @@ body.modal-open{
     }
 
 :root{
-  --bg:#eef1f6;
+  --bg:#e8eaed;
   --surface:#ffffff;
   --surface-low:#f6f8fb;
   --surface-mid:#edf0f4;
@@ -711,10 +711,10 @@ body.modal-open{
   --dow-size:clamp(12px, 3vw, 15px);
 
   --day-height:clamp(84px, 12.7dvh, 112px);
-  --day-num-size:clamp(11.5px, 3.05vw, 14.5px);
-  --day-num-box:clamp(19px, 5.25vw, 24px);
-  --today-badge-h:clamp(18px, 4.8vw, 22px);
-  --today-badge-w:clamp(27px, 6.85vw, 33px);
+  --day-num-size:clamp(10.5px, 2.75vw, 13px);
+  --day-num-box:clamp(17px, 4.55vw, 21px);
+  --today-badge-h:clamp(17px, 4.25vw, 20px);
+  --today-badge-w:clamp(24px, 5.95vw, 30px);
   --pill-size:clamp(7.2px, 1.92vw, 8.8px);
   --pill-height:clamp(12px, 3.12vw, 15px);
 }
@@ -2696,6 +2696,52 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   color:#202124;
 }
 
+.statsHero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin:0 0 10px;
+  padding:15px 16px;
+  border-radius:22px;
+  background:linear-gradient(135deg, #e8f0fe, #f8fafd);
+  border:1px solid #dfe7fb;
+}
+
+.statsHero span{
+  display:block;
+  margin-bottom:7px;
+  font-size:13px;
+  line-height:1.2;
+  font-weight:650;
+  color:#3c4043;
+}
+
+.statsHero strong{
+  display:block;
+  font-size:31px;
+  line-height:1;
+  font-weight:560;
+  letter-spacing:-.045em;
+  color:#202124;
+}
+
+.statsHero small{
+  display:block;
+  margin-top:8px;
+  font-size:15px;
+  line-height:1.2;
+  font-weight:650;
+  color:#174ea6;
+}
+
+.statsHero svg{
+  width:42px;
+  height:42px;
+  flex:0 0 auto;
+  fill:#1a73e8;
+}
+
 .statsGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -3417,10 +3463,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   transform:translate(-50%, 0);
 }
 
-.monthViewHidden{
-  display:none;
-}
-
 .dayViewPage{
   width:calc(100% - 20px);
   margin:10px 10px 0;
@@ -3441,12 +3483,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   margin:0 0 10px;
 }
 
-.dayViewBack{
-  min-height:38px;
-  height:38px;
-  padding:0 14px;
-  flex:0 0 auto;
-}
 
 .dayViewNav{
   flex:1 1 auto;
@@ -3492,6 +3528,52 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+}
+
+.dayViewHero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin:0 0 10px;
+  padding:16px;
+  border-radius:26px;
+  background:linear-gradient(135deg, #e8f0fe, #f8fafd);
+  border:1px solid #dfe7fb;
+}
+
+.dayViewHero span{
+  display:block;
+  margin-bottom:7px;
+  font-size:13px;
+  line-height:1.2;
+  font-weight:650;
+  color:#3c4043;
+}
+
+.dayViewHero strong{
+  display:block;
+  font-size:34px;
+  line-height:1;
+  font-weight:560;
+  letter-spacing:-.045em;
+  color:#202124;
+}
+
+.dayViewHero small{
+  display:block;
+  margin-top:8px;
+  font-size:15px;
+  line-height:1.2;
+  font-weight:650;
+  color:#174ea6;
+}
+
+.dayViewHero svg{
+  width:42px;
+  height:42px;
+  flex:0 0 auto;
+  fill:#1a73e8;
 }
 
 .dayViewActions{
@@ -3742,7 +3824,7 @@ dialog#vacDialog.googlePanel .actionRow{
 }
 
 :root{
-  --bg:#eef3fb;
+  --bg:#eef1f6;
 }
 
 html,
@@ -4121,12 +4203,12 @@ dialog#dayDialog.googlePanel,
 @media (max-height:760px) and (max-width:430px){
 :root{
     --day-height:78px;
-    --day-num-size:10.5px;
-    --day-num-box:18px;
-    --today-badge-h:18px;
-    --today-badge-w:28px;
-    --pill-size:6.6px;
-    --pill-height:11px;
+    --day-num-size:9.8px;
+    --day-num-box:16px;
+    --today-badge-h:16px;
+    --today-badge-w:24px;
+    --pill-size:6.3px;
+    --pill-height:10px;
   }
 dialog#dayDialog{
     max-height:86dvh;
@@ -4269,6 +4351,12 @@ dialog#dayDialog{
     padding:3px 5px;
     font-size:10px;
   }
+.statsHero{
+    padding:14px 15px;
+  }
+.statsHero strong{
+    font-size:29px;
+  }
 .statsGrid{
     gap:8px;
   }
@@ -4326,11 +4414,14 @@ dialog#dayDialog.googlePanel,
 .dayViewTop{
     align-items:flex-start;
   }
-.dayViewBack{
-    padding:0 12px;
-  }
 .dayViewDateBlock strong{
     font-size:18px;
+  }
+.dayViewHero{
+    padding:15px;
+  }
+.dayViewHero strong{
+    font-size:31px;
   }
 .dayViewActions{
     flex-wrap:wrap;
@@ -4350,684 +4441,337 @@ dialog#dayDialog.googlePanel,
 }
 
 
-/* ===== Czas pracy 4.3.0 — nowy odporny moduł kalendarza ===== */
+/* ===== Czas pracy 4.3.8 — kalendarz stable: szkielet 4.2.3 + lekki UI polish ===== */
 :root{
   --bg:#eef1f6;
-  --cal-gap:5px;
-  --day-height:68px;
-  --day-num-size:18px;
-  --day-num-box:30px;
-  --today-badge-h:30px;
-  --today-badge-w:44px;
-  --pill-height:15px;
-  --pill-size:8px;
+  --surface:#ffffff;
+  --surface-low:#f6f8fb;
+  --surface-mid:#edf0f4;
+  --grid:#e0e0e0;
+  --app-title-size:clamp(20px, 5.2vw, 28px);
+  --month-title-size:clamp(22px, 6.1vw, 28px);
+  --dow-size:clamp(12px, 3vw, 15px);
+  --day-height:clamp(84px, 12.7dvh, 112px);
+  --day-num-size:clamp(10.5px, 2.75vw, 13px);
+  --day-num-box:clamp(17px, 4.55vw, 21px);
+  --today-badge-h:clamp(17px, 4.25vw, 20px);
+  --today-badge-w:clamp(24px, 5.95vw, 30px);
+  --pill-size:clamp(7.2px, 1.92vw, 8.8px);
+  --pill-height:clamp(12px, 3.12vw, 15px);
 }
+html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
+.monthViewHidden,.calCard.monthViewHidden,.monthSummaryCard.monthViewHidden,.dayViewPage.monthViewHidden{display:none;}
+.calCard{background:transparent;border:none;box-shadow:none;padding-left:6px;padding-right:6px;}
+#calSwipeArea{touch-action:pan-y;overflow:hidden;position:relative;contain:layout paint;}
+#calLayerCurrent,#calLayerGhost{width:100%;min-width:100%;will-change:transform;backface-visibility:hidden;transform:translateZ(0);}
+.calGhost{position:absolute;left:0;right:0;top:0;pointer-events:none;}
+.calFading{opacity:.94;transition:opacity 120ms ease;}
+.calGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));}
+#dowRow,#dowRowGhost{gap:0;padding:0 0 4px;}
+.calDow{min-width:0;padding:5px 0 6px;text-align:center;font-size:var(--dow-size);line-height:1;font-weight:650;color:#202124;text-transform:lowercase;}
+.calDow.dowToday{color:#1a73e8;font-weight:760;}
+#calGrid,#calGridGhost{gap:4px;background:transparent;grid-auto-rows:var(--day-height);grid-template-rows:none;align-items:stretch;}
+.dayCell,.blankCell{height:var(--day-height);min-height:var(--day-height);max-height:var(--day-height);border-radius:8px;background:#f8f9fa;border:1px solid rgba(60,64,67,.035);box-shadow:none;overflow:hidden;}
+.dayCell{position:relative;cursor:pointer;contain:layout paint;padding-top:4px;padding-bottom:6px;display:flex;flex-direction:column;align-items:stretch;transition:background .12s ease,border-color .12s ease,transform .08s ease;}
+.blankCell{pointer-events:none;opacity:1;background:rgba(248,249,250,.45);border-color:rgba(60,64,67,.02);}
+.dayCell:hover{background:#fff;border-color:rgba(60,64,67,.07);}
+.dayCell:active{background:#f4f7fb;transform:scale(.993);}
+.dayCell.today{background:#f8f9fa;border-color:rgba(66,133,244,.22);}
+.dayTop{display:flex;justify-content:flex-start;align-items:center;padding:1px 0 4px 4px;}
+.dayNum{width:var(--day-num-box);min-width:var(--day-num-box);height:var(--day-num-box);padding:0 4px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:var(--day-num-size);font-weight:540;line-height:1;letter-spacing:-.015em;color:#202124;}
+.dayCell.today .dayNum{width:auto;min-width:var(--today-badge-w);height:var(--today-badge-h);padding:0 6px;border-radius:999px;background:#4285f4;color:#fff;font-weight:600;box-shadow:0 1px 4px rgba(66,133,244,.22);}
+.dayNum.saturday{color:#5f6368;}
+.dayNum.sunday,.dayNum.holiday{color:#c5221f;}
+.dayCell.today .dayNum,.dayCell.today .dayNum.saturday,.dayCell.today .dayNum.sunday,.dayCell.today .dayNum.holiday{color:#fff;}
+.dayCell.is-saturday,.dayCell.is-sunday,.dayCell.is-holiday{background:#f8f9fa;}
+.dayCell.is-saturday:hover,.dayCell.is-sunday:hover,.dayCell.is-holiday:hover{background:#fff;}
+.pillStack{min-height:0;flex:1;display:flex;flex-direction:column;gap:2px;padding:0 2px;overflow:hidden;}
+.pill{height:var(--pill-height);min-height:var(--pill-height);max-height:var(--pill-height);max-width:100%;display:flex;align-items:center;justify-content:flex-start;border-radius:4px;padding:0 2px;overflow:hidden;white-space:nowrap;text-align:left;text-overflow:clip;font-size:var(--pill-size);line-height:1;font-weight:660;letter-spacing:-.045em;font-variant-numeric:tabular-nums;box-shadow:none;}
+.pill.work{background:#34a853;color:#fff;}
+.pill.vac{background:#d3e3fd;color:#174ea6;}
+.pill.unpaid{background:#eee7ff;color:#4a148c;}
+.pill.sick{background:#fce8e6;color:#a50e0e;}
+.pill.note{background:#feefc3;color:#5f4200;}
+.pill.more{background:transparent;color:#5f6368;justify-content:center;font-size:calc(var(--pill-size) + 1px);font-weight:720;}
+#calSwipeArea.is-swiping{overflow:hidden;contain:layout paint style;}
+#calSwipeArea.is-swiping #calLayerCurrent,#calSwipeArea.is-swiping #calLayerGhost{width:100%;min-width:100%;will-change:transform;backface-visibility:hidden;}
+#calSwipeArea.is-swiping #calGrid,#calSwipeArea.is-swiping #calGridGhost{gap:4px;grid-template-rows:none;}
+#calSwipeArea.is-swiping .dayCell,#calSwipeArea.is-swiping .blankCell{height:var(--swipe-cell-height);min-height:var(--swipe-cell-height);max-height:var(--swipe-cell-height);transition:none;transform:none;}
+#calSwipeArea.is-swiping .dayNum,#calSwipeArea.is-swiping .pill{transition:none;}
+.monthSummaryCard{width:calc(100% - 20px);margin:10px 10px 0;padding:14px 14px;display:grid;grid-template-columns:42px minmax(0,1fr) 24px;align-items:center;gap:13px;border:1px solid #dfe3eb;border-radius:26px;background:linear-gradient(180deg,#fff 0%,#f8fafd 100%);color:#202124;box-shadow:0 1px 3px rgba(60,64,67,.08);text-align:left;cursor:pointer;}
+.monthSummaryCard:active{transform:scale(.995);}
+.monthSummaryIcon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#e8f0fe;color:#1a73e8;}
+.monthSummaryIcon svg{width:24px;height:24px;fill:currentColor;}
+.monthSummaryText{min-width:0;}
+.monthSummaryKicker{font-size:13px;line-height:1.2;font-weight:720;color:#3c4043;}
+.monthSummaryMain{margin-top:4px;display:flex;align-items:baseline;gap:7px;min-width:0;font-size:24px;line-height:1.05;font-weight:610;letter-spacing:-.04em;color:#111318;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.monthSummaryMain span{min-width:0;overflow:hidden;text-overflow:ellipsis;}
+#monthSummaryMeta{margin-top:5px;font-size:13px;font-weight:650;color:#3c4043;}
+.monthSummaryArrow{width:24px;height:24px;fill:#5f6368;}
 
-html,
-body,
-.appHeader,
-.appHeader.navTopBar,
-.monthStrip{
-  background:#eef1f6;
-}
-
-.calCard{
-  width:100%;
-  margin:0;
-  padding:0 10px;
-  background:transparent;
-  border:none;
-  box-shadow:none;
-}
-
-#calSwipeArea{
-  width:100%;
-  overflow:hidden;
-  position:relative;
-  touch-action:pan-y;
-  contain:layout paint;
-}
-
-#calLayerCurrent,
-#calLayerGhost{
-  width:100%;
-  min-width:100%;
-  backface-visibility:hidden;
-  transform:translateZ(0);
-  will-change:transform;
-}
-
-.calGhost{
-  position:absolute;
-  inset:0 auto auto 0;
-  right:0;
-  pointer-events:none;
-}
-
-.calFading{
-  opacity:.94;
-  transition:opacity 120ms ease;
-}
-
-.calGrid{
-  display:grid;
-  grid-template-columns:repeat(7, minmax(0, 1fr));
-}
-
-#dowRow,
-#dowRowGhost{
-  gap:var(--cal-gap);
-  padding:0 0 7px;
-}
-
-.calDow{
-  min-width:0;
-  padding:4px 0 7px;
-  text-align:center;
-  font-size:clamp(13px, 3.3vw, 15px);
-  line-height:1;
-  font-weight:760;
-  color:#202124;
-  text-transform:lowercase;
-}
-
-.calDow.dowToday{
-  color:#1a73e8;
-}
-
-#calGrid,
-#calGridGhost{
-  gap:var(--cal-gap);
-  grid-auto-rows:var(--day-height);
-  align-items:stretch;
-  background:transparent;
-}
-
-.dayCell,
-.blankCell{
-  min-width:0;
-  height:var(--day-height);
-  min-height:var(--day-height);
-  max-height:var(--day-height);
-  border-radius:14px;
-  overflow:hidden;
-}
-
-.dayCell{
-  position:relative;
-  cursor:pointer;
-  background:#fbfcff;
-  border:1px solid rgba(60,64,67,.052);
-  box-shadow:0 1px 2px rgba(60,64,67,.038);
-  transition:background .12s ease, border-color .12s ease, box-shadow .12s ease, transform .08s ease;
-  contain:layout paint;
-}
-
-.dayCellInner{
-  height:100%;
-  min-width:0;
-  display:grid;
-  grid-template-rows:auto minmax(0, 1fr);
-  padding:5px 4px 5px;
-}
-
-.blankCell{
-  background:rgba(255,255,255,.34);
-  border:1px solid rgba(60,64,67,.026);
-}
-
-.dayCell:hover{
-  background:#fff;
-  border-color:rgba(60,64,67,.085);
-  box-shadow:0 2px 6px rgba(60,64,67,.06);
-}
-
-.dayCell:active{
-  transform:scale(.995);
-  background:#f6f8fc;
-}
-
-.dayCell.today{
-  background:linear-gradient(180deg, #f8fbff 0%, #ffffff 72%);
-  border-color:rgba(66,133,244,.22);
-  box-shadow:0 1px 3px rgba(66,133,244,.10);
-}
-
-.dayTop{
-  min-width:0;
-  display:flex;
-  justify-content:flex-start;
-  align-items:center;
-  padding:0 1px 4px;
-}
-
-.dayNum{
-  width:var(--day-num-box);
-  min-width:var(--day-num-box);
-  height:var(--day-num-box);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:0;
-  border-radius:999px;
-  font-size:var(--day-num-size);
-  line-height:1;
-  font-weight:760;
-  letter-spacing:-.045em;
-  color:#3c4043;
-}
-
-.dayCell.today .dayNum{
-  width:auto;
-  min-width:var(--today-badge-w);
-  height:var(--today-badge-h);
-  padding:0 9px;
-  background:#4285f4;
-  color:#fff;
-  box-shadow:0 2px 5px rgba(66,133,244,.24);
-}
-
-.dayNum.saturday{
-  color:#5f6368;
-}
-
-.dayNum.sunday,
-.dayNum.holiday{
-  color:#c5221f;
-}
-
-.dayCell.today .dayNum.saturday,
-.dayCell.today .dayNum.sunday,
-.dayCell.today .dayNum.holiday{
-  color:#fff;
-}
-
-.pillStack{
-  min-width:0;
-  min-height:0;
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-  overflow:hidden;
-  padding:0;
-}
-
-.pill{
-  width:100%;
-  min-width:0;
-  height:var(--pill-height);
-  min-height:var(--pill-height);
-  max-height:var(--pill-height);
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  border-radius:5px;
-  padding:0 3px;
-  overflow:hidden;
-  white-space:nowrap;
-  font-size:var(--pill-size);
-  line-height:1;
-  font-weight:780;
-  letter-spacing:-.075em;
-  font-variant-numeric:tabular-nums;
-  box-shadow:none;
-}
-
-.pill span{
-  min-width:0;
-  max-width:100%;
-  display:block;
-  overflow:hidden;
-  text-overflow:clip;
-  white-space:nowrap;
-}
-
-.pill.work{
-  background:#34a853;
-  color:#fff;
-}
-
-.pill.vac{
-  background:#d3e3fd;
-  color:#174ea6;
-}
-
-.pill.unpaid{
-  background:#eee7ff;
-  color:#4a148c;
-}
-
-.pill.sick{
-  background:#fce8e6;
-  color:#a50e0e;
-}
-
-.pill.note{
-  background:#feefc3;
-  color:#5f4200;
-}
-
-.pill.more{
-  background:transparent;
-  color:#5f6368;
-  justify-content:center;
-  text-align:center;
-}
-
-/* Jedna rodzina kart: statystyki miesiąca, podsumowanie dnia i hero w statystykach */
-.monthSummaryCard,
-.dayViewHero,
-.statsHero{
-  border:1px solid #dfe3eb;
-  border-radius:28px;
-  background:linear-gradient(180deg, #ffffff 0%, #f8fafd 100%);
-  box-shadow:0 1px 3px rgba(60,64,67,.08);
-  color:#202124;
-}
-
-.monthSummaryCard{
-  width:calc(100% - 20px);
-  margin:12px 10px 0;
-  padding:14px 14px;
-  display:grid;
-  grid-template-columns:42px minmax(0, 1fr) 24px;
-  align-items:center;
-  gap:13px;
-  text-align:left;
-  cursor:pointer;
-}
-
-.monthSummaryCard:active{
-  transform:scale(.995);
-}
-
-.monthSummaryIcon{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#e8f0fe;
-  color:#1a73e8;
-}
-
-.monthSummaryIcon svg{
-  width:24px;
-  height:24px;
-  fill:currentColor;
-}
-
-.monthSummaryText{
-  min-width:0;
-}
-
-.monthSummaryKicker{
-  font-size:13px;
-  line-height:1.2;
-  font-weight:700;
-  color:#3c4043;
-}
-
-.monthSummaryMain{
-  margin-top:4px;
-  display:flex;
-  align-items:baseline;
-  gap:7px;
-  min-width:0;
-  font-size:24px;
-  line-height:1.05;
-  font-weight:620;
-  letter-spacing:-.045em;
-  color:#111318;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.monthSummaryMain span{
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-#monthSummaryMeta{
-  margin-top:5px;
-  font-size:13px;
-  font-weight:650;
-  color:#3c4043;
-}
-
-.monthSummaryArrow{
-  width:24px;
-  height:24px;
-  fill:#5f6368;
-}
-
-.dayViewHero,
-.statsHero{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  margin:0 0 12px;
-  padding:20px 24px;
-}
-
-.dayViewHero span,
-.statsHero span{
-  display:block;
-  margin-bottom:8px;
-  font-size:13px;
-  line-height:1.2;
-  font-weight:750;
-  color:#3c4043;
-}
-
-.dayViewHero strong,
-.statsHero strong{
-  display:block;
-  font-size:34px;
-  line-height:1;
-  font-weight:640;
-  letter-spacing:-.055em;
-  color:#111318;
-}
-
-.dayViewHero small,
-.statsHero small{
-  display:block;
-  margin-top:8px;
-  font-size:15px;
-  line-height:1.2;
-  font-weight:750;
-  color:#174ea6;
-}
-
-.dayViewHero svg,
-.statsHero svg{
-  width:42px;
-  height:42px;
-  flex:0 0 auto;
-  fill:#1a73e8;
-}
-
-#calSwipeArea.is-swiping{
-  overflow:hidden;
-  contain:layout paint style;
-}
-
-#calSwipeArea.is-swiping #calLayerCurrent,
-#calSwipeArea.is-swiping #calLayerGhost{
-  width:100%;
-  min-width:100%;
-  will-change:transform;
-  backface-visibility:hidden;
-}
-
-#calSwipeArea.is-swiping #calGrid,
-#calSwipeArea.is-swiping #calGridGhost{
-  gap:var(--cal-gap);
-}
-
-#calSwipeArea.is-swiping .dayCell,
-#calSwipeArea.is-swiping .blankCell{
-  height:var(--swipe-cell-height);
-  min-height:var(--swipe-cell-height);
-  max-height:var(--swipe-cell-height);
-  transition:none;
-  transform:none;
-}
-
-#calSwipeArea.is-swiping .dayNum,
-#calSwipeArea.is-swiping .pill{
-  transition:none;
-}
 
 @media(max-width:430px){
-  .calCard{
-    padding-left:10px;
-    padding-right:10px;
+  :root{
+    --day-height:clamp(84px,11.35dvh,98px);
+    --day-num-size:clamp(10px,2.75vw,12.5px);
+    --day-num-box:clamp(16px,4.35vw,20px);
+    --today-badge-h:clamp(16px,4.15vw,19px);
+    --today-badge-w:clamp(23px,5.75vw,28px);
+    --pill-size:clamp(6.6px,1.72vw,7.8px);
+    --pill-height:clamp(10px,2.75vw,13px);
   }
-
-  #dowRow,
-  #dowRowGhost{
-    padding-bottom:7px;
-  }
-
-  .dayCell,
-  .blankCell{
-    border-radius:13px;
-  }
-
-  .dayCellInner{
-    padding:5px 3px 4px;
-  }
-
-  .dayTop{
-    padding-bottom:3px;
-  }
-
-  .pill{
-    border-radius:4px;
-    padding-left:2px;
-    padding-right:2px;
-    letter-spacing:-.085em;
-  }
-
-  .monthSummaryCard{
-    margin-top:12px;
-  }
-
-  .dayViewHero,
-  .statsHero{
-    padding:18px 22px;
-  }
+  .dayCell,.blankCell{border-radius:7px;}
+  .pill{border-radius:3px;padding:0 3px;}
 }
-
-@media(max-width:370px){
-  .calCard{
-    padding-left:8px;
-    padding-right:8px;
-  }
-
-  .dayCellInner{
-    padding-left:2px;
-    padding-right:2px;
-  }
-
-  .pill{
-    font-size:calc(var(--pill-size) * .94);
-    letter-spacing:-.1em;
+@media(max-height:720px) and (max-width:430px){
+  :root{
+    --day-height:78px;
+    --day-num-size:9.8px;
+    --day-num-box:16px;
+    --today-badge-h:16px;
+    --today-badge-w:24px;
+    --pill-size:6.3px;
+    --pill-height:10px;
   }
 }
 
 
-
-/* ===== Czas pracy 4.3.1 — finalne kafelki po teście na telefonach ===== */
-
-/* To musi być na końcu: hidden ma wygrywać z display:grid kart. */
-.monthViewHidden,
-.calCard.monthViewHidden,
-.monthSummaryCard.monthViewHidden,
-.dayViewPage.monthViewHidden{
-  display:none;
+/* ===== Czas pracy 4.3.8 — spójny widok dnia i statystyk ===== */
+.dayViewTop{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  margin:0 0 10px;
 }
 
-/* Duże kafelki: stary UX proporcji + nowa skórka UI */
-.calCard{
-  padding-left:8px;
-  padding-right:8px;
+.dayViewNav{
+  width:100%;
+  flex:1 1 auto;
+  min-width:0;
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr) 40px;
+  align-items:center;
+  gap:8px;
 }
 
-#calGrid,
-#calGridGhost{
-  gap:var(--cal-gap);
-  grid-auto-rows:var(--day-height);
-}
-
-.dayCell,
-.blankCell{
-  height:var(--day-height);
-  min-height:var(--day-height);
-  max-height:var(--day-height);
-  border-radius:13px;
-}
-
-.dayCell{
-  background:#fbfcff;
-  border:1px solid rgba(60,64,67,.055);
-  box-shadow:0 1px 2px rgba(60,64,67,.04);
-}
-
-.dayCellInner{
-  padding:6px 4px 6px;
-  grid-template-rows:auto minmax(0, 1fr);
-}
-
-.blankCell{
-  background:rgba(255,255,255,.28);
-  border-color:rgba(60,64,67,.025);
-}
-
-.dayTop{
-  padding:0 2px 6px;
-}
-
-.dayNum{
-  width:var(--day-num-box);
-  min-width:var(--day-num-box);
-  height:var(--day-num-box);
-  font-size:var(--day-num-size);
-  font-weight:760;
-  color:#3c4043;
-}
-
-.dayCell.today{
-  background:linear-gradient(180deg, #f8fbff 0%, #ffffff 74%);
-  border-color:rgba(66,133,244,.22);
-  box-shadow:0 1px 3px rgba(66,133,244,.10);
-}
-
-.dayCell.today .dayNum{
-  min-width:var(--today-badge-w);
-  height:var(--today-badge-h);
-  padding:0 10px;
-  background:#4285f4;
-  color:#fff;
-  box-shadow:0 2px 5px rgba(66,133,244,.24);
-}
-
-.pillStack{
-  gap:3px;
-  padding:0 1px;
-}
-
-.pill{
-  height:var(--pill-height);
-  min-height:var(--pill-height);
-  max-height:var(--pill-height);
-  border-radius:5px;
-  padding:0 2px;
-  font-size:var(--pill-size);
-  line-height:1;
-  font-weight:800;
-  letter-spacing:-.105em;
-  font-variant-numeric:tabular-nums;
-}
-
-.pill span{
-  display:inline-block;
-  min-width:max-content;
-  max-width:none;
-  transform:scaleX(.88);
-  transform-origin:left center;
-  overflow:visible;
-  text-overflow:clip;
-}
-
-.pill.work{
-  background:#34a853;
-  color:#fff;
-}
-
-.pill.vac{
-  background:#d3e3fd;
-  color:#174ea6;
-}
-
-.pill.unpaid{
-  background:#eee7ff;
-  color:#4a148c;
-}
-
-.pill.sick{
-  background:#fce8e6;
-  color:#a50e0e;
-}
-
-.pill.note{
-  background:#feefc3;
-  color:#5f4200;
-}
-
-/* W widoku dnia nie ma statystyk miesiąca — tylko podsumowanie konkretnego dnia. */
-body.view-day .monthSummaryCard,
-body.view-day .calCard,
-body.view-day #monthStrip{
-  display:none;
-}
-
-body.view-day .dayViewPage{
-  display:block;
-}
-
-/* Karta dnia i karta statystyk mają tę samą rodzinę UI */
 .dayViewHero,
-.statsHero{
-  background:linear-gradient(180deg, #ffffff 0%, #f8fafd 100%);
+.statsPage .statsHero{
+  background:linear-gradient(180deg,#fff 0%,#f8fafd 100%);
   border-color:#dfe3eb;
   box-shadow:0 1px 3px rgba(60,64,67,.08);
 }
 
+.dayViewActions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:12px 0 16px;
+}
+
+.dayViewActions button{
+  width:auto;
+  min-width:0;
+  min-height:42px;
+  height:42px;
+  padding:0 17px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:760;
+  flex:0 0 auto;
+}
+
+.dayViewActions #dayViewAddHours{
+  background:#1a73e8;
+  color:#fff;
+}
+
+.dayViewActions #dayViewAddLeave{
+  background:#fff;
+  border:1px solid #cddaf3;
+  color:#174ea6;
+  box-shadow:0 1px 2px rgba(60,64,67,.05);
+}
+
+.dayViewActions #dayViewOpenModal{
+  background:#fff;
+  border:1px solid #dfe3eb;
+  color:#174ea6;
+  box-shadow:0 1px 2px rgba(60,64,67,.04);
+}
+
+body.view-stats .appHeader,
+body.view-stats .monthStrip,
+body.view-stats .fab-container{
+  display:none;
+}
+
+.statsPage{
+  width:100%;
+  padding:calc(12px + env(safe-area-inset-top)) 10px calc(20px + env(safe-area-inset-bottom));
+}
+
+.statsPageShell{
+  width:100%;
+  max-width:760px;
+  margin:0 auto;
+}
+
+.statsFullCard{
+  min-height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  display:flex;
+  flex-direction:column;
+  padding:0 0 14px;
+  border:none;
+  background:transparent;
+  box-shadow:none;
+}
+
+.statsFullHeader{
+  padding:4px 4px 14px;
+}
+
+.statsFullHeader h2{
+  margin:0;
+  font-size:28px;
+  line-height:1.06;
+  font-weight:680;
+  letter-spacing:-.04em;
+  color:#111318;
+}
+
+.statsFullHeader p{
+  margin:7px 0 0;
+  font-size:14px;
+  line-height:1.35;
+  color:#5f6368;
+}
+
+.statsPageContent{
+  flex:1 1 auto;
+  min-height:0;
+}
+
+.statsPageContent .modalHead{
+  display:none;
+}
+
+.statsPageContent .modalBody{
+  padding:0;
+}
+
+/* Przełącznik Miesiąc/Rok spójny ze Zbiorczym wpisem */
+.statsPage .statsTabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3px;
+  padding:4px;
+  margin:0 0 14px;
+  border-radius:999px;
+  background:#edf1f7;
+}
+
+.statsPage .statsTab{
+  min-height:40px;
+  height:40px;
+  padding:0 14px;
+  border-radius:999px;
+  background:transparent;
+  color:#3c4043;
+  box-shadow:none;
+  font-size:14px;
+  font-weight:760;
+}
+
+.statsPage .statsTab.active{
+  background:#fff;
+  color:#174ea6;
+  box-shadow:0 1px 2px rgba(60,64,67,.12);
+}
+
+.statsPage .statsHero{
+  border-radius:26px;
+  margin-bottom:12px;
+}
+
+.statsPage .statSoftBox,
+.statsPage .statsChartCard,
+.statsPage .statsTableWrap{
+  background:#fff;
+  border:1px solid #e4e8f1;
+  box-shadow:0 1px 2px rgba(60,64,67,.05);
+}
+
+.statsPage .statSoftBox{
+  border-radius:20px;
+}
+
+.statsPage .statsChartCard{
+  border-radius:24px;
+}
+
+.statsPage .statsTableWrap{
+  border-radius:22px;
+}
+
+.statsPage .statsActions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:0 0 12px;
+}
+
+.statsPage .statsActions button{
+  min-height:42px;
+  height:42px;
+  padding:0 18px;
+  border-radius:999px;
+}
+
+.statsBottomActions{
+  padding:16px 0 0;
+  margin-top:auto;
+}
+
+.statsCloseBottom{
+  width:100%;
+  min-height:48px;
+  height:48px;
+  border-radius:999px;
+  font-size:15px;
+  font-weight:800;
+}
+
 @media(max-width:430px){
-  .calCard{
-    padding-left:9px;
-    padding-right:9px;
+  .dayViewActions{
+    gap:8px;
   }
 
-  .dayCell,
-  .blankCell{
-    border-radius:13px;
+  .dayViewActions button{
+    height:40px;
+    min-height:40px;
+    padding:0 14px;
+    font-size:13.5px;
   }
 
-  .dayCellInner{
-    padding-left:4px;
-    padding-right:4px;
+  .statsPage{
+    padding-left:10px;
+    padding-right:10px;
   }
 
-  .pill{
-    padding-left:2px;
-    padding-right:2px;
+  .statsFullHeader h2{
+    font-size:27px;
   }
 }
 
 @media(max-width:370px){
-  .calCard{
-    padding-left:7px;
-    padding-right:7px;
+  .dayViewActions button{
+    padding:0 12px;
+    font-size:13px;
   }
 
-  .dayCellInner{
-    padding-left:3px;
-    padding-right:3px;
-  }
-
-  .pill{
-    letter-spacing:-.12em;
-  }
-
-  .pill span{
-    transform:scaleX(.84);
+  .statsFullHeader h2{
+    font-size:25px;
   }
 }
 </style>
@@ -5104,7 +4848,6 @@ body.view-day .dayViewPage{
 
     <section class="dayViewPage monthViewHidden" id="dayViewPage" aria-label="Widok dnia">
       <div class="dayViewTop">
-        <button class="tonal dayViewBack" id="dayViewBackToMonth" type="button">Miesiąc</button>
         <div class="dayViewNav">
           <button class="tonal" id="dayViewPrev" type="button" aria-label="Poprzedni dzień">‹</button>
           <div class="dayViewDateBlock">
@@ -5138,6 +4881,166 @@ body.view-day .dayViewPage{
           <span id="dayViewEventsCount">0</span>
         </div>
         <div class="shiftList dayViewEvents" id="dayViewEvents"></div>
+      </div>
+    </section>
+
+
+        <section id="yearStatsDialog" class="statsPage monthViewHidden" aria-label="Statystyki">
+      <div class="statsPageShell">
+        <article class="statsFullCard">
+          <header class="statsFullHeader">
+            <h2>Statystyki</h2>
+            <p>Podsumowanie godzin, wypłat i nieobecności.</p>
+          </header>
+
+          <div class="statsPageContent">
+<div class="modalHead">
+          <div class="modalHeadInner">
+            <h3 id="statsTitle">Statystyki</h3>
+            <div class="muted" id="statsSubtitle">Podsumowanie godzin, wypłat i nieobecności.</div>
+          </div>
+        </div>
+
+        <div class="modalBody statsBody">
+          <div class="statsTabs" role="tablist" aria-label="Zakres statystyk">
+            <button class="statsTab active" id="statsTabMonth" type="button">Miesiąc</button>
+            <button class="statsTab" id="statsTabYear" type="button">Rok</button>
+          </div>
+
+          <section class="statsView active" id="monthStatsView">
+            <div class="statsPeriodBar">
+              <button class="tonal" id="monthStatsPrev" type="button" aria-label="Poprzedni miesiąc">‹</button>
+              <strong id="monthStatsCurrent">—</strong>
+              <button class="tonal" id="monthStatsNext" type="button" aria-label="Następny miesiąc">›</button>
+            </div>
+
+            <div class="statsHero">
+              <div>
+                <span>Miesiąc</span>
+                <strong id="monthStatsHours">0:00</strong>
+                <small id="monthStatsPay">0,00 zł</small>
+              </div>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 19V9h3v10H5Zm5.5 0V5h3v14h-3ZM16 19v-7h3v7h-3Z"/>
+              </svg>
+            </div>
+
+            <div class="statsGrid monthStatsGrid">
+              <div class="statSoftBox"><strong id="monthStatsWorkDays">0</strong><span>Dni pracujące</span></div>
+              <div class="statSoftBox"><strong id="monthStatsAbsences">0</strong><span>Nieobecności razem</span></div>
+              <div class="statSoftBox"><strong id="monthStatsPaid">0 dni</strong><span>Urlop płatny</span></div>
+              <div class="statSoftBox"><strong id="monthStatsUnpaid">0 dni</strong><span>Urlop bezpłatny</span></div>
+              <div class="statSoftBox"><strong id="monthStatsSick">0 dni</strong><span>Zwolnienie L4</span></div>
+              <div class="statSoftBox"><strong id="monthStatsNotes">0</strong><span>Dni z notatką</span></div>
+            </div>
+
+            <div class="statsExportBlock">
+              <div class="statsSectionLabel">Wyeksportuj statystyki</div>
+              <div class="statsActions">
+                <button class="tonal" id="monthStatsPdf" type="button">Raport PDF</button>
+                <button class="tonal" id="monthStatsCsv" type="button">Raport CSV</button>
+              </div>
+            </div>
+
+            <div class="statsChartCard">
+              <div class="statsChartHead">
+                <strong>Wykres godzin w miesiącu</strong>
+                <div class="chartModeToggle" aria-label="Typ wykresu miesiąca">
+                  <button class="active" id="monthChartBars" type="button">Słupkowy</button>
+                  <button id="monthChartLine" type="button">Liniowy</button>
+                </div>
+              </div>
+              <div class="statsChartScroll">
+                <svg id="monthStatsChart" class="statsChart monthStatsChart" viewBox="0 0 360 190" role="img" aria-label="Godziny w dniach miesiąca"></svg>
+              </div>
+            </div>
+
+            <div class="statsSectionLabel statsTableLabel">Podsumowanie miesiąca</div>
+            <div class="statsTableWrap">
+              <table class="statsTable">
+                <thead>
+                  <tr>
+                    <th>Dzień</th>
+                    <th>Godziny</th>
+                    <th>Status</th>
+                    <th>Notatka</th>
+                  </tr>
+                </thead>
+                <tbody id="monthStatsRows"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="statsView" id="yearStatsView">
+            <div class="statsPeriodBar">
+              <button class="tonal" id="yearStatsPrev" type="button" aria-label="Poprzedni rok">‹</button>
+              <strong id="yearStatsCurrent">2026</strong>
+              <button class="tonal" id="yearStatsNext" type="button" aria-label="Następny rok">›</button>
+            </div>
+
+            <div class="statsHero">
+              <div>
+                <span>Rok</span>
+                <strong id="yearStatsHours">0:00</strong>
+                <small id="yearStatsPay">0,00 zł</small>
+              </div>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 19h16v2H4v-2Zm1-2V9h3v8H5Zm5.5 0V3h3v14h-3ZM16 17v-6h3v6h-3Z"/>
+              </svg>
+            </div>
+
+            <div class="statsGrid yearStatsGrid">
+              <div class="statSoftBox"><strong id="yearStatsWorkDays">0</strong><span>Dni pracujące</span></div>
+              <div class="statSoftBox"><strong id="yearStatsAbsences">0</strong><span>Nieobecności razem</span></div>
+              <div class="statSoftBox"><strong id="yearStatsPaidUsed">0 dni</strong><span>Urlop wykorzystany</span></div>
+              <div class="statSoftBox"><strong id="yearStatsPaidLeft">0 dni</strong><span>Pozostało urlopu</span></div>
+              <div class="statSoftBox"><strong id="yearStatsUnpaid">0 dni</strong><span>Urlop bezpłatny</span></div>
+              <div class="statSoftBox"><strong id="yearStatsSick">0 dni</strong><span>Zwolnienie L4</span></div>
+            </div>
+
+            <div class="statsExportBlock">
+              <div class="statsSectionLabel">Wyeksportuj statystyki</div>
+              <div class="statsActions">
+                <button class="tonal" id="yearStatsCsv" type="button">Raport CSV</button>
+              </div>
+            </div>
+
+            <div class="statsChartCard">
+              <div class="statsChartHead">
+                <strong>Wykres godzin w roku</strong>
+                <div class="chartModeToggle" aria-label="Typ wykresu roku">
+                  <button class="active" id="yearChartBars" type="button">Słupkowy</button>
+                  <button id="yearChartLine" type="button">Liniowy</button>
+                </div>
+              </div>
+              <div class="statsChartScroll">
+                <svg id="yearStatsChart" class="statsChart yearStatsChart" viewBox="0 0 360 190" role="img" aria-label="Suma godzin per miesiąc"></svg>
+              </div>
+            </div>
+
+            <div class="statsSectionLabel statsTableLabel">Podsumowanie roku</div>
+            <div class="statsTableWrap">
+              <table class="statsTable">
+                <thead>
+                  <tr>
+                    <th>Miesiąc</th>
+                    <th>Godziny</th>
+                    <th>Dni</th>
+                    <th>Urlop</th>
+                    <th>Zwolnienie L4</th>
+                  </tr>
+                </thead>
+                <tbody id="yearStatsRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+          </div>
+
+          <div class="statsBottomActions">
+            <button class="filled statsCloseBottom" id="yearStatsPanelClose" type="button">Wróć</button>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -5551,157 +5454,7 @@ body.view-day .dayViewPage{
 
 
 
-  <dialog id="yearStatsDialog" class="googlePanel statsPanel">
-    <div class="googlePanelShell">
-      <div class="googlePanelBar">
-        <button class="panelCloseBtn" id="yearStatsPanelClose" type="button" aria-label="Zamknij"></button>
-      </div>
-
-      <div class="googlePanelContent">
-        <div class="modalHead">
-          <div class="modalHeadInner">
-            <h3 id="statsTitle">Statystyki</h3>
-            <div class="muted" id="statsSubtitle">Podsumowanie godzin, wypłat i nieobecności.</div>
-          </div>
-        </div>
-
-        <div class="modalBody statsBody">
-          <div class="statsTabs" role="tablist" aria-label="Zakres statystyk">
-            <button class="statsTab active" id="statsTabMonth" type="button">Miesiąc</button>
-            <button class="statsTab" id="statsTabYear" type="button">Rok</button>
-          </div>
-
-          <section class="statsView active" id="monthStatsView">
-            <div class="statsPeriodBar">
-              <button class="tonal" id="monthStatsPrev" type="button" aria-label="Poprzedni miesiąc">‹</button>
-              <strong id="monthStatsCurrent">—</strong>
-              <button class="tonal" id="monthStatsNext" type="button" aria-label="Następny miesiąc">›</button>
-            </div>
-
-            <div class="statsHero">
-              <div>
-                <span>Miesiąc</span>
-                <strong id="monthStatsHours">0:00</strong>
-                <small id="monthStatsPay">0,00 zł</small>
-              </div>
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M5 19V9h3v10H5Zm5.5 0V5h3v14h-3ZM16 19v-7h3v7h-3Z"/>
-              </svg>
-            </div>
-
-            <div class="statsGrid monthStatsGrid">
-              <div class="statSoftBox"><strong id="monthStatsWorkDays">0</strong><span>Dni pracujące</span></div>
-              <div class="statSoftBox"><strong id="monthStatsAbsences">0</strong><span>Nieobecności razem</span></div>
-              <div class="statSoftBox"><strong id="monthStatsPaid">0 dni</strong><span>Urlop płatny</span></div>
-              <div class="statSoftBox"><strong id="monthStatsUnpaid">0 dni</strong><span>Urlop bezpłatny</span></div>
-              <div class="statSoftBox"><strong id="monthStatsSick">0 dni</strong><span>Zwolnienie L4</span></div>
-              <div class="statSoftBox"><strong id="monthStatsNotes">0</strong><span>Dni z notatką</span></div>
-            </div>
-
-            <div class="statsExportBlock">
-              <div class="statsSectionLabel">Wyeksportuj statystyki</div>
-              <div class="statsActions">
-                <button class="tonal" id="monthStatsPdf" type="button">Raport PDF</button>
-                <button class="tonal" id="monthStatsCsv" type="button">Raport CSV</button>
-              </div>
-            </div>
-
-            <div class="statsChartCard">
-              <div class="statsChartHead">
-                <strong>Wykres godzin w miesiącu</strong>
-                <div class="chartModeToggle" aria-label="Typ wykresu miesiąca">
-                  <button class="active" id="monthChartBars" type="button">Słupkowy</button>
-                  <button id="monthChartLine" type="button">Liniowy</button>
-                </div>
-              </div>
-              <div class="statsChartScroll">
-                <svg id="monthStatsChart" class="statsChart monthStatsChart" viewBox="0 0 360 190" role="img" aria-label="Godziny w dniach miesiąca"></svg>
-              </div>
-            </div>
-
-            <div class="statsSectionLabel statsTableLabel">Podsumowanie miesiąca</div>
-            <div class="statsTableWrap">
-              <table class="statsTable">
-                <thead>
-                  <tr>
-                    <th>Dzień</th>
-                    <th>Godziny</th>
-                    <th>Status</th>
-                    <th>Notatka</th>
-                  </tr>
-                </thead>
-                <tbody id="monthStatsRows"></tbody>
-              </table>
-            </div>
-          </section>
-
-          <section class="statsView" id="yearStatsView">
-            <div class="statsPeriodBar">
-              <button class="tonal" id="yearStatsPrev" type="button" aria-label="Poprzedni rok">‹</button>
-              <strong id="yearStatsCurrent">2026</strong>
-              <button class="tonal" id="yearStatsNext" type="button" aria-label="Następny rok">›</button>
-            </div>
-
-            <div class="statsHero">
-              <div>
-                <span>Rok</span>
-                <strong id="yearStatsHours">0:00</strong>
-                <small id="yearStatsPay">0,00 zł</small>
-              </div>
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M4 19h16v2H4v-2Zm1-2V9h3v8H5Zm5.5 0V3h3v14h-3ZM16 17v-6h3v6h-3Z"/>
-              </svg>
-            </div>
-
-            <div class="statsGrid yearStatsGrid">
-              <div class="statSoftBox"><strong id="yearStatsWorkDays">0</strong><span>Dni pracujące</span></div>
-              <div class="statSoftBox"><strong id="yearStatsAbsences">0</strong><span>Nieobecności razem</span></div>
-              <div class="statSoftBox"><strong id="yearStatsPaidUsed">0 dni</strong><span>Urlop wykorzystany</span></div>
-              <div class="statSoftBox"><strong id="yearStatsPaidLeft">0 dni</strong><span>Pozostało urlopu</span></div>
-              <div class="statSoftBox"><strong id="yearStatsUnpaid">0 dni</strong><span>Urlop bezpłatny</span></div>
-              <div class="statSoftBox"><strong id="yearStatsSick">0 dni</strong><span>Zwolnienie L4</span></div>
-            </div>
-
-            <div class="statsExportBlock">
-              <div class="statsSectionLabel">Wyeksportuj statystyki</div>
-              <div class="statsActions">
-                <button class="tonal" id="yearStatsCsv" type="button">Raport CSV</button>
-              </div>
-            </div>
-
-            <div class="statsChartCard">
-              <div class="statsChartHead">
-                <strong>Wykres godzin w roku</strong>
-                <div class="chartModeToggle" aria-label="Typ wykresu roku">
-                  <button class="active" id="yearChartBars" type="button">Słupkowy</button>
-                  <button id="yearChartLine" type="button">Liniowy</button>
-                </div>
-              </div>
-              <div class="statsChartScroll">
-                <svg id="yearStatsChart" class="statsChart yearStatsChart" viewBox="0 0 360 190" role="img" aria-label="Suma godzin per miesiąc"></svg>
-              </div>
-            </div>
-
-            <div class="statsSectionLabel statsTableLabel">Podsumowanie roku</div>
-            <div class="statsTableWrap">
-              <table class="statsTable">
-                <thead>
-                  <tr>
-                    <th>Miesiąc</th>
-                    <th>Godziny</th>
-                    <th>Dni</th>
-                    <th>Urlop</th>
-                    <th>Zwolnienie L4</th>
-                  </tr>
-                </thead>
-                <tbody id="yearStatsRows"></tbody>
-              </table>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
-  </dialog>
+  
 
   <dialog id="appConfirmDialog" class="appConfirmDialog">
     <div class="appConfirmCard">
@@ -5716,16 +5469,31 @@ body.view-day .dayViewPage{
 
 <script>
 (() => {
+  const isIgnorableRuntimeError = (msg) => {
+    const text = String(msg || "");
+    return /ServiceWorker|service worker|sw\.js|Failed to update a ServiceWorker|fetching the script|Service Worker register error/i.test(text);
+  };
+
   const showErr = (msg) => {
+    if (isIgnorableRuntimeError(msg)) {
+      console.warn("Ignorowany błąd techniczny offline/SW:", msg);
+      return;
+    }
     const el = document.getElementById("status");
     if (el) {
       el.textContent = "BŁĄD: " + msg;
       el.classList.add("has-error");
     }
   };
-  window.addEventListener("error", (e) => showErr(e.message || "Nieznany błąd JS"));
+  window.addEventListener("error", (e) => {
+    const msg = e.message || "Nieznany błąd JS";
+    if (isIgnorableRuntimeError(msg)) return;
+    showErr(msg);
+  });
   window.addEventListener("unhandledrejection", (e) => {
-    showErr((e.reason && e.reason.message) ? e.reason.message : String(e.reason || "Promise error"));
+    const msg = (e.reason && e.reason.message) ? e.reason.message : String(e.reason || "Promise error");
+    if (isIgnorableRuntimeError(msg)) return;
+    showErr(msg);
   });
 
   if ("serviceWorker" in navigator) {
@@ -5751,7 +5519,14 @@ body.view-day .dayViewPage{
       });
 
       window.addEventListener("focus", () => {
-        try { reg.update?.(); } catch {}
+        try {
+          const maybePromise = reg.update?.();
+          if (maybePromise && typeof maybePromise.catch === "function") {
+            maybePromise.catch((err) => console.warn("Service Worker update skipped:", err));
+          }
+        } catch (err) {
+          console.warn("Service Worker update skipped:", err);
+        }
       });
     }).catch((err) => console.warn("Service Worker register error:", err));
 
@@ -6740,43 +6515,32 @@ body.view-day .dayViewPage{
     return `${Math.round(value * 10) / 10}px`;
   }
 
-  function monthGridRows(monthYM = getCurrentMonthYM()) {
-    const [Y, M] = monthYM.split("-").map(Number);
-    const firstIdx = mondayIndex(new Date(Y, M - 1, 1).getDay());
-    const dim = daysInMonth(Y, M);
-    return Math.max(5, Math.ceil((firstIdx + dim) / 7));
-  }
-
-  function updateCalendarGeometryVars(monthYM = getCurrentMonthYM()) {
+  function updateCalendarGeometryVars() {
     const area = $("calSwipeArea");
     const root = document.documentElement;
     const width = Math.round(area?.clientWidth || document.documentElement.clientWidth || window.innerWidth || 360);
     const viewportW = Math.round(window.innerWidth || width);
-    const gap = viewportW <= 430 ? 5 : 6;
-    const rows = monthGridRows(monthYM);
-    const cellW = Math.max(34, (width - (gap * 6)) / 7);
+    const gap = 4;
+    const cellW = Math.max(36, (width - (gap * 6)) / 7);
 
-    // 4.3.1: duże, stabilne kafelki. Geometria wraca do sprawdzonej wysokości z 4.2.3,
-    // ale działa już na nowej strukturze 4.3. Treść nie rozpycha komórek.
-    const isTiny = viewportW <= 360;
-    const isPhone = viewportW <= 430;
+    const isNarrow = viewportW <= 430;
+    const isVeryNarrow = viewportW <= 360;
 
-    const dayHeight = isTiny
+    const dayHeight = isVeryNarrow
       ? clampNumber(cellW * 1.78, 78, 92)
-      : isPhone
-        ? clampNumber(cellW * 1.86, 86, 102)
-        : clampNumber(cellW * 1.52, 90, 112);
+      : isNarrow
+        ? clampNumber(cellW * 1.86, 82, 98)
+        : clampNumber(cellW * 1.52, 88, 112);
 
-    const dayNumSize = clampNumber(dayHeight * 0.215, isPhone ? 18 : 19, isPhone ? 22 : 23);
-    const dayNumBox = clampNumber(dayHeight * 0.34, isPhone ? 30 : 32, isPhone ? 38 : 40);
-    const todayBadgeH = clampNumber(dayHeight * 0.32, isPhone ? 28 : 30, isPhone ? 36 : 38);
-    const todayBadgeW = clampNumber(dayHeight * 0.46, isPhone ? 42 : 46, isPhone ? 56 : 60);
-    const pillHeight = clampNumber(dayHeight * 0.19, isPhone ? 17 : 18, isPhone ? 21 : 22);
-    const pillSize = clampNumber(dayHeight * 0.088, isPhone ? 7.2 : 7.8, isPhone ? 8.8 : 9.8);
+    const dayNumSize = clampNumber(dayHeight * 0.135, isNarrow ? 10.5 : 11.5, isNarrow ? 13.5 : 14.5);
+    const dayNumBox = clampNumber(dayHeight * 0.235, isNarrow ? 18 : 19, isNarrow ? 23 : 24);
+    const todayBadgeH = clampNumber(dayHeight * 0.215, isNarrow ? 18 : 19, isNarrow ? 21 : 22);
+    const todayBadgeW = clampNumber(dayHeight * 0.325, isNarrow ? 26 : 27, isNarrow ? 32 : 33);
+    const pillHeight = clampNumber(dayHeight * 0.145, isNarrow ? 11 : 12, isNarrow ? 14 : 15);
+    const pillSize = clampNumber(dayHeight * 0.078, isNarrow ? 6.4 : 7.1, isNarrow ? 7.7 : 8.7);
 
     const geometryKey = [
       width,
-      rows,
       Math.round(dayHeight),
       Math.round(dayNumSize * 10),
       Math.round(pillHeight * 10)
@@ -6785,8 +6549,6 @@ body.view-day .dayViewPage{
     if (geometryKey === lastCalendarGeometryKey) return false;
     lastCalendarGeometryKey = geometryKey;
 
-    root.style.setProperty("--cal-gap", px(gap));
-    root.style.setProperty("--cal-rows", String(rows));
     root.style.setProperty("--day-height", px(dayHeight));
     root.style.setProperty("--day-num-size", px(dayNumSize));
     root.style.setProperty("--day-num-box", px(dayNumBox));
@@ -6807,8 +6569,8 @@ body.view-day .dayViewPage{
   }
 
   function refreshCalendarLayoutOnly() {
+    updateCalendarGeometryVars();
     const monthYM = getCurrentMonthYM();
-    updateCalendarGeometryVars(monthYM);
     renderDow();
     renderCalendar(monthYM);
     renderTotals(monthYM);
@@ -6834,12 +6596,6 @@ body.view-day .dayViewPage{
     }).join("");
   }
 
-  function calendarPill(title, cls, text) {
-    const safeText = escapeHtml(text);
-    const safeTitle = escapeHtml(title || text);
-    return `<div class="pill ${cls}" title="${safeTitle}"><span>${safeText}</span></div>`;
-  }
-
   function buildPillsHTML(day) {
     const shifts = (day?.shifts || []).slice().sort((a, b) => (a.start || "").localeCompare(b.start || ""));
     const leaveType = day?.leaveType || "";
@@ -6849,15 +6605,16 @@ body.view-day .dayViewPage{
 
     const pills = [];
 
+    // status zawsze pierwszy (jeśli jest)
     if (leaveLbl) {
-      pills.push(calendarPill(leaveLbl, leaveCls, leaveLbl));
+      pills.push(`<div class="pill ${leaveCls}">${leaveLbl}</div>`);
     }
 
     if (hasNote) {
-      pills.push(calendarPill("Notatka", "note", "Notatka"));
+      pills.push(`<div class="pill note">Notatka</div>`);
     }
 
-    const maxTotal = 3;
+    const maxTotal = (leaveLbl || hasNote) ? 4 : 3;
     const shiftSlots = Math.max(0, maxTotal - pills.length);
     const visibleCount = (shifts.length > shiftSlots && shiftSlots > 0) ? shiftSlots - 1 : shiftSlots;
     const visible = shifts.slice(0, visibleCount);
@@ -6866,17 +6623,16 @@ body.view-day .dayViewPage{
     pills.push(...visible.map(s => {
       const a = (s && s.start) ? s.start : "—";
       const b = (s && s.end) ? s.end : "—";
-      const label = `${a}–${b}`;
-      return calendarPill(label, "work", label);
+      return `<div class="pill work">${a}–${b}</div>`;
     }));
 
-    if (extra > 0 && pills.length < maxTotal) pills.push(calendarPill(`${extra} więcej`, "more", `+${extra}`));
+    if (extra > 0 && pills.length < maxTotal) pills.push(`<div class="pill more">+${extra}</div>`);
 
     return `<div class="pillStack">${pills.join("")}</div>`;
   }
 
   function renderCalendar(monthYM) {
-    updateCalendarGeometryVars(monthYM);
+    updateCalendarGeometryVars();
     const monthLabel = $("monthLabelText");
     const calGrid = $("calGrid");
     if (!monthLabel || !calGrid) return;
@@ -6911,7 +6667,7 @@ body.view-day .dayViewPage{
     const cells = [];
     const today = todayISO();
 
-    for (let i = 0; i < firstIdx; i++) cells.push(`<div class="blankCell" aria-hidden="true"></div>`);
+    for (let i = 0; i < firstIdx; i++) cells.push(`<div class="blankCell"></div>`);
 
     for (let d = 1; d <= dim; d++) {
       const dateISO = `${Y}-${pad2(M)}-${pad2(d)}`;
@@ -6940,19 +6696,10 @@ body.view-day .dayViewPage{
 
       const pillsHTML = buildPillsHTML(day);
 
-      const ariaBits = [
-        fmtDateLongPL(dateISO),
-        tileTitle,
-        computeDayMinutes(day) ? `Godziny ${fmtHM(computeDayMinutes(day))}` : "",
-        (day.shifts || []).length ? `${(day.shifts || []).length} wpisów` : ""
-      ].filter(Boolean).join(", ");
-
       cells.push(`
-        <div class="${dayCellClass}" data-date="${dateISO}" ${tileTitle ? `title="${escapeHtml(tileTitle)}"` : ""} aria-label="${escapeHtml(ariaBits)}">
-          <div class="dayCellInner">
-            <div class="dayTop"><div class="${numClass}">${d}</div></div>
-            ${pillsHTML}
-          </div>
+        <div class="${dayCellClass}" data-date="${dateISO}" ${tileTitle ? `title="${tileTitle}"` : ""}>
+          <div class="dayTop"><div class="${numClass}">${d}</div></div>
+          ${pillsHTML}
         </div>
       `);
     }
@@ -6960,7 +6707,7 @@ body.view-day .dayViewPage{
     const mod = cells.length % 7;
     if (mod !== 0) {
       const need = 7 - mod;
-      for (let i = 0; i < need; i++) cells.push(`<div class="blankCell" aria-hidden="true"></div>`);
+      for (let i = 0; i < need; i++) cells.push(`<div class="blankCell"></div>`);
     }
 
     const html = cells.join("");
@@ -6973,11 +6720,8 @@ body.view-day .dayViewPage{
   }
 
   function renderCalendarInto(monthYM, gridEl, bindClicks) {
-    if (bindClicks) updateCalendarGeometryVars(monthYM);
+    updateCalendarGeometryVars();
     if (!gridEl) return;
-
-    gridEl.dataset.month = monthYM;
-    gridEl.dataset.rows = String(monthGridRows(monthYM));
 
     const today = todayISO();
     gridEl.innerHTML = buildCalendarHTML(monthYM);
@@ -7329,22 +7073,28 @@ body.view-day .dayViewPage{
 
   function applyActiveView() {
     const isDay = activeView === "day";
+    const isStats = activeView === "stats";
+    const isMonth = !isDay && !isStats;
+
     document.body.classList.toggle("view-day", isDay);
-    document.body.classList.toggle("view-month", !isDay);
+    document.body.classList.toggle("view-stats", isStats);
+    document.body.classList.toggle("view-month", isMonth);
 
-    document.querySelector(".calCard")?.classList.toggle("monthViewHidden", isDay);
-    $("monthSummaryCard")?.classList.toggle("monthViewHidden", isDay);
+    document.querySelector(".calCard")?.classList.toggle("monthViewHidden", !isMonth);
+    $("monthSummaryCard")?.classList.toggle("monthViewHidden", !isMonth);
     $("dayViewPage")?.classList.toggle("monthViewHidden", !isDay);
-    $("monthStrip")?.toggleAttribute("hidden", isDay || !document.body.classList.contains("month-strip-open"));
+    $("yearStatsDialog")?.classList.toggle("monthViewHidden", !isStats);
+    $("monthStrip")?.toggleAttribute("hidden", !isMonth || !document.body.classList.contains("month-strip-open"));
 
-    $("drawerMonthView")?.classList.toggle("active", !isDay);
+    $("drawerMonthView")?.classList.toggle("active", isMonth);
     $("drawerDayView")?.classList.toggle("active", isDay);
 
     if (isDay) renderDayView(activeDayISO);
+    if (isStats) renderStatsPanel();
   }
 
   function setActiveView(view, dateISO = "") {
-    activeView = view === "day" ? "day" : "month";
+    activeView = view === "day" ? "day" : (view === "stats" ? "stats" : "month");
     if (dateISO) activeDayISO = dateISO;
 
     const mp = $("monthPick");
@@ -7357,6 +7107,27 @@ body.view-day .dayViewPage{
     applyActiveView();
     haptic.tap();
   }
+
+  function setDayViewDateOnly(dateISO) {
+    activeDayISO = dateISO || todayISO();
+
+    const mp = $("monthPick");
+    if (mp && activeDayISO) {
+      const nextYM = ym(activeDayISO);
+      if (mp.value !== nextYM) mp.value = nextYM;
+    }
+
+    renderDayView(activeDayISO);
+  }
+
+  function changeDayWithAnimation(dateISO, direction = 0) {
+    setDayViewDateOnly(dateISO);
+    haptic.tap();
+  }
+
+  Object.assign(window.CPApp, {
+    changeDayWithAnimation
+  });
 
   Object.assign(window.CPApp, {
     setActiveView,
@@ -8171,28 +7942,27 @@ body.view-day .dayViewPage{
   }
 
   function renderStatsPanel() {
-    const dlgYear = $("yearStatsDialog");
-    if (!dlgYear || !dlgYear.open) return;
+    const statsPage = $("yearStatsDialog");
+    if (!statsPage || activeView !== "stats") return;
     if (activeStatsMode === "year") renderYearStats();
     else renderMonthStats();
   }
 
   function openStatsPanel(mode = "month") {
     haptic.tap();
-    const dlgYear = $("yearStatsDialog");
-    if (!dlgYear) return;
+    const statsPage = $("yearStatsDialog");
+    if (!statsPage) return;
 
     const monthPick = $("monthPick");
     activeStatsMonth = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
     activeYearStatsYear = yearFromMonthYM(activeStatsMonth);
     activeStatsMode = mode === "year" ? "year" : "month";
 
-    window.setSystemBars?.("#ffffff");
-    if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
-    if (typeof dlgYear.showModal === "function") dlgYear.showModal();
-    else dlgYear.setAttribute("open", "");
-
+    activeView = "stats";
+    applyActiveView();
     setStatsMode(activeStatsMode);
+    window.setSystemBars?.("#eef1f6");
+    window.scrollTo({ top:0, behavior:"smooth" });
   }
 
 
@@ -8201,10 +7971,7 @@ body.view-day .dayViewPage{
   });
 
   function closeYearStats() {
-    const dlgYear = $("yearStatsDialog");
-    if (dlgYear && typeof dlgYear.close === "function") dlgYear.close();
-    else if (dlgYear) dlgYear.removeAttribute("open");
-    if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
+    setActiveView("month");
     window.setSystemBars?.("#eef1f6");
   }
 
@@ -8375,14 +8142,12 @@ body.view-day .dayViewPage{
     const base = parseISODate(activeDayISO) || new Date();
 
     switch (btn.id) {
-      case "dayViewBackToMonth":
-        setActiveView("month");
-        break;
+
       case "dayViewPrev":
-        setActiveView("day", isoFromDate(addDays(base, -1)));
+        changeDayWithAnimation(isoFromDate(addDays(base, -1)), -1);
         break;
       case "dayViewNext":
-        setActiveView("day", isoFromDate(addDays(base, 1)));
+        changeDayWithAnimation(isoFromDate(addDays(base, 1)), 1);
         break;
       case "dayViewAddHours":
         openDayAddForm(activeDayISO);
@@ -8406,7 +8171,7 @@ body.view-day .dayViewPage{
 
     const nextDay = (delta) => {
       const base = parseISODate(activeDayISO) || new Date();
-      setActiveView("day", isoFromDate(addDays(base, delta)));
+      changeDayWithAnimation(isoFromDate(addDays(base, delta)), delta);
     };
 
     page.addEventListener("touchstart", (e) => {
@@ -9163,9 +8928,14 @@ body.view-day .dayViewPage{
   }
 
   function logAppError(message, source) {
+    const text = String(message || "Nieznany błąd");
+    if (/ServiceWorker|service worker|sw\.js|Failed to update a ServiceWorker|fetching the script/i.test(text)) {
+      console.warn("Ignorowany błąd techniczny offline/SW:", text);
+      return;
+    }
     const item = {
       time: new Date().toLocaleString("pl-PL"),
-      message: String(message || "Nieznany błąd"),
+      message: text,
       source: source || ""
     };
     window.__appErrors.push(item);
