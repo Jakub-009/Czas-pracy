@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.3.9</title>
+  <title>Czas pracy 4.3.10</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -4441,7 +4441,7 @@ dialog#dayDialog.googlePanel,
 }
 
 
-/* ===== Czas pracy 4.3.9 — kalendarz stable: szkielet 4.2.3 + lekki UI polish ===== */
+/* ===== Czas pracy 4.3.10 — kalendarz stable: szkielet 4.2.3 + lekki UI polish ===== */
 :root{
   --bg:#eef1f6;
   --surface:#ffffff;
@@ -4536,7 +4536,7 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
 }
 
 
-/* ===== Czas pracy 4.3.9 — spójne widoki, formularze i statystyki ===== */
+/* ===== Czas pracy 4.3.10 — spójne widoki, formularze i statystyki ===== */
 html,
 body,
 .wrap,
@@ -4578,9 +4578,7 @@ body.view-stats{
   margin:12px 0 16px;
 }
 
-.dayViewActions button,
-.dayViewBottomActions button,
-.statsCloseBottom{
+.dayViewActions button{
   width:auto;
   min-width:0;
   min-height:42px;
@@ -4598,8 +4596,7 @@ body.view-stats{
 }
 
 .dayViewActions #dayViewAddLeave,
-.dayViewActions #dayViewOpenModal,
-.dayViewBottomActions button{
+.dayViewActions #dayViewOpenModal{
   background:#fff;
   border:1px solid #dfe3eb;
   color:#174ea6;
@@ -4610,13 +4607,31 @@ body.view-stats{
   border-color:#cddaf3;
 }
 
-.dayViewBottomActions{
+.dayViewBottomActions,
+.statsBottomActions{
   display:flex;
-  justify-content:center;
-  padding:14px 0 0;
+  justify-content:flex-end;
+  padding:16px 0 0;
 }
 
-/* Modale robocze: ten sam spokojny język UI co karty dnia i statystyk */
+.dayViewBottomActions button,
+.statsCloseBottom{
+  width:auto;
+  min-width:136px;
+  min-height:46px;
+  height:46px;
+  padding:0 24px;
+  border-radius:999px;
+  background:#1a73e8;
+  color:#fff;
+  border:none;
+  box-shadow:0 2px 5px rgba(26,115,232,.18);
+  font-size:15px;
+  font-weight:800;
+  flex:0 0 auto;
+}
+
+/* Modale robocze: spójne tło i karty jak w reszcie aplikacji */
 dialog#bulkDialog.googlePanel,
 dialog#dayDialog.googlePanel,
 dialog#vacDialog.googlePanel{
@@ -4628,7 +4643,10 @@ dialog#dayDialog .googlePanelShell,
 dialog#vacDialog .googlePanelShell,
 dialog#bulkDialog .googlePanelContent,
 dialog#dayDialog .googlePanelContent,
-dialog#vacDialog .googlePanelContent{
+dialog#vacDialog .googlePanelContent,
+dialog#bulkDialog .modalBody,
+dialog#dayDialog .modalBody,
+dialog#vacDialog .modalBody{
   background:#eef1f6;
 }
 
@@ -4637,6 +4655,12 @@ dialog#dayDialog .googlePanelBar,
 dialog#vacDialog .googlePanelBar{
   background:#eef1f6;
   border-bottom:1px solid #dfe3eb;
+}
+
+dialog#bulkDialog::backdrop,
+dialog#dayDialog::backdrop,
+dialog#vacDialog::backdrop{
+  background:#eef1f6;
 }
 
 dialog#bulkDialog .modalHead h3,
@@ -4670,11 +4694,52 @@ dialog#dayDialog .quickTemplatesBlock,
 dialog#dayDialog .modalStats,
 dialog#dayDialog .daySection,
 dialog#dayDialog .dayNotePreview,
-dialog#dayDialog .dayNoteField,
 dialog#vacDialog .bulkOptions{
   background:#fff;
   border:1px solid #e4e8f1;
   box-shadow:0 1px 2px rgba(60,64,67,.045);
+}
+
+/* Notatka w modalu dnia — bez podwójnej/rozjechanej ramki */
+dialog#dayDialog .dayNoteField{
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  padding:0;
+  margin-top:18px;
+}
+
+dialog#dayDialog .dayNoteField label{
+  display:block;
+  margin:0 0 10px;
+}
+
+dialog#dayDialog .dayNoteField textarea{
+  display:block;
+  width:100%;
+  min-height:112px;
+  padding:16px 18px;
+  background:#fff;
+  border:1px solid #dfe3eb;
+  border-radius:20px;
+  box-shadow:0 1px 2px rgba(60,64,67,.035);
+  resize:vertical;
+}
+
+/* Dodaj godziny w modalu dnia — mniejszy i po prawej, nie pełna szerokość */
+dialog#dayDialog #dlgAddShift.addBtnCenter{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:auto;
+  min-width:156px;
+  height:46px;
+  min-height:46px;
+  margin:18px 0 0 auto;
+  padding:0 28px;
+  border-radius:999px;
+  font-size:15px;
+  font-weight:800;
 }
 
 dialog#bulkDialog .rangeModeTabs,
@@ -4792,32 +4857,31 @@ body.view-stats .fab-container{
   border-radius:999px;
 }
 
-.statsBottomActions{
-  display:flex;
-  justify-content:center;
-  padding:16px 0 0;
-  margin-top:auto;
-}
-
-.statsCloseBottom{
-  background:#fff;
-  color:#174ea6;
-  border:1px solid #dfe3eb;
-  box-shadow:0 1px 2px rgba(60,64,67,.04);
-}
-
 @media(max-width:430px){
   .dayViewActions{
     gap:8px;
   }
 
-  .dayViewActions button,
-  .dayViewBottomActions button,
-  .statsCloseBottom{
+  .dayViewActions button{
     height:40px;
     min-height:40px;
     padding:0 14px;
     font-size:13.5px;
+  }
+
+  .dayViewBottomActions button,
+  .statsCloseBottom{
+    min-width:132px;
+    height:44px;
+    min-height:44px;
+    padding:0 22px;
+  }
+
+  dialog#dayDialog #dlgAddShift.addBtnCenter{
+    min-width:150px;
+    height:44px;
+    min-height:44px;
+    padding:0 24px;
   }
 
   .statsPage{
@@ -4831,11 +4895,20 @@ body.view-stats .fab-container{
 }
 
 @media(max-width:370px){
-  .dayViewActions button,
-  .dayViewBottomActions button,
-  .statsCloseBottom{
+  .dayViewActions button{
     padding:0 12px;
     font-size:13px;
+  }
+
+  .dayViewBottomActions button,
+  .statsCloseBottom{
+    min-width:124px;
+    padding:0 20px;
+  }
+
+  dialog#dayDialog #dlgAddShift.addBtnCenter{
+    min-width:140px;
+    padding:0 22px;
   }
 
   .statsFullHeader h2{
@@ -6857,7 +6930,7 @@ body.view-stats .fab-container{
 
     renderDayDialog();
 
-    window.CPApp?.setSystemBars?.("#ffffff");
+    window.CPApp?.setSystemBars?.("#eef1f6");
     if (dlg && typeof dlg.showModal === "function") dlg.showModal();
     else if (dlg) dlg.setAttribute("open", "");
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
@@ -7257,7 +7330,7 @@ body.view-stats .fab-container{
     if ($("vacIncludeSat")) $("vacIncludeSat").checked = !!db.settings.defaultIncludeSat;
     if ($("vacIncludeSun")) $("vacIncludeSun").checked = !!db.settings.defaultIncludeSun;
     if ($("vacIncludeHolidays")) $("vacIncludeHolidays").checked = !!db.settings.defaultIncludeHolidays;
-    window.setSystemBars?.("#ffffff");
+    window.setSystemBars?.("#eef1f6");
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
     if (typeof vacDlg.showModal === "function") vacDlg.showModal();
     else vacDlg.setAttribute("open", "");
@@ -7315,7 +7388,7 @@ body.view-stats .fab-container{
     if ($("bulkIncludeSun")) $("bulkIncludeSun").checked = !!db.settings.defaultIncludeSun;
     if ($("bulkIncludeHolidays")) $("bulkIncludeHolidays").checked = !!db.settings.defaultIncludeHolidays;
     setBulkMode(mode);
-    window.setSystemBars?.("#ffffff");
+    window.setSystemBars?.("#eef1f6");
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
     if (typeof bulkDlg.showModal === "function") bulkDlg.showModal();
     else bulkDlg.setAttribute("open", "");
@@ -9150,7 +9223,7 @@ body.view-stats .fab-container{
 
   function openDrawer() {
     showDrawerView("main");
-    window.setSystemBars?.("#ffffff");
+    window.setSystemBars?.("#eef1f6");
     document.body.classList.add("drawer-open");
     lockPageScroll("drawer");
     openDialog(drawer);
