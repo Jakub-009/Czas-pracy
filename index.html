@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.3.10</title>
+  <title>Czas pracy 4.3.11</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -418,16 +418,6 @@ dialog::backdrop{
       -webkit-backdrop-filter:blur(3px);
     }
 
-dialog#fabMenuDialog,
-    dialog#vacDialog,
-    dialog#bulkDialog,
-    dialog#dayDialog{
-      width:100vw;
-      max-width:100vw;
-      margin:auto 0 0 0;
-      border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;
-    }
-
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 
 .modalHead{
@@ -549,10 +539,6 @@ dialog#fabMenuDialog,
       font-size:13px;
       font-weight:400;
       color:var(--text-2);
-    }
-
-dialog#dayDialog{
-      max-height:96dvh;
     }
 
 #dayDialog .modalBody{
@@ -848,20 +834,6 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
   height:28px;
 }
 
-dialog#fabMenuDialog,
-dialog#vacDialog,
-dialog#bulkDialog,
-dialog#dayDialog,
-dialog#mainMenuDialog,
-dialog#settingsDialog,
-dialog#toolsDialog,
-dialog#appInfoDialog{
-  width:100vw;
-  max-width:100vw;
-  margin:auto 0 0 0;
-  border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;
-}
-
 dialog:focus,
 dialog:focus-visible{
   outline:none;
@@ -871,59 +843,10 @@ dialog:focus-visible{
   padding-top:0;
 }
 
-dialog#dayDialog{
-  max-height:88dvh;
-}
-
 #dayDialog .modalBody{
   max-height:calc(88dvh - 76px);
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
-}
-
-.dayPreviewHead{
-  padding-left:20px;
-  padding-right:20px;
-  padding-bottom:10px;
-}
-
-.dayPreviewHead h3{
-  font-size:clamp(22px, 6vw, 27px);
-  line-height:1.16;
-  letter-spacing:-.03em;
-}
-
-.dayPreviewHead .muted{
-  font-size:14px;
-}
-
-.dayPreviewBody{
-  padding-left:20px;
-  padding-right:20px;
-  padding-top:0;
-}
-
-.dayPreviewStats{
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin:4px 0 16px;
-}
-
-.dayPreviewStats .statMini{
-  padding:0 0 9px;
-  border-bottom:1px solid var(--outline-soft);
-}
-
-.dayPreviewStats .statMiniValue{
-  font-size:clamp(20px, 5.6vw, 25px);
-  line-height:1.05;
-  font-weight:500;
-  margin:0 0 6px;
-  letter-spacing:-.025em;
-}
-
-.dayPreviewStats .muted{
-  font-size:12.5px;
 }
 
 #dlgShiftsTitle{
@@ -1363,22 +1286,6 @@ dialog input,
 dialog textarea,
 dialog select{
   scroll-margin-bottom:180px;
-}
-
-body.keyboard-open dialog[open]:not(.googlePanel),
-body.keyboard-focus dialog[open]:not(.googlePanel){
-  max-height:92dvh;
-}
-
-body.keyboard-open #dayDialog:not(.googlePanel) .modalBody,
-body.keyboard-focus #dayDialog:not(.googlePanel) .modalBody{
-  max-height:calc(92dvh - 70px);
-  padding-bottom:calc(36px + env(safe-area-inset-bottom));
-}
-
-body.keyboard-open dialog:not(.googlePanel) .modalBody,
-body.keyboard-focus dialog:not(.googlePanel) .modalBody{
-  padding-bottom:calc(28px + env(safe-area-inset-bottom));
 }
 
 .navTopBar{
@@ -1948,14 +1855,6 @@ body.modal-open{
   touch-action:none;
 }
 
-dialog#vacDialog .modalBody,
-dialog#bulkDialog .modalBody{
-  max-height:calc(92dvh - 74px);
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
-}
-
 dialog#fabMenuDialog{
   pointer-events:none;
 }
@@ -2087,19 +1986,6 @@ body.drawer-open{
   max-width:100%;
   margin-left:auto;
   margin-right:0;
-}
-
-dialog#vacDialog,
-dialog#bulkDialog{
-  max-height:92dvh;
-}
-
-dialog#vacDialog .modalBody,
-dialog#bulkDialog .modalBody{
-  max-height:calc(92dvh - 92px);
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
 }
 
 body.modal-open,
@@ -2270,10 +2156,6 @@ dialog#mainMenuDialog.drawerDialog{
 .fabActionPill svg{width:21px;height:21px}
 
 .templateChip{min-height:29px;height:29px;padding:0 9px;font-size:12px;font-weight:650}
-
-dialog#vacDialog,dialog#bulkDialog{max-height:92dvh}
-
-dialog#vacDialog .modalBody,dialog#bulkDialog .modalBody{max-height:calc(92dvh - 92px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 
 #bulkApply,#setVacationRange,#dlgAddShift{min-height:46px;padding:0 20px;font-size:15px;border-radius:999px}
 
@@ -2908,10 +2790,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   display:none;
 }
 
-.googlePanelBar{
-  justify-content:flex-start;
-}
-
 .statsChartCard{
   overflow:hidden;
 }
@@ -3099,329 +2977,9 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   opacity:.88;
 }
 
-dialog#dayDialog.googlePanel,
-dialog#bulkDialog.googlePanel,
-dialog#vacDialog.googlePanel,
-dialog#yearStatsDialog.googlePanel{
-  position:fixed;
-  inset:0;
-  width:100vw;
-  max-width:none;
-  height:100dvh;
-  max-height:none;
-  margin:0;
-  padding:0;
-  border-radius:0;
-  background:#fff;
-  color:var(--text);
-  overflow:hidden;
-  box-shadow:none;
-  --panel-action-h:40px;
-  --panel-action-font:14.5px;
-}
-
-dialog#dayDialog.googlePanel::backdrop,
-dialog#bulkDialog.googlePanel::backdrop,
-dialog#vacDialog.googlePanel::backdrop,
-dialog#yearStatsDialog.googlePanel::backdrop{
-  background:rgba(32,33,36,.34);
-  backdrop-filter:blur(2px);
-  -webkit-backdrop-filter:blur(2px);
-}
-
-dialog#dayDialog.googlePanel[open],
-dialog#bulkDialog.googlePanel[open],
-dialog#vacDialog.googlePanel[open],
-dialog#yearStatsDialog.googlePanel[open]{
-  animation:googlePanelIn .18s cubic-bezier(.2,0,0,1);
-}
-
 @keyframes googlePanelIn{
   from{transform:translateY(10px);opacity:.98}
   to{transform:translateY(0);opacity:1}
-}
-
-.googlePanelShell{
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  background:#fff;
-  overflow:hidden;
-}
-
-.googlePanelBar{
-  position:sticky;
-  top:0;
-  z-index:5;
-  min-height:calc(54px + env(safe-area-inset-top));
-  padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
-  background:#fff;
-  border-bottom:1px solid rgba(60,64,67,.12);
-}
-
-.panelCloseBtn{
-  position:absolute;
-  left:24px;
-  top:calc(12px + env(safe-area-inset-top));
-  width:32px;
-  height:32px;
-  min-height:32px;
-  padding:0;
-  border-radius:50%;
-  background:transparent;
-  color:#111318;
-  box-shadow:none;
-}
-
-.panelCloseBtn::before,
-.panelCloseBtn::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:19px;
-  height:2.25px;
-  border-radius:999px;
-  background:currentColor;
-  transform-origin:center;
-}
-
-.panelCloseBtn::before{transform:translate(-50%,-50%) rotate(45deg)}
-
-.panelCloseBtn::after{transform:translate(-50%,-50%) rotate(-45deg)}
-
-.panelCloseBtn:hover{background:#f1f3f4}
-
-.panelSaveBtn,
-dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter,
-dialog#bulkDialog.googlePanel #bulkRemove,
-dialog#vacDialog.googlePanel #clearVacationRange{
-  width:auto;
-  min-width:0;
-  max-width:calc(100vw - 48px);
-  height:var(--panel-action-h);
-  min-height:var(--panel-action-h);
-  padding:0 22px;
-  border-radius:999px;
-  box-shadow:none;
-  font-size:var(--panel-action-font);
-  line-height:1;
-  font-weight:650;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  white-space:nowrap;
-}
-
-.panelSaveBtn{
-  position:absolute;
-  right:24px;
-  top:calc(8px + env(safe-area-inset-top));
-}
-
-.panelSaveBtn,
-dialog#dayDialog.googlePanel #dlgAddShift.addBtnCenter{
-  background:#4285f4;
-  color:#fff;
-}
-
-dialog#bulkDialog.googlePanel #bulkRemove,
-dialog#vacDialog.googlePanel #clearVacationRange{
-  background:#c5221f;
-  color:#fff;
-  margin-top:18px;
-  margin-left:0;
-  margin-right:0;
-}
-
-.googlePanelContent{
-  flex:1 1 auto;
-  min-height:0;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
-  padding-bottom:calc(8px + env(safe-area-inset-bottom));
-  background:#fff;
-  touch-action:pan-y;
-}
-
-.googlePanel .modalHead{
-  padding:18px 88px 16px;
-  background:#fff;
-  border:none;
-}
-
-.googlePanel .modalHead h3{
-  margin:0;
-  font-size:26px;
-  line-height:1.16;
-  font-weight:560;
-  letter-spacing:-.03em;
-  color:#111318;
-}
-
-.googlePanel .modalHead .muted{
-  margin-top:8px;
-  font-size:14.5px;
-  line-height:1.34;
-  color:#3c4043;
-}
-
-.googlePanel .modalBody{
-  max-height:none;
-  overflow:visible;
-  padding:0 88px 10px;
-  background:#fff;
-}
-
-.googlePanel label,
-.googlePanel .quickTemplatesTitle{
-  font-size:13.5px;
-  line-height:1.2;
-  font-weight:650;
-  color:#3c4043;
-}
-
-.googlePanel .fieldGrid,
-.googlePanel .timeGrid{
-  gap:15px;
-}
-
-.googlePanel input,
-.googlePanel textarea,
-.googlePanel select{
-  min-height:50px;
-  font-size:15px;
-  border-radius:14px 14px 0 0;
-}
-
-.googlePanel textarea{
-  min-height:76px;
-}
-
-.googlePanel .templateChip{
-  min-height:32px;
-  height:32px;
-  padding:0 11px;
-  font-size:12.5px;
-}
-
-.googlePanel .actionRow{
-  justify-content:flex-start;
-  margin-top:18px;
-  padding-bottom:0;
-}
-
-dialog#bulkDialog.googlePanel #bulkApply,
-dialog#bulkDialog.googlePanel #bulkBack,
-dialog#vacDialog.googlePanel #setVacationRange,
-dialog#vacDialog.googlePanel #vacBack,
-dialog#dayDialog.googlePanel .dayCloseRow{
-  display:none;
-}
-
-dialog#bulkDialog.googlePanel .googlePanelContent,
-dialog#vacDialog.googlePanel .googlePanelContent{
-  padding-bottom:calc(4px + env(safe-area-inset-bottom));
-}
-
-dialog#bulkDialog.googlePanel .modalBody,
-dialog#vacDialog.googlePanel .modalBody{
-  padding-bottom:4px;
-}
-
-dialog#bulkDialog.googlePanel .actionRow,
-dialog#vacDialog.googlePanel .actionRow{
-  margin-top:16px;
-  padding-bottom:0;
-}
-
-dialog#dayDialog.googlePanel.is-form-open .dayPreviewStats,
-dialog#dayDialog.googlePanel.is-form-open #dlgShiftsBlock,
-dialog#dayDialog.googlePanel.is-form-open #dlgNotePreview{
-  display:none;
-}
-
-dialog#dayDialog.googlePanel .dayAddTrigger{
-  width:max-content;
-  max-width:100%;
-  min-height:44px;
-  margin:16px 0 18px;
-  padding:0 18px 0 12px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  border-radius:999px;
-  background:#e8f0fe;
-  color:#174ea6;
-  box-shadow:none;
-  font-size:15px;
-  line-height:1;
-  font-weight:650;
-  white-space:nowrap;
-}
-
-dialog#dayDialog.googlePanel .plusMark{
-  width:28px;
-  height:28px;
-  min-width:28px;
-  border-radius:50%;
-  display:inline-grid;
-  place-items:center;
-  font-size:23px;
-  line-height:1;
-  font-weight:450;
-  color:#1a73e8;
-}
-
-dialog#dayDialog.googlePanel .addShiftPanel{
-  display:none;
-  margin:0;
-  padding:0;
-  border-radius:0;
-  background:transparent;
-  box-shadow:none;
-  border:none;
-}
-
-dialog#dayDialog.googlePanel.is-form-open .addShiftPanel{
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-}
-
-dialog#dayDialog.googlePanel.is-form-open .dayAddTrigger{
-  display:none;
-}
-
-dialog#dayDialog.googlePanel .addShiftPanel .timeGrid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:15px;
-  margin:0;
-}
-
-dialog#dayDialog.googlePanel .addShiftPanel .quickTemplatesBlock{
-  order:2;
-  margin:0;
-}
-
-dialog#dayDialog.googlePanel .addShiftPanel .timeGrid{
-  order:1;
-}
-
-dialog#dayDialog.googlePanel .addShiftPanel .dayNoteField{
-  order:3;
-  margin:0;
-}
-
-dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
-  order:4;
-  margin-top:4px;
-  margin-left:0;
-  margin-right:0;
 }
 
 .statusLine{
@@ -3482,7 +3040,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   gap:10px;
   margin:0 0 10px;
 }
-
 
 .dayViewNav{
   flex:1 1 auto;
@@ -3623,74 +3180,6 @@ dialog#dayDialog.googlePanel .addShiftPanel #dlgAddShift{
   margin:0 0 10px;
 }
 
-dialog.googlePanel{
-  background:#fff;
-}
-
-.googlePanelShell{
-  background:#fff;
-}
-
-.googlePanelBar{
-  min-height:calc(58px + env(safe-area-inset-top));
-  padding:calc(10px + env(safe-area-inset-top)) 22px 7px;
-  border-bottom:1px solid rgba(60,64,67,.10);
-}
-
-.googlePanelContent{
-  padding-bottom:calc(4px + env(safe-area-inset-bottom));
-}
-
-.googlePanel .modalHead{
-  padding-top:20px;
-  padding-bottom:14px;
-}
-
-.googlePanel .modalHead h3{
-  font-size:26px;
-  font-weight:580;
-  letter-spacing:-.035em;
-}
-
-.googlePanel .modalHead .muted{
-  max-width:640px;
-  font-size:14px;
-  line-height:1.38;
-  color:#5f6368;
-}
-
-.googlePanel .modalBody{
-  padding-bottom:10px;
-}
-
-.googlePanel .fieldGrid,
-.googlePanel .timeGrid{
-  gap:14px;
-  margin-bottom:16px;
-}
-
-.googlePanel input,
-.googlePanel textarea,
-.googlePanel select{
-  background:#f4f7fb;
-  border-bottom-color:#a7afbc;
-}
-
-.googlePanel input:hover,
-.googlePanel textarea:hover,
-.googlePanel select:hover,
-.googlePanel input:focus-visible,
-.googlePanel textarea:focus-visible,
-.googlePanel select:focus-visible{
-  background:#eef3fa;
-}
-
-.quickTemplatesBlock,
-.bulkOptions,
-.dayNoteField{
-  border-radius:20px;
-}
-
 .quickTemplatesBlock{
   padding:12px 12px 10px;
   background:#f8fafd;
@@ -3728,42 +3217,6 @@ dialog.googlePanel{
   box-shadow:0 1px 2px rgba(60,64,67,.10);
 }
 
-.panelSaveBtn{
-  top:calc(10px + env(safe-area-inset-top));
-  right:22px;
-  min-height:38px;
-  height:38px;
-  padding:0 20px;
-}
-
-.panelCloseBtn{
-  top:calc(13px + env(safe-area-inset-top));
-  left:22px;
-}
-
-dialog#bulkDialog.googlePanel #bulkRemove,
-dialog#vacDialog.googlePanel #clearVacationRange{
-  width:max-content;
-  max-width:100%;
-  min-height:40px;
-  height:40px;
-  margin:14px 0 0;
-  padding:0 18px;
-  border-radius:999px;
-  background:#fce8e6;
-  color:#a50e0e;
-}
-
-dialog#bulkDialog.googlePanel .actionRow,
-dialog#vacDialog.googlePanel .actionRow{
-  margin-top:12px;
-  padding-bottom:0;
-}
-
-.dayPreviewStats{
-  margin-bottom:18px;
-}
-
 .shiftItem.googleEvent{
   border-radius:16px;
   padding:10px 10px 10px 0;
@@ -3781,10 +3234,6 @@ dialog#vacDialog.googlePanel .actionRow{
 
 .shiftItem.googleEvent .mins{
   font-size:12.5px;
-}
-
-.dayAddTrigger{
-  margin-top:14px;
 }
 
 .statsChartCard,
@@ -3901,34 +3350,6 @@ body,
   color:#174ea6;
 }
 
-.dayAddActions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin:16px 0 18px;
-}
-
-dialog#dayDialog.googlePanel .dayAddActions .dayAddTrigger{
-  margin:0;
-}
-
-dialog#dayDialog.googlePanel .dayAddLeaveTrigger{
-  background:#fff;
-  border:1px solid #dfe7fb;
-}
-
-dialog#dayDialog.googlePanel.is-form-open .dayAddActions{
-  display:none;
-}
-
-.bulkModePane[hidden]{
-  display:none;
-}
-
-.bulkLeaveFields{
-  margin-bottom:14px;
-}
-
 .rangeModeTab{
   cursor:pointer;
 }
@@ -3992,32 +3413,6 @@ dialog#dayDialog.googlePanel.is-form-open .dayAddActions{
 }
 
 @media (min-width:680px){
-dialog#fabMenuDialog,
-      dialog#vacDialog,
-      dialog#bulkDialog,
-      dialog#dayDialog{
-        width:min(560px,calc(100vw - 32px));
-        max-width:560px;
-        margin:auto;
-        border-radius:var(--radius-sheet);
-      }
-dialog#dayDialog{max-width:640px}
-dialog#fabMenuDialog,
-  dialog#vacDialog,
-  dialog#bulkDialog,
-  dialog#dayDialog,
-  dialog#mainMenuDialog,
-  dialog#settingsDialog,
-  dialog#toolsDialog,
-  dialog#appInfoDialog{
-    width:min(560px,calc(100vw - 32px));
-    max-width:560px;
-    margin:auto;
-    border-radius:var(--radius-sheet);
-  }
-dialog#dayDialog{
-    max-width:640px;
-  }
 dialog#mainMenuDialog.drawerDialog{
     width:100vw;
     max-width:100vw;
@@ -4033,102 +3428,9 @@ dialog#mainMenuDialog.drawerDialog{
 
 @media (max-width:679px){
 dialog[open]{animation:slideUp .28s cubic-bezier(.2,0,0,1)}
-dialog#vacDialog,
-  dialog#bulkDialog,
-  dialog#dayDialog,
-  dialog#settingsDialog,
-  dialog#toolsDialog,
-  dialog#appInfoDialog{
-    width:calc(100vw - 18px);
-    max-width:calc(100vw - 18px);
-    margin:auto 9px 9px 9px;
-    border-radius:30px;
-  }
-dialog#vacDialog .modalHead,
-  dialog#bulkDialog .modalHead,
-  dialog#dayDialog .modalHead,
-  dialog#settingsDialog .modalHead,
-  dialog#toolsDialog .modalHead,
-  dialog#appInfoDialog .modalHead{
-    padding-left:22px;
-    padding-right:22px;
-  }
-dialog#vacDialog .modalBody,
-  dialog#bulkDialog .modalBody,
-  dialog#dayDialog .modalBody,
-  dialog#settingsDialog .modalBody,
-  dialog#toolsDialog .modalBody,
-  dialog#appInfoDialog .modalBody{
-    padding-left:22px;
-    padding-right:22px;
-  }
-dialog#vacDialog,dialog#bulkDialog,dialog#dayDialog{
-    width:calc(100vw - 18px);
-    max-width:calc(100vw - 18px);
-    margin:auto 9px 9px 9px;
-    border-radius:30px;
-  }
-dialog#vacDialog .modalHead,dialog#bulkDialog .modalHead,dialog#dayDialog .modalHead,
-  dialog#vacDialog .modalBody,dialog#bulkDialog .modalBody,dialog#dayDialog .modalBody{
-    padding-left:22px;
-    padding-right:22px;
-  }
-dialog#dayDialog,
-  dialog#bulkDialog,
-  dialog#vacDialog{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    top:auto;
-    width:100vw;
-    max-width:100vw;
-    margin:0;
-    border-radius:30px 30px 0 0;
-    max-height:92dvh;
-    box-shadow:0 -10px 36px rgba(32,33,36,.24);
-  }
-dialog#dayDialog{
-    max-height:90dvh;
-  }
-dialog#dayDialog[open],
-  dialog#bulkDialog[open],
-  dialog#vacDialog[open]{
-    animation:sheetUp410 .24s cubic-bezier(.2,0,0,1);
-  }
 @keyframes sheetUp410{
     from{transform:translateY(100%)}
     to{transform:translateY(0)}
-  }
-dialog#dayDialog .modalHead,
-  dialog#bulkDialog .modalHead,
-  dialog#vacDialog .modalHead{
-    padding:6px 24px 17px;
-  }
-dialog#dayDialog .modalBody,
-  dialog#bulkDialog .modalBody,
-  dialog#vacDialog .modalBody{
-    padding-left:24px;
-    padding-right:24px;
-    padding-bottom:calc(24px + env(safe-area-inset-bottom));
-    overscroll-behavior:contain;
-  }
-dialog#dayDialog .modalBody{
-    max-height:calc(90dvh - 88px);
-  }
-dialog#bulkDialog .modalBody,
-  dialog#vacDialog .modalBody{
-    max-height:calc(92dvh - 96px);
-  }
-dialog#bulkDialog{
-    max-height:91dvh;
-  }
-dialog#bulkDialog .modalHead{
-    padding-top:24px;
-    padding-bottom:16px;
-  }
-dialog#bulkDialog .modalBody{
-    max-height:calc(91dvh - 116px);
   }
 dialog#mainMenuDialog.drawerDialog .drawerPanel{
     width:min(304px, 86vw);
@@ -4146,12 +3448,6 @@ dialog#mainMenuDialog.drawerDialog .drawerView{
     padding-left:8px;
     padding-right:10px;
   }
-dialog#bulkDialog .modalHead{
-    padding-top:8px;
-  }
-dialog#bulkDialog .modalBody{
-    max-height:calc(91dvh - 102px);
-  }
 dialog#mainMenuDialog.drawerDialog .drawerPanel{
     width:min(292px, 82vw);
   }
@@ -4168,36 +3464,6 @@ dialog#mainMenuDialog.drawerDialog .drawerItem{
     padding-right:10px;
     gap:14px;
   }
-dialog#bulkDialog .modalHead{
-    padding-top:10px;
-    padding-bottom:16px;
-  }
-dialog#bulkDialog .modalBody{
-    max-height:calc(91dvh - 114px);
-  }
-dialog#dayDialog.googlePanel,
-  dialog#bulkDialog.googlePanel,
-  dialog#vacDialog.googlePanel,
-  dialog#yearStatsDialog.googlePanel{
-    --panel-action-h:40px;
-    --panel-action-font:14.5px;
-  }
-.googlePanelBar{
-    min-height:calc(54px + env(safe-area-inset-top));
-    padding:calc(8px + env(safe-area-inset-top)) 24px 6px;
-  }
-.googlePanel .modalHead{
-    padding:18px 28px 16px;
-  }
-.googlePanel .modalHead h3{
-    font-size:26px;
-  }
-.googlePanel .modalHead .muted{
-    font-size:14.5px;
-  }
-.googlePanel .modalBody{
-    padding:0 28px 32px;
-  }
 }
 
 @media (max-height:760px) and (max-width:430px){
@@ -4210,17 +3476,8 @@ dialog#dayDialog.googlePanel,
     --pill-size:6.3px;
     --pill-height:10px;
   }
-dialog#dayDialog{
-    max-height:86dvh;
-  }
 #dayDialog .modalBody{
     max-height:calc(86dvh - 72px);
-  }
-.dayPreviewHead h3{
-    font-size:21px;
-  }
-.dayPreviewStats .statMiniValue{
-    font-size:20px;
   }
 }
 
@@ -4371,41 +3628,6 @@ dialog#dayDialog{
   .statsTable td{
     padding:8px 8px;
   }
-dialog#dayDialog.googlePanel,
-  dialog#bulkDialog.googlePanel,
-  dialog#vacDialog.googlePanel,
-  dialog#yearStatsDialog.googlePanel{
-    --panel-action-h:39px;
-    --panel-action-font:14px;
-  }
-.googlePanelBar{
-    padding-left:22px;
-    padding-right:22px;
-  }
-.panelCloseBtn{
-    left:22px;
-    width:31px;
-    height:31px;
-    min-height:31px;
-  }
-.panelCloseBtn::before,
-  .panelCloseBtn::after{
-    width:18px;
-    height:2.2px;
-  }
-.panelSaveBtn{
-    right:22px;
-  }
-.googlePanel .modalHead{
-    padding:18px 24px 15px;
-  }
-.googlePanel .modalHead h3{
-    font-size:25px;
-  }
-.googlePanel .modalBody{
-    padding-left:24px;
-    padding-right:24px;
-  }
 .dayViewPage{
     width:calc(100% - 16px);
     margin-left:8px;
@@ -4426,12 +3648,6 @@ dialog#dayDialog.googlePanel,
 .dayViewActions{
     flex-wrap:wrap;
   }
-.googlePanel .modalHead{
-    padding-top:18px;
-  }
-.googlePanel .modalBody{
-    padding-bottom:8px;
-  }
 .dayViewActions{
     grid-template-columns:1fr;
   }
@@ -4440,8 +3656,6 @@ dialog#dayDialog.googlePanel,
   }
 }
 
-
-/* ===== Czas pracy 4.3.10 — kalendarz stable: szkielet 4.2.3 + lekki UI polish ===== */
 :root{
   --bg:#eef1f6;
   --surface:#ffffff;
@@ -4459,59 +3673,107 @@ dialog#dayDialog.googlePanel,
   --pill-size:clamp(7.2px, 1.92vw, 8.8px);
   --pill-height:clamp(12px, 3.12vw, 15px);
 }
+
 html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
+
 .monthViewHidden,.calCard.monthViewHidden,.monthSummaryCard.monthViewHidden,.dayViewPage.monthViewHidden{display:none;}
+
 .calCard{background:transparent;border:none;box-shadow:none;padding-left:6px;padding-right:6px;}
+
 #calSwipeArea{touch-action:pan-y;overflow:hidden;position:relative;contain:layout paint;}
+
 #calLayerCurrent,#calLayerGhost{width:100%;min-width:100%;will-change:transform;backface-visibility:hidden;transform:translateZ(0);}
+
 .calGhost{position:absolute;left:0;right:0;top:0;pointer-events:none;}
+
 .calFading{opacity:.94;transition:opacity 120ms ease;}
+
 .calGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));}
+
 #dowRow,#dowRowGhost{gap:0;padding:0 0 4px;}
+
 .calDow{min-width:0;padding:5px 0 6px;text-align:center;font-size:var(--dow-size);line-height:1;font-weight:650;color:#202124;text-transform:lowercase;}
+
 .calDow.dowToday{color:#1a73e8;font-weight:760;}
+
 #calGrid,#calGridGhost{gap:4px;background:transparent;grid-auto-rows:var(--day-height);grid-template-rows:none;align-items:stretch;}
+
 .dayCell,.blankCell{height:var(--day-height);min-height:var(--day-height);max-height:var(--day-height);border-radius:8px;background:#f8f9fa;border:1px solid rgba(60,64,67,.035);box-shadow:none;overflow:hidden;}
+
 .dayCell{position:relative;cursor:pointer;contain:layout paint;padding-top:4px;padding-bottom:6px;display:flex;flex-direction:column;align-items:stretch;transition:background .12s ease,border-color .12s ease,transform .08s ease;}
+
 .blankCell{pointer-events:none;opacity:1;background:rgba(248,249,250,.45);border-color:rgba(60,64,67,.02);}
+
 .dayCell:hover{background:#fff;border-color:rgba(60,64,67,.07);}
+
 .dayCell:active{background:#f4f7fb;transform:scale(.993);}
+
 .dayCell.today{background:#f8f9fa;border-color:rgba(66,133,244,.22);}
+
 .dayTop{display:flex;justify-content:flex-start;align-items:center;padding:1px 0 4px 4px;}
+
 .dayNum{width:var(--day-num-box);min-width:var(--day-num-box);height:var(--day-num-box);padding:0 4px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:var(--day-num-size);font-weight:540;line-height:1;letter-spacing:-.015em;color:#202124;}
+
 .dayCell.today .dayNum{width:auto;min-width:var(--today-badge-w);height:var(--today-badge-h);padding:0 6px;border-radius:999px;background:#4285f4;color:#fff;font-weight:600;box-shadow:0 1px 4px rgba(66,133,244,.22);}
+
 .dayNum.saturday{color:#5f6368;}
+
 .dayNum.sunday,.dayNum.holiday{color:#c5221f;}
+
 .dayCell.today .dayNum,.dayCell.today .dayNum.saturday,.dayCell.today .dayNum.sunday,.dayCell.today .dayNum.holiday{color:#fff;}
+
 .dayCell.is-saturday,.dayCell.is-sunday,.dayCell.is-holiday{background:#f8f9fa;}
+
 .dayCell.is-saturday:hover,.dayCell.is-sunday:hover,.dayCell.is-holiday:hover{background:#fff;}
+
 .pillStack{min-height:0;flex:1;display:flex;flex-direction:column;gap:2px;padding:0 2px;overflow:hidden;}
+
 .pill{height:var(--pill-height);min-height:var(--pill-height);max-height:var(--pill-height);max-width:100%;display:flex;align-items:center;justify-content:flex-start;border-radius:4px;padding:0 2px;overflow:hidden;white-space:nowrap;text-align:left;text-overflow:clip;font-size:var(--pill-size);line-height:1;font-weight:660;letter-spacing:-.045em;font-variant-numeric:tabular-nums;box-shadow:none;}
+
 .pill.work{background:#34a853;color:#fff;}
+
 .pill.vac{background:#d3e3fd;color:#174ea6;}
+
 .pill.unpaid{background:#eee7ff;color:#4a148c;}
+
 .pill.sick{background:#fce8e6;color:#a50e0e;}
+
 .pill.note{background:#feefc3;color:#5f4200;}
+
 .pill.more{background:transparent;color:#5f6368;justify-content:center;font-size:calc(var(--pill-size) + 1px);font-weight:720;}
+
 #calSwipeArea.is-swiping{overflow:hidden;contain:layout paint style;}
+
 #calSwipeArea.is-swiping #calLayerCurrent,#calSwipeArea.is-swiping #calLayerGhost{width:100%;min-width:100%;will-change:transform;backface-visibility:hidden;}
+
 #calSwipeArea.is-swiping #calGrid,#calSwipeArea.is-swiping #calGridGhost{gap:4px;grid-template-rows:none;}
+
 #calSwipeArea.is-swiping .dayCell,#calSwipeArea.is-swiping .blankCell{height:var(--swipe-cell-height);min-height:var(--swipe-cell-height);max-height:var(--swipe-cell-height);transition:none;transform:none;}
+
 #calSwipeArea.is-swiping .dayNum,#calSwipeArea.is-swiping .pill{transition:none;}
+
 .monthSummaryCard{width:calc(100% - 20px);margin:10px 10px 0;padding:14px 14px;display:grid;grid-template-columns:42px minmax(0,1fr) 24px;align-items:center;gap:13px;border:1px solid #dfe3eb;border-radius:26px;background:linear-gradient(180deg,#fff 0%,#f8fafd 100%);color:#202124;box-shadow:0 1px 3px rgba(60,64,67,.08);text-align:left;cursor:pointer;}
+
 .monthSummaryCard:active{transform:scale(.995);}
+
 .monthSummaryIcon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#e8f0fe;color:#1a73e8;}
+
 .monthSummaryIcon svg{width:24px;height:24px;fill:currentColor;}
+
 .monthSummaryText{min-width:0;}
+
 .monthSummaryKicker{font-size:13px;line-height:1.2;font-weight:720;color:#3c4043;}
+
 .monthSummaryMain{margin-top:4px;display:flex;align-items:baseline;gap:7px;min-width:0;font-size:24px;line-height:1.05;font-weight:610;letter-spacing:-.04em;color:#111318;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
 .monthSummaryMain span{min-width:0;overflow:hidden;text-overflow:ellipsis;}
+
 #monthSummaryMeta{margin-top:5px;font-size:13px;font-weight:650;color:#3c4043;}
+
 .monthSummaryArrow{width:24px;height:24px;fill:#5f6368;}
 
-
-@media(max-width:430px){
-  :root{
+@media (max-width:430px){
+:root{
     --day-height:clamp(84px,11.35dvh,98px);
     --day-num-size:clamp(10px,2.75vw,12.5px);
     --day-num-box:clamp(16px,4.35vw,20px);
@@ -4520,11 +3782,12 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
     --pill-size:clamp(6.6px,1.72vw,7.8px);
     --pill-height:clamp(10px,2.75vw,13px);
   }
-  .dayCell,.blankCell{border-radius:7px;}
-  .pill{border-radius:3px;padding:0 3px;}
+.dayCell,.blankCell{border-radius:7px;}
+.pill{border-radius:3px;padding:0 3px;}
 }
-@media(max-height:720px) and (max-width:430px){
-  :root{
+
+@media (max-height:720px) and (max-width:430px){
+:root{
     --day-height:78px;
     --day-num-size:9.8px;
     --day-num-box:16px;
@@ -4536,7 +3799,7 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
 }
 
 
-/* ===== Czas pracy 4.3.10 — spójne widoki, formularze i statystyki ===== */
+/* ===== Czas pracy 4.3.11 — finalny porządek UI paneli roboczych i statystyk ===== */
 html,
 body,
 .wrap,
@@ -4546,6 +3809,7 @@ body.view-stats{
   background:#eef1f6;
 }
 
+/* Widok dnia */
 .dayViewTop{
   display:flex;
   align-items:center;
@@ -4631,82 +3895,468 @@ body.view-stats{
   flex:0 0 auto;
 }
 
-/* Modale robocze: spójne tło i karty jak w reszcie aplikacji */
+/* Wspólny szkielet paneli roboczych: Zbiorczy wpis, Dzisiejszy wpis / Edytuj dzień, Urlop/L4 */
 dialog#bulkDialog.googlePanel,
 dialog#dayDialog.googlePanel,
 dialog#vacDialog.googlePanel{
+  width:100vw;
+  max-width:100vw;
+  height:100dvh;
+  max-height:100dvh;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  overflow:hidden;
+  background:#eef1f6;
+  color:#202124;
+}
+
+dialog#bulkDialog.googlePanel::backdrop,
+dialog#dayDialog.googlePanel::backdrop,
+dialog#vacDialog.googlePanel::backdrop{
   background:#eef1f6;
 }
 
 dialog#bulkDialog .googlePanelShell,
 dialog#dayDialog .googlePanelShell,
-dialog#vacDialog .googlePanelShell,
-dialog#bulkDialog .googlePanelContent,
-dialog#dayDialog .googlePanelContent,
-dialog#vacDialog .googlePanelContent,
-dialog#bulkDialog .modalBody,
-dialog#dayDialog .modalBody,
-dialog#vacDialog .modalBody{
+dialog#vacDialog .googlePanelShell{
+  height:100%;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
   background:#eef1f6;
 }
 
 dialog#bulkDialog .googlePanelBar,
 dialog#dayDialog .googlePanelBar,
 dialog#vacDialog .googlePanelBar{
+  position:sticky;
+  top:0;
+  z-index:5;
+  min-height:calc(64px + env(safe-area-inset-top));
+  padding:calc(10px + env(safe-area-inset-top)) 24px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   background:#eef1f6;
   border-bottom:1px solid #dfe3eb;
 }
 
-dialog#bulkDialog::backdrop,
-dialog#dayDialog::backdrop,
-dialog#vacDialog::backdrop{
+dialog#bulkDialog .googlePanelContent,
+dialog#dayDialog .googlePanelContent,
+dialog#vacDialog .googlePanelContent{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-x:hidden;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  padding:0 0 calc(22px + env(safe-area-inset-bottom));
   background:#eef1f6;
+}
+
+.panelCloseBtn{
+  width:42px;
+  height:42px;
+  min-height:42px;
+  padding:0;
+  border-radius:50%;
+  position:relative;
+  background:transparent;
+  color:#111318;
+  box-shadow:none;
+}
+
+.panelCloseBtn::before,
+.panelCloseBtn::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:22px;
+  height:2.4px;
+  border-radius:999px;
+  background:currentColor;
+  transform-origin:center;
+}
+
+.panelCloseBtn::before{transform:translate(-50%,-50%) rotate(45deg);}
+.panelCloseBtn::after{transform:translate(-50%,-50%) rotate(-45deg);}
+
+.panelSaveBtn{
+  min-width:132px;
+  height:46px;
+  min-height:46px;
+  padding:0 24px;
+  border-radius:999px;
+  background:#4285f4;
+  color:#fff;
+  box-shadow:0 2px 5px rgba(66,133,244,.18);
+  font-size:15px;
+  font-weight:800;
+}
+
+dialog#dayDialog .panelSaveBtn{
+  display:none;
+}
+
+dialog#bulkDialog .modalHead,
+dialog#dayDialog .modalHead,
+dialog#vacDialog .modalHead{
+  padding:22px 24px 16px;
+  background:#eef1f6;
+  border:0;
 }
 
 dialog#bulkDialog .modalHead h3,
 dialog#dayDialog .modalHead h3,
 dialog#vacDialog .modalHead h3{
+  margin:0;
+  font-size:clamp(27px,7.2vw,38px);
+  line-height:1.08;
   font-weight:680;
-  letter-spacing:-.04em;
+  letter-spacing:-.055em;
+  color:#111318;
 }
 
 dialog#bulkDialog .modalHead .muted,
 dialog#dayDialog .modalHead .muted,
 dialog#vacDialog .modalHead .muted{
+  margin-top:8px;
+  font-size:clamp(15px,4vw,18px);
+  line-height:1.35;
   color:#5f6368;
+}
+
+dialog#bulkDialog .modalBody,
+dialog#dayDialog .modalBody,
+dialog#vacDialog .modalBody{
+  max-height:none;
+  overflow:visible;
+  padding:0 24px 24px;
+  background:#eef1f6;
+}
+
+dialog#bulkDialog label,
+dialog#dayDialog label,
+dialog#vacDialog label,
+dialog#bulkDialog .quickTemplatesTitle,
+dialog#dayDialog .quickTemplatesTitle,
+dialog#vacDialog .quickTemplatesTitle{
+  display:block;
+  margin:0 0 8px;
+  color:#3c4043;
+  font-size:15px;
+  line-height:1.2;
+  font-weight:750;
+}
+
+dialog#bulkDialog .fieldGrid,
+dialog#dayDialog .fieldGrid,
+dialog#vacDialog .fieldGrid,
+dialog#dayDialog .timeGrid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  margin-bottom:18px;
 }
 
 dialog#bulkDialog input,
 dialog#bulkDialog select,
+dialog#bulkDialog textarea,
 dialog#dayDialog input,
 dialog#dayDialog select,
 dialog#dayDialog textarea,
 dialog#vacDialog input,
-dialog#vacDialog select{
-  background:#fff;
+dialog#vacDialog select,
+dialog#vacDialog textarea{
+  width:100%;
+  max-width:100%;
+  min-height:58px;
+  padding:0 18px;
+  box-sizing:border-box;
   border:1px solid #dfe3eb;
-  border-radius:18px;
+  border-radius:20px;
+  background:#fff;
+  color:#202124;
+  box-shadow:0 1px 2px rgba(60,64,67,.035);
+  font-size:16px;
 }
 
+dialog#bulkDialog textarea,
+dialog#dayDialog textarea,
+dialog#vacDialog textarea{
+  min-height:112px;
+  padding-top:16px;
+  padding-bottom:16px;
+  line-height:1.35;
+  resize:none;
+}
+
+/* Przełączniki trybu */
+dialog#bulkDialog .rangeModeTabs,
+dialog#vacDialog .rangeModeTabs,
+.statsPage .statsRangeTabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4px;
+  padding:4px;
+  margin:0 0 22px;
+  border-radius:999px;
+  background:#edf1f7;
+}
+
+dialog#bulkDialog .rangeModeTab,
+dialog#vacDialog .rangeModeTab,
+.statsPage .statsRangeTabs .rangeModeTab{
+  min-height:42px;
+  height:42px;
+  padding:0 14px;
+  border-radius:999px;
+  background:transparent;
+  color:#3c4043;
+  box-shadow:none;
+  font-size:14px;
+  font-weight:760;
+}
+
+dialog#bulkDialog .rangeModeTab.active,
+dialog#vacDialog .rangeModeTab.active,
+.statsPage .statsRangeTabs .rangeModeTab.active{
+  background:#fff;
+  color:#174ea6;
+  box-shadow:0 1px 2px rgba(60,64,67,.12);
+}
+
+.bulkModePane[hidden],
+.bulkLeaveFields[hidden]{
+  display:none;
+}
+
+/* Karty w panelach roboczych */
 dialog#bulkDialog .quickTemplatesBlock,
-dialog#bulkDialog .bulkOptions,
 dialog#dayDialog .quickTemplatesBlock,
+dialog#bulkDialog .bulkOptions,
+dialog#vacDialog .bulkOptions,
 dialog#dayDialog .modalStats,
 dialog#dayDialog .daySection,
-dialog#dayDialog .dayNotePreview,
-dialog#vacDialog .bulkOptions{
+dialog#dayDialog .dayNotePreview{
   background:#fff;
   border:1px solid #e4e8f1;
+  border-radius:22px;
   box-shadow:0 1px 2px rgba(60,64,67,.045);
 }
 
-/* Notatka w modalu dnia — bez podwójnej/rozjechanej ramki */
-dialog#dayDialog .dayNoteField{
-  background:transparent;
-  border:none;
+dialog#bulkDialog .quickTemplatesBlock,
+dialog#dayDialog .quickTemplatesBlock{
+  margin:0 0 18px;
+  padding:16px 18px;
+}
+
+dialog#bulkDialog .bulkOptions,
+dialog#vacDialog .bulkOptions{
+  margin:20px 0 0;
+  padding:18px;
+  border-top:0;
+  border-bottom:0;
+}
+
+.bulkOptionsTitle{
+  margin:0 0 10px;
+  font-size:15px;
+  font-weight:780;
+  color:#3c4043;
+}
+
+.checkRow{
+  min-height:44px;
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-size:15px;
+  font-weight:650;
+  color:#3c4043;
+}
+
+.checkRow input{
+  width:22px;
+  min-width:22px;
+  height:22px;
+  min-height:22px;
+  accent-color:#1a73e8;
   box-shadow:none;
-  padding:0;
+}
+
+dialog#bulkDialog .actionRow,
+dialog#vacDialog .actionRow{
   margin-top:18px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  flex-wrap:wrap;
+  background:transparent;
+}
+
+dialog#bulkDialog .actionRow .backBtn,
+dialog#vacDialog .actionRow .backBtn{
+  display:none;
+}
+
+dialog#bulkDialog #bulkApply,
+dialog#vacDialog #setVacationRange{
+  display:none;
+}
+
+dialog#bulkDialog #bulkRemove,
+dialog#vacDialog #clearVacationRange{
+  min-height:42px;
+  height:42px;
+  padding:0 18px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid #f1c7c4;
+  color:#a50e0e;
+  box-shadow:0 1px 2px rgba(60,64,67,.04);
+  font-size:14px;
+  font-weight:760;
+}
+
+/* Dzisiejszy wpis / Edycja dnia */
+dialog#dayDialog .dayPreviewHead{
+  padding-bottom:14px;
+}
+
+dialog#dayDialog .dayPreviewBody{
+  padding-top:0;
+}
+
+dialog#dayDialog .dayPreviewStats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:0 0 18px;
+  padding:16px 18px;
+}
+
+dialog#dayDialog .statMini{
+  min-width:0;
+  background:transparent;
+  border:0;
+  padding:0;
+}
+
+dialog#dayDialog .statMiniValue{
+  display:block;
+  margin:0 0 6px;
+  font-size:clamp(26px,7vw,34px);
+  line-height:1;
+  font-weight:610;
+  letter-spacing:-.045em;
+  color:#111318;
+}
+
+dialog#dayDialog .statMini .muted{
+  font-size:13px;
+  color:#5f6368;
+}
+
+dialog#dayDialog #dlgShiftsBlock{
+  margin:0 0 16px;
+  padding:16px 18px;
+}
+
+dialog#dayDialog #dlgShiftsTitle{
+  display:block;
+  margin:0 0 12px;
+  color:#3c4043;
+  font-size:16px;
+  font-weight:780;
+}
+
+dialog#dayDialog .shiftItem.googleEvent{
+  min-height:64px;
+  border-radius:18px;
+}
+
+dialog#dayDialog .dayAddActions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:18px 0;
+}
+
+dialog#dayDialog.googlePanel.is-form-open .dayAddActions,
+dialog#dayDialog.googlePanel.is-form-open .dayPreviewStats,
+dialog#dayDialog.googlePanel.is-form-open #dlgShiftsBlock,
+dialog#dayDialog.googlePanel.is-form-open #dlgNotePreview{
+  display:none;
+}
+
+dialog#dayDialog .dayAddTrigger{
+  width:auto;
+  min-width:0;
+  min-height:44px;
+  height:44px;
+  margin:0;
+  padding:0 18px 0 14px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid #dfe3eb;
+  color:#174ea6;
+  box-shadow:0 1px 2px rgba(60,64,67,.04);
+  font-size:14px;
+  font-weight:760;
+  white-space:nowrap;
+}
+
+dialog#dayDialog #dlgShowAddShift{
+  background:#e8f0fe;
+  border-color:#d7e3ff;
+}
+
+dialog#dayDialog .plusMark{
+  width:24px;
+  height:24px;
+  min-width:24px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#1a73e8;
+  font-size:20px;
+  line-height:1;
+  font-weight:500;
+}
+
+dialog#dayDialog .addShiftPanel{
+  display:none;
+  margin:0;
+  padding:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+}
+
+dialog#dayDialog.googlePanel.is-form-open .addShiftPanel{
+  display:block;
+}
+
+dialog#dayDialog .addShiftPanel .timeGrid{
+  margin-bottom:18px;
+}
+
+dialog#dayDialog .dayNoteField{
+  margin:18px 0 0;
+  padding:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
 }
 
 dialog#dayDialog .dayNoteField label{
@@ -4717,43 +4367,39 @@ dialog#dayDialog .dayNoteField label{
 dialog#dayDialog .dayNoteField textarea{
   display:block;
   width:100%;
-  min-height:112px;
+  max-width:100%;
+  min-height:116px;
   padding:16px 18px;
   background:#fff;
   border:1px solid #dfe3eb;
   border-radius:20px;
   box-shadow:0 1px 2px rgba(60,64,67,.035);
-  resize:vertical;
 }
 
-/* Dodaj godziny w modalu dnia — mniejszy i po prawej, nie pełna szerokość */
 dialog#dayDialog #dlgAddShift.addBtnCenter{
   display:flex;
   align-items:center;
   justify-content:center;
   width:auto;
   min-width:156px;
+  max-width:max-content;
   height:46px;
   min-height:46px;
   margin:18px 0 0 auto;
   padding:0 28px;
   border-radius:999px;
+  background:#4285f4;
+  color:#fff;
+  box-shadow:0 2px 5px rgba(66,133,244,.18);
   font-size:15px;
   font-weight:800;
 }
 
-dialog#bulkDialog .rangeModeTabs,
-dialog#vacDialog .rangeModeTabs{
-  background:#f1f4f9;
+dialog#dayDialog .dayCloseRow{
+  display:none;
 }
 
-dialog#bulkDialog .rangeModeTab.active,
-dialog#vacDialog .rangeModeTab.active{
-  background:#d7e3ff;
-  color:#174ea6;
-  box-shadow:none;
-}
-
+/* Statystyki */
 body.view-stats .appHeader,
 body.view-stats .monthStrip,
 body.view-stats .fab-container{
@@ -4839,10 +4485,6 @@ body.view-stats .fab-container{
   border-radius:24px;
 }
 
-.statsPage .statsTableWrap{
-  border-radius:22px;
-}
-
 .statsPage .statsActions{
   display:flex;
   flex-wrap:wrap;
@@ -4857,7 +4499,71 @@ body.view-stats .fab-container{
   border-radius:999px;
 }
 
+.statsPage .statsTableWrap{
+  border-radius:22px;
+  padding:8px 0;
+}
+
+.statsPage .statsTable{
+  min-width:470px;
+}
+
+.statsPage .statsTable th,
+.statsPage .statsTable td{
+  padding:13px 16px;
+}
+
+.statsBottomActions{
+  display:flex;
+  justify-content:flex-end;
+  padding:16px 0 0;
+  margin-top:auto;
+}
+
+.statsCloseBottom{
+  width:auto;
+  min-width:136px;
+  min-height:46px;
+  height:46px;
+  padding:0 24px;
+  border-radius:999px;
+  background:#1a73e8;
+  color:#fff;
+  border:none;
+  box-shadow:0 2px 5px rgba(26,115,232,.18);
+  font-size:15px;
+  font-weight:800;
+}
+
 @media(max-width:430px){
+  dialog#bulkDialog .googlePanelBar,
+  dialog#dayDialog .googlePanelBar,
+  dialog#vacDialog .googlePanelBar{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  dialog#bulkDialog .modalHead,
+  dialog#dayDialog .modalHead,
+  dialog#vacDialog .modalHead{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  dialog#bulkDialog .modalBody,
+  dialog#dayDialog .modalBody,
+  dialog#vacDialog .modalBody{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .panelSaveBtn{
+    min-width:122px;
+    height:44px;
+    min-height:44px;
+    padding:0 22px;
+  }
+
   .dayViewActions{
     gap:8px;
   }
@@ -4892,18 +4598,25 @@ body.view-stats .fab-container{
   .statsFullHeader h2{
     font-size:27px;
   }
+
+  .statsPage .statsTable th,
+  .statsPage .statsTable td{
+    padding:12px 14px;
+  }
 }
 
 @media(max-width:370px){
-  .dayViewActions button{
-    padding:0 12px;
-    font-size:13px;
+  dialog#bulkDialog .modalHead h3,
+  dialog#dayDialog .modalHead h3,
+  dialog#vacDialog .modalHead h3{
+    font-size:26px;
   }
 
+  .dayViewActions button,
   .dayViewBottomActions button,
   .statsCloseBottom{
-    min-width:124px;
-    padding:0 20px;
+    padding:0 12px;
+    font-size:13px;
   }
 
   dialog#dayDialog #dlgAddShift.addBtnCenter{
@@ -8532,11 +8245,12 @@ body.view-stats .fab-container{
     };
   }
 
-  document.querySelector(".rangeModeTabs")?.addEventListener("click", (e) => {
-    const btn = e.target.closest?.(".rangeModeTab");
+  $("bulkDialog")?.addEventListener("click", (e) => {
+    const btn = e.target.closest?.("#bulkModeHours, #bulkModeLeave");
     if (!btn) return;
-    if (btn.id === "bulkModeHours") { haptic.tap(); setBulkMode("hours"); }
-    if (btn.id === "bulkModeLeave") { haptic.tap(); setBulkMode("leave"); }
+    haptic.tap();
+    if (btn.id === "bulkModeHours") setBulkMode("hours");
+    if (btn.id === "bulkModeLeave") setBulkMode("leave");
   });
 
   const monthSummaryCard = $("monthSummaryCard");
