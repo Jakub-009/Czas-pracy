@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.4</title>
+  <title>Czas pracy 4.4.2</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2847,6 +2847,106 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   touch-action:pan-y;
 }
 
+.weekViewPage{
+  width:calc(100% - 20px);
+  margin:10px 10px 0;
+  padding:0 0 18px;
+  animation:dayViewIn .18s cubic-bezier(.2,0,0,1);
+  touch-action:pan-y;
+}
+
+.weekViewList{
+  display:grid;
+  gap:8px;
+  margin:0 0 12px;
+}
+
+.weekDayCard{
+  width:100%;
+  min-height:72px;
+  padding:12px 13px;
+  border-radius:20px;
+  border:1px solid #e4e8f1;
+  background:#fff;
+  color:#202124;
+  box-shadow:0 1px 2px rgba(60,64,67,.05);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:12px;
+  text-align:left;
+}
+
+.weekDayCard.today{
+  border-color:rgba(66,133,244,.28);
+  background:#f8fbff;
+}
+
+.weekDayCard:active{
+  transform:scale(.992);
+}
+
+.weekDayMain{
+  min-width:0;
+}
+
+.weekDayTitle{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+  margin-bottom:5px;
+}
+
+.weekDayTitle strong{
+  font-size:15.5px;
+  line-height:1.15;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.weekDayTitle span{
+  font-size:12px;
+  line-height:1;
+  font-weight:700;
+  color:#174ea6;
+  background:#e8f0fe;
+  border-radius:999px;
+  padding:4px 7px;
+}
+
+.weekDaySub{
+  font-size:12.5px;
+  line-height:1.25;
+  color:#5f6368;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.weekDayHours{
+  text-align:right;
+  white-space:nowrap;
+}
+
+.weekDayHours strong{
+  display:block;
+  font-size:18px;
+  line-height:1;
+  color:#202124;
+}
+
+.weekDayHours span{
+  display:block;
+  margin-top:5px;
+  font-size:12px;
+  line-height:1;
+  color:#174ea6;
+  font-weight:650;
+}
+
 html,
 body,
 .appHeader,
@@ -2864,6 +2964,8 @@ body,
 
 #dayViewPrev,
 #dayViewNext,
+#weekViewPrev,
+#weekViewNext,
 #monthStatsPrev,
 #monthStatsNext,
 #yearStatsPrev,
@@ -2875,6 +2977,8 @@ body,
 
 #dayViewPrev::before,
 #dayViewNext::before,
+#weekViewPrev::before,
+#weekViewNext::before,
 #monthStatsPrev::before,
 #monthStatsNext::before,
 #yearStatsPrev::before,
@@ -2890,6 +2994,7 @@ body,
 }
 
 #dayViewPrev::before,
+#weekViewPrev::before,
 #monthStatsPrev::before,
 #yearStatsPrev::before{
   border-left:2.4px solid currentColor;
@@ -2897,6 +3002,7 @@ body,
 }
 
 #dayViewNext::before,
+#weekViewNext::before,
 #monthStatsNext::before,
 #yearStatsNext::before{
   border-right:2.4px solid currentColor;
@@ -3111,6 +3217,11 @@ dialog#mainMenuDialog.drawerDialog .drawerItem{
     margin-left:8px;
     margin-right:8px;
   }
+.weekViewPage{
+    width:calc(100% - 16px);
+    margin-left:8px;
+    margin-right:8px;
+  }
 .dayViewTop{
     align-items:flex-start;
   }
@@ -3136,7 +3247,7 @@ dialog#mainMenuDialog.drawerDialog .drawerItem{
 
 html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
 
-.monthViewHidden,.calCard.monthViewHidden,.monthSummaryCard.monthViewHidden,.dayViewPage.monthViewHidden{display:none;}
+.monthViewHidden,.calCard.monthViewHidden,.monthSummaryCard.monthViewHidden,.dayViewPage.monthViewHidden,.weekViewPage.monthViewHidden{display:none;}
 
 .calCard{background:transparent;border:none;box-shadow:none;padding-left:6px;padding-right:6px;}
 
@@ -4393,6 +4504,36 @@ dialog#dayDialog .dayCloseRow{
       </div>
     </section>
 
+    <section class="weekViewPage monthViewHidden" id="weekViewPage" aria-label="Widok tygodnia">
+      <div class="dayViewTop weekViewTop">
+        <div class="dayViewNav weekViewNav">
+          <button class="tonal" id="weekViewPrev" type="button" aria-label="Poprzedni tydzień">‹</button>
+          <div class="dayViewDateBlock">
+            <strong id="weekViewRange">—</strong>
+            <span id="weekViewMeta">—</span>
+          </div>
+          <button class="tonal" id="weekViewNext" type="button" aria-label="Następny tydzień">›</button>
+        </div>
+      </div>
+
+      <div class="dayViewHero weekViewHero">
+        <div>
+          <span>Podsumowanie tygodnia</span>
+          <strong id="weekViewHours">0:00</strong>
+          <small id="weekViewPay">0,00 zł</small>
+        </div>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M7 2v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-2V2h-2v2H9V2H7Zm12 18H5V9h14v11Z"/>
+        </svg>
+      </div>
+
+      <div class="weekViewList" id="weekViewList"></div>
+
+      <div class="dayViewBottomActions">
+        <button class="tonal" id="weekViewBackToMonth" type="button">Wróć</button>
+      </div>
+    </section>
+
 
         <section id="statsPage" class="statsPage monthViewHidden" aria-label="Statystyki">
       <div class="statsPageShell">
@@ -4599,9 +4740,9 @@ dialog#dayDialog .dayCloseRow{
               <span>Miesiąc</span>
             </button>
 
-            <button class="drawerItem soon" id="drawerWeekView" type="button">
+            <button class="drawerItem" id="drawerWeekView" type="button">
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 2v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-2V2h-2v2H9V2H7Zm12 18H5V9h14v11Z"/></svg>
-              <span>Tydzień <em>wkrótce</em></span>
+              <span>Tydzień</span>
             </button>
 
             <button class="drawerItem" id="drawerDayView" type="button">
@@ -6029,6 +6170,10 @@ dialog#dayDialog .dayCloseRow{
     if (!mp) return;
     mp.value = newYM;
     shouldScrollToToday = false;
+    if ((activeView === "day" || activeView === "week") && activeDayISO && ym(activeDayISO) !== newYM) {
+      const today = todayISO();
+      activeDayISO = ym(today) === newYM ? today : `${newYM}-01`;
+    }
     renderAll();
   }
 
@@ -6084,7 +6229,7 @@ dialog#dayDialog .dayCloseRow{
     const strip = $("monthStrip");
     const btn = $("monthNavToggle");
     if (!strip || !btn) return;
-    strip.hidden = !open || activeView === "day";
+    strip.hidden = !open;
     document.body.classList.toggle("month-strip-open", open);
     btn.classList.toggle("is-open", open);
     btn.setAttribute("aria-expanded", open ? "true" : "false");
@@ -6667,39 +6812,127 @@ dialog#dayDialog .dayCloseRow{
     if ($("dayViewEventsCount")) $("dayViewEventsCount").textContent = rendered.count ? `${rendered.count} wpisy` : "brak wpisów";
   }
 
+  function startOfWeekISO(dateISO) {
+    const dt = parseISODate(dateISO) || new Date();
+    return isoFromDate(addDays(dt, -mondayIndex(dt.getDay())));
+  }
+
+  function formatWeekRange(startISO) {
+    const start = parseISODate(startISO) || new Date();
+    const end = addDays(start, 6);
+    const startText = new Intl.DateTimeFormat("pl-PL", { day:"numeric", month:"short" }).format(start).replace(".", "");
+    const endText = new Intl.DateTimeFormat("pl-PL", { day:"numeric", month:"short", year:"numeric" }).format(end).replace(".", "");
+    return `${startText} – ${endText}`;
+  }
+
+  function summarizeWeekDay(dateISO) {
+    const day = getDay(dateISO) || { date: dateISO, note: "", shifts: [], vacation: false, leaveType:"" };
+    const [Y] = dateISO.split("-").map(Number);
+    const holidayName = getHolidayMap(Y).get(dateISO) || "";
+    const leaveType = day.leaveType || (day.vacation ? "paid" : "");
+    const shifts = (day.shifts || []).slice().sort((a, b) => (a.start || "").localeCompare(b.start || ""));
+    const note = (day.note || "").trim();
+    const parts = [];
+
+    if (holidayName) parts.push(holidayName);
+    if (leaveType) parts.push(leaveLabel(leaveType));
+    if (shifts.length) parts.push(shifts.map(s => `${s.start || "—"}–${s.end || "—"}`).join(", "));
+    if (note) parts.push("Notatka");
+
+    return {
+      day,
+      minutes:computeDayMinutes(day),
+      details:parts.join(" · ") || "Brak wpisów"
+    };
+  }
+
+  function renderWeekView(dateISO = activeDayISO) {
+    activeDayISO = dateISO || todayISO();
+    const startISO = startOfWeekISO(activeDayISO);
+    const startDate = parseISODate(startISO) || new Date();
+    const days = Array.from({ length:7 }, (_, i) => isoFromDate(addDays(startDate, i)));
+    const today = todayISO();
+    let totalMinutes = 0;
+    let workDays = 0;
+    let absences = 0;
+
+    const listHTML = days.map(date => {
+      const summary = summarizeWeekDay(date);
+      totalMinutes += summary.minutes;
+      if (summary.minutes > 0) workDays++;
+      if (summary.day.leaveType || summary.day.vacation) absences++;
+
+      const isToday = date === today;
+      const title = capFirst(fmtWeekdayLongPL(date));
+      const dayText = fmtDMYText(date);
+      const pay = round2((summary.minutes / 60) * (db.settings.rate || 0));
+
+      return `
+        <button class="weekDayCard ${isToday ? "today" : ""}" type="button" data-week-date="${date}">
+          <div class="weekDayMain">
+            <div class="weekDayTitle">
+              <strong>${escapeHtml(title)}</strong>
+              ${isToday ? "<span>Dziś</span>" : ""}
+            </div>
+            <div class="weekDaySub">${escapeHtml(dayText)} · ${escapeHtml(summary.details)}</div>
+          </div>
+          <div class="weekDayHours">
+            <strong>${fmtHM(summary.minutes)}</strong>
+            <span>${pln(pay)}</span>
+          </div>
+        </button>
+      `;
+    }).join("");
+
+    const totalPay = round2((totalMinutes / 60) * (db.settings.rate || 0));
+
+    if ($("weekViewRange")) $("weekViewRange").textContent = formatWeekRange(startISO);
+    if ($("weekViewMeta")) $("weekViewMeta").textContent = `${workDays} dni pracy · ${absences} nieobecności`;
+    if ($("weekViewHours")) $("weekViewHours").textContent = fmtHM(totalMinutes);
+    if ($("weekViewPay")) $("weekViewPay").textContent = pln(totalPay);
+    if ($("weekViewList")) $("weekViewList").innerHTML = listHTML;
+  }
+
   function applyActiveView() {
     const isDay = activeView === "day";
+    const isWeek = activeView === "week";
     const isStats = activeView === "stats";
-    const isMonth = !isDay && !isStats;
+    const isMonth = !isDay && !isWeek && !isStats;
 
     document.body.classList.toggle("view-day", isDay);
+    document.body.classList.toggle("view-week", isWeek);
     document.body.classList.toggle("view-stats", isStats);
     document.body.classList.toggle("view-month", isMonth);
 
     document.querySelector(".calCard")?.classList.toggle("monthViewHidden", !isMonth);
     $("monthSummaryCard")?.classList.toggle("monthViewHidden", !isMonth);
     $("dayViewPage")?.classList.toggle("monthViewHidden", !isDay);
+    $("weekViewPage")?.classList.toggle("monthViewHidden", !isWeek);
     $("statsPage")?.classList.toggle("monthViewHidden", !isStats);
-    $("monthStrip")?.toggleAttribute("hidden", !isMonth || !document.body.classList.contains("month-strip-open"));
+    $("monthStrip")?.toggleAttribute("hidden", !document.body.classList.contains("month-strip-open"));
 
     $("drawerMonthView")?.classList.toggle("active", isMonth);
     $("drawerDayView")?.classList.toggle("active", isDay);
+    $("drawerWeekView")?.classList.toggle("active", isWeek);
 
     if (isDay) renderDayView(activeDayISO);
+    if (isWeek) renderWeekView(activeDayISO);
     if (isStats) renderStatsPanel();
   }
 
   function setActiveView(view, dateISO = "") {
-    activeView = view === "day" ? "day" : (view === "stats" ? "stats" : "month");
+    activeView = view === "day" ? "day" : (view === "week" ? "week" : (view === "stats" ? "stats" : "month"));
     if (activeView !== "month") {
       window.CPApp?.closeFabMenu?.();
+    }
+    if (activeView === "stats") {
       document.body.classList.remove("month-strip-open");
       $("monthStrip")?.setAttribute("hidden", "");
     }
     if (dateISO) activeDayISO = dateISO;
 
     const mp = $("monthPick");
-    if (activeView === "day" && mp && activeDayISO) {
+    if ((activeView === "day" || activeView === "week") && mp && activeDayISO) {
       const nextYM = ym(activeDayISO);
       if (mp.value !== nextYM) mp.value = nextYM;
     }
@@ -6726,13 +6959,29 @@ dialog#dayDialog .dayCloseRow{
     haptic.tap();
   }
 
+  function changeWeek(delta) {
+    const base = parseISODate(activeDayISO) || new Date();
+    activeDayISO = isoFromDate(addDays(base, delta * 7));
+
+    const mp = $("monthPick");
+    if (mp && activeDayISO) {
+      const nextYM = ym(activeDayISO);
+      if (mp.value !== nextYM) mp.value = nextYM;
+    }
+
+    renderWeekView(activeDayISO);
+    haptic.tap();
+  }
+
   Object.assign(window.CPApp, {
-    changeDay
+    changeDay,
+    changeWeek
   });
 
   Object.assign(window.CPApp, {
     setActiveView,
-    renderDayView
+    renderDayView,
+    renderWeekView
   });
 
 
@@ -6770,6 +7019,7 @@ dialog#dayDialog .dayCloseRow{
     renderMonthStrip(monthYM);
     renderStatsPanel();
     if (activeView === "day") renderDayView(activeDayISO);
+    if (activeView === "week") renderWeekView(activeDayISO);
     applyActiveView();
 
     const todayNum = $("todayIconNum");
@@ -7801,6 +8051,30 @@ dialog#dayDialog .dayCloseRow{
     }
   });
 
+  $("weekViewPage")?.addEventListener("click", (e) => {
+    const dateCard = e.target.closest?.("[data-week-date]");
+    if (dateCard && $("weekViewPage")?.contains(dateCard)) {
+      const date = dateCard.getAttribute("data-week-date");
+      if (date) setActiveView("day", date);
+      return;
+    }
+
+    const btn = e.target.closest?.("button");
+    if (!btn || !$("weekViewPage")?.contains(btn)) return;
+
+    switch (btn.id) {
+      case "weekViewBackToMonth":
+        setActiveView("month");
+        break;
+      case "weekViewPrev":
+        changeWeek(-1);
+        break;
+      case "weekViewNext":
+        changeWeek(1);
+        break;
+    }
+  });
+
   (function enableDayViewSwipe() {
     const page = $("dayViewPage");
     if (!page || page.dataset.swipeReady) return;
@@ -7948,6 +8222,7 @@ dialog#dayDialog .dayCloseRow{
     todayBtn.onclick = () => {
       haptic.tap();
       const t = todayISO();
+      activeDayISO = t;
       monthPick.value = ym(t);
       shouldScrollToToday = true;
       renderAll();
@@ -8760,17 +9035,7 @@ dialog#dayDialog .dayCloseRow{
   });
   $("drawerWeekView")?.addEventListener("click", () => {
     closeDrawer();
-    window.CPApp?.haptic?.tap?.();
-    const toast = $("appToast");
-    if (toast) {
-      toast.textContent = "Widok tygodnia — wkrótce.";
-      toast.hidden = false;
-      requestAnimationFrame(() => toast.classList.add("show"));
-      setTimeout(() => {
-        toast.classList.remove("show");
-        setTimeout(() => { toast.hidden = true; }, 180);
-      }, 2400);
-    }
+    setTimeout(() => window.CPApp?.setActiveView?.("week"), 90);
   });
   $("openEmployerSettings")?.addEventListener("click", () => { showDrawerView("settings"); haptic.tap(); });
   $("openSystemTools")?.addEventListener("click", () => { showDrawerView("tools"); haptic.tap(); });
