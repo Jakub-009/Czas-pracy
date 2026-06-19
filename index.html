@@ -2953,21 +2953,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   font-weight:650;
 }
 
-.weekDayTemplateRow{
-  grid-column:1 / -1;
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  margin-top:-2px;
-}
-
-.weekDayTemplateRow .templateChip{
-  min-height:28px;
-  height:28px;
-  padding:0 9px;
-  font-size:12px;
-}
-
 html,
 body,
 .appHeader,
@@ -3506,6 +3491,11 @@ dialog#fabMenuDialog{
 }
 
 body.view-stats .fab-container{
+  display:none;
+}
+
+body.view-stats .appHeader,
+body.view-stats .monthStrip{
   display:none;
 }
 
@@ -4553,11 +4543,6 @@ dialog#dayDialog .dayCloseRow{
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path d="M7 2v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-2V2h-2v2H9V2H7Zm12 18H5V9h14v11Z"/>
         </svg>
-      </div>
-
-      <div class="quickTemplatesBlock dayViewTemplatesBlock">
-        <div class="quickTemplatesTitle">Szybkie szablony dla zaznaczonego tygodnia</div>
-        <div class="quickTemplates" id="weekViewTemplates"></div>
       </div>
 
       <div class="weekViewList" id="weekViewList"></div>
@@ -5846,7 +5831,6 @@ dialog#dayDialog .dayCloseRow{
 
     renderButtons("dayTemplates", "day");
     renderButtons("dayViewTemplates", "active-day");
-    renderButtons("weekViewTemplates", "active-week");
     renderButtons("bulkTemplates", "bulk");
   }
 
@@ -5884,11 +5868,6 @@ dialog#dayDialog .dayCloseRow{
           return;
         }
 
-        if (mode === "active-week") {
-          setStatus("Wybierz dzień tygodnia i użyj szablonu na jego karcie.");
-          return;
-        }
-
         if ($("bulkStart")) $("bulkStart").value = t.start;
         if ($("bulkEnd")) $("bulkEnd").value = t.end;
         haptic.tap();
@@ -5899,7 +5878,6 @@ dialog#dayDialog .dayCloseRow{
 
     setupQuickBox("dayTemplates", "day");
     setupQuickBox("dayViewTemplates", "active-day");
-    setupQuickBox("weekViewTemplates", "active-week");
     setupQuickBox("bulkTemplates", "bulk");
   }
 
@@ -7036,11 +7014,6 @@ dialog#dayDialog .dayCloseRow{
       const title = capFirst(fmtWeekdayLongPL(date));
       const dayText = fmtDMYText(date);
       const pay = round2((summary.minutes / 60) * (db.settings.rate || 0));
-      const templateButtons = getShiftTemplates().slice(0, 3).map((t, idx) => `
-        <button class="templateChip" type="button" data-week-template-date="${date}" data-week-template-index="${idx}">
-          ${templateKey(t)}
-        </button>
-      `).join("");
 
       return `
         <div class="weekDayCard ${isToday ? "today" : ""}" role="button" tabindex="0" data-week-date="${date}">
@@ -7055,7 +7028,6 @@ dialog#dayDialog .dayCloseRow{
             <strong>${fmtHM(summary.minutes)}</strong>
             <span>${pln(pay)}</span>
           </div>
-          <div class="weekDayTemplateRow">${templateButtons}</div>
         </div>
       `;
     }).join("");
@@ -8239,15 +8211,6 @@ dialog#dayDialog .dayCloseRow{
   });
 
   $("weekViewPage")?.addEventListener("click", (e) => {
-    const templateBtn = e.target.closest?.("[data-week-template-date]");
-    if (templateBtn && $("weekViewPage")?.contains(templateBtn)) {
-      const date = templateBtn.getAttribute("data-week-template-date");
-      const idx = Number(templateBtn.getAttribute("data-week-template-index"));
-      const t = getShiftTemplates()[idx];
-      if (date && t) addShiftTemplateToDate(date, t.start, t.end);
-      return;
-    }
-
     const dateCard = e.target.closest?.("[data-week-date]");
     if (dateCard && $("weekViewPage")?.contains(dateCard)) {
       const date = dateCard.getAttribute("data-week-date");
