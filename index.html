@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.4.2</title>
+  <title>Czas pracy 4.4.3</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2762,6 +2762,11 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   padding:10px 2px 4px;
 }
 
+.dayViewTemplatesBlock{
+  margin:0 0 10px;
+  border-radius:20px;
+}
+
 .settingsHint{
   margin:0 0 10px;
 }
@@ -2875,6 +2880,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   align-items:center;
   gap:12px;
   text-align:left;
+  cursor:pointer;
 }
 
 .weekDayCard.today{
@@ -2945,6 +2951,21 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   line-height:1;
   color:#174ea6;
   font-weight:650;
+}
+
+.weekDayTemplateRow{
+  grid-column:1 / -1;
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:-2px;
+}
+
+.weekDayTemplateRow .templateChip{
+  min-height:28px;
+  height:28px;
+  padding:0 9px;
+  font-size:12px;
 }
 
 html,
@@ -3310,6 +3331,8 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
 .pill.sick{background:#fce8e6;color:#a50e0e;}
 
 .pill.note{background:#feefc3;color:#5f4200;}
+
+.pill.missing{background:#f1f3f4;color:#6f7785;border:1px dashed #c4cad4;}
 
 .pill.more{background:transparent;color:#5f6368;justify-content:center;font-size:calc(var(--pill-size) + 1px);font-weight:720;}
 
@@ -4491,6 +4514,11 @@ dialog#dayDialog .dayCloseRow{
         <button class="tonal" id="dayViewOpenModal" type="button">Edytuj dzień</button>
       </div>
 
+      <div class="quickTemplatesBlock dayViewTemplatesBlock">
+        <div class="quickTemplatesTitle">Szybkie szablony</div>
+        <div class="quickTemplates" id="dayViewTemplates"></div>
+      </div>
+
       <div class="dayViewCard">
         <div class="dayViewCardHead">
           <strong>Wydarzenia dnia</strong>
@@ -4525,6 +4553,11 @@ dialog#dayDialog .dayCloseRow{
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path d="M7 2v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-2V2h-2v2H9V2H7Zm12 18H5V9h14v11Z"/>
         </svg>
+      </div>
+
+      <div class="quickTemplatesBlock dayViewTemplatesBlock">
+        <div class="quickTemplatesTitle">Szybkie szablony dla zaznaczonego tygodnia</div>
+        <div class="quickTemplates" id="weekViewTemplates"></div>
       </div>
 
       <div class="weekViewList" id="weekViewList"></div>
@@ -4846,6 +4879,9 @@ dialog#dayDialog .dayCloseRow{
             <button class="tonal" id="backupJson" type="button">Pobierz kopię</button>
             <input id="restoreJson" type="file" accept="application/json" style="display:none" />
             <button class="tonal" id="restoreBtn" type="button">Wczytaj dane</button>
+            <button class="tonal" id="openMonthAudit" type="button">Korekta miesiąca</button>
+            <button class="tonal" id="openActivityPanel" type="button">Ostatnie zmiany</button>
+            <button class="tonal" id="openTrashPanel" type="button">Kosz</button>
             <button class="error-tonal" id="clearMonth" type="button">Wyczyść miesiąc</button>
           </div>
         </div>
@@ -5350,7 +5386,12 @@ dialog#dayDialog .dayCloseRow{
   let storageWriteWarningShown = false;
 
   function createEmptyDB() {
-    return { settings:{ rate:0, leaveQuota:26, defaultIncludeSat:false, defaultIncludeSun:false, defaultIncludeHolidays:false, backupReminderDays:5 }, entries:[] };
+    return {
+      settings:{ rate:0, leaveQuota:26, defaultIncludeSat:false, defaultIncludeSun:false, defaultIncludeHolidays:false, backupReminderDays:5 },
+      entries:[],
+      trash:[],
+      activity:[]
+    };
   }
 
   function isPlainObject(v) {
@@ -5551,6 +5592,17 @@ dialog#dayDialog .dayCloseRow{
       .filter(t => t && /^\d{2}:\d{2}$/.test(t.start || "") && /^\d{2}:\d{2}$/.test(t.end || ""))
       .slice(0, 8);
 
+    db.trash = Array.isArray(db.trash) ? db.trash : [];
+    db.activity = Array.isArray(db.activity) ? db.activity : [];
+
+    const trashCutoff = Date.now() - (14 * 24 * 60 * 60 * 1000);
+    db.trash = db.trash
+      .filter(item => item && item.deletedAt && Date.parse(item.deletedAt) >= trashCutoff)
+      .slice(-80);
+    db.activity = db.activity
+      .filter(item => item && item.at && item.text)
+      .slice(-80);
+
     db.entries = Array.isArray(db.entries) ? db.entries : [];
     for (const e of db.entries) {
       e.shifts = Array.isArray(e.shifts) ? e.shifts : [];
@@ -5601,6 +5653,47 @@ dialog#dayDialog .dayCloseRow{
       el.classList.remove("has-error");
     }
     if (t) showToast(t);
+  }
+
+  function pluralPL(n, one, few, many) {
+    const abs = Math.abs(Number(n) || 0);
+    if (abs === 1) return one;
+    const mod10 = abs % 10;
+    const mod100 = abs % 100;
+    if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return few;
+    return many;
+  }
+
+  function cloneDay(day) {
+    return JSON.parse(JSON.stringify(day || {}));
+  }
+
+  function recordActivity(text, meta = {}) {
+    normalize();
+    db.activity.push({
+      at:new Date().toISOString(),
+      text:String(text || "").slice(0, 180),
+      meta
+    });
+    db.activity = db.activity.slice(-80);
+  }
+
+  function pushTrash(type, dateISO, payload, label = "") {
+    normalize();
+    db.trash.push({
+      id:`${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      type,
+      date:dateISO,
+      label,
+      payload:cloneDay(payload),
+      deletedAt:new Date().toISOString()
+    });
+    db.trash = db.trash.slice(-80);
+  }
+
+  function markDayRemoved(type, dateISO, payload, label) {
+    pushTrash(type, dateISO, payload, label);
+    recordActivity(label || `Usunięto wpis w ${fmtDMYText(dateISO)}`, { type, date:dateISO });
   }
 
   function minutesBetween(dateISO, start, end) {
@@ -5752,6 +5845,8 @@ dialog#dayDialog .dayCloseRow{
     };
 
     renderButtons("dayTemplates", "day");
+    renderButtons("dayViewTemplates", "active-day");
+    renderButtons("weekViewTemplates", "active-week");
     renderButtons("bulkTemplates", "bulk");
   }
 
@@ -5784,6 +5879,16 @@ dialog#dayDialog .dayCloseRow{
           return;
         }
 
+        if (mode === "active-day") {
+          addShiftTemplateToDate(activeDayISO, t.start, t.end);
+          return;
+        }
+
+        if (mode === "active-week") {
+          setStatus("Wybierz dzień tygodnia i użyj szablonu na jego karcie.");
+          return;
+        }
+
         if ($("bulkStart")) $("bulkStart").value = t.start;
         if ($("bulkEnd")) $("bulkEnd").value = t.end;
         haptic.tap();
@@ -5793,11 +5898,48 @@ dialog#dayDialog .dayCloseRow{
     };
 
     setupQuickBox("dayTemplates", "day");
+    setupQuickBox("dayViewTemplates", "active-day");
+    setupQuickBox("weekViewTemplates", "active-week");
     setupQuickBox("bulkTemplates", "bulk");
+  }
+
+  function addShiftTemplateToDate(dateISO, start, end) {
+    if (!dateISO) return false;
+
+    start = normalizeTimeHHMM(start);
+    end = normalizeTimeHHMM(end);
+
+    const validation = validateShiftNoOverlap(dateISO, start, end);
+    if (!validation.ok) {
+      haptic.warning();
+      notify(validation.message);
+      return false;
+    }
+
+    const day = getDay(dateISO) || { date: dateISO, note: "", shifts: [], vacation: false, leaveType:"" };
+    day.shifts.push({ start, end });
+    day.shifts.sort((a, b) => (a.start || "").localeCompare(b.start || ""));
+
+    upsertDay(dateISO, day);
+    db.settings.lastShift = { start, end };
+    recordActivity(`Dodano ${start}–${end} w ${fmtDMYText(dateISO)}`, { type:"add-shift", date:dateISO, start, end });
+    save();
+    renderAll();
+    if (dlgDate === dateISO) renderDayDialog();
+
+    if (dlg) {
+      dlg.classList.add("is-preview-only");
+      dlg.classList.remove("is-form-open", "is-empty-day");
+    }
+
+    setStatus(`Dodano zakres: ${start}–${end}.`);
+    haptic.success();
+    return true;
   }
 
   function addShiftFromTemplate(start, end) {
     if (!dlgDate) return;
+    return addShiftTemplateToDate(dlgDate, start, end);
 
     start = normalizeTimeHHMM(start);
     end = normalizeTimeHHMM(end);
@@ -6336,6 +6478,18 @@ dialog#dayDialog .dayCloseRow{
     }).join("");
   }
 
+  function isMissingWorkday(dateISO, day) {
+    if (!dateISO) return false;
+    const [Y, M, D] = dateISO.split("-").map(Number);
+    const jsDow = new Date(Y, M - 1, D).getDay();
+    const isWeekend = jsDow === 0 || jsDow === 6;
+    const isHoliday = !!getHolidayMap(Y).get(dateISO);
+    const hasShift = (day?.shifts || []).length > 0;
+    const hasLeave = !!(day?.leaveType || day?.vacation);
+    const hasNote = !!(day?.note && day.note.trim());
+    return !isWeekend && !isHoliday && !hasShift && !hasLeave && !hasNote;
+  }
+
   function buildPillsHTML(day) {
     const shifts = (day?.shifts || []).slice().sort((a, b) => (a.start || "").localeCompare(b.start || ""));
     const leaveType = day?.leaveType || "";
@@ -6352,6 +6506,10 @@ dialog#dayDialog .dayCloseRow{
 
     if (hasNote) {
       pills.push(`<div class="pill note">Notatka</div>`);
+    }
+
+    if (!leaveLbl && !hasNote && !shifts.length && isMissingWorkday(day?.date, day)) {
+      pills.push(`<div class="pill missing">Brak wpisu</div>`);
     }
 
     const maxTotal = (leaveLbl || hasNote) ? 4 : 3;
@@ -6555,6 +6713,11 @@ dialog#dayDialog .dayCloseRow{
       dlg.classList.add("is-form-open");
       dlg.classList.remove("is-preview-only");
       renderQuickTemplatesUI();
+      const last = db?.settings?.lastShift;
+      if (last?.start && last?.end) {
+        if ($("dlgStart") && !$("dlgStart").value) $("dlgStart").value = last.start;
+        if ($("dlgEnd") && !$("dlgEnd").value) $("dlgEnd").value = last.end;
+      }
       setTimeout(() => $("dlgStart")?.focus(), 80);
     } else {
       dlg.classList.add("is-preview-only");
@@ -6689,6 +6852,8 @@ dialog#dayDialog .dayCloseRow{
         if (!(await askConfirm("Usunąć ten zakres?", "Usuń zakres"))) return;
         const d = getDay(dlgDate);
         if (!d) return;
+        const removed = d.shifts[idx] ? { date:dlgDate, shifts:[d.shifts[idx]], note:"", vacation:false, leaveType:"" } : cloneDay(d);
+        markDayRemoved("shift", dlgDate, removed, `Usunięto zakres w ${fmtDMYText(dlgDate)}`);
         d.shifts.splice(idx, 1);
         save();
         renderAll();
@@ -6702,6 +6867,7 @@ dialog#dayDialog .dayCloseRow{
       if (!(await askConfirm("Usunąć status urlopu/L4 z tego dnia?", "Usuń status"))) return;
       const d = getDay(dlgDate);
       if (!d) return;
+      markDayRemoved("leave", dlgDate, { date:dlgDate, shifts:[], note:"", vacation:d.vacation, leaveType:d.leaveType }, `Usunięto urlop/L4 w ${fmtDMYText(dlgDate)}`);
       d.leaveType = "";
       d.vacation = false;
       save();
@@ -6715,6 +6881,7 @@ dialog#dayDialog .dayCloseRow{
       if (!(await askConfirm("Usunąć notatkę z tego dnia?", "Usuń notatkę"))) return;
       const d = getDay(dlgDate);
       if (!d) return;
+      markDayRemoved("note", dlgDate, { date:dlgDate, shifts:[], note:d.note || "", vacation:false, leaveType:"" }, `Usunięto notatkę w ${fmtDMYText(dlgDate)}`);
       d.note = "";
       if ($("dlgNote")) $("dlgNote").value = "";
       save();
@@ -6809,7 +6976,9 @@ dialog#dayDialog .dayCloseRow{
 
     const rendered = buildDayEventsHTML(activeDayISO);
     if ($("dayViewEvents")) $("dayViewEvents").innerHTML = rendered.html;
-    if ($("dayViewEventsCount")) $("dayViewEventsCount").textContent = rendered.count ? `${rendered.count} wpisy` : "brak wpisów";
+    if ($("dayViewEventsCount")) $("dayViewEventsCount").textContent = rendered.count
+      ? `${rendered.count} ${pluralPL(rendered.count, "wpis", "wpisy", "wpisów")}`
+      : "brak wpisów";
   }
 
   function startOfWeekISO(dateISO) {
@@ -6838,6 +7007,7 @@ dialog#dayDialog .dayCloseRow{
     if (leaveType) parts.push(leaveLabel(leaveType));
     if (shifts.length) parts.push(shifts.map(s => `${s.start || "—"}–${s.end || "—"}`).join(", "));
     if (note) parts.push("Notatka");
+    if (!parts.length && isMissingWorkday(dateISO, day)) parts.push("Brak wpisu w dniu roboczym");
 
     return {
       day,
@@ -6866,9 +7036,14 @@ dialog#dayDialog .dayCloseRow{
       const title = capFirst(fmtWeekdayLongPL(date));
       const dayText = fmtDMYText(date);
       const pay = round2((summary.minutes / 60) * (db.settings.rate || 0));
+      const templateButtons = getShiftTemplates().slice(0, 3).map((t, idx) => `
+        <button class="templateChip" type="button" data-week-template-date="${date}" data-week-template-index="${idx}">
+          ${templateKey(t)}
+        </button>
+      `).join("");
 
       return `
-        <button class="weekDayCard ${isToday ? "today" : ""}" type="button" data-week-date="${date}">
+        <div class="weekDayCard ${isToday ? "today" : ""}" role="button" tabindex="0" data-week-date="${date}">
           <div class="weekDayMain">
             <div class="weekDayTitle">
               <strong>${escapeHtml(title)}</strong>
@@ -6880,14 +7055,16 @@ dialog#dayDialog .dayCloseRow{
             <strong>${fmtHM(summary.minutes)}</strong>
             <span>${pln(pay)}</span>
           </div>
-        </button>
+          <div class="weekDayTemplateRow">${templateButtons}</div>
+        </div>
       `;
     }).join("");
 
     const totalPay = round2((totalMinutes / 60) * (db.settings.rate || 0));
 
     if ($("weekViewRange")) $("weekViewRange").textContent = formatWeekRange(startISO);
-    if ($("weekViewMeta")) $("weekViewMeta").textContent = `${workDays} dni pracy · ${absences} nieobecności`;
+    if ($("weekViewMeta")) $("weekViewMeta").textContent =
+      `${workDays} ${pluralPL(workDays, "dzień pracy", "dni pracy", "dni pracy")} · ${absences} ${pluralPL(absences, "nieobecność", "nieobecności", "nieobecności")}`;
     if ($("weekViewHours")) $("weekViewHours").textContent = fmtHM(totalMinutes);
     if ($("weekViewPay")) $("weekViewPay").textContent = pln(totalPay);
     if ($("weekViewList")) $("weekViewList").innerHTML = listHTML;
@@ -7503,11 +7680,21 @@ dialog#dayDialog .dayCloseRow{
 </html>`;
   }
 
-  function openReportPdf(monthOverride = "") {
+  async function openReportPdf(monthOverride = "") {
     haptic.tap();
 
     const monthPick = $("monthPick");
     const monthYM = monthOverride || ((monthPick && monthPick.value) ? monthPick.value : ym(todayISO()));
+    const audit = buildMonthAudit(monthYM);
+    const sumMin = computeMonthMinutes(monthYM);
+    const pay = round2((sumMin / 60) * (db.settings.rate || 0));
+    const proceed = await openAppDialog({
+      title:"Sprawdź przed eksportem",
+      message:`${fmtMonthPL(monthYM)}\nGodziny: ${fmtHM(sumMin)}\nWypłata: ${pln(pay)}\nBraki dni roboczych: ${audit.missing}\nDni z notatką: ${audit.notes}\nUrlop/L4: ${audit.leaves}`,
+      okText:"Generuj PDF",
+      cancelText:"Anuluj"
+    });
+    if (!proceed) return;
 
     // Ważne na iOS/Safari: nowe okno otwieramy natychmiast po tapnięciu,
     // a dopiero potem budujemy HTML raportu.
@@ -8052,6 +8239,15 @@ dialog#dayDialog .dayCloseRow{
   });
 
   $("weekViewPage")?.addEventListener("click", (e) => {
+    const templateBtn = e.target.closest?.("[data-week-template-date]");
+    if (templateBtn && $("weekViewPage")?.contains(templateBtn)) {
+      const date = templateBtn.getAttribute("data-week-template-date");
+      const idx = Number(templateBtn.getAttribute("data-week-template-index"));
+      const t = getShiftTemplates()[idx];
+      if (date && t) addShiftTemplateToDate(date, t.start, t.end);
+      return;
+    }
+
     const dateCard = e.target.closest?.("[data-week-date]");
     if (dateCard && $("weekViewPage")?.contains(dateCard)) {
       const date = dateCard.getAttribute("data-week-date");
@@ -8163,6 +8359,8 @@ dialog#dayDialog .dayCloseRow{
       day.shifts.sort((a, b) => (a.start || "").localeCompare(b.start || ""));
 
       upsertDay(dlgDate, day);
+      db.settings.lastShift = { start, end };
+      recordActivity(`Dodano ${start}–${end} w ${fmtDMYText(dlgDate)}`, { type:"add-shift", date:dlgDate, start, end });
 
       if ($("dlgStart")) $("dlgStart").value = "";
       if ($("dlgEnd")) $("dlgEnd").value = "";
@@ -8316,6 +8514,10 @@ dialog#dayDialog .dayCloseRow{
   const checkUpdateBtn = $("checkUpdateBtn");
   if (checkUpdateBtn) checkUpdateBtn.onclick = checkForAppUpdate;
 
+  $("openMonthAudit")?.addEventListener("click", () => { haptic.tap(); showMonthAudit(); });
+  $("openActivityPanel")?.addEventListener("click", () => { haptic.tap(); showActivityPanel(); });
+  $("openTrashPanel")?.addEventListener("click", () => { haptic.tap(); showTrashPanel(); });
+
   function updateChartModeButtons() {
     $("monthChartBars")?.classList.toggle("active", activeMonthChartType === "bar");
     $("monthChartLine")?.classList.toggle("active", activeMonthChartType === "line");
@@ -8425,6 +8627,159 @@ dialog#dayDialog .dayCloseRow{
     };
   }
 
+  function prepareImportedDb(obj) {
+    if (!validateDbShape(obj)) throw new Error("Nieprawidłowa struktura pliku.");
+    const clean = JSON.parse(JSON.stringify(obj));
+    clean.settings = { ...createEmptyDB().settings, ...(clean.settings || {}) };
+    clean.entries = (clean.entries || [])
+      .filter(e => e && isValidDateISO(e.date))
+      .map(e => ({
+        date:e.date,
+        note:String(e.note || ""),
+        shifts:(e.shifts || [])
+          .map(s => ({ start:normalizeTimeHHMM(s.start), end:normalizeTimeHHMM(s.end) }))
+          .filter(s => s.start && s.end),
+        vacation:!!e.vacation,
+        leaveType:["", "paid", "unpaid", "sick"].includes(e.leaveType) ? e.leaveType : ""
+      }));
+    clean.trash = Array.isArray(clean.trash) ? clean.trash : [];
+    clean.activity = Array.isArray(clean.activity) ? clean.activity : [];
+    return clean;
+  }
+
+  function analyzeImportDb(importDb) {
+    const importedDates = importDb.entries.map(e => e.date).sort();
+    const currentByDate = new Map((db.entries || []).map(e => [e.date, e]));
+    let conflicts = 0;
+    let duplicateDates = 0;
+
+    for (const entry of importDb.entries) {
+      const current = currentByDate.get(entry.date);
+      if (!current) continue;
+      duplicateDates++;
+      if (JSON.stringify(current) !== JSON.stringify(entry)) conflicts++;
+    }
+
+    return {
+      count:importDb.entries.length,
+      from:importedDates[0] || "brak",
+      to:importedDates[importedDates.length - 1] || "brak",
+      duplicateDates,
+      conflicts
+    };
+  }
+
+  function mergeImportedDb(importDb) {
+    const byDate = new Map((db.entries || []).map(e => [e.date, e]));
+    let addedDays = 0;
+    let addedShifts = 0;
+    let skipped = 0;
+
+    for (const entry of importDb.entries) {
+      const current = byDate.get(entry.date);
+      if (!current) {
+        db.entries.push(cloneDay(entry));
+        byDate.set(entry.date, db.entries[db.entries.length - 1]);
+        addedDays++;
+        continue;
+      }
+
+      if (!current.note && entry.note) current.note = entry.note;
+      if (!(current.leaveType || current.vacation) && (entry.leaveType || entry.vacation)) {
+        current.leaveType = entry.leaveType || (entry.vacation ? "paid" : "");
+        current.vacation = !!entry.vacation;
+      }
+
+      current.shifts = Array.isArray(current.shifts) ? current.shifts : [];
+      for (const shift of (entry.shifts || [])) {
+        const exists = current.shifts.some(s => normalizeTimeHHMM(s.start) === shift.start && normalizeTimeHHMM(s.end) === shift.end);
+        if (exists) {
+          skipped++;
+          continue;
+        }
+        current.shifts.push({ start:shift.start, end:shift.end });
+        addedShifts++;
+      }
+      current.shifts.sort((a, b) => (a.start || "").localeCompare(b.start || ""));
+    }
+
+    normalize();
+    recordActivity(`Scalono import JSON: ${addedDays} ${pluralPL(addedDays, "dzień", "dni", "dni")}, ${addedShifts} ${pluralPL(addedShifts, "zakres", "zakresy", "zakresów")}`, { type:"import-merge" });
+    save();
+    return { addedDays, addedShifts, skipped };
+  }
+
+  function formatActivityTime(iso) {
+    const dt = new Date(iso);
+    if (!Number.isFinite(dt.getTime())) return "";
+    return new Intl.DateTimeFormat("pl-PL", {
+      day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"
+    }).format(dt);
+  }
+
+  function showActivityPanel() {
+    normalize();
+    const items = db.activity.slice(-12).reverse();
+    const message = items.length
+      ? items.map(item => `${formatActivityTime(item.at)}  ${item.text}`).join("\n")
+      : "Brak zarejestrowanych zmian.";
+    openAppDialog({ title:"Ostatnie zmiany", message, okText:"OK" });
+  }
+
+  function showTrashPanel() {
+    normalize();
+    const items = db.trash.slice(-12).reverse();
+    const message = items.length
+      ? items.map(item => `${formatActivityTime(item.deletedAt)}  ${item.label || item.type || "Usunięty wpis"}`).join("\n")
+      : "Kosz jest pusty. Usunięte wpisy są przechowywane lokalnie do 14 dni.";
+    openAppDialog({ title:"Kosz lokalny", message, okText:"OK" });
+  }
+
+  function buildMonthAudit(monthYM) {
+    const [Y, M] = monthYM.split("-").map(Number);
+    const dim = daysInMonth(Y, M);
+    const rows = [];
+    let missing = 0;
+    let notes = 0;
+    let leaves = 0;
+
+    for (let d = 1; d <= dim; d++) {
+      const dateISO = `${Y}-${pad2(M)}-${pad2(d)}`;
+      const day = getDay(dateISO) || { date:dateISO, note:"", shifts:[], vacation:false, leaveType:"" };
+      const flags = [];
+
+      if (isMissingWorkday(dateISO, day)) {
+        flags.push("brak wpisu");
+        missing++;
+      }
+      if (day.note && day.note.trim()) {
+        flags.push("notatka");
+        notes++;
+      }
+      if (day.leaveType || day.vacation) {
+        flags.push(leaveLabel(day.leaveType || "paid"));
+        leaves++;
+      }
+
+      if (flags.length) rows.push(`${fmtDMYText(dateISO)}: ${flags.join(", ")}`);
+    }
+
+    return {
+      missing,
+      notes,
+      leaves,
+      message:rows.length
+        ? `Braki: ${missing}\nDni z notatką: ${notes}\nUrlop/L4: ${leaves}\n\n${rows.slice(0, 24).join("\n")}${rows.length > 24 ? "\n…" : ""}`
+        : "Nie znaleziono braków, notatek ani urlopów w tym miesiącu."
+    };
+  }
+
+  function showMonthAudit() {
+    const monthYM = $("monthPick")?.value || ym(todayISO());
+    const audit = buildMonthAudit(monthYM);
+    openAppDialog({ title:`Korekta miesiąca: ${fmtMonthPL(monthYM)}`, message:audit.message, okText:"OK" });
+  }
+
   const restoreBtn = $("restoreBtn");
   const restoreInput = $("restoreJson");
   if (restoreBtn && restoreInput) {
@@ -8434,10 +8789,35 @@ dialog#dayDialog .dayCloseRow{
       if (!f) return;
       try {
         const txt = await f.text();
-        const obj = JSON.parse(txt);
-        db = obj;
+        const importDb = prepareImportedDb(JSON.parse(txt));
+        const info = analyzeImportDb(importDb);
+        const merge = await openAppDialog({
+          title:"Podgląd importu JSON",
+          message:`Plik zawiera ${info.count} ${pluralPL(info.count, "wpis", "wpisy", "wpisów")}.\nZakres dat: ${info.from} – ${info.to}.\nDaty już obecne: ${info.duplicateDates}.\nKonflikty z obecną bazą: ${info.conflicts}.\n\nWybrać scalanie bez duplikatów?`,
+          okText:"Scal",
+          cancelText:"Zastąp wszystko"
+        });
+
+        if (merge) {
+          const res = mergeImportedDb(importDb);
+          hydrateSettingsUI();
+          renderAll();
+          if (dlgDate) renderDayDialog();
+          setStatus(`Scalono import: ${res.addedDays} dni, ${res.addedShifts} zakresów.`);
+          haptic.success();
+          restoreInput.value = "";
+          return;
+        }
+
+        const replace = await askConfirm("Zastąpić całą obecną bazę danymi z pliku? Tej operacji nie da się cofnąć poza wcześniejszą kopią JSON.", "Zastąp dane");
+        if (!replace) {
+          restoreInput.value = "";
+          return;
+        }
+
+        db = importDb;
         normalize();
-        migrateIfNeeded();
+        recordActivity(`Zastąpiono bazę importem JSON: ${info.count} ${pluralPL(info.count, "wpis", "wpisy", "wpisów")}`, { type:"import-replace" });
         save();
         hydrateSettingsUI();
         renderAll();
@@ -8456,6 +8836,9 @@ dialog#dayDialog .dayCloseRow{
       haptic.tap();
       const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
       if (!(await askConfirm("Usunąć wszystkie wpisy z tego miesiąca?", "Wyczyść miesiąc"))) return;
+      db.entries
+        .filter(e => e?.date && ym(e.date) === monthYM)
+        .forEach(e => markDayRemoved("day", e.date, e, `Wyczyszczono dzień ${fmtDMYText(e.date)}`));
       db.entries = db.entries.filter(e => ym(e.date) !== monthYM);
       save();
       renderAll();
