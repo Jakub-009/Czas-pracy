@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.4.5</title>
+  <title>Czas pracy 4.4.6</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -274,6 +274,28 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
       box-shadow:none;
       padding:0;
       margin:0;
+    }
+
+.surfaceCard,
+.listCard,
+.statSoftBox{
+      background:#fff;
+      border:1px solid #e4e8f1;
+      border-radius:var(--radius-list);
+      box-shadow:0 1px 2px rgba(60,64,67,.05);
+    }
+
+.heroCard{
+      background:linear-gradient(180deg,#fff 0%,#f8fafd 100%);
+      border:1px solid #dfe3eb;
+      border-radius:var(--radius-hero);
+      box-shadow:0 1px 3px rgba(60,64,67,.08);
+    }
+
+.bottomActions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
     }
 
 .monthSelector{
@@ -2122,9 +2144,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   gap:16px;
   margin:0 0 10px;
   padding:15px 16px;
-  border-radius:22px;
-  background:linear-gradient(135deg, #e8f0fe, #f8fafd);
-  border:1px solid #dfe7fb;
 }
 
 .statsHero span{
@@ -2596,9 +2615,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   gap:16px;
   margin:0 0 10px;
   padding:16px;
-  border-radius:26px;
-  background:linear-gradient(135deg, #e8f0fe, #f8fafd);
-  border:1px solid #dfe7fb;
 }
 
 .dayViewHero span{
@@ -2648,10 +2664,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 .dayViewCard{
   padding:14px 13px 13px;
-  border-radius:24px;
-  background:#fff;
-  border:1px solid #e4e8f1;
-  box-shadow:0 1px 2px rgba(60,64,67,.06);
 }
 
 .dayViewCardHead{
@@ -2743,13 +2755,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   font-size:12.5px;
 }
 
-.statsChartCard,
-.statsTableWrap,
-.statSoftBox{
-  border-color:#e4e8f1;
-  box-shadow:0 1px 2px rgba(60,64,67,.04);
-}
-
 .statsTable th{
   background:#f8fafd;
 }
@@ -2786,11 +2791,7 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
   width:100%;
   min-height:72px;
   padding:12px 13px;
-  border-radius:20px;
-  border:1px solid #e4e8f1;
-  background:#fff;
   color:#202124;
-  box-shadow:0 1px 2px rgba(60,64,67,.05);
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
   align-items:center;
@@ -3443,13 +3444,6 @@ body.view-stats{
   gap:8px;
 }
 
-.dayViewHero,
-.statsPage .statsHero{
-  background:linear-gradient(180deg,#fff 0%,#f8fafd 100%);
-  border-color:#dfe3eb;
-  box-shadow:0 1px 3px rgba(60,64,67,.08);
-}
-
 .dayViewActions{
   display:flex;
   flex-wrap:wrap;
@@ -3488,8 +3482,6 @@ body.view-stats{
 
 .dayViewBottomActions,
 .statsBottomActions{
-  display:flex;
-  justify-content:flex-end;
   padding:16px 0 0;
 }
 
@@ -4129,24 +4121,15 @@ dialog#dayDialog .dayCloseRow{
 }
 
 .statsPage .statsHero{
-  border-radius:26px;
   margin-bottom:12px;
 }
 
-.statsPage .statSoftBox,
-.statsPage .statsChartCard,
-.statsPage .statsTableWrap{
-  background:#fff;
-  border:1px solid #e4e8f1;
-  box-shadow:0 1px 2px rgba(60,64,67,.05);
-}
-
 .statsPage .statSoftBox{
-  border-radius:20px;
+  border-radius:var(--radius-list);
 }
 
 .statsPage .statsChartCard{
-  border-radius:24px;
+  border-radius:var(--radius-hero);
 }
 
 .statsPage .statsActions{
@@ -4164,7 +4147,6 @@ dialog#dayDialog .dayCloseRow{
 }
 
 .statsPage .statsTableWrap{
-  border-radius:22px;
   padding:0;
   overflow-x:auto;
 }
@@ -4376,7 +4358,7 @@ dialog#dayDialog .dayCloseRow{
         </div>
       </div>
 
-      <div class="dayViewHero">
+      <div class="dayViewHero heroCard">
         <div>
           <span>Podsumowanie dnia</span>
           <strong id="dayViewHours">0:00</strong>
@@ -4398,7 +4380,7 @@ dialog#dayDialog .dayCloseRow{
         <div class="quickTemplates" id="dayViewTemplates"></div>
       </div>
 
-      <div class="dayViewCard">
+      <div class="dayViewCard surfaceCard">
         <div class="dayViewCardHead">
           <strong>Wydarzenia dnia</strong>
           <span id="dayViewEventsCount">0</span>
@@ -4406,7 +4388,7 @@ dialog#dayDialog .dayCloseRow{
         <div class="shiftList dayViewEvents" id="dayViewEvents"></div>
       </div>
 
-      <div class="dayViewBottomActions">
+      <div class="dayViewBottomActions bottomActions">
         <button class="tonal" id="dayViewBackToMonth" type="button">Wróć</button>
       </div>
     </section>
@@ -4423,7 +4405,7 @@ dialog#dayDialog .dayCloseRow{
         </div>
       </div>
 
-      <div class="dayViewHero weekViewHero">
+      <div class="dayViewHero weekViewHero heroCard">
         <div>
           <span>Podsumowanie tygodnia</span>
           <strong id="weekViewHours">0:00</strong>
@@ -4436,7 +4418,7 @@ dialog#dayDialog .dayCloseRow{
 
       <div class="weekViewList" id="weekViewList"></div>
 
-      <div class="dayViewBottomActions">
+      <div class="dayViewBottomActions bottomActions">
         <button class="tonal" id="weekViewBackToMonth" type="button">Wróć</button>
       </div>
     </section>
@@ -4471,7 +4453,7 @@ dialog#dayDialog .dayCloseRow{
               <button class="tonal" id="monthStatsNext" type="button" aria-label="Następny miesiąc">›</button>
             </div>
 
-            <div class="statsHero">
+            <div class="statsHero heroCard">
               <div>
                 <span>Miesiąc</span>
                 <strong id="monthStatsHours">0:00</strong>
@@ -4499,7 +4481,7 @@ dialog#dayDialog .dayCloseRow{
               </div>
             </div>
 
-            <div class="statsChartCard">
+            <div class="statsChartCard surfaceCard">
               <div class="statsChartHead">
                 <strong>Wykres godzin w miesiącu</strong>
                 <div class="chartModeToggle" aria-label="Typ wykresu miesiąca">
@@ -4513,7 +4495,7 @@ dialog#dayDialog .dayCloseRow{
             </div>
 
             <div class="statsSectionLabel statsTableLabel">Podsumowanie miesiąca</div>
-            <div class="statsTableWrap">
+            <div class="statsTableWrap surfaceCard">
               <table class="statsTable">
                 <thead>
                   <tr>
@@ -4535,7 +4517,7 @@ dialog#dayDialog .dayCloseRow{
               <button class="tonal" id="yearStatsNext" type="button" aria-label="Następny rok">›</button>
             </div>
 
-            <div class="statsHero">
+            <div class="statsHero heroCard">
               <div>
                 <span>Rok</span>
                 <strong id="yearStatsHours">0:00</strong>
@@ -4562,7 +4544,7 @@ dialog#dayDialog .dayCloseRow{
               </div>
             </div>
 
-            <div class="statsChartCard">
+            <div class="statsChartCard surfaceCard">
               <div class="statsChartHead">
                 <strong>Wykres godzin w roku</strong>
                 <div class="chartModeToggle" aria-label="Typ wykresu roku">
@@ -4576,7 +4558,7 @@ dialog#dayDialog .dayCloseRow{
             </div>
 
             <div class="statsSectionLabel statsTableLabel">Podsumowanie roku</div>
-            <div class="statsTableWrap">
+            <div class="statsTableWrap surfaceCard">
               <table class="statsTable">
                 <thead>
                   <tr>
@@ -4594,7 +4576,7 @@ dialog#dayDialog .dayCloseRow{
         </div>
           </div>
 
-          <div class="statsBottomActions">
+          <div class="statsBottomActions bottomActions">
             <button class="filled statsCloseBottom" id="statsPageClose" type="button">Wróć</button>
           </div>
         </article>
@@ -6905,7 +6887,7 @@ dialog#dayDialog .dayCloseRow{
       const pay = round2((summary.minutes / 60) * (db.settings.rate || 0));
 
       return `
-        <div class="weekDayCard ${isToday ? "today" : ""}" role="button" tabindex="0" data-week-date="${date}">
+        <div class="weekDayCard listCard ${isToday ? "today" : ""}" role="button" tabindex="0" data-week-date="${date}">
           <div class="weekDayMain">
             <div class="weekDayTitle">
               <strong>${escapeHtml(title)}</strong>
