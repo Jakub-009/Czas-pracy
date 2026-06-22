@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.4.3</title>
+  <title>Czas pracy 4.4.4</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -376,30 +376,6 @@ details[open] .chev{transform:rotate(180deg) translateY(-2px)}
     }
 
 @keyframes panelIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-
-.fab{
-      width:auto;
-      height:64px;
-      min-height:64px;
-      padding:0 24px 0 20px;
-      border-radius:20px;
-      background:var(--primary-soft);
-      color:var(--on-primary-soft);
-      box-shadow:var(--shadow-fab);
-      font-size:18px;
-      font-weight:500;
-    }
-
-.fab:active{border-radius:24px}
-
-.fab svg{
-      width:30px;
-      height:30px;
-      fill:currentColor;
-      flex:0 0 auto;
-    }
-
-.fabText{display:inline-block}
 
 dialog{
       border:none;
@@ -781,26 +757,6 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
 
 .statBox .muted{
   font-size:12.5px;
-}
-
-.fab{
-  width:58px;
-  height:58px;
-  min-height:58px;
-  padding:0;
-  border-radius:18px;
-  background:#d7e3ff;
-  color:#12355f;
-  box-shadow:0 7px 18px rgba(60,64,67,.18), 0 2px 5px rgba(60,64,67,.12);
-}
-
-.fabText{
-  display:none;
-}
-
-.fab svg{
-  width:28px;
-  height:28px;
 }
 
 dialog:focus,
@@ -3065,11 +3021,6 @@ body,
 .statValue{font-size:25px}
 .compactCard{margin-left:10px;margin-right:10px}
 
-.fab{
-        height:64px;
-        min-height:64px;
-        padding:0 22px 0 18px;
-      }
 .modalHead{padding-left:24px;padding-right:24px}
 .modalBody{padding-left:24px;padding-right:24px}
 }
@@ -3087,12 +3038,6 @@ body,
 .statMiniValue{font-size:28px}
 .shiftItem .times{font-size:21px}
 .shiftItem .mins{font-size:15px}
-.fabText{display:none}
-.fab{
-        width:64px;
-        padding:0;
-        border-radius:20px;
-      }
 }
 
 @media (min-width:680px){
@@ -3112,22 +3057,6 @@ dialog[open]{animation:slideUp .28s cubic-bezier(.2,0,0,1)}
 @keyframes sheetUp410{
     from{transform:translateY(100%)}
     to{transform:translateY(0)}
-  }
-dialog#mainMenuDialog.drawerDialog .drawerPanel{
-    width:min(304px, 86vw);
-  }
-dialog#mainMenuDialog.drawerDialog .drawerHeader{
-    padding-left:20px;
-    padding-right:18px;
-  }
-dialog#mainMenuDialog.drawerDialog .drawerItem{
-    padding-left:10px;
-    padding-right:10px;
-    gap:15px;
-  }
-dialog#mainMenuDialog.drawerDialog .drawerView{
-    padding-left:8px;
-    padding-right:10px;
   }
 dialog#mainMenuDialog.drawerDialog .drawerPanel{
     width:min(292px, 82vw);
@@ -3357,7 +3286,7 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
 .pill{border-radius:3px;padding:0 3px;}
 }
 
-/* ===== Czas pracy 4.4.1 — clean FAB / szybkie akcje ===== */
+/* ===== FAB / szybkie akcje ===== */
 .fabScrim{
   position:fixed;
   inset:0;
@@ -3525,7 +3454,7 @@ body.view-stats .monthStrip{
   }
 }
 
-/* ===== Czas pracy 4.4.1 — finalny UI + safety cleanup ===== */
+/* ===== Finalny UI + safety cleanup ===== */
 html,
 body,
 .wrap,
