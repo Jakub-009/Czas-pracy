@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.4.8</title>
+  <title>Czas pracy 4.4.9</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -6895,12 +6895,21 @@ dialog#dayDialog .dayCloseRow{
       cpApp:true,
       view:activeView || "month",
       date:activeDayISO || todayISO(),
-      month:(monthPick && monthPick.value) ? monthPick.value : ym(activeDayISO || todayISO())
+      month:(monthPick && monthPick.value) ? monthPick.value : ym(activeDayISO || todayISO()),
+      statsMode:activeStatsMode || "month",
+      statsMonth:activeStatsMonth || ((monthPick && monthPick.value) ? monthPick.value : ym(todayISO())),
+      statsYear:activeYearStatsYear || yearFromMonthYM((monthPick && monthPick.value) ? monthPick.value : ym(todayISO()))
     };
   }
 
   function isSameAppHistoryState(a, b) {
-    return !!(a && b && a.cpApp && b.cpApp && a.view === b.view && a.date === b.date && a.month === b.month);
+    return !!(a && b && a.cpApp && b.cpApp
+      && a.view === b.view
+      && a.date === b.date
+      && a.month === b.month
+      && a.statsMode === b.statsMode
+      && a.statsMonth === b.statsMonth
+      && Number(a.statsYear || 0) === Number(b.statsYear || 0));
   }
 
   function writeAppHistory(mode = "push") {
@@ -6937,6 +6946,12 @@ dialog#dayDialog .dayCloseRow{
       const nextMonth = /^\d{4}-\d{2}$/.test(String(state.month || "")) ? state.month : ym(activeDayISO || todayISO());
       if (monthPick && nextMonth) monthPick.value = nextMonth;
 
+      if (state.view === "stats") {
+        activeStatsMode = state.statsMode === "year" ? "year" : "month";
+        activeStatsMonth = /^\d{4}-\d{2}$/.test(String(state.statsMonth || "")) ? state.statsMonth : nextMonth;
+        activeYearStatsYear = Number(state.statsYear || yearFromMonthYM(activeStatsMonth)) || yearFromMonthYM(activeStatsMonth);
+      }
+
       document.body.classList.remove("month-strip-open");
       $("monthStrip")?.setAttribute("hidden", "");
       window.CPApp?.closeFabMenu?.();
@@ -6956,6 +6971,7 @@ dialog#dayDialog .dayCloseRow{
 
   function setActiveView(view, dateISO = "", options = {}) {
     if (!options || options instanceof Event) options = {};
+    const mp = $("monthPick");
     activeView = view === "day" ? "day" : (view === "week" ? "week" : (view === "stats" ? "stats" : "month"));
     if (activeView !== "month") {
       window.CPApp?.closeFabMenu?.();
@@ -6963,10 +6979,12 @@ dialog#dayDialog .dayCloseRow{
     if (activeView === "stats") {
       document.body.classList.remove("month-strip-open");
       $("monthStrip")?.setAttribute("hidden", "");
+      const monthForStats = (mp && mp.value) ? mp.value : ym(activeDayISO || todayISO());
+      activeStatsMonth = activeStatsMonth || monthForStats;
+      activeYearStatsYear = activeYearStatsYear || yearFromMonthYM(activeStatsMonth);
     }
     if (dateISO) activeDayISO = dateISO;
 
-    const mp = $("monthPick");
     if ((activeView === "day" || activeView === "week") && mp && activeDayISO) {
       const nextYM = ym(activeDayISO);
       if (mp.value !== nextYM) mp.value = nextYM;
@@ -7810,6 +7828,7 @@ dialog#dayDialog .dayCloseRow{
     $("yearStatsView")?.classList.toggle("active", activeStatsMode === "year");
     updateChartModeButtons();
     renderStatsPanel();
+    if (activeView === "stats") writeAppHistory("replace");
   }
 
   function renderMonthStats() {
@@ -7899,7 +7918,6 @@ dialog#dayDialog .dayCloseRow{
   }
 
   function openStatsPanel(mode = "month") {
-    haptic.tap();
     window.CPApp?.closeFabMenu?.();
     const statsPage = $("statsPage");
     if (!statsPage) return;
@@ -7909,11 +7927,11 @@ dialog#dayDialog .dayCloseRow{
     activeYearStatsYear = yearFromMonthYM(activeStatsMonth);
     activeStatsMode = mode === "year" ? "year" : "month";
 
-    activeView = "stats";
-    applyActiveView();
+    setActiveView("stats", "", { historyMode:"push", haptic:false });
     setStatsMode(activeStatsMode);
     window.setSystemBars?.("#eef1f6");
     window.scrollTo({ top:0, behavior:"smooth" });
+    haptic.tap();
   }
 
 
@@ -8398,8 +8416,7 @@ dialog#dayDialog .dayCloseRow{
     if (chartTarget) {
       const date = chartTarget.getAttribute("data-chart-date");
       if (date) {
-        closeStatsPage();
-        setTimeout(() => setActiveView("day", date), 90);
+        setActiveView("day", date);
       }
       return;
     }
@@ -8444,11 +8461,13 @@ dialog#dayDialog .dayCloseRow{
         activeStatsMonth = addMonths(activeStatsMonth || $("monthPick")?.value || ym(todayISO()), -1);
         haptic.tap();
         renderStatsPanel();
+        writeAppHistory("replace");
         break;
       case "monthStatsNext":
         activeStatsMonth = addMonths(activeStatsMonth || $("monthPick")?.value || ym(todayISO()), 1);
         haptic.tap();
         renderStatsPanel();
+        writeAppHistory("replace");
         break;
       case "monthStatsPdf":
         openReportPdf(activeStatsMonth);
@@ -8460,11 +8479,13 @@ dialog#dayDialog .dayCloseRow{
         activeYearStatsYear = (activeYearStatsYear || yearFromMonthYM($("monthPick")?.value || ym(todayISO()))) - 1;
         haptic.tap();
         renderStatsPanel();
+        writeAppHistory("replace");
         break;
       case "yearStatsNext":
         activeYearStatsYear = (activeYearStatsYear || yearFromMonthYM($("monthPick")?.value || ym(todayISO()))) + 1;
         haptic.tap();
         renderStatsPanel();
+        writeAppHistory("replace");
         break;
       case "yearStatsCsv":
         exportYearCsv(activeYearStatsYear);
