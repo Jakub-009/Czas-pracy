@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.4.9</title>
+  <title>Czas pracy 4.5.0</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2963,24 +2963,8 @@ body,
 .shiftItem .mins{font-size:15px}
 }
 
-@media (min-width:680px){
-dialog#mainMenuDialog.drawerDialog{
-    width:100vw;
-    max-width:100vw;
-    height:100dvh;
-    max-height:100dvh;
-    margin:0;
-    border-radius:0;
-  }
-
-}
-
 @media (max-width:679px){
 dialog[open]{animation:slideUp .28s cubic-bezier(.2,0,0,1)}
-@keyframes sheetUp410{
-    from{transform:translateY(100%)}
-    to{transform:translateY(0)}
-  }
 dialog#mainMenuDialog.drawerDialog .drawerPanel{
     width:min(292px, 82vw);
   }
@@ -3026,10 +3010,6 @@ dialog#mainMenuDialog.drawerDialog .drawerItem{
 .monthStrip{
     top:54px;
   }
-.drawerPanel{
-    width:min(320px, 90vw);
-  }
-
 .templateChip{
     min-height:29px;
     height:29px;
@@ -5094,6 +5074,7 @@ dialog#dayDialog .dayCloseRow{
         cancel.onclick = null;
         dlg.oncancel = null;
         if (dlg.open) dlg.close();
+        window.CPApp?.clearAppOverlayHistory?.("confirmDialog");
         resolve(result);
       };
 
@@ -5106,6 +5087,7 @@ dialog#dayDialog .dayCloseRow{
 
       if (typeof dlg.showModal === "function") dlg.showModal();
       else dlg.setAttribute("open", "");
+      if (!window.history?.state?.overlay) window.CPApp?.pushAppOverlay?.("confirmDialog");
     });
   }
 
@@ -6161,7 +6143,7 @@ dialog#dayDialog .dayCloseRow{
     }, 40);
   }
 
-  function setMonthStripOpen(open) {
+  function setMonthStripOpen(open, options = {}) {
     const strip = $("monthStrip");
     const btn = $("monthNavToggle");
     if (!strip || !btn) return;
@@ -6169,7 +6151,12 @@ dialog#dayDialog .dayCloseRow{
     document.body.classList.toggle("month-strip-open", open);
     btn.classList.toggle("is-open", open);
     btn.setAttribute("aria-expanded", open ? "true" : "false");
-    if (open) renderMonthStrip(getCurrentMonthYM());
+    if (open) {
+      renderMonthStrip(getCurrentMonthYM());
+      pushAppOverlay("monthStrip");
+    } else if (options.history !== false) {
+      clearAppOverlayHistory("monthStrip");
+    }
   }
 
   // ===== KALENDARZ =====
@@ -6481,6 +6468,7 @@ dialog#dayDialog .dayCloseRow{
     if (dlg && typeof dlg.showModal === "function") dlg.showModal();
     else if (dlg) dlg.setAttribute("open", "");
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
+    pushAppOverlay("dayDialog");
   }
 
   Object.assign(window.CPApp, {
@@ -6488,12 +6476,15 @@ dialog#dayDialog .dayCloseRow{
     workTodayISO: todayISO
   });
 
-  function closeDay() {
+  function closeDay(options = {}) {
+    if (!options || options instanceof Event) options = {};
+    if (options.history !== false && backIfCurrentOverlay("dayDialog")) return;
     dlgDate = null;
     if (dlg && typeof dlg.close === "function" && dlg.open) dlg.close();
     else if (dlg) dlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
     window.CPApp?.setSystemBars?.("#eef1f6");
+    if (options.history !== false) clearAppOverlayHistory("dayDialog");
   }
 
   if (dlg) {
@@ -6889,13 +6880,14 @@ dialog#dayDialog .dayCloseRow{
   let appHistoryReady = false;
   let applyingAppHistory = false;
 
-  function getAppHistoryState() {
+  function getAppHistoryState(extra = {}) {
     const monthPick = $("monthPick");
     return {
       cpApp:true,
       view:activeView || "month",
       date:activeDayISO || todayISO(),
       month:(monthPick && monthPick.value) ? monthPick.value : ym(activeDayISO || todayISO()),
+      overlay:extra.overlay || "",
       statsMode:activeStatsMode || "month",
       statsMonth:activeStatsMonth || ((monthPick && monthPick.value) ? monthPick.value : ym(todayISO())),
       statsYear:activeYearStatsYear || yearFromMonthYM((monthPick && monthPick.value) ? monthPick.value : ym(todayISO()))
@@ -6907,16 +6899,17 @@ dialog#dayDialog .dayCloseRow{
       && a.view === b.view
       && a.date === b.date
       && a.month === b.month
+      && (a.overlay || "") === (b.overlay || "")
       && a.statsMode === b.statsMode
       && a.statsMonth === b.statsMonth
       && Number(a.statsYear || 0) === Number(b.statsYear || 0));
   }
 
-  function writeAppHistory(mode = "push") {
+  function writeAppHistory(mode = "push", extra = {}) {
     if (applyingAppHistory) return;
     if (!window.history || typeof window.history.replaceState !== "function") return;
 
-    const state = getAppHistoryState();
+    const state = getAppHistoryState(extra);
     if (isSameAppHistoryState(window.history.state, state)) {
       appHistoryReady = true;
       return;
@@ -6932,6 +6925,50 @@ dialog#dayDialog .dayCloseRow{
     } catch (err) {
       console.warn("Nie udało się zapisać historii widoku:", err);
     }
+  }
+
+  function pushAppOverlay(overlay) {
+    if (!overlay || applyingAppHistory) return;
+    if (window.history?.state?.cpApp && window.history.state.overlay === overlay) return;
+    writeAppHistory("push", { overlay });
+  }
+
+  function clearAppOverlayHistory(overlay = "") {
+    if (applyingAppHistory) return;
+    const state = window.history?.state;
+    if (!state?.cpApp || !state.overlay) return;
+    if (overlay && state.overlay !== overlay) return;
+    writeAppHistory("replace", { overlay:"" });
+  }
+
+  function backIfCurrentOverlay(overlay) {
+    const state = window.history?.state;
+    if (!overlay || !state?.cpApp || state.overlay !== overlay || typeof window.history?.back !== "function") return false;
+    window.history.back();
+    return true;
+  }
+
+  function closeDialogElement(id) {
+    const el = $(id);
+    if (!el) return;
+    if (id === "appConfirmDialog" && el.open) {
+      $("appConfirmCancel")?.click();
+      return;
+    }
+    if (typeof el.close === "function" && el.open) el.close();
+    else el.removeAttribute("open");
+  }
+
+  function closeAppOverlays() {
+    setMonthStripOpen(false, { history:false });
+    if (dlg?.open) closeDay({ history:false, haptic:false });
+    if (typeof closeVac === "function" && vacDlg?.open) closeVac({ history:false, haptic:false });
+    if (typeof closeBulk === "function" && bulkDlg?.open) closeBulk({ history:false, haptic:false });
+    closeDialogElement("appConfirmDialog");
+    window.CPApp?.closeFabMenu?.({ history:false });
+    closeDialogElement("mainMenuDialog");
+    document.body.classList.remove("drawer-open", "modal-open", "fab-open");
+    window.unlockPageScroll?.("drawer");
   }
 
   function applyAppHistoryState(state) {
@@ -6954,7 +6991,7 @@ dialog#dayDialog .dayCloseRow{
 
       document.body.classList.remove("month-strip-open");
       $("monthStrip")?.setAttribute("hidden", "");
-      window.CPApp?.closeFabMenu?.();
+      closeAppOverlays();
 
       renderAll({ skipSave:true });
       applyActiveView();
@@ -7050,6 +7087,10 @@ dialog#dayDialog .dayCloseRow{
   });
 
   Object.assign(window.CPApp, {
+    pushAppOverlay,
+    clearAppOverlayHistory,
+    backIfCurrentOverlay,
+    closeAppOverlays,
     setActiveView,
     goBackOrSetActiveView,
     renderDayView,
@@ -7130,19 +7171,23 @@ dialog#dayDialog .dayCloseRow{
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
     if (typeof vacDlg.showModal === "function") vacDlg.showModal();
     else vacDlg.setAttribute("open", "");
+    pushAppOverlay("vacDialog");
   }
-  function closeVac() {
-    haptic.tap();
+  function closeVac(options = {}) {
+    if (!options || options instanceof Event) options = {};
+    if (options.history !== false && backIfCurrentOverlay("vacDialog")) return;
+    if (options.haptic !== false) haptic.tap();
     if (!vacDlg) return;
     if (typeof vacDlg.close === "function" && vacDlg.open) vacDlg.close();
     else vacDlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
     window.CPApp?.setSystemBars?.("#eef1f6");
+    if (options.history !== false) clearAppOverlayHistory("vacDialog");
   }
   function openVacationForDate(dateISO = activeDayISO) {
     const target = isValidDateISO(dateISO) ? dateISO : todayISO();
     const wasDayDialogOpen = !!(dlg && dlg.open);
-    if (wasDayDialogOpen) closeDay();
+    if (wasDayDialogOpen) closeDay({ history:false });
     setTimeout(() => openVac(target), wasDayDialogOpen ? 80 : 0);
   }
   if (vacDlg) {
@@ -7188,14 +7233,18 @@ dialog#dayDialog .dayCloseRow{
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
     if (typeof bulkDlg.showModal === "function") bulkDlg.showModal();
     else bulkDlg.setAttribute("open", "");
+    pushAppOverlay("bulkDialog");
   }
-  function closeBulk() {
-    haptic.tap();
+  function closeBulk(options = {}) {
+    if (!options || options instanceof Event) options = {};
+    if (options.history !== false && backIfCurrentOverlay("bulkDialog")) return;
+    if (options.haptic !== false) haptic.tap();
     if (!bulkDlg) return;
     if (typeof bulkDlg.close === "function" && bulkDlg.open) bulkDlg.close();
     else bulkDlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
     window.setSystemBars?.("#eef1f6");
+    if (options.history !== false) clearAppOverlayHistory("bulkDialog");
   }
   if (bulkDlg) {
     bulkDlg.addEventListener("cancel", (e) => { e.preventDefault(); closeBulk(); });
@@ -7208,7 +7257,7 @@ dialog#dayDialog .dayCloseRow{
     openBulkDialog: openBulk
   });
 
-  // ===== RAPORT PDF =====
+  // ===== RAPORTY / CSV / AKTUALIZACJA PLIKÓW =====
   function escapeHtml(s) {
     return String(s ?? "")
       .replaceAll("&", "&amp;")
@@ -8497,7 +8546,7 @@ dialog#dayDialog .dayCloseRow{
   });
 
 
-  // ===== BACKUP JSON =====
+  // ===== EKSPORT JSON / BACKUP =====
   const backupBtn = $("backupJson");
   if (backupBtn) {
     backupBtn.onclick = () => {
@@ -9086,6 +9135,11 @@ dialog#dayDialog .dayCloseRow{
   const APP_VERSION = (APP_TITLE.match(/(\d+(?:\.\d+)*(?:\s*[a-zA-Z]+)?)/) || ["", "dev"])[1];
   window.__appErrors = window.__appErrors || [];
 
+  const onClick = (id, handler) => {
+    const el = $(id);
+    if (el) el.addEventListener("click", handler);
+  };
+
   const lockReasons = new Set();
   let lockY = 0;
 
@@ -9152,7 +9206,7 @@ dialog#dayDialog .dayCloseRow{
     else dlg.removeAttribute("open");
   }
 
-  function setFabOpen(open) {
+  function setFabOpen(open, options = {}) {
     const mainFab = $("mainFab");
     const fabActions = $("fabActions");
     const fabScrim = $("fabScrim");
@@ -9166,9 +9220,16 @@ dialog#dayDialog .dayCloseRow{
     document.body.classList.toggle("fab-open", open);
     if (open) lockPageScroll("fab");
     else unlockPageScroll("fab");
+    if (open) window.CPApp?.pushAppOverlay?.("fab");
+    else if (options.history !== false) window.CPApp?.clearAppOverlayHistory?.("fab");
   }
 
-  function closeFabMenu() { setFabOpen(false); }
+  function closeFabMenu(options = {}) {
+    if (!options || options instanceof Event) options = {};
+    if (options.history !== false && window.CPApp?.backIfCurrentOverlay?.("fab")) return;
+    setFabOpen(false, options);
+    if (options.history === false && options.clearHistory !== false) window.CPApp?.clearAppOverlayHistory?.("fab");
+  }
 
   Object.assign(window.CPApp, {
     closeFabMenu
@@ -9176,6 +9237,7 @@ dialog#dayDialog .dayCloseRow{
 
   $("mainFab")?.addEventListener("click", () => {
     const next = !$("fabContainer")?.classList.contains("is-open");
+    if (!next && window.CPApp?.backIfCurrentOverlay?.("fab")) return;
     setFabOpen(next);
     haptic.tap();
   });
@@ -9187,7 +9249,7 @@ dialog#dayDialog .dayCloseRow{
     const btn = e.target.closest?.(".fabActionPill");
     if (!btn) return;
 
-    closeFabMenu();
+    closeFabMenu({ history:false });
 
     if (btn.id === "fabTodayAction") {
       setTimeout(() => window.CPApp?.openWorkDay?.(window.CPApp?.workTodayISO?.()), 80);
@@ -9198,11 +9260,11 @@ dialog#dayDialog .dayCloseRow{
     }
   });
 
-  $("vacPanelClose")?.addEventListener("click", () => { $("vacBack")?.click(); });
-  $("vacPanelSave")?.addEventListener("click", () => { $("setVacationRange")?.click(); });
-  $("bulkPanelClose")?.addEventListener("click", () => { $("bulkBack")?.click(); });
-  $("bulkPanelSave")?.addEventListener("click", () => { $("bulkApply")?.click(); });
-  $("dayPanelClose")?.addEventListener("click", () => { $("dlgBack")?.click(); });
+  onClick("vacPanelClose", () => { $("vacBack")?.click(); });
+  onClick("vacPanelSave", () => { $("setVacationRange")?.click(); });
+  onClick("bulkPanelClose", () => { $("bulkBack")?.click(); });
+  onClick("bulkPanelSave", () => { $("bulkApply")?.click(); });
+  onClick("dayPanelClose", () => { $("dlgBack")?.click(); });
 
 
   const drawer = $("mainMenuDialog");
@@ -9277,16 +9339,20 @@ dialog#dayDialog .dayCloseRow{
     document.body.classList.add("drawer-open");
     lockPageScroll("drawer");
     openDialog(drawer);
+    window.CPApp?.pushAppOverlay?.("drawer");
   }
 
-  function closeDrawer() {
+  function closeDrawer(options = {}) {
+    if (!options || options instanceof Event) options = {};
+    if (options.history !== false && window.CPApp?.backIfCurrentOverlay?.("drawer")) return;
     document.body.classList.remove("drawer-open");
     unlockPageScroll("drawer");
     window.setSystemBars?.("#eef1f6");
     closeDialog(drawer);
+    if (options.history !== false || options.clearHistory !== false) window.CPApp?.clearAppOverlayHistory?.("drawer");
   }
 
-  $("mainMenuBtn")?.addEventListener("click", () => { openDrawer(); haptic.tap(); });
+  onClick("mainMenuBtn", () => { openDrawer(); haptic.tap(); });
   drawer?.addEventListener("click", (e) => { if (e.target === drawer) closeDrawer(); });
   drawer?.addEventListener("touchmove", (e) => { if (e.target === drawer) e.preventDefault(); }, { passive:false });
   drawer?.addEventListener("cancel", (e) => { e.preventDefault(); closeDrawer(); });
@@ -9297,27 +9363,20 @@ dialog#dayDialog .dayCloseRow{
     haptic.tap();
   });
 
-  $("drawerMonthView")?.addEventListener("click", () => {
-    closeDrawer();
-    setTimeout(() => window.CPApp?.setActiveView?.("month"), 90);
-  });
-  $("drawerDayView")?.addEventListener("click", () => {
-    closeDrawer();
-    setTimeout(() => window.CPApp?.setActiveView?.("day"), 90);
-  });
-  $("drawerYearSummary")?.addEventListener("click", () => {
-    closeDrawer();
-    setTimeout(() => window.CPApp?.openStatsPanel?.("month"), 120);
-  });
-  $("drawerWeekView")?.addEventListener("click", () => {
-    closeDrawer();
-    setTimeout(() => window.CPApp?.setActiveView?.("week"), 90);
-  });
-  $("openEmployerSettings")?.addEventListener("click", () => { showDrawerView("settings"); haptic.tap(); });
-  $("openSystemTools")?.addEventListener("click", () => { showDrawerView("tools"); haptic.tap(); });
-  $("openAppInfo")?.addEventListener("click", () => { showDrawerView("info"); haptic.tap(); });
+  function goFromDrawer(action, delay = 90) {
+    closeDrawer({ history:false });
+    setTimeout(action, delay);
+  }
 
-  $("clearAppErrors")?.addEventListener("click", () => {
+  onClick("drawerMonthView", () => goFromDrawer(() => window.CPApp?.setActiveView?.("month")));
+  onClick("drawerDayView", () => goFromDrawer(() => window.CPApp?.setActiveView?.("day")));
+  onClick("drawerYearSummary", () => goFromDrawer(() => window.CPApp?.openStatsPanel?.("month"), 120));
+  onClick("drawerWeekView", () => goFromDrawer(() => window.CPApp?.setActiveView?.("week")));
+  onClick("openEmployerSettings", () => { showDrawerView("settings"); haptic.tap(); });
+  onClick("openSystemTools", () => { showDrawerView("tools"); haptic.tap(); });
+  onClick("openAppInfo", () => { showDrawerView("info"); haptic.tap(); });
+
+  onClick("clearAppErrors", () => {
     window.__appErrors = [];
     refreshAppInfo();
     const toast = $("appToast");
