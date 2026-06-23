@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.5.2</title>
+  <title>Czas pracy 4.5.3</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -68,6 +68,11 @@
 
       --shadow-fab:0 8px 20px rgba(60,64,67,.25),0 2px 6px rgba(60,64,67,.16);
       --shadow-sheet:0 18px 60px rgba(32,33,36,.26);
+
+      --motion-fast:120ms;
+      --motion-normal:180ms;
+      --motion-slow:240ms;
+      --motion-ease:cubic-bezier(.2,0,0,1);
 
       --wrapPad:0px;
       --calEdgePad:0px;
@@ -178,10 +183,14 @@ button{
       align-items:center;
       justify-content:center;
       gap:8px;
-      transition:background .15s ease,box-shadow .15s ease,transform .08s ease;
+      transition:background var(--motion-fast) ease,box-shadow var(--motion-fast) ease,transform var(--motion-fast) ease;
     }
 
 button:active{transform:scale(.985)}
+
+button:hover{
+      box-shadow:0 1px 3px rgba(60,64,67,.12);
+    }
 
 button.filled{background:var(--primary);color:#fff}
 
@@ -283,6 +292,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
       border:1px solid #e4e8f1;
       border-radius:var(--radius-list);
       box-shadow:0 1px 2px rgba(60,64,67,.05);
+      transition:background var(--motion-fast) ease,border-color var(--motion-fast) ease,box-shadow var(--motion-fast) ease,transform var(--motion-fast) ease;
     }
 
 .heroCard{
@@ -290,6 +300,13 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
       border:1px solid #dfe3eb;
       border-radius:var(--radius-hero);
       box-shadow:0 1px 3px rgba(60,64,67,.08);
+      transition:background var(--motion-fast) ease,border-color var(--motion-fast) ease,box-shadow var(--motion-fast) ease,transform var(--motion-fast) ease;
+    }
+
+.surfaceCard:active,
+.heroCard:active,
+.listCard:active{
+      transform:scale(.997);
     }
 
 .bottomActions{
@@ -404,7 +421,7 @@ details[open] .chev{transform:rotate(180deg) translateY(-2px)}
 .panel{
       margin-top:2px;
       padding-bottom:14px;
-      animation:panelIn .2s cubic-bezier(.2,0,0,1);
+      animation:panelIn var(--motion-normal) var(--motion-ease);
     }
 
 @keyframes panelIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
@@ -427,6 +444,28 @@ dialog::backdrop{
     }
 
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+@keyframes surfaceIn{
+      from{opacity:0;transform:translateY(10px) scale(.99)}
+      to{opacity:1;transform:translateY(0) scale(1)}
+    }
+
+@media (prefers-reduced-motion: reduce){
+      :root{
+        --motion-fast:1ms;
+        --motion-normal:1ms;
+        --motion-slow:1ms;
+      }
+
+      *,
+      *::before,
+      *::after{
+        animation-duration:1ms;
+        animation-iteration-count:1;
+        scroll-behavior:auto;
+        transition-duration:1ms;
+      }
+    }
 
 .modalHead{
       padding:0 24px 14px;
@@ -1570,7 +1609,7 @@ dialog#mainMenuDialog.drawerDialog[open]{
   background:#fff;
   display:flex;
   flex-direction:column;
-  animation:drawerFromLeft404 .24s cubic-bezier(.2,0,0,1);
+  animation:drawerFromLeft404 var(--motion-slow) var(--motion-ease);
   transform-origin:left center;
   box-shadow:0 12px 34px rgba(60,64,67,.28);
 }
@@ -2334,6 +2373,11 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 @keyframes googlePanelIn{
   from{transform:translateY(10px);opacity:.98}
   to{transform:translateY(0);opacity:1}
+}
+
+dialog.googlePanel[open],
+.appConfirmDialog[open]{
+  animation:surfaceIn var(--motion-slow) var(--motion-ease);
 }
 
 .statusLine{
@@ -3112,7 +3156,7 @@ html,body,.appHeader,.appHeader.navTopBar,.monthStrip{background:#eef1f6;}
   font-weight:550;
   letter-spacing:-.02em;
   transform-origin:right center;
-  animation:fabActionIn .18s cubic-bezier(.2,0,0,1) both;
+  animation:fabActionIn var(--motion-normal) var(--motion-ease) both;
 }
 
 .fabActionPill:nth-child(1){animation-delay:.03s}
@@ -3875,11 +3919,12 @@ dialog#dayDialog .dayCloseRow{
   min-height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   display:flex;
   flex-direction:column;
-  padding:0 0 14px;
-  border:none;
-  background:transparent;
-  box-shadow:none;
-  animation:dayViewIn .18s cubic-bezier(.2,0,0,1);
+  padding:16px 14px 14px;
+  border:1px solid #e4e8f1;
+  border-radius:var(--radius-hero);
+  background:#fff;
+  box-shadow:0 1px 3px rgba(60,64,67,.08);
+  animation:surfaceIn var(--motion-slow) var(--motion-ease);
 }
 
 .statsFullHeader{
@@ -4881,12 +4926,24 @@ dialog#dayDialog .dayCloseRow{
   const HAPTICS_ON = true;
   const hasVibe = () => HAPTICS_ON && ("vibrate" in navigator);
   const vibe = (pattern) => { if (hasVibe()) navigator.vibrate(pattern); };
+  const HAPTIC_PATTERN = {
+    tap:8,
+    open:10,
+    close:6,
+    save:12,
+    success:[10, 30, 10],
+    warning:[12, 40, 12],
+    danger:[20, 50, 20]
+  };
   const haptic = {
-    tap:     () => vibe(8),
-    commit:  () => vibe(10),
-    success: () => vibe([10, 30, 10]),
-    warning: () => vibe([12, 40, 12]),
-    danger:  () => vibe([20, 50, 20]),
+    tap:     () => vibe(HAPTIC_PATTERN.tap),
+    open:    () => vibe(HAPTIC_PATTERN.open),
+    close:   () => vibe(HAPTIC_PATTERN.close),
+    save:    () => vibe(HAPTIC_PATTERN.save),
+    commit:  () => vibe(HAPTIC_PATTERN.save),
+    success: () => vibe(HAPTIC_PATTERN.success),
+    warning: () => vibe(HAPTIC_PATTERN.warning),
+    danger:  () => vibe(HAPTIC_PATTERN.danger),
   };
   window.haptic = haptic;
   window.CPApp = window.CPApp || {};
@@ -6261,7 +6318,7 @@ dialog#dayDialog .dayCloseRow{
   let dlgDate = null;
 
   function openDay(dateISO) {
-    haptic.tap();
+    haptic.open();
     dlgDate = dateISO;
 
     const day = getDay(dateISO) || { date: dateISO, note: "", shifts: [], vacation: false, leaveType:"" };
@@ -6308,6 +6365,7 @@ dialog#dayDialog .dayCloseRow{
 
   function closeDay(options = {}) {
     if (!options || options instanceof Event) options = {};
+    if (options.haptic !== false) haptic.close();
     if (closeOverlay("dayDialog", options)) return;
     dlgDate = null;
     if (dlg && typeof dlg.close === "function" && dlg.open) dlg.close();
@@ -6974,7 +7032,8 @@ dialog#dayDialog .dayCloseRow{
     renderCalendar(monthYM);
     renderTotals(monthYM);
     renderQuickTemplatesUI();
-    renderMonthStrip(monthYM);
+    const monthStrip = $("monthStrip");
+    if (monthStrip && !monthStrip.hidden) renderMonthStrip(monthYM);
     renderStatsPanel();
     if (activeView === "day") renderDayView(activeDayISO);
     if (activeView === "week") renderWeekView(activeDayISO);
@@ -7004,7 +7063,7 @@ dialog#dayDialog .dayCloseRow{
   // ===== MODALE: STATUS / BULK =====
   const vacDlg = $("vacDialog");
   function openVac(dateISO = "") {
-    haptic.tap();
+    haptic.open();
     if (!vacDlg) return;
     const t = isValidDateISO(dateISO) ? dateISO : todayISO();
     if ($("vacFrom")) $("vacFrom").value = t;
@@ -7020,8 +7079,8 @@ dialog#dayDialog .dayCloseRow{
   }
   function closeVac(options = {}) {
     if (!options || options instanceof Event) options = {};
+    if (options.haptic !== false) haptic.close();
     if (closeOverlay("vacDialog", options)) return;
-    if (options.haptic !== false) haptic.tap();
     if (!vacDlg) return;
     if (typeof vacDlg.close === "function" && vacDlg.open) vacDlg.close();
     else vacDlg.removeAttribute("open");
@@ -7064,7 +7123,7 @@ dialog#dayDialog .dayCloseRow{
   }
 
   function openBulk(mode = "hours") {
-    haptic.tap();
+    haptic.open();
     if (!bulkDlg) return;
     const t = todayISO();
     if ($("bulkFrom") && !$("bulkFrom").value) $("bulkFrom").value = t;
@@ -7081,8 +7140,8 @@ dialog#dayDialog .dayCloseRow{
   }
   function closeBulk(options = {}) {
     if (!options || options instanceof Event) options = {};
+    if (options.haptic !== false) haptic.close();
     if (closeOverlay("bulkDialog", options)) return;
-    if (options.haptic !== false) haptic.tap();
     if (!bulkDlg) return;
     if (typeof bulkDlg.close === "function" && bulkDlg.open) bulkDlg.close();
     else bulkDlg.removeAttribute("open");
@@ -7845,14 +7904,28 @@ dialog#dayDialog .dayCloseRow{
     return String(value ?? 0).replace(".", ",");
   }
 
-  function downloadTextFile(filename, content, mime = "text/plain;charset=utf-8") {
-    const blob = new Blob(["\ufeff" + content], { type:mime });
+  function downloadFile(filename, content, mime = "text/plain;charset=utf-8", options = {}) {
+    const text = options.bom === false ? content : "\ufeff" + content;
+    const blob = new Blob([text], { type:mime });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = filename;
     a.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+  }
+
+  function downloadTextFile(filename, content, mime = "text/plain;charset=utf-8") {
+    downloadFile(filename, content, mime);
+  }
+
+  function downloadJsonFile(filename, obj) {
+    downloadFile(filename, JSON.stringify(obj, null, 2), "application/json;charset=utf-8", { bom:false });
+  }
+
+  function markExportDone(message) {
+    setStatus(message);
+    haptic.success();
   }
 
   function buildMonthCsv(monthYM) {
@@ -7929,7 +8002,7 @@ dialog#dayDialog .dayCloseRow{
     const monthPick = $("monthPick");
     const monthYM = monthOverride || activeStatsMonth || ((monthPick && monthPick.value) ? monthPick.value : ym(todayISO()));
     downloadTextFile(`czas-pracy_${monthYM}.csv`, buildMonthCsv(monthYM), "text/csv;charset=utf-8");
-    setStatus("Wyeksportowano CSV miesiąca.");
+    markExportDone("Wyeksportowano CSV miesiąca.");
   }
 
   function exportYearCsv(yearOverride = 0) {
@@ -7938,7 +8011,7 @@ dialog#dayDialog .dayCloseRow{
     const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
     const year = yearOverride || activeYearStatsYear || yearFromMonthYM(monthYM);
     downloadTextFile(`czas-pracy_${year}_podsumowanie.csv`, buildYearCsv(year), "text/csv;charset=utf-8");
-    setStatus("Wyeksportowano CSV roku.");
+    markExportDone("Wyeksportowano CSV roku.");
   }
 
   async function forceRefreshAppFiles() {
@@ -7995,8 +8068,8 @@ dialog#dayDialog .dayCloseRow{
     }
   }
 
-  // ===== UI =====
-  $("dayViewPage")?.addEventListener("click", (e) => {
+  // ===== DAY EVENTS =====
+  function handleDayViewClick(e) {
     const btn = e.target.closest?.("button");
     if (!btn || !$("dayViewPage")?.contains(btn)) return;
 
@@ -8023,9 +8096,12 @@ dialog#dayDialog .dayCloseRow{
         openDay(activeDayISO);
         break;
     }
-  });
+  }
 
-  $("weekViewPage")?.addEventListener("click", (e) => {
+  $("dayViewPage")?.addEventListener("click", handleDayViewClick);
+
+  // ===== WEEK EVENTS =====
+  function handleWeekViewClick(e) {
     const dateCard = e.target.closest?.("[data-week-date]");
     if (dateCard && $("weekViewPage")?.contains(dateCard)) {
       const date = dateCard.getAttribute("data-week-date");
@@ -8047,7 +8123,9 @@ dialog#dayDialog .dayCloseRow{
         changeWeek(1);
         break;
     }
-  });
+  }
+
+  $("weekViewPage")?.addEventListener("click", handleWeekViewClick);
 
   (function enableDayViewSwipe() {
     const page = $("dayViewPage");
@@ -8094,7 +8172,7 @@ dialog#dayDialog .dayCloseRow{
       const dx = t.clientX - sx;
       if (Math.abs(dx) < THRESH_X) return;
 
-      haptic.commit();
+      haptic.save();
       nextDay(dx < 0 ? 1 : -1);
     }, { passive:true });
 
@@ -8107,7 +8185,7 @@ dialog#dayDialog .dayCloseRow{
   })();
 
   const dlgBackBtn = $("dlgBack");
-  if (dlgBackBtn) dlgBackBtn.onclick = () => { haptic.tap(); closeDay(); };
+  if (dlgBackBtn) dlgBackBtn.onclick = () => { closeDay(); };
 
 
   const vacBackBtn = $("vacBack");
@@ -8176,6 +8254,7 @@ dialog#dayDialog .dayCloseRow{
     });
   }
 
+  // ===== MONTH EVENTS =====
   const monthToggle = $("monthNavToggle");
   const monthStrip = $("monthStrip");
   const monthPick = $("monthPick");
@@ -8206,6 +8285,7 @@ dialog#dayDialog .dayCloseRow{
     };
   }
 
+  // ===== WORK PANEL EVENTS =====
   const setVacationRangeBtn = $("setVacationRange");
   if (setVacationRangeBtn) {
     setVacationRangeBtn.onclick = () => {
@@ -8285,13 +8365,15 @@ dialog#dayDialog .dayCloseRow{
     };
   }
 
-  $("bulkDialog")?.addEventListener("click", (e) => {
+  function handleBulkDialogClick(e) {
     const btn = e.target.closest?.("#bulkModeHours, #bulkModeLeave");
     if (!btn) return;
     haptic.tap();
     if (btn.id === "bulkModeHours") setBulkMode("hours");
     if (btn.id === "bulkModeLeave") setBulkMode("leave");
-  });
+  }
+
+  $("bulkDialog")?.addEventListener("click", handleBulkDialogClick);
 
   const monthSummaryCard = $("monthSummaryCard");
   if (monthSummaryCard) monthSummaryCard.onclick = () => openStatsPanel("month");
@@ -8306,7 +8388,8 @@ dialog#dayDialog .dayCloseRow{
     $("yearChartLine")?.classList.toggle("active", activeYearChartType === "line");
   }
 
-  $("statsPage")?.addEventListener("click", (e) => {
+  // ===== STATS EVENTS =====
+  function handleStatsPageClick(e) {
     const chartTarget = e.target.closest?.("[data-chart-date]");
     if (chartTarget) {
       const date = chartTarget.getAttribute("data-chart-date");
@@ -8389,25 +8472,21 @@ dialog#dayDialog .dayCloseRow{
         closeStatsPage();
         break;
     }
-  });
+  }
+
+  $("statsPage")?.addEventListener("click", handleStatsPageClick);
 
 
+  // ===== IMPORT / EXPORT / REPORT EVENTS =====
   // ===== EKSPORT JSON / BACKUP =====
   const backupBtn = $("backupJson");
   if (backupBtn) {
     backupBtn.onclick = () => {
       haptic.tap();
-
-      const blob = new Blob([JSON.stringify(db,null,2)], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `czas-pracy-backup_${new Date().toISOString().slice(0,10)}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
+      downloadJsonFile(`czas-pracy-backup_${new Date().toISOString().slice(0,10)}.json`, db);
 
       setLastBackupNow();
-      haptic.success();
+      markExportDone("Kopia JSON została pobrana.");
       notify("Kopia zapisana 👍 Polecam wysłać plik na Google Drive lub maila do siebie.");
     };
   }
@@ -8773,7 +8852,7 @@ dialog#dayDialog .dayCloseRow{
       cancelDragFrame();
       const w = area.clientWidth || window.innerWidth;
 
-      haptic.commit();
+      haptic.save();
 
       currentLayer.style.transition = "transform 190ms ease";
       ghostLayer.style.transition = "transform 190ms ease";
@@ -8928,7 +9007,7 @@ dialog#dayDialog .dayCloseRow{
 <script>
 (() => {
   const $ = (id) => document.getElementById(id);
-  const haptic = window.CPApp?.haptic || window.haptic || { tap(){}, commit(){}, success(){}, warning(){}, danger(){} };
+  const haptic = window.CPApp?.haptic || window.haptic || { tap(){}, open(){}, close(){}, save(){}, commit(){}, success(){}, warning(){}, danger(){} };
   const APP_TITLE = document.title || "Czas pracy";
   const APP_VERSION = (APP_TITLE.match(/(\d+(?:\.\d+)*(?:\s*[a-zA-Z]+)?)/) || ["", "dev"])[1];
   window.__appErrors = window.__appErrors || [];
@@ -9024,6 +9103,7 @@ dialog#dayDialog .dayCloseRow{
 
   function closeFabMenu(options = {}) {
     if (!options || options instanceof Event) options = {};
+    if (options.haptic !== false) haptic.close();
     if (window.CPApp?.closeOverlay?.("fab", options)) return;
     setFabOpen(false, options);
   }
@@ -9034,12 +9114,13 @@ dialog#dayDialog .dayCloseRow{
 
   $("mainFab")?.addEventListener("click", () => {
     const next = !$("fabContainer")?.classList.contains("is-open");
+    if (!next) haptic.close();
     if (!next && window.CPApp?.closeOverlay?.("fab")) return;
     setFabOpen(next);
-    haptic.tap();
+    if (next) haptic.open();
   });
 
-  $("fabScrim")?.addEventListener("click", () => { closeFabMenu(); haptic.tap(); });
+  $("fabScrim")?.addEventListener("click", () => { closeFabMenu(); });
   $("fabScrim")?.addEventListener("touchmove", (e) => e.preventDefault(), { passive:false });
 
   $("fabActions")?.addEventListener("click", (e) => {
@@ -9132,6 +9213,7 @@ dialog#dayDialog .dayCloseRow{
 
   function openDrawer() {
     showDrawerView("main");
+    haptic.open();
     window.setSystemBars?.("#eef1f6");
     document.body.classList.add("drawer-open");
     lockPageScroll("drawer");
@@ -9141,6 +9223,7 @@ dialog#dayDialog .dayCloseRow{
 
   function closeDrawer(options = {}) {
     if (!options || options instanceof Event) options = {};
+    if (options.haptic !== false) haptic.close();
     if (window.CPApp?.closeOverlay?.("drawer", options)) return;
     document.body.classList.remove("drawer-open");
     unlockPageScroll("drawer");
@@ -9148,15 +9231,18 @@ dialog#dayDialog .dayCloseRow{
     closeDialog(drawer);
   }
 
-  onClick("mainMenuBtn", () => { openDrawer(); haptic.tap(); });
+  // ===== DRAWER EVENTS =====
+  onClick("mainMenuBtn", () => { openDrawer(); });
   drawer?.addEventListener("click", (e) => { if (e.target === drawer) closeDrawer(); });
   drawer?.addEventListener("touchmove", (e) => { if (e.target === drawer) e.preventDefault(); }, { passive:false });
   drawer?.addEventListener("cancel", (e) => { e.preventDefault(); closeDrawer(); });
   drawer?.addEventListener("close", () => { document.body.classList.remove("drawer-open"); unlockPageScroll("drawer"); });
   drawerBack?.addEventListener("click", () => {
     if (currentDrawerView === "main") closeDrawer();
-    else showDrawerView("main");
-    haptic.tap();
+    else {
+      showDrawerView("main");
+      haptic.tap();
+    }
   });
 
   function goFromDrawer(action, delay = 90) {
