@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.5.0</title>
+  <title>Czas pracy 4.5.2</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -1182,7 +1182,7 @@ textarea{
 
 .templateAddBtn{
   width:100%;
-  min-height:48px;
+  min-height:44px;
 }
 
 .emptyTemplateHint,
@@ -1418,40 +1418,14 @@ dialog#mainMenuDialog.drawerDialog{
   background:transparent;
   box-shadow:none;
   overflow:hidden;
+  overscroll-behavior:none;
+  touch-action:none;
 }
 
 dialog#mainMenuDialog.drawerDialog::backdrop{
   background:rgba(32,33,36,.46);
   backdrop-filter:blur(2px);
   -webkit-backdrop-filter:blur(2px);
-}
-
-.drawerPanel{
-  width:min(330px, 88vw);
-  height:100dvh;
-  background:#fff;
-  box-shadow:0 12px 34px rgba(60,64,67,.28);
-  padding:14px 0 calc(18px + env(safe-area-inset-bottom));
-  display:flex;
-  flex-direction:column;
-}
-
-.drawerHeader{
-  padding:12px 24px 18px;
-}
-
-.drawerAppName{
-  font-size:24px;
-  line-height:1.1;
-  font-weight:500;
-  letter-spacing:-.025em;
-  color:#202124;
-}
-
-.drawerAppSub{
-  margin-top:5px;
-  font-size:13px;
-  color:#5f6368;
 }
 
 .drawerSection{
@@ -1522,87 +1496,9 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
   white-space:nowrap;
 }
 
-.drawerFooter{
-  margin-top:auto;
-  padding:14px 24px 0;
-  border-top:1px solid #e2e6ed;
-  color:#6f7785;
-  font-size:12px;
-  line-height:1.45;
-}
-
-.settingsAccordion{
-  border-top:1px solid var(--outline-soft);
-}
-
-.settingsAccordion:last-of-type{
-  border-bottom:1px solid var(--outline-soft);
-}
-
-.settingsAccordion summary{
-  min-height:58px;
-  padding:0;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  list-style:none;
-  color:#202124;
-}
-
-.settingsAccordion summary::-webkit-details-marker{
-  display:none;
-}
-
-.settingsAccordion summary span{
-  font-size:16px;
-  font-weight:650;
-}
-
-.settingsChevron{
-  width:22px;
-  height:22px;
-  position:relative;
-  flex:0 0 auto;
-  transition:transform .18s ease;
-}
-
-.settingsChevron::before{
-  content:"";
-  position:absolute;
-  left:6px;
-  top:5px;
-  width:9px;
-  height:9px;
-  border-right:2px solid #5f6368;
-  border-bottom:2px solid #5f6368;
-  transform:rotate(45deg);
-}
-
-.settingsAccordion[open] .settingsChevron{
-  transform:rotate(180deg);
-}
-
-.settingsAccordionBody{
-  padding:0 0 18px;
-  animation:settingsAccordionIn .18s cubic-bezier(.2,0,0,1);
-}
-
 @keyframes settingsAccordionIn{
   from{opacity:0;transform:translateY(-4px)}
   to{opacity:1;transform:translateY(0)}
-}
-
-.settingsSoon{
-  margin-top:14px;
-  padding:12px 14px;
-  border-radius:14px;
-  background:#f6f8fb;
-  border:1px solid #e2e6ed;
-  color:#5f6368;
-  font-size:14px;
-  line-height:1.35;
 }
 
 .fabCloseIcon{
@@ -1747,17 +1643,15 @@ dialog#mainMenuDialog.drawerDialog[open]{
 
 .settingsAccordion summary span{font-size:15.5px;font-weight:650;color:#202124}
 
-.settingsChevron{width:22px;height:22px;position:relative;transition:transform .18s ease}
+.settingsChevron{width:22px;height:22px;position:relative;display:grid;place-items:center;flex:0 0 auto;transform-origin:center;transition:transform .18s ease}
 
-.settingsChevron::before{content:"";position:absolute;left:6px;top:5px;width:9px;height:9px;border-right:2px solid #5f6368;border-bottom:2px solid #5f6368;transform:rotate(45deg)}
+.settingsChevron::before{content:"";position:absolute;left:50%;top:50%;width:9px;height:9px;border-right:2px solid #5f6368;border-bottom:2px solid #5f6368;transform:translate(-50%,-60%) rotate(45deg);transform-origin:center}
 
-.settingsAccordion[open] .settingsChevron{transform:rotate(180deg)}
+.settingsAccordion[open] .settingsChevron{transform:scaleY(-1)}
 
-.settingsAccordionBody{padding:0 0 16px}
+.settingsAccordionBody{padding:0 0 16px;animation:settingsAccordionIn .18s cubic-bezier(.2,0,0,1)}
 
 .settingsSoon{margin-top:12px;padding:11px 13px;border-radius:14px;background:#f6f8fb;border:1px solid #e2e6ed;color:#5f6368;font-size:13.5px;line-height:1.35}
-
-.templateAddBtn{width:100%;min-height:44px}
 
 .templateChip{min-height:29px;height:29px;padding:0 9px;font-size:12px;font-weight:650}
 
@@ -1770,11 +1664,6 @@ dialog#mainMenuDialog.drawerDialog[open]{
 html.scroll-locked-root,
 html.scroll-locked-root body{
   overflow:hidden;
-  overscroll-behavior:none;
-  touch-action:none;
-}
-
-dialog#mainMenuDialog.drawerDialog{
   overscroll-behavior:none;
   touch-action:none;
 }
@@ -1934,24 +1823,6 @@ dialog#mainMenuDialog.drawerDialog .drawerBack{
 
 .rangeModeTab:disabled{
   cursor:default;
-}
-
-.settingsChevron{
-  display:grid;
-  place-items:center;
-  transform-origin:center;
-  transition:transform .18s ease;
-}
-
-.settingsChevron::before{
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-60%) rotate(45deg);
-  transform-origin:center;
-}
-
-.settingsAccordion[open] .settingsChevron{
-  transform:scaleY(-1);
 }
 
 .appConfirmDialog{
@@ -3326,7 +3197,7 @@ body.view-stats .monthStrip{
   display:none;
 }
 
-@media(max-width:430px){
+@media (max-width:430px){
   .fab-container.fabGoogle{
     right:20px;
     bottom:calc(32px + env(safe-area-inset-bottom));
@@ -4008,6 +3879,7 @@ dialog#dayDialog .dayCloseRow{
   border:none;
   background:transparent;
   box-shadow:none;
+  animation:dayViewIn .18s cubic-bezier(.2,0,0,1);
 }
 
 .statsFullHeader{
@@ -4109,7 +3981,7 @@ dialog#dayDialog .dayCloseRow{
   font-weight:800;
 }
 
-@media(max-width:430px){
+@media (max-width:430px){
   .workPanelBar{
     padding-left:20px;
     padding-right:20px;
@@ -4660,9 +4532,6 @@ dialog#dayDialog .dayCloseRow{
             <button class="tonal" id="backupJson" type="button">Pobierz kopię</button>
             <input id="restoreJson" type="file" accept="application/json" style="display:none" />
             <button class="tonal" id="restoreBtn" type="button">Wczytaj dane</button>
-            <button class="tonal" id="openMonthAudit" type="button">Korekta miesiąca</button>
-            <button class="tonal" id="openActivityPanel" type="button">Ostatnie zmiany</button>
-            <button class="tonal" id="openTrashPanel" type="button">Kosz</button>
             <button class="error-tonal" id="clearMonth" type="button">Wyczyść miesiąc</button>
           </div>
         </div>
@@ -5074,7 +4943,7 @@ dialog#dayDialog .dayCloseRow{
         cancel.onclick = null;
         dlg.oncancel = null;
         if (dlg.open) dlg.close();
-        window.CPApp?.clearAppOverlayHistory?.("confirmDialog");
+        window.CPApp?.closeOverlay?.("confirmDialog", { history:false });
         resolve(result);
       };
 
@@ -5087,7 +4956,7 @@ dialog#dayDialog .dayCloseRow{
 
       if (typeof dlg.showModal === "function") dlg.showModal();
       else dlg.setAttribute("open", "");
-      if (!window.history?.state?.overlay) window.CPApp?.pushAppOverlay?.("confirmDialog");
+      if (!window.history?.state?.overlay) window.CPApp?.openOverlay?.("confirmDialog");
     });
   }
 
@@ -5171,9 +5040,7 @@ dialog#dayDialog .dayCloseRow{
   function createEmptyDB() {
     return {
       settings:{ rate:0, leaveQuota:26, defaultIncludeSat:false, defaultIncludeSun:false, defaultIncludeHolidays:false, backupReminderDays:5 },
-      entries:[],
-      trash:[],
-      activity:[]
+      entries:[]
     };
   }
 
@@ -5375,16 +5242,8 @@ dialog#dayDialog .dayCloseRow{
       .filter(t => t && /^\d{2}:\d{2}$/.test(t.start || "") && /^\d{2}:\d{2}$/.test(t.end || ""))
       .slice(0, 8);
 
-    db.trash = Array.isArray(db.trash) ? db.trash : [];
-    db.activity = Array.isArray(db.activity) ? db.activity : [];
-
-    const trashCutoff = Date.now() - (14 * 24 * 60 * 60 * 1000);
-    db.trash = db.trash
-      .filter(item => item && item.deletedAt && Date.parse(item.deletedAt) >= trashCutoff)
-      .slice(-80);
-    db.activity = db.activity
-      .filter(item => item && item.at && item.text)
-      .slice(-80);
+    delete db.trash;
+    delete db.activity;
 
     db.entries = Array.isArray(db.entries) ? db.entries : [];
     for (const e of db.entries) {
@@ -5449,34 +5308,6 @@ dialog#dayDialog .dayCloseRow{
 
   function cloneDay(day) {
     return JSON.parse(JSON.stringify(day || {}));
-  }
-
-  function recordActivity(text, meta = {}) {
-    normalize();
-    db.activity.push({
-      at:new Date().toISOString(),
-      text:String(text || "").slice(0, 180),
-      meta
-    });
-    db.activity = db.activity.slice(-80);
-  }
-
-  function pushTrash(type, dateISO, payload, label = "") {
-    normalize();
-    db.trash.push({
-      id:`${Date.now()}-${Math.random().toString(16).slice(2)}`,
-      type,
-      date:dateISO,
-      label,
-      payload:cloneDay(payload),
-      deletedAt:new Date().toISOString()
-    });
-    db.trash = db.trash.slice(-80);
-  }
-
-  function markDayRemoved(type, dateISO, payload, label) {
-    pushTrash(type, dateISO, payload, label);
-    recordActivity(label || `Usunięto wpis w ${fmtDMYText(dateISO)}`, { type, date:dateISO });
   }
 
   function minutesBetween(dateISO, start, end) {
@@ -5698,7 +5529,6 @@ dialog#dayDialog .dayCloseRow{
 
     upsertDay(dateISO, day);
     db.settings.lastShift = { start, end };
-    recordActivity(`Dodano ${start}–${end} w ${fmtDMYText(dateISO)}`, { type:"add-shift", date:dateISO, start, end });
     save();
     renderAll();
     if (dlgDate === dateISO) renderDayDialog();
@@ -6153,9 +5983,9 @@ dialog#dayDialog .dayCloseRow{
     btn.setAttribute("aria-expanded", open ? "true" : "false");
     if (open) {
       renderMonthStrip(getCurrentMonthYM());
-      pushAppOverlay("monthStrip");
-    } else if (options.history !== false) {
-      clearAppOverlayHistory("monthStrip");
+      openOverlay("monthStrip");
+    } else {
+      closeOverlay("monthStrip", options);
     }
   }
 
@@ -6468,7 +6298,7 @@ dialog#dayDialog .dayCloseRow{
     if (dlg && typeof dlg.showModal === "function") dlg.showModal();
     else if (dlg) dlg.setAttribute("open", "");
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
-    pushAppOverlay("dayDialog");
+    openOverlay("dayDialog");
   }
 
   Object.assign(window.CPApp, {
@@ -6478,13 +6308,12 @@ dialog#dayDialog .dayCloseRow{
 
   function closeDay(options = {}) {
     if (!options || options instanceof Event) options = {};
-    if (options.history !== false && backIfCurrentOverlay("dayDialog")) return;
+    if (closeOverlay("dayDialog", options)) return;
     dlgDate = null;
     if (dlg && typeof dlg.close === "function" && dlg.open) dlg.close();
     else if (dlg) dlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
     window.CPApp?.setSystemBars?.("#eef1f6");
-    if (options.history !== false) clearAppOverlayHistory("dayDialog");
   }
 
   if (dlg) {
@@ -6637,8 +6466,6 @@ dialog#dayDialog .dayCloseRow{
         if (!(await askConfirm("Usunąć ten zakres?", "Usuń zakres"))) return;
         const d = getDay(dlgDate);
         if (!d) return;
-        const removed = d.shifts[idx] ? { date:dlgDate, shifts:[d.shifts[idx]], note:"", vacation:false, leaveType:"" } : cloneDay(d);
-        markDayRemoved("shift", dlgDate, removed, `Usunięto zakres w ${fmtDMYText(dlgDate)}`);
         d.shifts.splice(idx, 1);
         save();
         renderAll();
@@ -6652,7 +6479,6 @@ dialog#dayDialog .dayCloseRow{
       if (!(await askConfirm("Usunąć status urlopu/L4 z tego dnia?", "Usuń status"))) return;
       const d = getDay(dlgDate);
       if (!d) return;
-      markDayRemoved("leave", dlgDate, { date:dlgDate, shifts:[], note:"", vacation:d.vacation, leaveType:d.leaveType }, `Usunięto urlop/L4 w ${fmtDMYText(dlgDate)}`);
       d.leaveType = "";
       d.vacation = false;
       save();
@@ -6666,7 +6492,6 @@ dialog#dayDialog .dayCloseRow{
       if (!(await askConfirm("Usunąć notatkę z tego dnia?", "Usuń notatkę"))) return;
       const d = getDay(dlgDate);
       if (!d) return;
-      markDayRemoved("note", dlgDate, { date:dlgDate, shifts:[], note:d.note || "", vacation:false, leaveType:"" }, `Usunięto notatkę w ${fmtDMYText(dlgDate)}`);
       d.note = "";
       if ($("dlgNote")) $("dlgNote").value = "";
       save();
@@ -6927,13 +6752,13 @@ dialog#dayDialog .dayCloseRow{
     }
   }
 
-  function pushAppOverlay(overlay) {
+  function pushOverlayHistory(overlay) {
     if (!overlay || applyingAppHistory) return;
     if (window.history?.state?.cpApp && window.history.state.overlay === overlay) return;
     writeAppHistory("push", { overlay });
   }
 
-  function clearAppOverlayHistory(overlay = "") {
+  function clearOverlayHistory(overlay = "") {
     if (applyingAppHistory) return;
     const state = window.history?.state;
     if (!state?.cpApp || !state.overlay) return;
@@ -6941,12 +6766,27 @@ dialog#dayDialog .dayCloseRow{
     writeAppHistory("replace", { overlay:"" });
   }
 
-  function backIfCurrentOverlay(overlay) {
+  function closeOverlayFromHistory(overlay) {
     const state = window.history?.state;
     if (!overlay || !state?.cpApp || state.overlay !== overlay || typeof window.history?.back !== "function") return false;
     window.history.back();
     return true;
   }
+
+  function openOverlay(overlay) {
+    pushOverlayHistory(overlay);
+  }
+
+  function closeOverlay(overlay, options = {}) {
+    if (!options || options instanceof Event) options = {};
+    if (options.history !== false && closeOverlayFromHistory(overlay)) return true;
+    clearOverlayHistory(overlay);
+    return false;
+  }
+
+  const pushAppOverlay = pushOverlayHistory;
+  const clearAppOverlayHistory = clearOverlayHistory;
+  const backIfCurrentOverlay = closeOverlayFromHistory;
 
   function closeDialogElement(id) {
     const el = $(id);
@@ -7087,6 +6927,11 @@ dialog#dayDialog .dayCloseRow{
   });
 
   Object.assign(window.CPApp, {
+    openOverlay,
+    closeOverlay,
+    pushOverlayHistory,
+    clearOverlayHistory,
+    closeOverlayFromHistory,
     pushAppOverlay,
     clearAppOverlayHistory,
     backIfCurrentOverlay,
@@ -7171,18 +7016,17 @@ dialog#dayDialog .dayCloseRow{
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
     if (typeof vacDlg.showModal === "function") vacDlg.showModal();
     else vacDlg.setAttribute("open", "");
-    pushAppOverlay("vacDialog");
+    openOverlay("vacDialog");
   }
   function closeVac(options = {}) {
     if (!options || options instanceof Event) options = {};
-    if (options.history !== false && backIfCurrentOverlay("vacDialog")) return;
+    if (closeOverlay("vacDialog", options)) return;
     if (options.haptic !== false) haptic.tap();
     if (!vacDlg) return;
     if (typeof vacDlg.close === "function" && vacDlg.open) vacDlg.close();
     else vacDlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
     window.CPApp?.setSystemBars?.("#eef1f6");
-    if (options.history !== false) clearAppOverlayHistory("vacDialog");
   }
   function openVacationForDate(dateISO = activeDayISO) {
     const target = isValidDateISO(dateISO) ? dateISO : todayISO();
@@ -7233,18 +7077,17 @@ dialog#dayDialog .dayCloseRow{
     if (window.lockPageScroll) window.lockPageScroll("modal"); else document.body.classList.add("modal-open");
     if (typeof bulkDlg.showModal === "function") bulkDlg.showModal();
     else bulkDlg.setAttribute("open", "");
-    pushAppOverlay("bulkDialog");
+    openOverlay("bulkDialog");
   }
   function closeBulk(options = {}) {
     if (!options || options instanceof Event) options = {};
-    if (options.history !== false && backIfCurrentOverlay("bulkDialog")) return;
+    if (closeOverlay("bulkDialog", options)) return;
     if (options.haptic !== false) haptic.tap();
     if (!bulkDlg) return;
     if (typeof bulkDlg.close === "function" && bulkDlg.open) bulkDlg.close();
     else bulkDlg.removeAttribute("open");
     if (window.unlockPageScroll) window.unlockPageScroll("modal"); else document.body.classList.remove("modal-open");
     window.setSystemBars?.("#eef1f6");
-    if (options.history !== false) clearAppOverlayHistory("bulkDialog");
   }
   if (bulkDlg) {
     bulkDlg.addEventListener("cancel", (e) => { e.preventDefault(); closeBulk(); });
@@ -7629,7 +7472,7 @@ dialog#dayDialog .dayCloseRow{
 
     const monthPick = $("monthPick");
     const monthYM = monthOverride || ((monthPick && monthPick.value) ? monthPick.value : ym(todayISO()));
-    const audit = buildMonthAudit(monthYM);
+    const audit = buildReportPreflight(monthYM);
     const sumMin = computeMonthMinutes(monthYM);
     const pay = round2((sumMin / 60) * (db.settings.rate || 0));
     const proceed = await openAppDialog({
@@ -8295,8 +8138,6 @@ dialog#dayDialog .dayCloseRow{
 
       upsertDay(dlgDate, day);
       db.settings.lastShift = { start, end };
-      recordActivity(`Dodano ${start}–${end} w ${fmtDMYText(dlgDate)}`, { type:"add-shift", date:dlgDate, start, end });
-
       if ($("dlgStart")) $("dlgStart").value = "";
       if ($("dlgEnd")) $("dlgEnd").value = "";
       save();
@@ -8347,7 +8188,10 @@ dialog#dayDialog .dayCloseRow{
   }
 
   if (monthPick) {
-    monthPick.addEventListener("change", renderAll);
+    monthPick.addEventListener("change", () => {
+      haptic.tap();
+      renderAll();
+    });
   }
 
   const todayBtn = $("todayBtn");
@@ -8390,7 +8234,10 @@ dialog#dayDialog .dayCloseRow{
         includeSun: $("vacIncludeSun")?.checked,
         includeHolidays: $("vacIncludeHolidays")?.checked
       });
-      if (res.ok) haptic.warning();
+      if (res.ok) {
+        haptic.warning();
+        closeVac();
+      }
     };
   }
 
@@ -8431,7 +8278,10 @@ dialog#dayDialog .dayCloseRow{
         ? clearLeaveRange(from, to, opts)
         : applyBulkHours(from, to, $("bulkStart")?.value, $("bulkEnd")?.value, "remove", opts);
 
-      if (res.ok) haptic.warning();
+      if (res.ok) {
+        haptic.warning();
+        closeBulk();
+      }
     };
   }
 
@@ -8448,10 +8298,6 @@ dialog#dayDialog .dayCloseRow{
 
   const checkUpdateBtn = $("checkUpdateBtn");
   if (checkUpdateBtn) checkUpdateBtn.onclick = checkForAppUpdate;
-
-  $("openMonthAudit")?.addEventListener("click", () => { haptic.tap(); showMonthAudit(); });
-  $("openActivityPanel")?.addEventListener("click", () => { haptic.tap(); showActivityPanel(); });
-  $("openTrashPanel")?.addEventListener("click", () => { haptic.tap(); showTrashPanel(); });
 
   function updateChartModeButtons() {
     $("monthChartBars")?.classList.toggle("active", activeMonthChartType === "bar");
@@ -8582,8 +8428,6 @@ dialog#dayDialog .dayCloseRow{
         vacation:!!e.vacation,
         leaveType:["", "paid", "unpaid", "sick"].includes(e.leaveType) ? e.leaveType : ""
       }));
-    clean.trash = Array.isArray(clean.trash) ? clean.trash : [];
-    clean.activity = Array.isArray(clean.activity) ? clean.activity : [];
     return clean;
   }
 
@@ -8644,42 +8488,14 @@ dialog#dayDialog .dayCloseRow{
     }
 
     normalize();
-    recordActivity(`Scalono import JSON: ${addedDays} ${pluralPL(addedDays, "dzień", "dni", "dni")}, ${addedShifts} ${pluralPL(addedShifts, "zakres", "zakresy", "zakresów")}`, { type:"import-merge" });
     save();
     return { addedDays, addedShifts, skipped };
   }
 
-  // ===== LOCAL SAFETY PANELS: ACTIVITY / TRASH / MONTH AUDIT =====
-  function formatActivityTime(iso) {
-    const dt = new Date(iso);
-    if (!Number.isFinite(dt.getTime())) return "";
-    return new Intl.DateTimeFormat("pl-PL", {
-      day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"
-    }).format(dt);
-  }
-
-  function showActivityPanel() {
-    normalize();
-    const items = db.activity.slice(-12).reverse();
-    const message = items.length
-      ? items.map(item => `${formatActivityTime(item.at)}  ${item.text}`).join("\n")
-      : "Brak zarejestrowanych zmian.";
-    openAppDialog({ title:"Ostatnie zmiany", message, okText:"OK" });
-  }
-
-  function showTrashPanel() {
-    normalize();
-    const items = db.trash.slice(-12).reverse();
-    const message = items.length
-      ? items.map(item => `${formatActivityTime(item.deletedAt)}  ${item.label || item.type || "Usunięty wpis"}`).join("\n")
-      : "Kosz jest pusty. Usunięte wpisy są przechowywane lokalnie do 14 dni.";
-    openAppDialog({ title:"Kosz lokalny", message, okText:"OK" });
-  }
-
-  function buildMonthAudit(monthYM) {
+  // ===== RAPORT: SZYBKIE SPRAWDZENIE PRZED EKSPORTEM =====
+  function buildReportPreflight(monthYM) {
     const [Y, M] = monthYM.split("-").map(Number);
     const dim = daysInMonth(Y, M);
-    const rows = [];
     let missing = 0;
     let notes = 0;
     let leaves = 0;
@@ -8687,38 +8503,23 @@ dialog#dayDialog .dayCloseRow{
     for (let d = 1; d <= dim; d++) {
       const dateISO = `${Y}-${pad2(M)}-${pad2(d)}`;
       const day = getDay(dateISO) || { date:dateISO, note:"", shifts:[], vacation:false, leaveType:"" };
-      const flags = [];
 
       if (isMissingWorkday(dateISO, day)) {
-        flags.push("brak wpisu");
         missing++;
       }
       if (day.note && day.note.trim()) {
-        flags.push("notatka");
         notes++;
       }
       if (day.leaveType || day.vacation) {
-        flags.push(leaveLabel(day.leaveType || "paid"));
         leaves++;
       }
-
-      if (flags.length) rows.push(`${fmtDMYText(dateISO)}: ${flags.join(", ")}`);
     }
 
     return {
       missing,
       notes,
-      leaves,
-      message:rows.length
-        ? `Braki: ${missing}\nDni z notatką: ${notes}\nUrlop/L4: ${leaves}\n\n${rows.slice(0, 24).join("\n")}${rows.length > 24 ? "\n…" : ""}`
-        : "Nie znaleziono braków, notatek ani urlopów w tym miesiącu."
+      leaves
     };
-  }
-
-  function showMonthAudit() {
-    const monthYM = $("monthPick")?.value || ym(todayISO());
-    const audit = buildMonthAudit(monthYM);
-    openAppDialog({ title:`Korekta miesiąca: ${fmtMonthPL(monthYM)}`, message:audit.message, okText:"OK" });
   }
 
   const restoreBtn = $("restoreBtn");
@@ -8758,7 +8559,6 @@ dialog#dayDialog .dayCloseRow{
 
         db = importDb;
         normalize();
-        recordActivity(`Zastąpiono bazę importem JSON: ${info.count} ${pluralPL(info.count, "wpis", "wpisy", "wpisów")}`, { type:"import-replace" });
         save();
         hydrateSettingsUI();
         renderAll();
@@ -8777,9 +8577,6 @@ dialog#dayDialog .dayCloseRow{
       haptic.tap();
       const monthYM = (monthPick && monthPick.value) ? monthPick.value : ym(todayISO());
       if (!(await askConfirm("Usunąć wszystkie wpisy z tego miesiąca?", "Wyczyść miesiąc"))) return;
-      db.entries
-        .filter(e => e?.date && ym(e.date) === monthYM)
-        .forEach(e => markDayRemoved("day", e.date, e, `Wyczyszczono dzień ${fmtDMYText(e.date)}`));
       db.entries = db.entries.filter(e => ym(e.date) !== monthYM);
       save();
       renderAll();
@@ -9127,6 +8924,7 @@ dialog#dayDialog .dayCloseRow{
   }
 })();
 </script>
+<!-- UI shell helpers: scroll lock, FAB, drawer, keyboard and app chrome. -->
 <script>
 (() => {
   const $ = (id) => document.getElementById(id);
@@ -9220,15 +9018,14 @@ dialog#dayDialog .dayCloseRow{
     document.body.classList.toggle("fab-open", open);
     if (open) lockPageScroll("fab");
     else unlockPageScroll("fab");
-    if (open) window.CPApp?.pushAppOverlay?.("fab");
-    else if (options.history !== false) window.CPApp?.clearAppOverlayHistory?.("fab");
+    if (open) window.CPApp?.openOverlay?.("fab");
+    else window.CPApp?.closeOverlay?.("fab", options);
   }
 
   function closeFabMenu(options = {}) {
     if (!options || options instanceof Event) options = {};
-    if (options.history !== false && window.CPApp?.backIfCurrentOverlay?.("fab")) return;
+    if (window.CPApp?.closeOverlay?.("fab", options)) return;
     setFabOpen(false, options);
-    if (options.history === false && options.clearHistory !== false) window.CPApp?.clearAppOverlayHistory?.("fab");
   }
 
   Object.assign(window.CPApp, {
@@ -9237,7 +9034,7 @@ dialog#dayDialog .dayCloseRow{
 
   $("mainFab")?.addEventListener("click", () => {
     const next = !$("fabContainer")?.classList.contains("is-open");
-    if (!next && window.CPApp?.backIfCurrentOverlay?.("fab")) return;
+    if (!next && window.CPApp?.closeOverlay?.("fab")) return;
     setFabOpen(next);
     haptic.tap();
   });
@@ -9339,17 +9136,16 @@ dialog#dayDialog .dayCloseRow{
     document.body.classList.add("drawer-open");
     lockPageScroll("drawer");
     openDialog(drawer);
-    window.CPApp?.pushAppOverlay?.("drawer");
+    window.CPApp?.openOverlay?.("drawer");
   }
 
   function closeDrawer(options = {}) {
     if (!options || options instanceof Event) options = {};
-    if (options.history !== false && window.CPApp?.backIfCurrentOverlay?.("drawer")) return;
+    if (window.CPApp?.closeOverlay?.("drawer", options)) return;
     document.body.classList.remove("drawer-open");
     unlockPageScroll("drawer");
     window.setSystemBars?.("#eef1f6");
     closeDialog(drawer);
-    if (options.history !== false || options.clearHistory !== false) window.CPApp?.clearAppOverlayHistory?.("drawer");
   }
 
   onClick("mainMenuBtn", () => { openDrawer(); haptic.tap(); });
