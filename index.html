@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.4.6</title>
+  <title>Czas pracy 4.4.7</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -959,10 +959,6 @@ textarea{
   min-height:48px;
 }
 
-#appInfoDialog .modalBody{
-  padding-top:0;
-}
-
 .sheetList{
   display:flex;
   flex-direction:column;
@@ -1110,12 +1106,6 @@ textarea{
 
 .dayNotePreview{
   display:none;
-}
-
-.settingsSection{
-  margin-top:22px;
-  padding-top:18px;
-  border-top:1px solid var(--outline-soft);
 }
 
 .sectionTitle{
@@ -1541,17 +1531,6 @@ dialog#mainMenuDialog.drawerDialog::backdrop{
   line-height:1.45;
 }
 
-dialog#settingsDialog{
-  max-height:92dvh;
-}
-
-#settingsDialog .modalBody.settingsBody{
-  max-height:calc(92dvh - 96px);
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-  padding-bottom:calc(24px + env(safe-area-inset-bottom));
-}
-
 .settingsAccordion{
   border-top:1px solid var(--outline-soft);
 }
@@ -1626,20 +1605,6 @@ dialog#settingsDialog{
   line-height:1.35;
 }
 
-.settingsCloseRow{
-  position:sticky;
-  bottom:0;
-  padding-top:14px;
-  padding-bottom:2px;
-  background:linear-gradient(to top, var(--surface) 78%, rgba(255,255,255,0));
-}
-
-.settingsSection{
-  margin-top:0;
-  padding-top:0;
-  border-top:none;
-}
-
 .fabCloseIcon{
   display:none;
 }
@@ -1664,10 +1629,7 @@ dialog#settingsDialog{
 #bulkRemove,
 #clearVacationRange,
 .backBtn,
-#dlgBack,
-#settingsClose,
-#toolsClose,
-#appInfoClose{
+#dlgBack{
   min-height:42px;
   padding:0 16px;
   font-size:15px;
@@ -3375,11 +3337,6 @@ body.fab-open .appHeader{
   pointer-events:none;
 }
 
-dialog#fabMenuDialog{
-  display:none;
-  pointer-events:none;
-}
-
 body.view-stats .fab-container{
   display:none;
 }
@@ -3503,9 +3460,7 @@ body.view-stats{
 }
 
 /* Wspólny szkielet paneli roboczych: Zbiorczy wpis, Dzisiejszy wpis / Edytuj dzień, Urlop/L4 */
-dialog#bulkDialog.googlePanel,
-dialog#dayDialog.googlePanel,
-dialog#vacDialog.googlePanel{
+.workPanel{
   width:100vw;
   max-width:100vw;
   height:100dvh;
@@ -3519,15 +3474,11 @@ dialog#vacDialog.googlePanel{
   color:#202124;
 }
 
-dialog#bulkDialog.googlePanel::backdrop,
-dialog#dayDialog.googlePanel::backdrop,
-dialog#vacDialog.googlePanel::backdrop{
+.workPanel::backdrop{
   background:#eef1f6;
 }
 
-dialog#bulkDialog .googlePanelShell,
-dialog#dayDialog .googlePanelShell,
-dialog#vacDialog .googlePanelShell{
+.workPanelShell{
   height:100%;
   min-height:0;
   display:flex;
@@ -3536,9 +3487,7 @@ dialog#vacDialog .googlePanelShell{
   background:#eef1f6;
 }
 
-dialog#bulkDialog .googlePanelBar,
-dialog#dayDialog .googlePanelBar,
-dialog#vacDialog .googlePanelBar{
+.workPanelBar{
   position:sticky;
   top:0;
   z-index:5;
@@ -3551,9 +3500,7 @@ dialog#vacDialog .googlePanelBar{
   border-bottom:1px solid #dfe3eb;
 }
 
-dialog#bulkDialog .googlePanelContent,
-dialog#dayDialog .googlePanelContent,
-dialog#vacDialog .googlePanelContent{
+.workPanelContent{
   flex:1 1 auto;
   min-height:0;
   overflow-x:hidden;
@@ -4183,9 +4130,7 @@ dialog#dayDialog .dayCloseRow{
 }
 
 @media(max-width:430px){
-  dialog#bulkDialog .googlePanelBar,
-  dialog#dayDialog .googlePanelBar,
-  dialog#vacDialog .googlePanelBar{
+  .workPanelBar{
     padding-left:20px;
     padding-right:20px;
   }
@@ -4759,13 +4704,13 @@ dialog#dayDialog .dayCloseRow{
     </div>
   </dialog>
 
-  <dialog id="vacDialog" class="googlePanel leavePanel">
-    <div class="googlePanelShell">
-      <div class="googlePanelBar">
+  <dialog id="vacDialog" class="googlePanel workPanel leavePanel">
+    <div class="googlePanelShell workPanelShell">
+      <div class="googlePanelBar workPanelBar">
         <button class="panelCloseBtn" id="vacPanelClose" type="button" aria-label="Zamknij"></button>
         <button class="panelSaveBtn" id="vacPanelSave" type="button">Zapisz</button>
       </div>
-      <div class="googlePanelContent">
+      <div class="googlePanelContent workPanelContent">
     <div class="modalHead">
       <div class="modalHeadInner">
         <h3>Dodaj urlop</h3>
@@ -4825,13 +4770,13 @@ dialog#dayDialog .dayCloseRow{
   </dialog>
 
   <!-- MODAL GODZINY DLA ZAKRESU DNI -->
-  <dialog id="bulkDialog" class="googlePanel bulkPanel">
-    <div class="googlePanelShell">
-      <div class="googlePanelBar">
+  <dialog id="bulkDialog" class="googlePanel workPanel bulkPanel">
+    <div class="googlePanelShell workPanelShell">
+      <div class="googlePanelBar workPanelBar">
         <button class="panelCloseBtn" id="bulkPanelClose" type="button" aria-label="Zamknij"></button>
         <button class="panelSaveBtn" id="bulkPanelSave" type="button">Zapisz</button>
       </div>
-      <div class="googlePanelContent">
+      <div class="googlePanelContent workPanelContent">
     <div class="modalHead">
       <div class="modalHeadInner">
         <h3 id="bulkTitle">Godziny dla zakresu dni</h3>
@@ -4917,12 +4862,12 @@ dialog#dayDialog .dayCloseRow{
   </dialog>
 
   <!-- MODAL DNIA -->
-  <dialog id="dayDialog" class="googlePanel dayPanel">
-    <div class="googlePanelShell">
-      <div class="googlePanelBar">
+  <dialog id="dayDialog" class="googlePanel workPanel dayPanel">
+    <div class="googlePanelShell workPanelShell">
+      <div class="googlePanelBar workPanelBar">
         <button class="panelCloseBtn" id="dayPanelClose" type="button" aria-label="Zamknij"></button>
       </div>
-      <div class="googlePanelContent">
+      <div class="googlePanelContent workPanelContent">
 
     <div class="modalHead dayPreviewHead">
       <div class="modalHeadInner">
@@ -8442,6 +8387,7 @@ dialog#dayDialog .dayCloseRow{
   });
 
 
+  // ===== BACKUP JSON =====
   const backupBtn = $("backupJson");
   if (backupBtn) {
     backupBtn.onclick = () => {
@@ -8461,6 +8407,7 @@ dialog#dayDialog .dayCloseRow{
     };
   }
 
+  // ===== IMPORT JSON: PREVIEW / MERGE / REPLACE =====
   function prepareImportedDb(obj) {
     if (!validateDbShape(obj)) throw new Error("Nieprawidłowa struktura pliku.");
     const clean = JSON.parse(JSON.stringify(obj));
@@ -8543,6 +8490,7 @@ dialog#dayDialog .dayCloseRow{
     return { addedDays, addedShifts, skipped };
   }
 
+  // ===== LOCAL SAFETY PANELS: ACTIVITY / TRASH / MONTH AUDIT =====
   function formatActivityTime(iso) {
     const dt = new Date(iso);
     if (!Number.isFinite(dt.getTime())) return "";
