@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.4.7</title>
+  <title>Czas pracy 4.4.8</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -6885,7 +6885,77 @@ dialog#dayDialog .dayCloseRow{
     if (isStats) renderStatsPanel();
   }
 
-  function setActiveView(view, dateISO = "") {
+  // ===== APP HISTORY / SYSTEM BACK =====
+  let appHistoryReady = false;
+  let applyingAppHistory = false;
+
+  function getAppHistoryState() {
+    const monthPick = $("monthPick");
+    return {
+      cpApp:true,
+      view:activeView || "month",
+      date:activeDayISO || todayISO(),
+      month:(monthPick && monthPick.value) ? monthPick.value : ym(activeDayISO || todayISO())
+    };
+  }
+
+  function isSameAppHistoryState(a, b) {
+    return !!(a && b && a.cpApp && b.cpApp && a.view === b.view && a.date === b.date && a.month === b.month);
+  }
+
+  function writeAppHistory(mode = "push") {
+    if (applyingAppHistory) return;
+    if (!window.history || typeof window.history.replaceState !== "function") return;
+
+    const state = getAppHistoryState();
+    if (isSameAppHistoryState(window.history.state, state)) {
+      appHistoryReady = true;
+      return;
+    }
+
+    try {
+      if (mode === "replace" || !appHistoryReady || typeof window.history.pushState !== "function") {
+        window.history.replaceState(state, document.title);
+      } else {
+        window.history.pushState(state, document.title);
+      }
+      appHistoryReady = true;
+    } catch (err) {
+      console.warn("Nie udało się zapisać historii widoku:", err);
+    }
+  }
+
+  function applyAppHistoryState(state) {
+    if (!state || !state.cpApp) return false;
+
+    applyingAppHistory = true;
+    try {
+      activeView = ["month", "day", "week", "stats"].includes(state.view) ? state.view : "month";
+      if (isValidDateISO(state.date)) activeDayISO = state.date;
+
+      const monthPick = $("monthPick");
+      const nextMonth = /^\d{4}-\d{2}$/.test(String(state.month || "")) ? state.month : ym(activeDayISO || todayISO());
+      if (monthPick && nextMonth) monthPick.value = nextMonth;
+
+      document.body.classList.remove("month-strip-open");
+      $("monthStrip")?.setAttribute("hidden", "");
+      window.CPApp?.closeFabMenu?.();
+
+      renderAll({ skipSave:true });
+      applyActiveView();
+      haptic.tap();
+      return true;
+    } finally {
+      applyingAppHistory = false;
+    }
+  }
+
+  window.addEventListener("popstate", (e) => {
+    applyAppHistoryState(e.state);
+  });
+
+  function setActiveView(view, dateISO = "", options = {}) {
+    if (!options || options instanceof Event) options = {};
     activeView = view === "day" ? "day" : (view === "week" ? "week" : (view === "stats" ? "stats" : "month"));
     if (activeView !== "month") {
       window.CPApp?.closeFabMenu?.();
@@ -6904,7 +6974,23 @@ dialog#dayDialog .dayCloseRow{
 
     renderAll();
     applyActiveView();
-    haptic.tap();
+
+    if (options.historyMode !== "none") {
+      writeAppHistory(options.historyMode || (activeView === "month" ? "replace" : "push"));
+    }
+    if (options.haptic !== false) haptic.tap();
+  }
+
+  function goBackOrSetActiveView(view = "month", dateISO = "") {
+    const state = window.history?.state;
+    const targetView = view === "day" ? "day" : (view === "week" ? "week" : (view === "stats" ? "stats" : "month"));
+
+    if (state?.cpApp && state.view !== targetView && typeof window.history?.back === "function") {
+      window.history.back();
+      return;
+    }
+
+    setActiveView(targetView, dateISO, { historyMode:"replace" });
   }
 
   function setDayViewDateOnly(dateISO) {
@@ -6917,6 +7003,7 @@ dialog#dayDialog .dayCloseRow{
     }
 
     renderDayView(activeDayISO);
+    writeAppHistory("replace");
   }
 
   function changeDay(dateISO) {
@@ -6935,6 +7022,7 @@ dialog#dayDialog .dayCloseRow{
     }
 
     renderWeekView(activeDayISO);
+    writeAppHistory("replace");
     haptic.tap();
   }
 
@@ -6945,6 +7033,7 @@ dialog#dayDialog .dayCloseRow{
 
   Object.assign(window.CPApp, {
     setActiveView,
+    goBackOrSetActiveView,
     renderDayView,
     renderWeekView
   });
@@ -7833,7 +7922,7 @@ dialog#dayDialog .dayCloseRow{
   });
 
   function closeStatsPage() {
-    setActiveView("month");
+    goBackOrSetActiveView("month");
     window.setSystemBars?.("#eef1f6");
   }
 
@@ -8005,7 +8094,7 @@ dialog#dayDialog .dayCloseRow{
 
     switch (btn.id) {
       case "dayViewBackToMonth":
-        setActiveView("month");
+        goBackOrSetActiveView("month");
         break;
 
       case "dayViewPrev":
@@ -8039,7 +8128,7 @@ dialog#dayDialog .dayCloseRow{
 
     switch (btn.id) {
       case "weekViewBackToMonth":
-        setActiveView("month");
+        goBackOrSetActiveView("month");
         break;
       case "weekViewPrev":
         changeWeek(-1);
@@ -8940,6 +9029,7 @@ dialog#dayDialog .dayCloseRow{
     if ($("bulkTo") && !$("bulkTo").value) $("bulkTo").value = t;
 
     renderAll();
+    writeAppHistory("replace");
 
     if (pendingStorageWarning) {
       setStatus(pendingStorageWarning);
