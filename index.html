@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.5.3</title>
+  <title>Czas pracy 4.5.5</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -1672,6 +1672,23 @@ dialog#mainMenuDialog.drawerDialog[open]{
 
 .drawerInfoList .sheetListRow{min-height:54px}
 
+#appVersionLabel{
+  font-size:11px;
+  line-height:1;
+  font-weight:650;
+  color:#6f7785;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#f1f3f4;
+}
+
+#appVersionFooter{
+  font-size:11px;
+  line-height:1.3;
+  font-weight:600;
+  color:#8a929f;
+}
+
 .settingsAccordion{border-top:1px solid var(--outline-soft);margin:0 8px}
 
 .settingsAccordion:last-of-type{border-bottom:1px solid var(--outline-soft)}
@@ -2648,6 +2665,18 @@ dialog.googlePanel[open],
 
 .dayViewPage{
   touch-action:pan-y;
+  will-change:transform,opacity;
+}
+
+.dayViewPage.is-horizontal-swipe,
+.weekViewPage.is-horizontal-swipe{
+  user-select:none;
+  cursor:grabbing;
+}
+
+.dayViewPage.is-swipe-animating,
+.weekViewPage.is-swipe-animating{
+  pointer-events:none;
 }
 
 .weekViewPage{
@@ -2656,6 +2685,7 @@ dialog.googlePanel[open],
   padding:0 0 18px;
   animation:dayViewIn .18s cubic-bezier(.2,0,0,1);
   touch-action:pan-y;
+  will-change:transform,opacity;
 }
 
 .weekViewList{
@@ -3919,11 +3949,11 @@ dialog#dayDialog .dayCloseRow{
   min-height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   display:flex;
   flex-direction:column;
-  padding:16px 14px 14px;
-  border:1px solid #e4e8f1;
-  border-radius:var(--radius-hero);
-  background:#fff;
-  box-shadow:0 1px 3px rgba(60,64,67,.08);
+  padding:0 0 14px;
+  border:none;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
   animation:surfaceIn var(--motion-slow) var(--motion-ease);
 }
 
@@ -5603,33 +5633,6 @@ dialog#dayDialog .dayCloseRow{
   function addShiftFromTemplate(start, end) {
     if (!dlgDate) return;
     return addShiftTemplateToDate(dlgDate, start, end);
-
-    start = normalizeTimeHHMM(start);
-    end = normalizeTimeHHMM(end);
-
-    const validation = validateShiftNoOverlap(dlgDate, start, end);
-    if (!validation.ok) {
-      haptic.warning();
-      notify(validation.message);
-      return;
-    }
-
-    const day = getDay(dlgDate) || { date: dlgDate, note: "", shifts: [], vacation: false, leaveType:"" };
-    day.shifts.push({ start, end });
-    day.shifts.sort((a, b) => (a.start || "").localeCompare(b.start || ""));
-
-    upsertDay(dlgDate, day);
-    save();
-    renderAll();
-    renderDayDialog();
-
-    if (dlg) {
-      dlg.classList.add("is-preview-only");
-      dlg.classList.remove("is-form-open", "is-empty-day");
-    }
-
-    setStatus(`Dodano zakres z szablonu: ${start}–${end}.`);
-    haptic.success();
   }
 
   function fmtHM(mins) {
@@ -7534,17 +7537,21 @@ dialog#dayDialog .dayCloseRow{
     const audit = buildReportPreflight(monthYM);
     const sumMin = computeMonthMinutes(monthYM);
     const pay = round2((sumMin / 60) * (db.settings.rate || 0));
+
+    // iOS/Safari blokuje window.open po await, więc rezerwujemy okno od razu po tapnięciu.
+    const w = window.open("", "_blank");
+
     const proceed = await openAppDialog({
       title:"Sprawdź przed eksportem",
       message:`${fmtMonthPL(monthYM)}\nGodziny: ${fmtHM(sumMin)}\nWypłata: ${pln(pay)}\nBraki dni roboczych: ${audit.missing}\nDni z notatką: ${audit.notes}\nUrlop/L4: ${audit.leaves}`,
       okText:"Generuj PDF",
       cancelText:"Anuluj"
     });
-    if (!proceed) return;
+    if (!proceed) {
+      try { if (w && !w.closed) w.close(); } catch {}
+      return;
+    }
 
-    // Ważne na iOS/Safari: nowe okno otwieramy natychmiast po tapnięciu,
-    // a dopiero potem budujemy HTML raportu.
-    const w = window.open("", "_blank");
     let html = "";
 
     try {
@@ -8127,6 +8134,61 @@ dialog#dayDialog .dayCloseRow{
 
   $("weekViewPage")?.addEventListener("click", handleWeekViewClick);
 
+  function clampSwipeDelta(dx) {
+    const max = Math.min(76, Math.max(38, window.innerWidth * 0.18));
+    return Math.max(-max, Math.min(max, dx * 0.34));
+  }
+
+  function setSwipeVisual(page, dx, animated = false) {
+    if (!page) return;
+    const offset = clampSwipeDelta(dx);
+    const opacity = Math.max(.84, 1 - Math.min(Math.abs(dx) / 420, .16));
+    page.style.transition = animated ? "transform var(--motion-fast) var(--motion-ease), opacity var(--motion-fast) ease" : "none";
+    page.style.transform = `translate3d(${offset}px, 0, 0)`;
+    page.style.opacity = String(opacity);
+    page.classList.toggle("is-horizontal-swipe", !animated && Math.abs(dx) > 0);
+  }
+
+  function resetSwipeVisual(page, animated = true) {
+    if (!page) return;
+    page.style.transition = animated ? "transform var(--motion-normal) var(--motion-ease), opacity var(--motion-normal) ease" : "none";
+    page.style.transform = "";
+    page.style.opacity = "";
+    page.classList.remove("is-horizontal-swipe");
+    window.setTimeout(() => {
+      if (!page.classList.contains("is-swipe-animating")) page.style.transition = "";
+    }, 180);
+  }
+
+  function runSwipeChange(page, direction, updateView) {
+    if (!page || page.classList.contains("is-swipe-animating")) return;
+
+    const outX = direction < 0 ? -42 : 42;
+    const inX = direction < 0 ? 42 : -42;
+    page.classList.add("is-swipe-animating");
+    page.classList.remove("is-horizontal-swipe");
+    page.style.transition = "transform var(--motion-normal) var(--motion-ease), opacity var(--motion-normal) ease";
+    page.style.transform = `translate3d(${outX}px, 0, 0)`;
+    page.style.opacity = ".72";
+
+    window.setTimeout(() => {
+      updateView();
+      page.style.transition = "none";
+      page.style.transform = `translate3d(${inX}px, 0, 0)`;
+      page.style.opacity = ".72";
+
+      requestAnimationFrame(() => {
+        page.style.transition = "transform var(--motion-slow) var(--motion-ease), opacity var(--motion-slow) ease";
+        page.style.transform = "";
+        page.style.opacity = "";
+        window.setTimeout(() => {
+          page.classList.remove("is-swipe-animating");
+          page.style.transition = "";
+        }, 210);
+      });
+    }, 145);
+  }
+
   (function enableDayViewSwipe() {
     const page = $("dayViewPage");
     if (!page || page.dataset.swipeReady) return;
@@ -8158,27 +8220,99 @@ dialog#dayDialog .dayCloseRow{
 
       if (!locked && (Math.abs(dx) > LOCK_START || Math.abs(dy) > LOCK_START)) {
         locked = Math.abs(dx) > Math.abs(dy) ? "h" : "v";
+        if (locked === "h") page.classList.add("is-horizontal-swipe");
       }
 
-      if (locked === "h") e.preventDefault();
+      if (locked === "h") {
+        e.preventDefault();
+        setSwipeVisual(page, dx);
+      }
     }, { passive:false });
 
     page.addEventListener("touchend", (e) => {
       if (!tracking) return;
       tracking = false;
-      if (locked !== "h") return;
+      if (locked !== "h") {
+        resetSwipeVisual(page, true);
+        return;
+      }
 
       const t = e.changedTouches[0];
       const dx = t.clientX - sx;
-      if (Math.abs(dx) < THRESH_X) return;
+      if (Math.abs(dx) < THRESH_X) {
+        resetSwipeVisual(page, true);
+        return;
+      }
 
-      haptic.save();
-      nextDay(dx < 0 ? 1 : -1);
+      runSwipeChange(page, dx < 0 ? -1 : 1, () => nextDay(dx < 0 ? 1 : -1));
     }, { passive:true });
 
     page.addEventListener("touchcancel", () => {
       tracking = false;
       locked = null;
+      resetSwipeVisual(page, true);
+    }, { passive:true });
+
+    page.dataset.swipeReady = "1";
+  })();
+
+  (function enableWeekViewSwipe() {
+    const page = $("weekViewPage");
+    if (!page || page.dataset.swipeReady) return;
+
+    let sx = 0, sy = 0, tracking = false, locked = null;
+    const LOCK_START = 10;
+    const THRESH_X = 56;
+
+    page.addEventListener("touchstart", (e) => {
+      if (e.touches.length !== 1) return;
+      if (e.target.closest?.("button,input,textarea,select,a")) return;
+      const t = e.touches[0];
+      sx = t.clientX;
+      sy = t.clientY;
+      tracking = true;
+      locked = null;
+    }, { passive:true });
+
+    page.addEventListener("touchmove", (e) => {
+      if (!tracking || e.touches.length !== 1) return;
+      const t = e.touches[0];
+      const dx = t.clientX - sx;
+      const dy = t.clientY - sy;
+
+      if (!locked && (Math.abs(dx) > LOCK_START || Math.abs(dy) > LOCK_START)) {
+        locked = Math.abs(dx) > Math.abs(dy) ? "h" : "v";
+        if (locked === "h") page.classList.add("is-horizontal-swipe");
+      }
+
+      if (locked === "h") {
+        e.preventDefault();
+        setSwipeVisual(page, dx);
+      }
+    }, { passive:false });
+
+    page.addEventListener("touchend", (e) => {
+      if (!tracking) return;
+      tracking = false;
+      if (locked !== "h") {
+        resetSwipeVisual(page, true);
+        return;
+      }
+
+      const t = e.changedTouches[0];
+      const dx = t.clientX - sx;
+      if (Math.abs(dx) < THRESH_X) {
+        resetSwipeVisual(page, true);
+        return;
+      }
+
+      runSwipeChange(page, dx < 0 ? -1 : 1, () => changeWeek(dx < 0 ? 1 : -1));
+    }, { passive:true });
+
+    page.addEventListener("touchcancel", () => {
+      tracking = false;
+      locked = null;
+      resetSwipeVisual(page, true);
     }, { passive:true });
 
     page.dataset.swipeReady = "1";
@@ -8607,7 +8741,10 @@ dialog#dayDialog .dayCloseRow{
     restoreBtn.onclick = () => { haptic.tap(); restoreInput.click(); };
     restoreInput.onchange = async (ev) => {
       const f = ev.target.files?.[0];
-      if (!f) return;
+      if (!f) {
+        restoreInput.value = "";
+        return;
+      }
       try {
         const txt = await f.text();
         const importDb = prepareImportedDb(JSON.parse(txt));
@@ -8644,8 +8781,10 @@ dialog#dayDialog .dayCloseRow{
         if (dlgDate) renderDayDialog();
         setStatus("Przywrócono dane z pliku JSON.");
         haptic.success();
+        restoreInput.value = "";
       } catch {
         notify("Nie udało się wczytać pliku JSON.");
+        restoreInput.value = "";
       }
     };
   }
