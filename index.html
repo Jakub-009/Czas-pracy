@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.5.5</title>
+  <title>Czas pracy 4.5.6</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -8134,15 +8134,19 @@ dialog#dayDialog .dayCloseRow{
 
   $("weekViewPage")?.addEventListener("click", handleWeekViewClick);
 
-  function clampSwipeDelta(dx) {
-    const max = Math.min(76, Math.max(38, window.innerWidth * 0.18));
-    return Math.max(-max, Math.min(max, dx * 0.34));
+  function getSwipeWidth(page) {
+    return Math.max(page?.getBoundingClientRect?.().width || 0, window.innerWidth || 320);
+  }
+
+  function clampSwipeDelta(page, dx) {
+    const max = getSwipeWidth(page) * .72;
+    return Math.max(-max, Math.min(max, dx));
   }
 
   function setSwipeVisual(page, dx, animated = false) {
     if (!page) return;
-    const offset = clampSwipeDelta(dx);
-    const opacity = Math.max(.84, 1 - Math.min(Math.abs(dx) / 420, .16));
+    const offset = clampSwipeDelta(page, dx);
+    const opacity = Math.max(.94, 1 - Math.min(Math.abs(dx) / 900, .06));
     page.style.transition = animated ? "transform var(--motion-fast) var(--motion-ease), opacity var(--motion-fast) ease" : "none";
     page.style.transform = `translate3d(${offset}px, 0, 0)`;
     page.style.opacity = String(opacity);
@@ -8163,19 +8167,20 @@ dialog#dayDialog .dayCloseRow{
   function runSwipeChange(page, direction, updateView) {
     if (!page || page.classList.contains("is-swipe-animating")) return;
 
-    const outX = direction < 0 ? -42 : 42;
-    const inX = direction < 0 ? 42 : -42;
+    const width = getSwipeWidth(page) + 28;
+    const outX = direction < 0 ? -width : width;
+    const inX = direction < 0 ? width : -width;
     page.classList.add("is-swipe-animating");
     page.classList.remove("is-horizontal-swipe");
     page.style.transition = "transform var(--motion-normal) var(--motion-ease), opacity var(--motion-normal) ease";
     page.style.transform = `translate3d(${outX}px, 0, 0)`;
-    page.style.opacity = ".72";
+    page.style.opacity = ".96";
 
     window.setTimeout(() => {
       updateView();
       page.style.transition = "none";
       page.style.transform = `translate3d(${inX}px, 0, 0)`;
-      page.style.opacity = ".72";
+      page.style.opacity = ".96";
 
       requestAnimationFrame(() => {
         page.style.transition = "transform var(--motion-slow) var(--motion-ease), opacity var(--motion-slow) ease";
