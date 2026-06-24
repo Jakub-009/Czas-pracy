@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.5.6</title>
+  <title>Czas pracy 4.5.7</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2665,17 +2665,39 @@ dialog.googlePanel[open],
 
 .dayViewPage{
   touch-action:pan-y;
+}
+
+.viewSwipeViewport{
+  position:relative;
+  overflow:hidden;
+  contain:layout paint;
+}
+
+.viewSwipeSurface{
+  position:relative;
+  z-index:2;
   will-change:transform,opacity;
 }
 
-.dayViewPage.is-horizontal-swipe,
-.weekViewPage.is-horizontal-swipe{
+.viewSwipeGhost{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  display:none;
+  will-change:transform,opacity;
+}
+
+.viewSwipeViewport.is-swipe-active .viewSwipeGhost{
+  display:block;
+}
+
+.viewSwipeSurface.is-horizontal-swipe{
   user-select:none;
   cursor:grabbing;
 }
 
-.dayViewPage.is-swipe-animating,
-.weekViewPage.is-swipe-animating{
+.viewSwipeSurface.is-swipe-animating{
   pointer-events:none;
 }
 
@@ -2685,7 +2707,6 @@ dialog.googlePanel[open],
   padding:0 0 18px;
   animation:dayViewIn .18s cubic-bezier(.2,0,0,1);
   touch-action:pan-y;
-  will-change:transform,opacity;
 }
 
 .weekViewList{
@@ -4230,6 +4251,9 @@ dialog#dayDialog .dayCloseRow{
         </div>
       </div>
 
+      <div class="viewSwipeViewport" id="dayViewSwipeViewport">
+        <div class="viewSwipeGhost" id="dayViewSwipeGhost" aria-hidden="true"></div>
+        <div class="viewSwipeSurface" id="dayViewSwipeSurface">
       <div class="dayViewHero heroCard">
         <div>
           <span>Podsumowanie dnia</span>
@@ -4263,6 +4287,8 @@ dialog#dayDialog .dayCloseRow{
       <div class="dayViewBottomActions bottomActions">
         <button class="tonal" id="dayViewBackToMonth" type="button">Wróć</button>
       </div>
+        </div>
+      </div>
     </section>
 
     <section class="weekViewPage monthViewHidden" id="weekViewPage" aria-label="Widok tygodnia">
@@ -4277,6 +4303,9 @@ dialog#dayDialog .dayCloseRow{
         </div>
       </div>
 
+      <div class="viewSwipeViewport" id="weekViewSwipeViewport">
+        <div class="viewSwipeGhost" id="weekViewSwipeGhost" aria-hidden="true"></div>
+        <div class="viewSwipeSurface" id="weekViewSwipeSurface">
       <div class="dayViewHero weekViewHero heroCard">
         <div>
           <span>Podsumowanie tygodnia</span>
@@ -4292,6 +4321,8 @@ dialog#dayDialog .dayCloseRow{
 
       <div class="dayViewBottomActions bottomActions">
         <button class="tonal" id="weekViewBackToMonth" type="button">Wróć</button>
+      </div>
+        </div>
       </div>
     </section>
 
@@ -8080,18 +8111,16 @@ dialog#dayDialog .dayCloseRow{
     const btn = e.target.closest?.("button");
     if (!btn || !$("dayViewPage")?.contains(btn)) return;
 
-    const base = parseISODate(activeDayISO) || new Date();
-
     switch (btn.id) {
       case "dayViewBackToMonth":
         goBackOrSetActiveView("month");
         break;
 
       case "dayViewPrev":
-        changeDay(isoFromDate(addDays(base, -1)));
+        animateDayChange(-1);
         break;
       case "dayViewNext":
-        changeDay(isoFromDate(addDays(base, 1)));
+        animateDayChange(1);
         break;
       case "dayViewAddHours":
         openDayAddForm(activeDayISO);
@@ -8124,10 +8153,10 @@ dialog#dayDialog .dayCloseRow{
         goBackOrSetActiveView("month");
         break;
       case "weekViewPrev":
-        changeWeek(-1);
+        animateWeekChange(-1);
         break;
       case "weekViewNext":
-        changeWeek(1);
+        animateWeekChange(1);
         break;
     }
   }
@@ -8138,78 +8167,143 @@ dialog#dayDialog .dayCloseRow{
     return Math.max(page?.getBoundingClientRect?.().width || 0, window.innerWidth || 320);
   }
 
-  function clampSwipeDelta(page, dx) {
-    const max = getSwipeWidth(page) * .72;
+  function clampSwipeDelta(surface, dx) {
+    const max = getSwipeWidth(surface) * .72;
     return Math.max(-max, Math.min(max, dx));
   }
 
-  function setSwipeVisual(page, dx, animated = false) {
-    if (!page) return;
-    const offset = clampSwipeDelta(page, dx);
+  function setSwipeVisual(surface, dx, animated = false) {
+    if (!surface) return;
+    const offset = clampSwipeDelta(surface, dx);
     const opacity = Math.max(.94, 1 - Math.min(Math.abs(dx) / 900, .06));
-    page.style.transition = animated ? "transform var(--motion-fast) var(--motion-ease), opacity var(--motion-fast) ease" : "none";
-    page.style.transform = `translate3d(${offset}px, 0, 0)`;
-    page.style.opacity = String(opacity);
-    page.classList.toggle("is-horizontal-swipe", !animated && Math.abs(dx) > 0);
+    surface.style.transition = animated ? "transform var(--motion-fast) var(--motion-ease), opacity var(--motion-fast) ease" : "none";
+    surface.style.transform = `translate3d(${offset}px, 0, 0)`;
+    surface.style.opacity = String(opacity);
+    surface.classList.toggle("is-horizontal-swipe", !animated && Math.abs(dx) > 0);
   }
 
-  function resetSwipeVisual(page, animated = true) {
-    if (!page) return;
-    page.style.transition = animated ? "transform var(--motion-normal) var(--motion-ease), opacity var(--motion-normal) ease" : "none";
-    page.style.transform = "";
-    page.style.opacity = "";
-    page.classList.remove("is-horizontal-swipe");
+  function resetSwipeVisual(surface, animated = true) {
+    if (!surface) return;
+    surface.style.transition = animated ? "transform var(--motion-normal) var(--motion-ease), opacity var(--motion-normal) ease" : "none";
+    surface.style.transform = "";
+    surface.style.opacity = "";
+    surface.classList.remove("is-horizontal-swipe");
     window.setTimeout(() => {
-      if (!page.classList.contains("is-swipe-animating")) page.style.transition = "";
+      if (!surface.classList.contains("is-swipe-animating")) surface.style.transition = "";
     }, 180);
   }
 
-  function runSwipeChange(page, direction, updateView) {
-    if (!page || page.classList.contains("is-swipe-animating")) return;
+  function stripGhostIds(root) {
+    root.querySelectorAll?.("[id]").forEach(el => el.removeAttribute("id"));
+  }
 
-    const width = getSwipeWidth(page) + 28;
-    const outX = direction < 0 ? -width : width;
+  function prepareSwipeGhost(surface, direction, options = {}) {
+    const ghost = options.ghost;
+    const viewport = options.viewport || surface?.parentElement;
+    if (!surface || !ghost || !viewport || typeof options.renderPreview !== "function" || typeof options.renderCurrent !== "function") return;
+
+    const width = getSwipeWidth(surface) + 28;
     const inX = direction < 0 ? width : -width;
-    page.classList.add("is-swipe-animating");
-    page.classList.remove("is-horizontal-swipe");
-    page.style.transition = "transform var(--motion-normal) var(--motion-ease), opacity var(--motion-normal) ease";
-    page.style.transform = `translate3d(${outX}px, 0, 0)`;
-    page.style.opacity = ".96";
+
+    options.renderPreview();
+    ghost.innerHTML = surface.innerHTML;
+    stripGhostIds(ghost);
+    options.renderCurrent();
+
+    viewport.classList.add("is-swipe-active");
+    ghost.style.transition = "none";
+    ghost.style.transform = `translate3d(${inX}px, 0, 0)`;
+    ghost.style.opacity = ".98";
+    void ghost.offsetWidth;
+    ghost.style.transition = "transform var(--motion-normal) var(--motion-ease), opacity var(--motion-normal) ease";
+    ghost.style.transform = "";
+    ghost.style.opacity = "1";
+  }
+
+  function clearSwipeGhost(surface, options = {}) {
+    const ghost = options.ghost;
+    const viewport = options.viewport || surface?.parentElement;
+    if (viewport) viewport.classList.remove("is-swipe-active");
+    if (ghost) {
+      ghost.innerHTML = "";
+      ghost.style.transition = "";
+      ghost.style.transform = "";
+      ghost.style.opacity = "";
+    }
+  }
+
+  function runSwipeChange(surface, direction, updateView, options = {}) {
+    if (!surface || surface.classList.contains("is-swipe-animating")) return;
+
+    prepareSwipeGhost(surface, direction, options);
+
+    const width = getSwipeWidth(surface) + 28;
+    const outX = direction < 0 ? -width : width;
+    surface.classList.add("is-swipe-animating");
+    surface.classList.remove("is-horizontal-swipe");
+    surface.style.transition = "transform var(--motion-normal) var(--motion-ease), opacity var(--motion-normal) ease";
+    surface.style.transform = `translate3d(${outX}px, 0, 0)`;
+    surface.style.opacity = ".96";
 
     window.setTimeout(() => {
       updateView();
-      page.style.transition = "none";
-      page.style.transform = `translate3d(${inX}px, 0, 0)`;
-      page.style.opacity = ".96";
-
-      requestAnimationFrame(() => {
-        page.style.transition = "transform var(--motion-slow) var(--motion-ease), opacity var(--motion-slow) ease";
-        page.style.transform = "";
-        page.style.opacity = "";
-        window.setTimeout(() => {
-          page.classList.remove("is-swipe-animating");
-          page.style.transition = "";
-        }, 210);
-      });
+      clearSwipeGhost(surface, options);
+      surface.style.transition = "none";
+      surface.style.transform = "";
+      surface.style.opacity = "";
+      surface.classList.remove("is-swipe-animating");
+      window.setTimeout(() => { surface.style.transition = ""; }, 0);
     }, 145);
+  }
+
+  function animateDayChange(delta) {
+    const current = activeDayISO || todayISO();
+    const base = parseISODate(current) || new Date();
+    const target = isoFromDate(addDays(base, delta));
+    const surface = $("dayViewSwipeSurface") || $("dayViewPage");
+    const ghost = $("dayViewSwipeGhost");
+    const viewport = $("dayViewSwipeViewport");
+    const direction = delta > 0 ? -1 : 1;
+
+    runSwipeChange(surface, direction, () => changeDay(target), {
+      ghost,
+      viewport,
+      renderPreview:() => renderDayView(target),
+      renderCurrent:() => renderDayView(current)
+    });
+  }
+
+  function animateWeekChange(delta) {
+    const current = activeDayISO || todayISO();
+    const base = parseISODate(current) || new Date();
+    const target = isoFromDate(addDays(base, delta * 7));
+    const surface = $("weekViewSwipeSurface") || $("weekViewPage");
+    const ghost = $("weekViewSwipeGhost");
+    const viewport = $("weekViewSwipeViewport");
+    const direction = delta > 0 ? -1 : 1;
+
+    runSwipeChange(surface, direction, () => changeWeek(delta), {
+      ghost,
+      viewport,
+      renderPreview:() => renderWeekView(target),
+      renderCurrent:() => renderWeekView(current)
+    });
   }
 
   (function enableDayViewSwipe() {
     const page = $("dayViewPage");
+    const surface = $("dayViewSwipeSurface") || page;
     if (!page || page.dataset.swipeReady) return;
 
     let sx = 0, sy = 0, tracking = false, locked = null;
     const LOCK_START = 10;
     const THRESH_X = 56;
 
-    const nextDay = (delta) => {
-      const base = parseISODate(activeDayISO) || new Date();
-      changeDay(isoFromDate(addDays(base, delta)));
-    };
-
     page.addEventListener("touchstart", (e) => {
       if (e.touches.length !== 1) return;
+      if (surface && !surface.contains(e.target)) return;
       if (e.target.closest?.("button,input,textarea,select,a")) return;
+      if (surface?.classList.contains("is-swipe-animating")) return;
       const t = e.touches[0];
       sx = t.clientX;
       sy = t.clientY;
@@ -8225,12 +8319,12 @@ dialog#dayDialog .dayCloseRow{
 
       if (!locked && (Math.abs(dx) > LOCK_START || Math.abs(dy) > LOCK_START)) {
         locked = Math.abs(dx) > Math.abs(dy) ? "h" : "v";
-        if (locked === "h") page.classList.add("is-horizontal-swipe");
+        if (locked === "h") surface.classList.add("is-horizontal-swipe");
       }
 
       if (locked === "h") {
         e.preventDefault();
-        setSwipeVisual(page, dx);
+        setSwipeVisual(surface, dx);
       }
     }, { passive:false });
 
@@ -8238,24 +8332,24 @@ dialog#dayDialog .dayCloseRow{
       if (!tracking) return;
       tracking = false;
       if (locked !== "h") {
-        resetSwipeVisual(page, true);
+        resetSwipeVisual(surface, true);
         return;
       }
 
       const t = e.changedTouches[0];
       const dx = t.clientX - sx;
       if (Math.abs(dx) < THRESH_X) {
-        resetSwipeVisual(page, true);
+        resetSwipeVisual(surface, true);
         return;
       }
 
-      runSwipeChange(page, dx < 0 ? -1 : 1, () => nextDay(dx < 0 ? 1 : -1));
+      animateDayChange(dx < 0 ? 1 : -1);
     }, { passive:true });
 
     page.addEventListener("touchcancel", () => {
       tracking = false;
       locked = null;
-      resetSwipeVisual(page, true);
+      resetSwipeVisual(surface, true);
     }, { passive:true });
 
     page.dataset.swipeReady = "1";
@@ -8263,6 +8357,7 @@ dialog#dayDialog .dayCloseRow{
 
   (function enableWeekViewSwipe() {
     const page = $("weekViewPage");
+    const surface = $("weekViewSwipeSurface") || page;
     if (!page || page.dataset.swipeReady) return;
 
     let sx = 0, sy = 0, tracking = false, locked = null;
@@ -8271,7 +8366,9 @@ dialog#dayDialog .dayCloseRow{
 
     page.addEventListener("touchstart", (e) => {
       if (e.touches.length !== 1) return;
+      if (surface && !surface.contains(e.target)) return;
       if (e.target.closest?.("button,input,textarea,select,a")) return;
+      if (surface?.classList.contains("is-swipe-animating")) return;
       const t = e.touches[0];
       sx = t.clientX;
       sy = t.clientY;
@@ -8287,12 +8384,12 @@ dialog#dayDialog .dayCloseRow{
 
       if (!locked && (Math.abs(dx) > LOCK_START || Math.abs(dy) > LOCK_START)) {
         locked = Math.abs(dx) > Math.abs(dy) ? "h" : "v";
-        if (locked === "h") page.classList.add("is-horizontal-swipe");
+        if (locked === "h") surface.classList.add("is-horizontal-swipe");
       }
 
       if (locked === "h") {
         e.preventDefault();
-        setSwipeVisual(page, dx);
+        setSwipeVisual(surface, dx);
       }
     }, { passive:false });
 
@@ -8300,24 +8397,24 @@ dialog#dayDialog .dayCloseRow{
       if (!tracking) return;
       tracking = false;
       if (locked !== "h") {
-        resetSwipeVisual(page, true);
+        resetSwipeVisual(surface, true);
         return;
       }
 
       const t = e.changedTouches[0];
       const dx = t.clientX - sx;
       if (Math.abs(dx) < THRESH_X) {
-        resetSwipeVisual(page, true);
+        resetSwipeVisual(surface, true);
         return;
       }
 
-      runSwipeChange(page, dx < 0 ? -1 : 1, () => changeWeek(dx < 0 ? 1 : -1));
+      animateWeekChange(dx < 0 ? 1 : -1);
     }, { passive:true });
 
     page.addEventListener("touchcancel", () => {
       tracking = false;
       locked = null;
-      resetSwipeVisual(page, true);
+      resetSwipeVisual(surface, true);
     }, { passive:true });
 
     page.dataset.swipeReady = "1";
