@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.5.8</title>
+  <title>Czas pracy 4.5.9</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -2677,6 +2677,8 @@ dialog.googlePanel[open],
   position:relative;
   z-index:2;
   will-change:transform,opacity;
+  backface-visibility:hidden;
+  transform:translateZ(0);
 }
 
 .viewSwipeGhost{
@@ -2686,6 +2688,8 @@ dialog.googlePanel[open],
   pointer-events:none;
   display:none;
   will-change:transform,opacity;
+  backface-visibility:hidden;
+  transform:translateZ(0);
 }
 
 .viewSwipeViewport.is-swipe-active .viewSwipeGhost{
@@ -8198,20 +8202,33 @@ dialog#dayDialog .dayCloseRow{
     root.querySelectorAll?.("[id]").forEach(el => el.removeAttribute("id"));
   }
 
+  function captureSwipePreviewHTML(surface, renderPreview, renderCurrent) {
+    if (!surface || typeof renderPreview !== "function" || typeof renderCurrent !== "function") return "";
+    renderPreview();
+    const html = surface.innerHTML;
+    renderCurrent();
+    return html;
+  }
+
   function prepareSwipeGhost(surface, direction, options = {}) {
     const ghost = options.ghost;
     const viewport = options.viewport || surface?.parentElement;
-    if (!surface || !ghost || !viewport || typeof options.renderPreview !== "function" || typeof options.renderCurrent !== "function") return;
+    const hasPreviewHTML = typeof options.previewHTML === "string" && options.previewHTML;
+    if (!surface || !ghost || !viewport || (!hasPreviewHTML && (typeof options.renderPreview !== "function" || typeof options.renderCurrent !== "function"))) return;
     const dirKey = String(direction);
     if (viewport.classList.contains("is-swipe-active") && viewport.dataset.swipeDir === dirKey && ghost.innerHTML) return;
 
     const width = getSwipeWidth(surface) + 28;
     const inX = direction < 0 ? width : -width;
 
-    options.renderPreview();
-    ghost.innerHTML = surface.innerHTML;
+    if (hasPreviewHTML) {
+      ghost.innerHTML = options.previewHTML;
+    } else {
+      options.renderPreview();
+      ghost.innerHTML = surface.innerHTML;
+      options.renderCurrent();
+    }
     stripGhostIds(ghost);
-    options.renderCurrent();
 
     viewport.classList.add("is-swipe-active");
     viewport.dataset.swipeDir = dirKey;
@@ -8333,27 +8350,55 @@ dialog#dayDialog .dayCloseRow{
     });
   }
 
-  function prepareDaySwipePreview(surface, direction) {
+  function buildDaySwipePreviewCache(surface) {
+    const current = activeDayISO || todayISO();
+    const base = parseISODate(current) || new Date();
+    const prev = isoFromDate(addDays(base, -1));
+    const next = isoFromDate(addDays(base, 1));
+    return {
+      current,
+      "-1":captureSwipePreviewHTML(surface, () => renderDayView(next), () => renderDayView(current)),
+      "1":captureSwipePreviewHTML(surface, () => renderDayView(prev), () => renderDayView(current))
+    };
+  }
+
+  function buildWeekSwipePreviewCache(surface) {
+    const current = activeDayISO || todayISO();
+    const base = parseISODate(current) || new Date();
+    const prev = isoFromDate(addDays(base, -7));
+    const next = isoFromDate(addDays(base, 7));
+    return {
+      current,
+      "-1":captureSwipePreviewHTML(surface, () => renderWeekView(next), () => renderWeekView(current)),
+      "1":captureSwipePreviewHTML(surface, () => renderWeekView(prev), () => renderWeekView(current))
+    };
+  }
+
+  function prepareDaySwipePreview(surface, direction, cache = null) {
     const current = activeDayISO || todayISO();
     const base = parseISODate(current) || new Date();
     const target = isoFromDate(addDays(base, direction < 0 ? 1 : -1));
+    const previewHTML = cache?.current === current ? cache[String(direction)] : "";
     prepareSwipeGhost(surface, direction, {
       ghost:$("dayViewSwipeGhost"),
       viewport:$("dayViewSwipeViewport"),
       mode:"drag",
+      previewHTML,
       renderPreview:() => renderDayView(target),
       renderCurrent:() => renderDayView(current)
     });
   }
 
-  function prepareWeekSwipePreview(surface, direction) {
+  function prepareWeekSwipePreview(surface, direction, cache = null) {
     const current = activeDayISO || todayISO();
     const base = parseISODate(current) || new Date();
     const target = isoFromDate(addDays(base, direction < 0 ? 7 : -7));
+    const previewHTML = cache?.current === current ? cache[String(direction)] : "";
     prepareSwipeGhost(surface, direction, {
       ghost:$("weekViewSwipeGhost"),
       viewport:$("weekViewSwipeViewport"),
       mode:"drag",
+      previewHTML,
       renderPreview:() => renderWeekView(target),
       renderCurrent:() => renderWeekView(current)
     });
@@ -8365,8 +8410,32 @@ dialog#dayDialog .dayCloseRow{
     if (!page || page.dataset.swipeReady) return;
 
     let sx = 0, sy = 0, tracking = false, locked = null, previewDirection = 0;
+    let previewCache = null, primeFrame = 0, swipeFrame = 0, queuedDx = 0;
     const LOCK_START = 10;
     const THRESH_X = 56;
+    const swipeOptions = {
+      ghost:$("dayViewSwipeGhost"),
+      viewport:$("dayViewSwipeViewport")
+    };
+
+    function queueDaySwipeVisual(dx) {
+      queuedDx = dx;
+      if (swipeFrame) return;
+      swipeFrame = requestAnimationFrame(() => {
+        swipeFrame = 0;
+        setSwipeVisual(surface, queuedDx, false, swipeOptions);
+      });
+    }
+
+    function cancelDaySwipeFrame() {
+      if (swipeFrame) cancelAnimationFrame(swipeFrame);
+      swipeFrame = 0;
+    }
+
+    function cancelDayPrimeFrame() {
+      if (primeFrame) cancelAnimationFrame(primeFrame);
+      primeFrame = 0;
+    }
 
     page.addEventListener("touchstart", (e) => {
       if (e.touches.length !== 1) return;
@@ -8379,6 +8448,14 @@ dialog#dayDialog .dayCloseRow{
       tracking = true;
       locked = null;
       previewDirection = 0;
+      previewCache = null;
+      cancelDayPrimeFrame();
+      primeFrame = requestAnimationFrame(() => {
+        primeFrame = 0;
+        if (tracking && !locked && !surface.classList.contains("is-swipe-animating")) {
+          previewCache = buildDaySwipePreviewCache(surface);
+        }
+      });
     }, { passive:true });
 
     page.addEventListener("touchmove", (e) => {
@@ -8397,24 +8474,21 @@ dialog#dayDialog .dayCloseRow{
         const direction = dx < 0 ? -1 : 1;
         if (previewDirection !== direction) {
           previewDirection = direction;
-          prepareDaySwipePreview(surface, direction);
+          prepareDaySwipePreview(surface, direction, previewCache);
         }
-        setSwipeVisual(surface, dx, false, {
-          ghost:$("dayViewSwipeGhost"),
-          viewport:$("dayViewSwipeViewport")
-        });
+        queueDaySwipeVisual(dx);
       }
     }, { passive:false });
 
     page.addEventListener("touchend", (e) => {
       if (!tracking) return;
       tracking = false;
+      cancelDayPrimeFrame();
+      cancelDaySwipeFrame();
       if (locked !== "h") {
         previewDirection = 0;
-        cancelSwipePreview(surface, {
-          ghost:$("dayViewSwipeGhost"),
-          viewport:$("dayViewSwipeViewport")
-        });
+        previewCache = null;
+        cancelSwipePreview(surface, swipeOptions);
         return;
       }
 
@@ -8422,14 +8496,13 @@ dialog#dayDialog .dayCloseRow{
       const dx = t.clientX - sx;
       if (Math.abs(dx) < THRESH_X) {
         previewDirection = 0;
-        cancelSwipePreview(surface, {
-          ghost:$("dayViewSwipeGhost"),
-          viewport:$("dayViewSwipeViewport")
-        });
+        previewCache = null;
+        cancelSwipePreview(surface, swipeOptions);
         return;
       }
 
       previewDirection = 0;
+      previewCache = null;
       animateDayChange(dx < 0 ? 1 : -1);
     }, { passive:true });
 
@@ -8437,10 +8510,10 @@ dialog#dayDialog .dayCloseRow{
       tracking = false;
       locked = null;
       previewDirection = 0;
-      cancelSwipePreview(surface, {
-        ghost:$("dayViewSwipeGhost"),
-        viewport:$("dayViewSwipeViewport")
-      });
+      previewCache = null;
+      cancelDayPrimeFrame();
+      cancelDaySwipeFrame();
+      cancelSwipePreview(surface, swipeOptions);
     }, { passive:true });
 
     page.dataset.swipeReady = "1";
@@ -8452,8 +8525,32 @@ dialog#dayDialog .dayCloseRow{
     if (!page || page.dataset.swipeReady) return;
 
     let sx = 0, sy = 0, tracking = false, locked = null, previewDirection = 0;
+    let previewCache = null, primeFrame = 0, swipeFrame = 0, queuedDx = 0;
     const LOCK_START = 10;
     const THRESH_X = 56;
+    const swipeOptions = {
+      ghost:$("weekViewSwipeGhost"),
+      viewport:$("weekViewSwipeViewport")
+    };
+
+    function queueWeekSwipeVisual(dx) {
+      queuedDx = dx;
+      if (swipeFrame) return;
+      swipeFrame = requestAnimationFrame(() => {
+        swipeFrame = 0;
+        setSwipeVisual(surface, queuedDx, false, swipeOptions);
+      });
+    }
+
+    function cancelWeekSwipeFrame() {
+      if (swipeFrame) cancelAnimationFrame(swipeFrame);
+      swipeFrame = 0;
+    }
+
+    function cancelWeekPrimeFrame() {
+      if (primeFrame) cancelAnimationFrame(primeFrame);
+      primeFrame = 0;
+    }
 
     page.addEventListener("touchstart", (e) => {
       if (e.touches.length !== 1) return;
@@ -8466,6 +8563,14 @@ dialog#dayDialog .dayCloseRow{
       tracking = true;
       locked = null;
       previewDirection = 0;
+      previewCache = null;
+      cancelWeekPrimeFrame();
+      primeFrame = requestAnimationFrame(() => {
+        primeFrame = 0;
+        if (tracking && !locked && !surface.classList.contains("is-swipe-animating")) {
+          previewCache = buildWeekSwipePreviewCache(surface);
+        }
+      });
     }, { passive:true });
 
     page.addEventListener("touchmove", (e) => {
@@ -8484,24 +8589,21 @@ dialog#dayDialog .dayCloseRow{
         const direction = dx < 0 ? -1 : 1;
         if (previewDirection !== direction) {
           previewDirection = direction;
-          prepareWeekSwipePreview(surface, direction);
+          prepareWeekSwipePreview(surface, direction, previewCache);
         }
-        setSwipeVisual(surface, dx, false, {
-          ghost:$("weekViewSwipeGhost"),
-          viewport:$("weekViewSwipeViewport")
-        });
+        queueWeekSwipeVisual(dx);
       }
     }, { passive:false });
 
     page.addEventListener("touchend", (e) => {
       if (!tracking) return;
       tracking = false;
+      cancelWeekPrimeFrame();
+      cancelWeekSwipeFrame();
       if (locked !== "h") {
         previewDirection = 0;
-        cancelSwipePreview(surface, {
-          ghost:$("weekViewSwipeGhost"),
-          viewport:$("weekViewSwipeViewport")
-        });
+        previewCache = null;
+        cancelSwipePreview(surface, swipeOptions);
         return;
       }
 
@@ -8509,14 +8611,13 @@ dialog#dayDialog .dayCloseRow{
       const dx = t.clientX - sx;
       if (Math.abs(dx) < THRESH_X) {
         previewDirection = 0;
-        cancelSwipePreview(surface, {
-          ghost:$("weekViewSwipeGhost"),
-          viewport:$("weekViewSwipeViewport")
-        });
+        previewCache = null;
+        cancelSwipePreview(surface, swipeOptions);
         return;
       }
 
       previewDirection = 0;
+      previewCache = null;
       animateWeekChange(dx < 0 ? 1 : -1);
     }, { passive:true });
 
@@ -8524,10 +8625,10 @@ dialog#dayDialog .dayCloseRow{
       tracking = false;
       locked = null;
       previewDirection = 0;
-      cancelSwipePreview(surface, {
-        ghost:$("weekViewSwipeGhost"),
-        viewport:$("weekViewSwipeViewport")
-      });
+      previewCache = null;
+      cancelWeekPrimeFrame();
+      cancelWeekSwipeFrame();
+      cancelSwipePreview(surface, swipeOptions);
     }, { passive:true });
 
     page.dataset.swipeReady = "1";
