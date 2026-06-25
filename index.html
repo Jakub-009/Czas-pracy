@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Czas pracy 4.5.10</title>
+  <title>Czas pracy 4.5.11</title>
   <meta name="theme-color" content="#eef1f6" id="themeColorMeta" />
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="/czas-pracy-pwa/manifest.webmanifest">
@@ -6709,7 +6709,7 @@ dialog#dayDialog .dayCloseRow{
     const rendered = buildDayEventsHTML(activeDayISO);
     if ($("dayViewEvents")) $("dayViewEvents").innerHTML = rendered.html;
     if ($("dayViewEventsCount")) $("dayViewEventsCount").textContent = rendered.count
-      ? `${rendered.count} ${pluralPL(rendered.count, "wpis", "wpisy", "wpisów")}`
+      ? `${rendered.count} ${pluralPL(rendered.count, "wpis", "wpisy", "wpis\u00f3w")}`
       : "brak wpisów";
   }
 
@@ -6774,9 +6774,9 @@ dialog#dayDialog .dayCloseRow{
           <div class="weekDayMain">
             <div class="weekDayTitle">
               <strong>${escapeHtml(title)}</strong>
-              ${isToday ? "<span>Dziś</span>" : ""}
+              ${isToday ? "<span>Dzi\u015b</span>" : ""}
             </div>
-            <div class="weekDaySub">${escapeHtml(dayText)} · ${escapeHtml(summary.details)}</div>
+            <div class="weekDaySub">${escapeHtml(dayText)} \u00b7 ${escapeHtml(summary.details)}</div>
           </div>
           <div class="weekDayHours">
             <strong>${fmtHM(summary.minutes)}</strong>
@@ -8231,19 +8231,100 @@ dialog#dayDialog .dayCloseRow{
     });
   }
 
+  function setSnapshotText(root, selector, value) {
+    const el = root.querySelector(selector);
+    if (el) el.textContent = value;
+  }
+
+  function setSnapshotHTML(root, selector, value) {
+    const el = root.querySelector(selector);
+    if (el) el.innerHTML = value;
+  }
+
+  function buildDaySwipeSnapshotHTML(surface, dateISO) {
+    if (!surface) return "";
+    const root = document.createElement("div");
+    root.innerHTML = surface.innerHTML;
+
+    const day = getDay(dateISO) || { date: dateISO, note: "", shifts: [], vacation: false, leaveType:"" };
+    const mins = computeDayMinutes(day);
+    const pay = round2((mins / 60) * (db.settings.rate || 0));
+    const rendered = buildDayEventsHTML(dateISO);
+
+    setSnapshotText(root, "#dayViewHours", fmtHM(mins));
+    setSnapshotText(root, "#dayViewPay", pln(pay));
+    setSnapshotHTML(root, "#dayViewEvents", rendered.html);
+    setSnapshotText(root, "#dayViewEventsCount", rendered.count
+      ? `${rendered.count} ${pluralPL(rendered.count, "wpis", "wpisy", "wpis\u00f3w")}`
+      : "brak wpis\u00f3w");
+
+    return root.innerHTML;
+  }
+
+  function buildWeekSwipeSnapshotHTML(surface, dateISO) {
+    if (!surface) return "";
+    const root = document.createElement("div");
+    root.innerHTML = surface.innerHTML;
+
+    const startISO = startOfWeekISO(dateISO || todayISO());
+    const startDate = parseISODate(startISO) || new Date();
+    const days = Array.from({ length:7 }, (_, i) => isoFromDate(addDays(startDate, i)));
+    const today = todayISO();
+    let totalMinutes = 0;
+
+    const listHTML = days.map(date => {
+      const summary = summarizeWeekDay(date);
+      totalMinutes += summary.minutes;
+      const isToday = date === today;
+      const title = capFirst(fmtWeekdayLongPL(date));
+      const dayText = fmtDMYText(date);
+      const pay = round2((summary.minutes / 60) * (db.settings.rate || 0));
+
+      return `
+        <div class="weekDayCard listCard ${isToday ? "today" : ""}" role="button" tabindex="0" data-week-date="${date}">
+          <div class="weekDayMain">
+            <div class="weekDayTitle">
+              <strong>${escapeHtml(title)}</strong>
+              ${isToday ? "<span>Dzi\u015b</span>" : ""}
+            </div>
+            <div class="weekDaySub">${escapeHtml(dayText)} \u00b7 ${escapeHtml(summary.details)}</div>
+          </div>
+          <div class="weekDayHours">
+            <strong>${fmtHM(summary.minutes)}</strong>
+            <span>${pln(pay)}</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    const totalPay = round2((totalMinutes / 60) * (db.settings.rate || 0));
+
+    setSnapshotText(root, "#weekViewHours", fmtHM(totalMinutes));
+    setSnapshotText(root, "#weekViewPay", pln(totalPay));
+    setSnapshotHTML(root, "#weekViewList", listHTML);
+
+    return root.innerHTML;
+  }
+
   function prepareSwipeGhost(surface, direction, options = {}) {
     const ghost = options.ghost;
     const viewport = options.viewport || surface?.parentElement;
-    if (!surface || !ghost || !viewport || typeof options.renderPreview !== "function" || typeof options.renderCurrent !== "function") return;
+    const canBuildPreview = typeof options.previewHTML === "function" || typeof options.previewHTML === "string";
+    if (!surface || !ghost || !viewport || (!canBuildPreview && (typeof options.renderPreview !== "function" || typeof options.renderCurrent !== "function"))) return;
     const dirKey = String(direction);
     if (viewport.classList.contains("is-swipe-active") && viewport.dataset.swipeDir === dirKey && ghost.innerHTML) return;
 
     const width = getSwipeWidth(surface) + 28;
     const inX = direction < 0 ? width : -width;
+    const previewHTML = typeof options.previewHTML === "function" ? options.previewHTML() : options.previewHTML;
 
-    options.renderPreview();
-    ghost.innerHTML = surface.innerHTML;
-    options.renderCurrent();
+    if (previewHTML) {
+      ghost.innerHTML = previewHTML;
+    } else {
+      options.renderPreview();
+      ghost.innerHTML = surface.innerHTML;
+      options.renderCurrent();
+    }
     stripGhostIds(ghost);
 
     viewport.classList.add("is-swipe-active");
@@ -8329,7 +8410,7 @@ dialog#dayDialog .dayCloseRow{
       surface.style.opacity = "";
       surface.classList.remove("is-swipe-animating");
       window.setTimeout(() => { surface.style.transition = ""; }, 0);
-    }, 145);
+    }, 190);
   }
 
   function animateDayChange(delta) {
@@ -8344,6 +8425,7 @@ dialog#dayDialog .dayCloseRow{
     runSwipeChange(surface, direction, () => changeDay(target), {
       ghost,
       viewport,
+      previewHTML:() => buildDaySwipeSnapshotHTML(surface, target),
       renderPreview:() => renderDayView(target),
       renderCurrent:() => renderDayView(current)
     });
@@ -8361,6 +8443,7 @@ dialog#dayDialog .dayCloseRow{
     runSwipeChange(surface, direction, () => changeWeek(delta), {
       ghost,
       viewport,
+      previewHTML:() => buildWeekSwipeSnapshotHTML(surface, target),
       renderPreview:() => renderWeekView(target),
       renderCurrent:() => renderWeekView(current)
     });
@@ -8374,6 +8457,7 @@ dialog#dayDialog .dayCloseRow{
       ghost:$("dayViewSwipeGhost"),
       viewport:$("dayViewSwipeViewport"),
       mode:"drag",
+      previewHTML:() => buildDaySwipeSnapshotHTML(surface, target),
       renderPreview:() => renderDayView(target),
       renderCurrent:() => renderDayView(current)
     });
@@ -8387,6 +8471,7 @@ dialog#dayDialog .dayCloseRow{
       ghost:$("weekViewSwipeGhost"),
       viewport:$("weekViewSwipeViewport"),
       mode:"drag",
+      previewHTML:() => buildWeekSwipeSnapshotHTML(surface, target),
       renderPreview:() => renderWeekView(target),
       renderCurrent:() => renderWeekView(current)
     });
